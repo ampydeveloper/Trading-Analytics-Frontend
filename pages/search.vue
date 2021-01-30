@@ -1,0 +1,365 @@
+<template>
+  <div class="col-md-12 col-sm-12 search-page">
+    <div class="row slab-result-search" v-if="slabItems.length >0 && showSlab">
+      <div class="col-12 no-padding">
+        <div class="card transparent-bg">
+          <div class="card-body">
+            <h5 class="card-title">
+              <button class="theme-btn card-btn slab-result-title">Slabs Results</button>
+            </h5>
+            <ul class="my-card-listing slab-result-card-outer">
+              <CardSlabItem v-for="item in slabItems" :key="'slab-'+item.id" :itemdata="item" @clicked="selectSlabCard" />
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 t-p-5">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">
+              <button class="theme-green-btn card-btn">Listings Results</button>
+              <input
+              v-model="keyword"
+              @keyup="searchInternalCards()"
+              class="card-title-search-field"
+              type="text"
+              placeholder="search"
+            />
+            <div class="custom-dropdown float-right">
+              <button class="dropbtn">Filter</button>
+              <div class="dropdown-content">
+                <a href="javascript:;" @click="filterBy('ending_soon')"
+                  >Ending Soon</a
+                >
+                <a href="javascript:;" @click="filterBy('price_low_to_high')"
+                  >price low to high</a
+                >
+                <a href="javascript:;" @click="filterBy('buy_it_now')"
+                  >buy it now</a
+                >
+              </div>
+            </div>
+            </h5>
+            <div class="dataloader" v-if="requestInProcess">
+              <b-spinner variant="success" label="Spinning"></b-spinner>
+            </div>
+            <p
+              v-if="items.length == 0"
+              class="no-result-found"
+            >{{ (requestInProcess) ? '' : 'No results found.'}}</p>
+            <ul v-else class="my-card-listing">
+              <CardListItem v-for="item in items" :key="item.id" :itemdata="item" />
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import CardListItem from '~/components/dashboard/CardListItem'
+import CardSlabItem from '~/components/dashboard/CardSlabItem'
+import { mapGetters } from 'vuex'
+import { BSpinner } from 'bootstrap-vue'
+
+export default {
+  transition: 'fade',
+  layout: 'dashboard',
+  head() {
+    return {
+      title: 'Search - Slabstox'
+    }
+  },
+  async mounted() {
+    this.keyword = this.keyword_old_state
+    this.filter = this.filters_old_state
+    if (this.$route.query.hasOwnProperty('id')) {
+      this.searchCard = this.$route.query.id
+    }else{
+      this.searchCard = null
+      if (this.$route.query.hasOwnProperty('keyword')) {
+        this.keyword = this.$route.query.keyword
+      }
+    }
+    this.searchCards()
+    this.scroll()
+  },
+  components: {
+    CardListItem,
+    CardSlabItem,
+    BSpinner
+  },
+  computed: {
+    ...mapGetters({
+      keyword_old_state: 'advancesearch/keyword',
+      filters_old_state: 'advancesearch/filters',
+      cardid_old_state: 'advancesearch/cardid',
+      showAdvanceSearch: 'advancesearch/show',
+      searchBtnClick_old_state: 'advancesearch/searchBtnClick'
+    })
+  },
+  data() {
+    return {
+      keyword: '',
+      filter: {},
+      items: [],
+      slabItems: [],
+      requestInProcess: false,
+      page: 1,
+      noMoreData: false,
+      slabSearchActive: false,
+      slabSearchCardId: null,
+      showSlab: false,
+      filterByKeword: 'ending_soon',
+      searchCard: null,
+    }
+  },
+  watch: {
+    keyword_old_state(newVal, oldVal) {
+      console.log('newVal',newVal)
+      this.keyword = newVal
+      this.filter = {};
+      this.searchCard = null
+      this.searchCards()
+    },
+    filters_old_state(newVal, oldVal) {
+      this.filter = newVal
+      this.searchCard = null
+      this.keyword = '';
+      this.searchCards()
+    },
+    cardid_old_state(newVal, oldVal) {
+      if(typeof newVal == 'number'){
+        this.searchCard = newVal
+        this.keyword = '';
+        this.searchCards()
+      }
+    },
+    searchBtnClick_old_state(newVal, oldVal) {
+      this.searchCards()
+    }
+  },
+  methods: {
+    filterBy(data) {
+      this.filterByKeword = data
+      this.searchCards(false, false)
+    },
+    selectSlabCard(id) {
+      this.slabSearchActive = true
+      this.slabSearchCardId = id
+      this.slabSearchCard()
+    },
+    searchInternalCards(status = false,) {
+      if (!this.requestInProcess) {
+        try {
+          if (!status) {
+            this.page = 1
+            this.items = []
+          }
+          this.requestInProcess = true
+          this.$axios
+            .$post('search/get-internal-card-list', {
+              search: this.keyword,
+              filter: this.filter,
+              page: this.page,
+              filterBy: this.filterByKeword,
+              searchCard: this.searchCard
+            })
+            .then(res => {
+              this.requestInProcess = false
+              if (res.status == 200) {
+                if (res.items.data != null && res.items.data.length > 0) {
+                  if (status) {
+                    res.items.data.map(item => {
+                      this.items.push(item)
+                    })
+                  } else {
+                    this.items = res.items.data
+                  }
+                  this.page = res.items.next
+                } else {
+                  if (!status) {
+                    this.items = []
+                  } else {
+                    this.noMoreData = true
+                  }
+                }
+              }
+            }).catch(err => {
+              this.requestInProcess = false
+            })
+        } catch (err) {
+          this.requestInProcess = false
+          console.log(err)
+        }
+      }
+    },
+    searchCards(status = false, hideSlab=true) {
+      if (!this.requestInProcess) {
+        try {
+          if (!status) {
+            this.page = 1
+            this.items = []
+            if(hideSlab){
+              this.slabItems = []
+            }
+          }
+          this.requestInProcess = true
+          this.$axios
+            .$post('search/get-card-list', {
+              search: this.keyword,
+              filter: this.filter,
+              page: this.page,
+              filterBy: this.filterByKeword,
+              searchCard: this.searchCard
+            })
+            .then(res => {
+              this.requestInProcess = false
+              if (res.status == 200) {
+                if(hideSlab){
+                  this.slabItems = res.cards
+                }
+                this.showSlab = true
+                if (res.items.data != null && res.items.data.length > 0) {
+                  if (status) {
+                    res.items.data.map(item => {
+                      this.items.push(item)
+                    })
+                  } else {
+                    this.items = res.items.data
+                  }
+                  this.page = res.items.next
+                } else {
+                  if (!status) {
+                    this.items = []
+                  } else {
+                    this.noMoreData = true
+                  }
+                }
+              }
+            }).catch(err => {
+              this.requestInProcess = false
+            })
+        } catch (err) {
+          this.requestInProcess = false
+          console.log(err)
+        }
+      }
+    },
+    slabSearchCard(status = false) {
+      if (!this.requestInProcess) {
+        try {
+          if (!status) {
+            this.showSlab = false
+            this.page = 1
+            this.items = []
+          }
+          this.requestInProcess = true
+          this.$axios
+            .$post('card/get-card-list-using-card-id/' +this.slabSearchCardId,
+                {page: this.page})
+            .then(res => {
+              this.requestInProcess = false
+              this.showSlab = true
+              if (res.status == 200) {
+                if (res.data == null || res.data.length == 0) {
+                  this.noMoreData = true
+                }
+                if (status) {
+                  res.data.map(item => {
+                    this.items.push(item)
+                  })
+                } else {
+                  this.items = res.data
+                }
+                this.page = res.next
+              }
+            })
+        } catch (err) {
+          this.requestInProcess = false
+          this.showSlab = true
+          console.log(err)
+        }
+      }
+    },
+    scroll() {
+      window.onscroll = () => {
+        const scrollTop =
+          document.documentElement.scrollTop + window.innerHeight
+        const offsetHeight = document.documentElement.offsetHeight
+        let bottomOfWindow =
+          scrollTop >= offsetHeight - 2 && scrollTop <= offsetHeight + 2
+        if (bottomOfWindow) {
+          if (!this.noMoreData) {
+            if (this.slabSearchActive) {
+              this.slabSearchCard(true)
+            } else {
+              this.searchInternalCards(true)
+            }
+          }
+        }
+      }
+    }
+  }
+}
+</script>
+<style lang="scss" scoped>
+.t-p-5 {
+  padding: 5px;
+}
+.search-page {
+  .dataloader {
+    text-align: center;
+    margin-top: 15%;
+    margin-bottom: 30%;
+  }
+  .slab-result-search {
+    margin-top: 15px;
+    // background-color: #39414a;
+    margin-left: -10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    margin-right: -10px;
+    .no-padding {
+      padding: 0px;
+      .transparent-bg {
+        background: transparent;
+        border: none;
+        margin: 0;
+        .card-body {
+          padding-bottom: 0px;
+          padding-top: 0;
+
+          .card-body-wrap {
+            margin-left: -13px;
+            margin-right: -13px;
+            .card-title {
+              margin-left: 17px;
+            }
+          }
+        }
+        .slab-result-title {
+          border-top-left-radius: 2px;
+          border-top-right-radius: 2px;
+          margin-left: 0px;
+        }
+      }
+    }
+  }
+  ul.my-card-listing {
+    list-style: none;
+    padding: 0px;
+    margin-left: -13px;
+    margin-right: -13px;
+    margin-bottom: 0px;
+  }
+  .no-result-found {
+    text-transform: uppercase;
+    text-align: center;
+    color: #ffffff;
+  }
+}
+</style>

@@ -1,0 +1,72 @@
+body {
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+.mt-20 {
+  margin-top: 20px;
+}
+
+
+.toasted.toasted-primary.error{
+  background-color: #dc3545 !important;
+  font-weight: bold;
+}
+
+.toasted.toasted-primary.success{
+  background-color: #05fb62 !important;
+  font-weight: bold;
+}
+
+
+
+.page-enter-active, .page-leave-active {
+  transition: opacity .5s
+}
+.page-enter, .page-leave-active {
+  opacity: 0
+}
+
+.slide-left-enter,
+.slide-right-leave-active {
+  opacity: 0;
+  transform: translate(30px, 0);
+}
+.slide-left-leave-active,
+.slide-right-enter {
+  opacity: 0;
+  transform: translate(-30px, 0);
+}
+
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .28s ease-in-out, -webkit-transform .35s;
+  transition: transform .35s, opacity .28s ease-in-out;
+  transition: transform .35s, opacity .28s ease-in-out, -webkit-transform .35s
+}
+
+.fade-enter {
+  -webkit-transform: scale(.97);
+  opacity: 0
+}
+
+.fade-leave-to {
+  -webkit-transform: scale(1.03);
+  opacity: 0
+}
+
+body::-webkit-scrollbar {
+  width: 5px;
+  background-color: #39414a;
+}
+
+/**  STYLE 4 */
+body::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #39414a;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: #272d33;
+  border: 2px solid #555555;
+}
+

@@ -1,0 +1,6 @@
+@font-face {
+font-family: 'CocogoosePro-Regular';
+font-style: normal;
+font-weight: normal;
+src: local('Cocogoose Pro Regular'), url('./fonts/CocogooseProRegular.woff') format('woff');
+}

@@ -1,0 +1,9 @@
+body.adminDashboardLayout{
+    font-family: 'CocogoosePro-SemiLightItalic', Helvetica, Arial, sans-serif;
+    background-color: #272d33 !important;
+    overflow-x: hidden;
+}
+
+[role="main"] {
+    padding-top: 48px;
+}
