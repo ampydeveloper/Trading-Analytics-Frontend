@@ -118,6 +118,10 @@ $theme-nav-badge-color: #de3030;
 .btn-sxvalue {
   background: #272d33;
   color: #1ce783;
+  font-size: 10px;
+    padding: 6px 12px 5px 12px !important;
+    margin-top: -3px;
+    margin-right: 12px !important;
 }
 
 .card {
@@ -437,6 +441,7 @@ html body main .my-card-listing {
   tbody tr td {
     font-size: 14px;
     padding: 11px 8px 8px 8px;
+    text-transform: capitalize;
   }
 }
 
@@ -484,6 +489,7 @@ html body main .my-card-listing {
     font-weight: 400;
     color: #fff;
     border: 0;
+    margin-right: 10px;
   }
 
   .search-form .btn-outline-secondary {

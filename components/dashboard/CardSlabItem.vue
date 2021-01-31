@@ -5,6 +5,7 @@
     @click="makeActive()"
     v-bind:class="{ active: isActive }"
   >
+    <div class="bor-left"></div>
     <h4 class="my-card-title" :title="itemdata.title">
       {{ trimTitle(itemdata.title) }}
     </h4>
@@ -36,26 +37,37 @@
       View Slab Data
       <font-awesome-icon :icon="['fas', 'chevron-circle-right']" />
     </nuxt-link>
+
+    <div class="text-center">
+      <nuxt-link
+        class="my-card-view-link"
+        :to="'/live-auctions/?id=' + itemdata.id"
+      >
+        View Live Listings
+        <font-awesome-icon :icon="['fas', 'chevron-right']" />
+      </nuxt-link>
+    </div>
   </li>
 </template>
 
 <script>
 export default {
   props: {
-    'itemdata': Object, 
-    'activeSt':{
+    itemdata: Object,
+    activeSt: {
       type: Boolean,
-      default: false
-    }},
+      default: false,
+    },
+  },
   data() {
     return {
       isActive: false,
     }
   },
-  watch:{
+  watch: {
     activeSt(val) {
       this.isActive = val
-    }
+    },
   },
   mounted() {},
   methods: {
@@ -208,5 +220,26 @@ export default {
   font-size: 11px;
   color: #1ce783;
   z-index: 9;
+}
+.my-card {
+  .bor-left {
+    border-left: 2px solid #39414a;
+    height: calc(100% - 60px);
+    width: 1px;
+    position: absolute;
+    left: 0;
+    top: 30px;
+    bottom: 30px;
+  }
+  .my-card-view-link {
+    font-family: 'CocogoosePro-SemiLightItalic', Helvetica, Arial, sans-serif;
+    color: #edecec;
+    text-transform: uppercase;
+    font-size: 7px;
+    line-height: 2;
+    letter-spacing: 1px;
+    margin-top: 12px;
+    display: inline-block
+  }
 }
 </style>

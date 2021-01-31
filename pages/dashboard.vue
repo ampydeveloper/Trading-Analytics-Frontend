@@ -15,7 +15,6 @@
               <b-spinner variant="success" label="Spinning"></b-spinner>
             </div>
             <ul class="my-card-listing featured-listing">
-              <li>
               <CardSlabItem
                 v-for="item in featuredListingItems"
                 :key="item.id"
@@ -24,7 +23,6 @@
                 @toggleCardActive='toggleCardActive'
                 @updateGraph='updateGraph'
               />
-              </li>
             </ul>
 
             <div
@@ -48,6 +46,17 @@
             id="dashboard-graph-outer"
             ref="shareImage"
           >
+          <h4 class="featured-graph-title">PRIZM LUKA DONCIC #75 ROOKIE BLUE ICE 
+
+<nuxt-link class="card-link float-right" to="/stoxticker">
+                Get the Ticker
+                <font-awesome-icon :icon="['fas', 'chevron-right']" />
+              </nuxt-link>
+              
+<button class="theme-btn card-btn btn-sxvalue float-right">
+                Slabstox ${{ stoxtickerData.total }}
+              </button>
+          </h4>
             <h5 class="card-title">
               
               <!-- <button class="theme-btn card-btn theme-green-btn">
@@ -91,11 +100,9 @@
                 <font-awesome-icon :icon="['fas', 'chevron-right']" />
               </nuxt-link>
 
-              <nuxt-link class="card-link float-right" to="/stoxticker">
-                Get the Ticker
-                <font-awesome-icon :icon="['fas', 'chevron-right']" />
-              </nuxt-link>
-              <span class="float-right share-lk-top">
+              
+
+              <!-- <span class="float-right share-lk-top">
                 <span class="share-icon">
                   <img src="~/assets/img/share-icon.png" alt />
                 </span>
@@ -144,13 +151,12 @@
                     </li>
                   </ul>
                 </div>
-                <!-- <span class="share-icon" @click='chart2Img()'>
+                <span class="share-icon" @click='chart2Img()'>
                   <img src="~/assets/img/share-icon.png" alt />
-                </span> -->
-              </span>
-              <button class="theme-btn card-btn btn-sxvalue float-right">
-                Slabstox ${{ stoxtickerData.total }}
-              </button>
+                </span> 
+              </span> -->
+
+              
             </h5>
             <div class="dashboard-apex-top" ref="dashboardApexChart">
               <VueApexCharts
@@ -673,10 +679,35 @@ ul.featured-listing {
     margin: 0;
         padding-top: 25px;
             padding-bottom: 25px;
+            position: relative;
   }
   li.my-card.active{
     background: #39414a;
   }
+  li.my-card.active + li{
+    //background: red;
+      .bor-left {
+           display:none;
+         //  background: blue;
+      }
+      .my-card-title{
+      //  background: blue;
+      }
+  }
+   li.my-card:first-child{
+     // background: yellow;
+   }
+  li.my-card:first-child .bor-left {
+    display:none;
+    //background: blue;
+  }
+}
+.featured-graph-title{
+font-family: 'CocogoosePro-SemiLightItalic', Helvetica, Arial, sans-serif;
+    color: #edecec;
+    font-size: 11px;
+    letter-spacing: 1px;
+        margin-bottom: 13px;
 }
 .dash-featured {
   padding-bottom: 0;
