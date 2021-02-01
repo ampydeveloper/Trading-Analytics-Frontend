@@ -5,34 +5,17 @@
         <div class="card ap">
           <div class="card-body">
             <h5 class="card-title">
-              <button class="theme-btn card-btn">All Listings</button>
+              <button class="theme-btn card-btn">All Sales Data</button>
               <nuxt-link
-                class="theme-green-btn card-btn pull-right"
-                :to='`/admin/create-listings-excel?card_id=${card_id}`'
-                style="margin-right: 5px"
-              >
-                Create Listing by CSV
-              </nuxt-link>
+              class="theme-green-btn card-btn pull-right"
+              :to="`create-sales-data?item=${card_id}`"
+              >Add Sales Data</nuxt-link
+            >
             </h5>
+            
           </div>
-          <div class="card-body search-form">
+          <!-- <div class="card-body search-form">
             <div class="row">
-              <!-- <div class="col-2">
-                  <select id="sportFilter" @change='getItems(currentPage, $event)' class="form-control text-capitalize">
-                    <option selected>Select Sport</option>
-                    <option :value="sport" v-for='sport in sportsList' :key='sport' v-text='sport' class="text-capitalize"></option>
-                  </select>
-                </div> -->
-              <div class="col-2">
-                <select
-                  id="simpleFilter"
-                  @change="getItems(currentPage, $event)"
-                  class="form-control text-capitalize"
-                >
-                  <option selected>Filter By</option>
-                  <option value="" class="text-capitalize">Ending Soon</option>
-                </select>
-              </div>
               <div class="col-3">
                 <div class="input-group mb-3">
                   <input
@@ -56,56 +39,39 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
           <div class="table_wrapper ap">
             <table class="table table-striped">
               <thead>
                 <tr>
                   <th>Id</th>
-                  <th>Title</th>
+                  <th>Date</th>
+                  <th>Type</th>
+                  <th>Source</th>
+                  <th>Quantity</th>
                   <th>Price</th>
-                  <th>Sold Price</th>
-                  <th>Listing Id</th>
-                  <th>Status</th>
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody v-if="items.length > 0">
                 <tr v-for="(item, key) of items" :key="item.id">
                   <td>{{ item.id }}</td>
-                  <td>{{ item.title }}</td>
-                  <td>${{ item.price }}</td>
-                  <td class="search-form tabel-in">
-                    <input
-                      type="text"
-                      class="form-control"
-                      v-model="soldPrice"
-                      placeholder=""
-                    />
-                    <button
-                      class="btn btn-outline-secondary"
-                      @click="saveSoldPrice(item.id)"
-                      type="button"
-                      id="button-addon2"
-                    >
-                      <i class="fa fa-floppy-o" aria-hidden="true"></i>
-                    </button>
-                  </td>
-                  <td>{{ item.itemId }}</td>
-                  <td>{{ item.status == 1 ? 'Active' : 'Inactive' }}</td>
+                  <td>{{ item.timestamp }}</td>
+                  <td>{{ item.type }}</td>
+                  <td>{{ item.source }}</td>
+                  <td>{{ item.quantity }}</td>
+                  <td>${{ item.cost }}</td>
+                  <!-- <td>{{ (item.status==1?'Active':'Inactive') }}</td> -->
                   <td>
-                    <select
-                      @change="statusChange($event, item.id, key)"
-                      class="form-control text-capitalize"
-                    >
+                    <!-- <select @change="statusChange($event, item.id, key)" class="form-control text-capitalize">
                       <option disabled>Status</option>
                       <option value="0">Active</option>
                       <option value="2">Disable</option>
-                    </select>
+                    </select> -->
                     <nuxt-link
                       class="card-btn btn btn-primary btn-table-spec"
-                      :to="`edit-listing?listing_id=${item.id}`"
-                      >Edit Listings</nuxt-link
+                      :to="`edit-sales-data?sale_id=${item.id}`"
+                      >Edit</nuxt-link
                     >
                   </td>
                 </tr>
@@ -117,25 +83,19 @@
               </tbody>
               <tbody v-if="items.length == 0 && requestInProcess == false">
                 <tr>
-                  <td colspan="6" class="text-center">No listings found.</td>
+                  <td colspan="6" class="text-center">No sales data found.</td>
                 </tr>
               </tbody>
-              <tfoot>
+              <!-- <tfoot>
                 <tr>
                   <td colspan="6">
-                    <button
-                      class="theme-btn card-btn"
-                      :disabled="page == 2"
-                      @click="getItems(page - 1)"
-                    >
+                    <button class="theme-btn card-btn" :disabled="page == 2" @click="getItems(page - 1)">
                       Previous
                     </button>
-                    <button class="theme-btn card-btn" @click="getItems(page)">
-                      Next
-                    </button>
+                    <button class="theme-btn card-btn" @click="getItems(page)">Next</button>
                   </td>
                 </tr>
-              </tfoot>
+              </tfoot> -->
             </table>
           </div>
         </div>
@@ -154,8 +114,8 @@ export default {
     }
   },
   mounted() {
-     this.card_id = this.$route.query.card;
-    this.getItems(this.page, this.$route.query.card)
+    this.card_id = this.$route.query.card_id
+    this.getItems(this.$route.query.card_id)
   },
   components: {},
   data() {
@@ -166,33 +126,28 @@ export default {
       page: 1,
       currentPage: 1,
       noMoreData: false,
-      soldPrice: '',
+      card_id: '',
       sportsList: [],
       sportFilter: '',
       filter: null,
-      card_id:null
     }
   },
   methods: {
-    getItems(page, card_id, filter = null) {
+    getItems(card_id) {
       if (!this.requestInProcess) {
         try {
           this.showLoader()
           this.requestInProcess = true
-          let payload = {
-            page: page,
-            card_id: card_id,
-            search: this.searchTerm,
-          }
-          if (filter != null) payload['sport'] = filter.target.value
+          let payload = { card_id: card_id, search: this.searchTerm }
           this.$axios
-            .post('get-ebay-specific-list', payload)
+            .post('get-sales-list', payload)
             .then((res) => {
+              console.log(res)
               if (res.status == 200) {
-                this.currentPage = page
+                // this.currentPage = page;
                 this.items = res.data.data
-                this.page = res.data.next
-                this.sportsList = res.data.sportsList
+                // this.page = res.data.next
+                // this.sportsList = res.data.sportsList
               }
               this.requestInProcess = false
               this.hideLoader()

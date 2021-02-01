@@ -5,12 +5,12 @@
         <div class="card create_card">
           <div class="card-body">
             <h5 class="card-title">
-              <button class="theme-btn card-btn">Add Sales Data</button>
+              <button class="theme-btn card-btn">Edit Sales Data</button>
             </h5>
           </div>
           <div class="table_wrapper ap">
-            <form class="form-inline" v-on:submit.prevent="create">
-              <input type="hidden" value="" v-model="card.card_id" />
+            <form class="form-inline" v-on:submit.prevent="edit">
+              <input type="hidden" value="" v-model="card.id" />
               <div class="form_column">
                 <label>Sale Date</label>
                 <b-form-datepicker
@@ -77,7 +77,7 @@
                     class="theme-green-btn card-btn btn-save"
                     :disabled="requestInProcess"
                   >
-                    Create
+                    Update
                   </button>
                 </div>
               </div>
@@ -102,7 +102,8 @@ export default {
     }
   },
   mounted() {
-    this.card.card_id = this.$route.query.item
+    // this.card.card_id = this.$route.query.item
+     this.getData(this.$route.query.sale_id)
   },
   components: {},
   data() {
@@ -123,24 +124,35 @@ export default {
     back() {
       this.$router.go(-1)
     },
-    create() {
+    getData(sale_id) {
+      try {
+        this.$axios.$get('get-edit-sales/' + sale_id).then(res => {
+            console.log(res);
+          if (res.status == 200) {
+            this.card = {
+                id: res.data.id,
+                    timestamp: res.data.timestamp,
+                    quantity: res.data.quantity,
+                    cost: res.data.cost,
+                    source: res.data.source,
+                    type: res.data.type,
+                  };
+          }
+        })
+      } catch (err) {
+        console.log(err)
+      }
+    },
+    edit() {
       if (!this.requestInProcess) {
         try {
           this.showLoader()
           this.requestInProcess = true
           this.$axios
-            .post('sales-create', this.card)
+            .post('edit-sales-data', this.card)
             .then((res) => {
               if (res.status == 200) {
                 this.$toast.success(res.data.message)
-                this.card = {
-                  card_id: '',
-                  timestamp: '',
-                  quantity: '',
-                  cost: '',
-                  type:'',
-                   source: '',
-                }
               }
               this.requestInProcess = false
               this.hideLoader()

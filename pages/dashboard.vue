@@ -46,7 +46,7 @@
             id="dashboard-graph-outer"
             ref="shareImage"
           >
-          <h4 class="featured-graph-title">PRIZM LUKA DONCIC #75 ROOKIE BLUE ICE 
+          <h4 class="featured-graph-title">{{cardActiveTitle}}
 
 <nuxt-link class="card-link float-right" to="/stoxticker">
                 Get the Ticker
@@ -363,7 +363,6 @@ export default {
     this.getTernder()
     this.getWatchlist()
     this.getStoxtickerData()
-    this.updateGraph()
     this.logo = document.getElementById('sidebarLogo').src
     // this.print()
   },
@@ -377,6 +376,7 @@ export default {
     return {
       cardsActive: false,
       cardActiveId: 0,
+      cardActiveTitle: '',
       featuredListingItems: [],
       requestInProcessFeatured: false,
       logo: null,
@@ -428,6 +428,7 @@ export default {
               fontSize: '10px',
               fontFamily: 'NexaBold',
             },
+            formatter: (value) => { return '$'+value },
           },
         },
         xaxis: {
@@ -436,7 +437,7 @@ export default {
               colors: '#edecec',
               fontSize: '10px',
               fontFamily: 'NexaBold',
-            },
+            }
           },
           type: 'category',
           categories: [],
@@ -450,8 +451,9 @@ export default {
     }
   },
   methods: {
-    toggleCardActive(id){
-      this.cardActiveId = id
+    toggleCardActive(card){
+      this.cardActiveId = card.id
+      this.cardActiveTitle = card.title
       this.cardsActive = false
     },
     trimString(title) {
@@ -475,6 +477,10 @@ export default {
             this.requestInProcessFeatured = false
             if (res.status == 200) {
               this.featuredListingItems = res.data
+              if(this.featuredListingItems.length > 0){
+                this.toggleCardActive(this.featuredListingItems[0])
+                this.updateGraph()
+              }
             }
           })
       } catch (err) {
@@ -540,10 +546,10 @@ export default {
         console.log(error)
       }
     },
-    updateGraph(days = 2) {
+    updateGraph(days=2) {
       try {
         this.graphDataEmpty = false
-        this.$axios.$get(`get-dashboard-graph/${days}`).then((res) => {
+        this.$axios.$get(`get-dashboard-graph/${days}/${this.cardActiveId}`).then((res) => {
           if (res.status == 200) {
             this.activeDaysGraph = days
             if (this.initGraphLabelLength != res.data.labels.length) {

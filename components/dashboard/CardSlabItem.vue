@@ -69,7 +69,9 @@ export default {
       this.isActive = val
     },
   },
-  mounted() {},
+  mounted() {
+    this.isActive = this.activeSt
+  },
   methods: {
     selectSlabCard(id) {
       this.$emit('clicked', id)
@@ -83,7 +85,7 @@ export default {
       return title
     },
     makeActive() {
-      this.$emit('toggleCardActive', this.itemdata.id)
+      this.$emit('toggleCardActive', this.itemdata)
       this.$emit('updateGraph')
       // this.isActive = !this.isActive
       // this.updateGraph(2);

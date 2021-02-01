@@ -15,11 +15,14 @@
                    <nuxt-link class="theme-green-btn card-btn pull-right" to="/admin/create-card">
             Create Slab
           </nuxt-link>
-          <button class="theme-green-btn card-btn pull-right" style="margin-right:5px" @click="uploadExcel('soccer')">Upload Pokemon</button>
+             <nuxt-link class="theme-green-btn card-btn pull-right" to="/admin/create-cards-excel" style="margin-right:5px">
+            Create Slab by CSV
+          </nuxt-link>
+          <!-- <button class="theme-green-btn card-btn pull-right" style="margin-right:5px" @click="uploadExcel('soccer')">Upload Pokemon</button>
                   <button class="theme-green-btn card-btn pull-right" style="margin-right:5px" @click="uploadExcel('baseball')">Upload Baseball</button>
                   <button class="theme-green-btn card-btn pull-right" style="margin-right:5px" @click="uploadExcel('basketball')">Upload Basketball</button>
                   <button class="theme-green-btn card-btn pull-right" style="margin-right:5px" @click="uploadExcel('football')">Upload Football</button>
-                  <button class="theme-green-btn card-btn pull-right" style="margin-right:5px" @click="uploadExcel('soccer')">Upload Soccer</button>
+                  <button class="theme-green-btn card-btn pull-right" style="margin-right:5px" @click="uploadExcel('soccer')">Upload Soccer</button> -->
                   
                 </div>
               </div>
@@ -98,9 +101,10 @@
                     </button>
                   </td>
                   <td class="text-center">
-                    <button class="card-btn btn btn-primary  btn-table-spec" @click="addItem(card.id)">Add Listing</button>
-                    <nuxt-link class="card-btn btn btn-primary  btn-table-spec" :to='`ebay-specific-listings?card=${card.id}`'>Listing</nuxt-link>
-                    <nuxt-link class="card-btn btn  btn-primary  btn-table-spec" :to='`create-sales-data?item=${card.id}`'>Sale Data</nuxt-link>
+                    <button class="card-btn btn btn-primary  btn-table-spec" @click="addItem(card.id)">Add Listings</button>
+                    <nuxt-link class="card-btn btn btn-primary  btn-table-spec" :to='`ebay-specific-listings?card=${card.id}`'>All Listings</nuxt-link>
+                    <nuxt-link class="card-btn btn  btn-primary  btn-table-spec" :to='`all-sales-data?card_id=${card.id}`'>All Sales Data</nuxt-link>
+                    <nuxt-link class="card-btn btn  btn-primary  btn-table-spec" :to='`edit-card?card_id=${card.id}`'>Edit Slab</nuxt-link>
                   </td>
                 </tr>
               </tbody>
@@ -333,24 +337,5 @@ ul.my-card-listing {
 .card-link {
   line-height: 2;
   margin-top: 2px;
-}
-.btn-table-spec{
-      border: none;
-    border-radius: 2px;
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-        padding: 8px 12px 5px 12px;
-    font-family: "Nexabold", Helvetica, Arial, sans-serif;
-}
-.btn-table-spec.tag{
-  padding: 4px 6px 2px 6px;
-}
-.btn-table-spec.btn-primary{
-    background-color: #272d33
-}
-.btn-table-spec.btn-danger{
-      background-color: #f76573;
-
 }
 </style>
