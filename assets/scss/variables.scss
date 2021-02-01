@@ -3846,3 +3846,52 @@ html body #__nuxt .b-profileImage .dropdown-menu {
     display: inline-block;
   }
 }
+#openSeeProblemPopup{
+.modal-dialog {
+  .modal-content {
+    background: $theme-card-background-color;
+    font-family: 'NexaBold', Helvetica, Arial, sans-serif;
+    .modal-title {
+      background: $theme-background-color;
+      color: $theme-off-white;
+      border: none;
+      border-radius: 2px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 5px 15px 4px;
+    }
+    .modal-body {
+      color: $theme-off-white;
+      text-transform: uppercase;
+      padding: 20px 0px !important;
+      font-size: 12px;
+      ul li {
+        width: 49%;
+        float: left;
+        list-style: none;
+      }
+      textarea{
+        width: 100%;
+  background: #39414a;
+  color: #ffffff;
+  font-size: 11px;
+  letter-spacing: 2px;
+  line-height: 20px;
+  font-family: 'NexaBold', Helvetica, Arial, sans-serif;
+  margin: 0px;
+  &:focus{
+        box-shadow: none;
+        outline: 0;
+            border: 1px solid #ced4da;
+  }
+      }
+      .form-submit-btn{
+            padding: 8px 12px 5px 12px;
+  font-family: "Nexabold", Helvetica, Arial, sans-serif;
+  margin-top: 15px;
+      }
+    }
+  }
+}
+}

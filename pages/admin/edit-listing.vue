@@ -263,7 +263,9 @@ export default {
           console.log(res)
           if (res.status == 200) {
             this.item = {
-              itemId: res.data.items.id,
+               card_id: res.data.items.card_id,
+               itemId: res.data.items.itemId,
+              listing_Id: res.data.items.id,
               title: res.data.items.title,
               price: res.data.items.price,
               time_left: res.data.items.listing_ending_at,

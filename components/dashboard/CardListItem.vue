@@ -141,8 +141,11 @@ export default {
       }, 1000)
     },
     calculateValueDifference() {
-      if(this.itemdata.data.card.value != null) {
-        this.valueDifference = (parseFloat(this.itemdata.data.selling_status.price) - parseFloat(this.itemdata.data.card.value.value)) 
+      if(this.itemdata.data.card.value) {
+        if(this.itemdata.data.selling_status  != null){
+var selling_status_price = this.itemdata.data.selling_status.price;
+        }
+        this.valueDifference = (parseFloat(selling_status_price) - parseFloat(this.itemdata.data.card.value.value)) 
       }else{
         this.valueDifference = 0
       }

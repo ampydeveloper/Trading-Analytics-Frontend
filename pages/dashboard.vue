@@ -19,9 +19,9 @@
                 v-for="item in featuredListingItems"
                 :key="item.id"
                 :itemdata="item"
-                :activeSt="(item.id==cardActiveId) ? !cardsActive : cardsActive"
-                @toggleCardActive='toggleCardActive'
-                @updateGraph='updateGraph'
+                :activeSt="item.id == cardActiveId ? !cardsActive : cardsActive"
+                @toggleCardActive="toggleCardActive"
+                @updateGraph="updateGraph"
               />
             </ul>
 
@@ -46,19 +46,19 @@
             id="dashboard-graph-outer"
             ref="shareImage"
           >
-          <h4 class="featured-graph-title">{{cardActiveTitle}}
+            <h4 class="featured-graph-title">
+              <span class="fg-title">{{ cardActiveTitle }}</span>
 
-<nuxt-link class="card-link float-right" to="/stoxticker">
+              <nuxt-link class="card-link float-right" to="/stoxticker">
                 Get the Ticker
                 <font-awesome-icon :icon="['fas', 'chevron-right']" />
               </nuxt-link>
-              
-<button class="theme-btn card-btn btn-sxvalue float-right">
+
+              <button class="theme-btn card-btn btn-sxvalue float-right">
                 Slabstox ${{ stoxtickerData.total }}
               </button>
-          </h4>
+            </h4>
             <h5 class="card-title">
-              
               <!-- <button class="theme-btn card-btn theme-green-btn">
                 SX Stoxticker ${{ stoxtickerData.sale.toFixed(2) }}
               </button> -->
@@ -95,12 +95,10 @@
                   ]"
                 />&nbsp;&nbsp;{{ stoxtickerData.change }}%
               </button>
-              <nuxt-link class="card-link" to="/stoxticker">
+              <span class="card-link" v-b-modal.openSeeProblemPopup>
                 Export Data
                 <font-awesome-icon :icon="['fas', 'chevron-right']" />
-              </nuxt-link>
-
-              
+              </span>
 
               <!-- <span class="float-right share-lk-top">
                 <span class="share-icon">
@@ -155,8 +153,6 @@
                   <img src="~/assets/img/share-icon.png" alt />
                 </span> 
               </span> -->
-
-              
             </h5>
             <div class="dashboard-apex-top" ref="dashboardApexChart">
               <VueApexCharts
@@ -255,26 +251,26 @@
             <p class="card-text dash-no-cards" v-if="liveAuction.length == 0">
               <span>There are no cards here.</span>
             </p>
-            <span class="card-text-link dash-list"
+            <span
+              class="card-text-link dash-list"
               v-for="item in liveAuction"
               :key="item.id"
-              >
-              <span class="card-text-s">
-               {{ trimString(item.title) }}
-</span>
-              <nuxt-link
-              class=""
-              :to="'/product?id=' + item.id + '&slag=' + item.title"
-              :title="item.title"
-              >
-              ${{ trimString(item.price) }}
-              </nuxt-link
             >
+              <span class="card-text-s">
+                {{ trimString(item.title) }}
+              </span>
+              <nuxt-link
+                class=""
+                :to="'/product?id=' + item.id + '&slag=' + item.title"
+                :title="item.title"
+              >
+                ${{ trimString(item.price) }}
+              </nuxt-link>
             </span>
           </div>
         </div>
       </div>
-     
+
       <div class="col-md-4 col-sm-4 t-p-5 dash-watchlist">
         <div class="card">
           <div class="card-body">
@@ -288,19 +284,19 @@
             <p class="card-text dash-no-cards" v-if="watchlist.length == 0">
               <span>There are no cards here.</span>
             </p>
-            <span class="card-text-link dash-list"
+            <span
+              class="card-text-link dash-list"
               v-for="item in watchlist"
               :key="item.id"
-              >
+            >
               <span class="card-text-s">{{ trimString(item.title) }} </span>
 
               <nuxt-link
-              class=""
-              :to="'/product?id=' + item.id + '&slag=' + item.title"
-              :title="item.title"
-              >${{ trimString(item.price) }
-              </nuxt-link
-            >
+                class=""
+                :to="'/product?id=' + item.id + '&slag=' + item.title"
+                :title="item.title"
+                >${{ trimString(item.price) }}
+              </nuxt-link>
             </span>
           </div>
         </div>
@@ -319,27 +315,47 @@
             <p class="card-text dash-no-cards" v-if="ternder.length == 0">
               <span>There are no cards here.</span>
             </p>
-            <span class="card-text-link dash-list"
+            <span
+              class="card-text-link dash-list"
               v-for="item in ternder"
               :key="item.id"
-              >
-              <span class="card-text-s">{{ trimString(item.title) }} </span>
-              
-              <nuxt-link
-              class=""
-              :to="'/product?id=' + item.id + '&slag=' + item.title"
-              :title="item.title"
-              >
-              ${{ trimString(item.price) }}
-              </nuxt-link
             >
+              <span class="card-text-s">{{ trimString(item.title) }} </span>
+
+              <nuxt-link
+                class=""
+                :to="'/product?id=' + item.id + '&slag=' + item.title"
+                :title="item.title"
+              >
+                ${{ trimString(item.price) }}
+              </nuxt-link>
             </span>
           </div>
         </div>
       </div>
-
     </div>
     <MyListing />
+
+    <b-modal
+      id="openSeeProblemPopup"
+      title="EXPORT DATA"
+      hide-footer
+      v-model="dialogVisible"
+    >
+      <!-- <textarea class="form-control" placeholder="" 
+ required cols="30" rows="10"></textarea> -->
+      <div class="shar-text">Share Text</div>
+      <div class="g-main-text">
+        <span class="g-title"></span>
+        &nbsp;&nbsp;<span class="g-sx"></span>
+        &nbsp;&nbsp; <span class="g-image-link"></span>
+      </div>
+
+<div class="shar-text">Share Graphics</div>
+      <div class="g-img-full">
+        <img :src="graphImage" alt="">
+      </div>
+    </b-modal>
   </div>
 </template>
 
@@ -348,6 +364,7 @@ import CardSlabItem from '~/components/dashboard/CardSlabItem'
 import CardListItem from '~/components/dashboard/CardListItem'
 import MyListing from '~/components/dashboard/MyListing'
 import { BASE_URL } from '../constants/keys'
+import $ from 'jquery'
 
 export default {
   transition: 'fade',
@@ -388,7 +405,7 @@ export default {
       activeDaysGraph: 2,
       initGraphLabelLength: 0,
       graphDataEmpty: false,
-     
+      dialogVisible: false,
       stoxtickerData: {
         total: 0,
         sale: 0,
@@ -428,7 +445,9 @@ export default {
               fontSize: '10px',
               fontFamily: 'NexaBold',
             },
-            formatter: (value) => { return '$'+value },
+            formatter: (value) => {
+              return '$' + value
+            },
           },
         },
         xaxis: {
@@ -437,7 +456,7 @@ export default {
               colors: '#edecec',
               fontSize: '10px',
               fontFamily: 'NexaBold',
-            }
+            },
           },
           type: 'category',
           categories: [],
@@ -450,8 +469,27 @@ export default {
       },
     }
   },
+  watch: {
+    dialogVisible(visible) {
+      if (visible) {
+        $('.g-main-text .g-title').text(
+          $('.featured-graph-title .fg-title').text()
+        )
+        $('.g-main-text .g-sx').text(
+          $('.featured-graph-title .btn-sxvalue').text()
+        )
+        $('.g-main-text .g-image-link').text(
+          this.graphImage
+        )
+        
+        // console.log($('red').length)
+      } else {
+        console.log('Dialog was closed!')
+      }
+    },
+  },
   methods: {
-    toggleCardActive(card){
+    toggleCardActive(card) {
       this.cardActiveId = card.id
       this.cardActiveTitle = card.title
       this.cardsActive = false
@@ -477,7 +515,7 @@ export default {
             this.requestInProcessFeatured = false
             if (res.status == 200) {
               this.featuredListingItems = res.data
-              if(this.featuredListingItems.length > 0){
+              if (this.featuredListingItems.length > 0) {
                 this.toggleCardActive(this.featuredListingItems[0])
                 this.updateGraph()
               }
@@ -546,25 +584,27 @@ export default {
         console.log(error)
       }
     },
-    updateGraph(days=2) {
+    updateGraph(days = 2) {
       try {
         this.graphDataEmpty = false
-        this.$axios.$get(`get-dashboard-graph/${days}/${this.cardActiveId}`).then((res) => {
-          if (res.status == 200) {
-            this.activeDaysGraph = days
-            if (this.initGraphLabelLength != res.data.labels.length) {
-              this.graphDataEmpty = false
-              this.series = [{ name: 'Stoxticker', data: res.data.values }]
-              this.chartOptions = { xaxis: { categories: res.data.labels } }
-              this.initGraphLabelLength = res.data.labels.length
-              setTimeout(() => {
-                this.generateImageOfGraph()
-              }, 1000)
-            } else {
-              this.graphDataEmpty = true
+        this.$axios
+          .$get(`get-dashboard-graph/${days}/${this.cardActiveId}`)
+          .then((res) => {
+            if (res.status == 200) {
+              this.activeDaysGraph = days
+              if (this.initGraphLabelLength != res.data.labels.length) {
+                this.graphDataEmpty = false
+                this.series = [{ name: 'Stoxticker', data: res.data.values }]
+                this.chartOptions = { xaxis: { categories: res.data.labels } }
+                this.initGraphLabelLength = res.data.labels.length
+                setTimeout(() => {
+                  this.generateImageOfGraph()
+                }, 1000)
+              } else {
+                this.graphDataEmpty = true
+              }
             }
-          }
-        })
+          })
       } catch (error) {
         console.log(error)
       }
@@ -641,20 +681,19 @@ ul.featured-listing {
   text-align: left;
   line-height: 2;
   letter-spacing: 1px;
-  a{
-        color: #1ce783;
-        float: right;
-        width: 20%;
-          &:hover {
+  a {
     color: #1ce783;
+    float: right;
+    width: 20%;
+    &:hover {
+      color: #1ce783;
+    }
   }
-  }
-.card-text-s{
-          width: 80%;
+  .card-text-s {
+    width: 80%;
     display: inline-block;
     text-decoration: underline;
-}
-
+  }
 }
 .dash-watchlist,
 .dash-trenders,
@@ -683,41 +722,43 @@ ul.featured-listing {
     padding-right: 40px !important;
     width: 20% !important;
     margin: 0;
-        padding-top: 25px;
-            padding-bottom: 25px;
-            position: relative;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    position: relative;
   }
-  li.my-card.active{
+  li.my-card.active {
     background: #39414a;
+        margin-right: -2px;
   }
-  li.my-card.active + li{
-    //background: red;
-      .bor-left {
-           display:none;
-         //  background: blue;
-      }
-      .my-card-title{
-      //  background: blue;
-      }
-  }
-   li.my-card:first-child{
-     // background: yellow;
-   }
-  li.my-card:first-child .bor-left {
-    display:none;
-    //background: blue;
-  }
+  // li.my-card.active + li {
+  //   background: red;
+  //   .bor-left {
+  //     display: none;
+  //      background: blue;
+  //   }
+  // }
+  // li.my-card:first-child {
+  //   background: yellow;
+  //   .bor-left {
+  //     display: none;
+  //      background: blue;
+  //   }
+  // }
+  // li.my-card:first-child .bor-left {
+  //   display: none;
+  //   background: blue;
+  // }
 }
-.featured-graph-title{
-font-family: 'CocogoosePro-SemiLightItalic', Helvetica, Arial, sans-serif;
-    color: #edecec;
-    font-size: 11px;
-    letter-spacing: 1px;
-        margin-bottom: 13px;
+.featured-graph-title {
+  font-family: 'CocogoosePro-SemiLightItalic', Helvetica, Arial, sans-serif;
+  color: #edecec;
+  font-size: 11px;
+  letter-spacing: 1px;
+  margin-bottom: 13px;
 }
 .dash-featured {
   padding-bottom: 0;
-  .card-title{
+  .card-title {
     margin-bottom: 10px !important;
   }
   .card {
@@ -726,6 +767,7 @@ font-family: 'CocogoosePro-SemiLightItalic', Helvetica, Arial, sans-serif;
   .card-body {
     background: #2d343b;
     padding-bottom: 0;
+    overflow: hidden;
   }
 }
 .featured-graph {
@@ -737,11 +779,34 @@ font-family: 'CocogoosePro-SemiLightItalic', Helvetica, Arial, sans-serif;
       border-top-right-radius: 0;
     }
   }
-  .card-btn{
-        margin-right: 8px
+  .card-btn {
+    margin-right: 8px;
   }
 }
-.dash-list{
-
+.dash-list {
 }
+#openSeeProblemPopup___BV_modal_outer_ .modal-dialog{
+    width: 80%;
+    max-width: 1000px;
+}
+.modal-dialog{
+    width: 80%;
+    max-width: 1000px;
+}
+.g-main-text{
+  background: #272d33;
+    margin: 0 20px;
+    padding: 15px 15px;
+    border-radius: 2px;
+}
+.shar-text{
+      margin-left: 20px;
+    padding: 10px 0 4px 0;
+}
+.g-img-full{
+  img{
+    width: 100%;
+  }
+}
+
 </style>

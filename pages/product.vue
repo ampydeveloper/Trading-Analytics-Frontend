@@ -60,6 +60,17 @@
                       :icon="['fas', 'long-arrow-alt-down']"
                     />&nbsp;&nbsp;{{getValueDifference()}}
                   </button>
+                  <!-- <a :href="data.viewItemURL" class="theme-btn card-btn">
+                View Card Data
+                <font-awesome-icon :icon="['fas', 'chevron-right']" />
+              </a> -->
+              <nuxt-link
+      class="theme-btn card-btn vsd-btn"
+      :to="'/card-data/?id=' + data.card_id"
+    >
+      View Slab Data
+      <font-awesome-icon :icon="['fas', 'chevron-right']" />
+    </nuxt-link>
                 </h5>
                 <div class="listing-info-container">
                   <ul>
@@ -873,5 +884,12 @@ export default {
       }
     }
   }
+}
+.vsd-btn{
+  color: #212529;
+    display: inline-block;
+    &:hover{
+      text-decoration: none;
+    }
 }
 </style>
