@@ -77,7 +77,8 @@
                     'fas',
                     'long-arrow-alt-' + stoxtickerData.change_arrow,
                   ]"
-                />&nbsp;&nbsp;${{ stoxtickerData.change }}
+                />&nbsp;&nbsp;
+                <span class="g-dollar-d-val"> ${{ doller_diff }}</span>
               </button>
               <button
                 :class="
@@ -93,13 +94,13 @@
                     'fas',
                     'long-arrow-alt-' + stoxtickerData.change_arrow,
                   ]"
-                />&nbsp;&nbsp;{{ stoxtickerData.change }}%
+                />&nbsp;&nbsp;{{ perc_diff }}%
               </button>
               <span class="card-link" v-b-modal.openSeeProblemPopup>
                 Export Data
                 <font-awesome-icon :icon="['fas', 'chevron-right']" />
               </span>
-
+<span class="total_sales" style="display:none">{{total_sales}}</span>
               <!-- <span class="float-right share-lk-top">
                 <span class="share-icon">
                   <img src="~/assets/img/share-icon.png" alt />
@@ -230,7 +231,7 @@
                 </li>
               </ul>
               <p class="dashboard-graph-footer-update-at float-right">
-                Last Updated - {{ stoxtickerData.last_updated }}
+                Last Updated - {{ last_timestamp }}
               </p>
             </div>
           </div>
@@ -307,7 +308,7 @@
           <div class="card-body">
             <h5 class="card-title">
               <button class="theme-btn card-btn">Portfolio</button>
-              <nuxt-link class="card-link float-right" to="/trenders">
+              <nuxt-link class="card-link float-right" to="/my-portfolio">
                 View All
                 <font-awesome-icon :icon="['fas', 'chevron-right']" />
               </nuxt-link>
@@ -320,7 +321,9 @@
               v-for="item in ternder"
               :key="item.id"
             >
-              <span class="card-text-s">{{ trimString(item.title) }} </span>
+              <span class="card-text-s"
+                >{{ item.id }}. {{ trimString(item.title) }}
+              </span>
 
               <nuxt-link
                 class=""
@@ -342,18 +345,25 @@
       hide-footer
       v-model="dialogVisible"
     >
-      <!-- <textarea class="form-control" placeholder="" 
- required cols="30" rows="10"></textarea> -->
+    
       <div class="shar-text">Share Text</div>
       <div class="g-main-text">
         <span class="g-title"></span>
-        &nbsp;&nbsp;<span class="g-sx"></span>
+        &nbsp;&nbsp;<span class="g-sx"></span> &nbsp;&nbsp;
+        <span class="g-to-sales"></span> &nbsp;&nbsp;
+        <span class="g-sales-diff"></span>
         &nbsp;&nbsp; <span class="g-image-link"></span>
       </div>
 
-<div class="shar-text">Share Graphics</div>
+      <div class="shar-text">Share Graphics</div>
       <div class="g-img-full">
-        <img :src="graphImage" alt="">
+        <img src="" alt="" class="slab_image"/>
+        <img :src="graphImage" alt="" class="slab_graph"/>
+      </div>
+      <div class="clearfix g-download-out">
+        <a href="#" class="g-download-slab" download="slabImage.jpg"></a>
+        <a :href="graphImage" class="g-download-graph" download="slabGraph.png"></a>
+        <a href="#" class="g-download-img-all">Download Graphics</a>
       </div>
     </b-modal>
   </div>
@@ -406,6 +416,10 @@ export default {
       initGraphLabelLength: 0,
       graphDataEmpty: false,
       dialogVisible: false,
+      perc_diff:0,
+      doller_diff:0,
+      total_sales:0,
+      last_timestamp:0,
       stoxtickerData: {
         total: 0,
         sale: 0,
@@ -415,7 +429,7 @@ export default {
       },
       series: [
         {
-          name: 'Stoxticker',
+          name: 'Sales',
           data: [],
         },
       ],
@@ -478,13 +492,22 @@ export default {
         $('.g-main-text .g-sx').text(
           $('.featured-graph-title .btn-sxvalue').text()
         )
-        $('.g-main-text .g-image-link').text(
-          this.graphImage
+        $('.g-main-text .g-to-sales').text(
+          'Total Sales '+$('.total_sales').text()
         )
+        $('.g-main-text .g-sales-diff').text(
+          'Price Change $'+$('.g-dollar-d-val').text()
+        )
+        $('.g-main-text .g-image-link').text(this.graphImage)
+        $('.g-img-full .slab_image').attr('src',$('.my-card.active .image-container img').attr('src'))
+         $('.g-download-slab').attr('href',$('.my-card.active .image-container img').attr('src'))
+ 
+ $('.g-download-img-all').on('click', function(){
+  $('.g-download-slab').click();
+  $('.g-download-graph').click();
+  console.log('redd')
+ });
         
-        // console.log($('red').length)
-      } else {
-        console.log('Dialog was closed!')
       }
     },
   },
@@ -495,8 +518,8 @@ export default {
       this.cardsActive = false
     },
     trimString(title) {
-      if (title.length > 53) {
-        title = title.substring(0, 50)
+      if (title.length > 33) {
+        title = title.substring(0, 30)
         title += '...'
         return title
       }
@@ -592,11 +615,17 @@ export default {
           .then((res) => {
             if (res.status == 200) {
               this.activeDaysGraph = days
+              var percDiff = res.data.perc_diff;
+              var dollerDiff = String(res.data.doller_diff);
               if (this.initGraphLabelLength != res.data.labels.length) {
                 this.graphDataEmpty = false
-                this.series = [{ name: 'Stoxticker', data: res.data.values }]
+                this.series = [{ name: 'Sales', data: res.data.values }]
                 this.chartOptions = { xaxis: { categories: res.data.labels } }
                 this.initGraphLabelLength = res.data.labels.length
+                this.doller_diff = dollerDiff.replace("-", "")
+                this.perc_diff = percDiff.toFixed(2)
+                this.total_sales = res.data.total_sales
+                this.last_timestamp = res.data.last_timestamp
                 setTimeout(() => {
                   this.generateImageOfGraph()
                 }, 1000)
@@ -660,6 +689,7 @@ export default {
 ul.my-card-listing {
   list-style: none;
   padding: 0px;
+  margin-left: -17px !important;
 }
 ul.featured-listing {
   .my-card {
@@ -684,15 +714,16 @@ ul.featured-listing {
   a {
     color: #1ce783;
     float: right;
-    width: 20%;
+    width: 64px;
     &:hover {
       color: #1ce783;
     }
   }
   .card-text-s {
-    width: 80%;
+    width: calc(100% - 64px);
     display: inline-block;
     text-decoration: underline;
+        padding-right: 10px;
   }
 }
 .dash-watchlist,
@@ -728,7 +759,7 @@ ul.featured-listing {
   }
   li.my-card.active {
     background: #39414a;
-        margin-right: -2px;
+    margin-right: -2px;
   }
   // li.my-card.active + li {
   //   background: red;
@@ -783,30 +814,45 @@ ul.featured-listing {
     margin-right: 8px;
   }
 }
-.dash-list {
+#openSeeProblemPopup___BV_modal_outer_ .modal-dialog {
+  width: 80%;
+  max-width: 1000px;
 }
-#openSeeProblemPopup___BV_modal_outer_ .modal-dialog{
-    width: 80%;
-    max-width: 1000px;
+.modal-dialog {
+  width: 80%;
+  max-width: 1000px;
 }
-.modal-dialog{
-    width: 80%;
-    max-width: 1000px;
-}
-.g-main-text{
+.g-main-text {
   background: #272d33;
-    margin: 0 20px;
-    padding: 15px 15px;
-    border-radius: 2px;
+  margin: 0 20px;
+  padding: 15px 15px;
+  border-radius: 2px;
+  text-transform: initial;
 }
-.shar-text{
-      margin-left: 20px;
-    padding: 10px 0 4px 0;
+.shar-text {
+  margin-left: 20px;
+  padding: 10px 0 4px 0;
 }
-.g-img-full{
-  img{
-    width: 100%;
+.g-img-full {
+  margin: -10px 20px 0 20px;
+  .slab_image{
+        width: calc(20% - 5px);
+    margin-right: 5px;
+    float: left;
+    margin-top: 10px;
+  }
+  .slab_graph{
+    width: 80%;
   }
 }
-
+.g-download-img-all{
+      font-family: "CocogoosePro-Italic", Helvetica, Arial, sans-serif;
+    color: #1ce783;
+    text-transform: uppercase;
+    font-size: 9px;
+    letter-spacing: 1px;
+}
+.g-download-out{
+      margin: 20px 20px 0 20px;
+}
 </style>

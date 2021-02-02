@@ -1,7 +1,7 @@
 <template>
   <div class="col-md-12 col-sm-12">
     <div class="row">
-      <h1 class="main-title-dh">Welcome to Dashboard</h1>
+      <h1 class="main-title-dh">Slabstox Pro Administration</h1>
     </div>
   </div>
 </template>

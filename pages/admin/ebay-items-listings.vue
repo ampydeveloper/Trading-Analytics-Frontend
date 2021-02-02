@@ -36,6 +36,7 @@
             <table class="table table-striped">
               <thead>
                 <tr>
+                 <!-- <th><input type="checkbox" class="main-checkbox" /></th> -->
                   <th>Id</th>
                   <th>Title</th>
                   <th>Price</th>
@@ -47,6 +48,7 @@
               </thead>
               <tbody v-if="items.length > 0">
                 <tr v-for="(item, key) of items" :key="item.id">
+               <!-- <td><input type="checkbox" class="indi-checkbox" :value="item.id" @change="statusChange($event, item.id, key)" /></td> -->
                   <td>{{ item.id }}</td>
                   <td>{{ item.title }}</td>
                   <td>${{ item.price }}</td>
@@ -124,6 +126,12 @@ export default {
   },
   mounted() {
     this.getItems(this.page)
+    // $('.indi-checkbox').on('click', function(){
+    //   var $this = $(this);
+    //   if($this.is(':checkbox')){
+    //     $this.val()
+    //   }
+    // });
   },
   components: {},
   data() {
@@ -174,6 +182,29 @@ export default {
         }
       }
     },
+    // addRemoveCheckbox(id) {
+    //   const a = this.checkedItems.filter(item => item == id);
+    //   if(a.length == 1) {
+    //     this.checkedItems.splice(this.checkedItems.indexOf(id),1);
+    //   }else{
+    //     this.checkedItems.push(id);
+    //   }
+    // },
+    // toggleCheckbox(){
+    //   if(this.toggleCheckboxInput) {
+    //     this.checkedItems = []
+    //     this.checkedItems = this.data.map(item => {return item.id});
+    //   }else{
+    //     this.checkedItems = []
+    //   }
+    // },
+    // isChecked(id) {
+    //   const a = this.checkedItems.filter(item => item == id);
+    //   if(a.length == 1) {
+    //     return true;
+    //   }
+    //   return false;
+    // },
     getStatus(status) {
       if (status == 0) {
         return 'Active'
