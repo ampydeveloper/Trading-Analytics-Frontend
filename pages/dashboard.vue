@@ -318,11 +318,11 @@
             </p>
             <span
               class="card-text-link dash-list"
-              v-for="item in ternder"
+              v-for="(item,index) in ternder"
               :key="item.id"
             >
               <span class="card-text-s"
-                >{{ item.id }}. {{ trimString(item.title) }}
+                >{{ index+1 }}. {{ trimString(item.title) }}
               </span>
 
               <nuxt-link
@@ -361,8 +361,8 @@
         <img :src="graphImage" alt="" class="slab_graph"/>
       </div>
       <div class="clearfix g-download-out">
-        <a href="#" class="g-download-slab" download="slabImage.jpg"></a>
-        <a :href="graphImage" class="g-download-graph" download="slabGraph.png"></a>
+        <a href="#" class="g-download-slab" target="_blank" download></a>
+        <a :href="graphImage" class="g-download-graph" target="_blank" download></a>
         <a href="#" class="g-download-img-all">Download Graphics</a>
       </div>
     </b-modal>
@@ -420,6 +420,7 @@ export default {
       doller_diff:0,
       total_sales:0,
       last_timestamp:0,
+      keyCount:0,
       stoxtickerData: {
         total: 0,
         sale: 0,
@@ -503,9 +504,10 @@ export default {
          $('.g-download-slab').attr('href',$('.my-card.active .image-container img').attr('src'))
  
  $('.g-download-img-all').on('click', function(){
-  $('.g-download-slab').click();
-  $('.g-download-graph').click();
-  console.log('redd')
+  
+  // $('.g-download-slab').click();
+  // $('.g-download-graph').click();
+  // console.log('redd')
  });
         
       }
@@ -814,14 +816,14 @@ ul.featured-listing {
     margin-right: 8px;
   }
 }
-#openSeeProblemPopup___BV_modal_outer_ .modal-dialog {
-  width: 80%;
-  max-width: 1000px;
-}
-.modal-dialog {
-  width: 80%;
-  max-width: 1000px;
-}
+// #openSeeProblemPopup___BV_modal_outer_ .modal-dialog {
+//   width: 80%;
+//   max-width: 1000px;
+// }
+// .modal-dialog {
+//   width: 80%;
+//   max-width: 1000px;
+// }
 .g-main-text {
   background: #272d33;
   margin: 0 20px;

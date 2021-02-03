@@ -37,7 +37,7 @@
       />
     </div>
     <nuxt-link
-      class="my-card-view-listing"
+      :class="'my-card-view-listing ' + timeEndClass"
       :to="'/product?id=' + itemdata.id + '&slag=' + itemdata.title"
     >
       View Listing
@@ -70,8 +70,9 @@ export default {
         secs: 0,
         value: null,
         datetime: null,
-        intervalObject: null
+        intervalObject: null,
       },
+      timeEndClass: '',
       valueDifference: 0,
     }
   },
@@ -137,10 +138,13 @@ export default {
         } else {
           this.timeLeft.value = '00:00'
           clearInterval(this.timeLeft.intervalObject)
+          this.timeEndClass= 'time-end-grey';
         }
       }, 1000)
     },
     calculateValueDifference() {
+      if(this.itemdata.data.card  != null){
+
       if(this.itemdata.data.card.value) {
         if(this.itemdata.data.selling_status  != null){
 var selling_status_price = this.itemdata.data.selling_status.price;
@@ -149,6 +153,7 @@ var selling_status_price = this.itemdata.data.selling_status.price;
       }else{
         this.valueDifference = 0
       }
+    }
     },
   },
   destroyed() {
@@ -310,5 +315,13 @@ text-align: left;
       font-style: italic;
     }
   }
+}
+.my-card-view-listing.time-end-grey{
+      background: #272d33;
+    color: #fff;
+    &:hover{
+        background: #272d33;
+    color: #fff;
+    }
 }
 </style>

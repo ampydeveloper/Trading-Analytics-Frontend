@@ -9,34 +9,73 @@
             </h5>
           </div>
           <div class="card-body search-form">
-          <div class="row">
- <div class="col-2">
-                  <select id="sportFilter" @change='getItems(currentPage, $event)' class="form-control text-capitalize">
-                    <option selected>Select Sport</option>
-                    <option :value="sport" v-for='sport in sportsList' :key='sport' v-text='sport' class="text-capitalize"></option>
-                  </select>
-                </div>
-                 <div class="col-2">
-                  <select id="simpleFilter" @change='getItems(currentPage, $event)' class="form-control text-capitalize">
-                    <option selected>Filter By</option>
-                    <option value="" class="text-capitalize">Ending Soon</option>
-                  </select>
-                </div>
-                <div class="col-3">
-                  <div class="input-group mb-3">
-                    <input type="text" class="form-control" v-model='searchTerm' placeholder="Search Slabs" aria-label="Search term..." aria-describedby="button-addon2">
-                    <div class="input-group-append">
-                      <button class="btn btn-outline-secondary" @click="getItems(currentPage)" type="button" id="button-addon2">Search</button>
-                    </div>
+            <div class="row">
+              <div class="col-2">
+                <select
+                  id="sportFilter"
+                  @change="getItems(currentPage, $event)"
+                  class="form-control text-capitalize"
+                >
+                  <option selected>Select Sport</option>
+                  <option
+                    :value="sport"
+                    v-for="sport in sportsList"
+                    :key="sport"
+                    v-text="sport"
+                    class="text-capitalize"
+                  ></option>
+                </select>
+              </div>
+              <div class="col-2">
+                <select
+                  id="simpleFilter"
+                  @change="getItems(currentPage, $event)"
+                  class="form-control text-capitalize"
+                >
+                  <option selected>Filter By</option>
+                  <option value="" class="text-capitalize">Ending Soon</option>
+                </select>
+              </div>
+              <div class="col-3">
+                <div class="input-group mb-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    v-model="searchTerm"
+                    placeholder="Search Listings"
+                    aria-label="Search term..."
+                    aria-describedby="button-addon2"
+                  />
+                  <div class="input-group-append">
+                    <button
+                      class="btn btn-outline-secondary"
+                      @click="getItems(currentPage)"
+                      type="button"
+                      id="button-addon2"
+                    >
+                      Search
+                    </button>
                   </div>
                 </div>
-             </div>
-             </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body search-form">
+              <div class="row">
+              <div class="col-2">
+            <select class="form-control text-capitalize main-sel-all">
+              <option disabled>Status</option>
+              <option value="0">Active</option>
+              <option value="2">Disable</option>
+            </select>
+            </div>
+            </div>
+          </div>
           <div class="table_wrapper ap">
             <table class="table table-striped">
               <thead>
                 <tr>
-                 <!-- <th><input type="checkbox" class="main-checkbox" /></th> -->
+                  <th><input type="checkbox" class="main-checkbox" /></th>
                   <th>Id</th>
                   <th>Title</th>
                   <th>Price</th>
@@ -48,7 +87,13 @@
               </thead>
               <tbody v-if="items.length > 0">
                 <tr v-for="(item, key) of items" :key="item.id">
-               <!-- <td><input type="checkbox" class="indi-checkbox" :value="item.id" @change="statusChange($event, item.id, key)" /></td> -->
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="indi-checkbox"
+                      :value="item.id"
+                    />
+                  </td>
                   <td>{{ item.id }}</td>
                   <td>{{ item.title }}</td>
                   <td>${{ item.price }}</td>
@@ -69,9 +114,12 @@
                     </button>
                   </td>
                   <td>{{ item.itemId }}</td>
-                  <td>{{ (item.status==1?'Active':'Inactive') }}</td>
+                  <td>{{ item.status == 1 ? 'Active' : 'Inactive' }}</td>
                   <td>
-                    <select @change="statusChange($event, item.id, key)" class="form-control text-capitalize">
+                    <select
+                      @change="statusChange($event, item.id, key)"
+                      class="form-control text-capitalize"
+                    >
                       <option disabled>Status</option>
                       <option value="0">Active</option>
                       <option value="2">Disable</option>
@@ -86,9 +134,7 @@
               </tbody>
               <tbody v-if="items.length == 0 && requestInProcess == false">
                 <tr>
-                  <td colspan="6" class="text-center">
-                    No listings found.
-                  </td>
+                  <td colspan="6" class="text-center">No listings found.</td>
                 </tr>
               </tbody>
               <tfoot>
@@ -116,6 +162,8 @@
 </template>
 
 <script>
+import $ from 'jquery'
+import { DEV_API } from '../../constants/keys'
 export default {
   transition: 'fade',
   layout: 'admin',
@@ -126,12 +174,32 @@ export default {
   },
   mounted() {
     this.getItems(this.page)
-    // $('.indi-checkbox').on('click', function(){
-    //   var $this = $(this);
-    //   if($this.is(':checkbox')){
-    //     $this.val()
-    //   }
-    // });
+  },
+  updated() {
+    $('.main-sel-all').change(function () {
+      var $this = $(this),
+        statusVal = $this.val(),
+        listingArr = []
+
+      $('.indi-checkbox').each(function () {
+        var $thisCheck = $(this)
+        if ($thisCheck.is(':checked')) {
+          listingArr.push($thisCheck.val())
+        }
+      })
+// console.log(token);
+//       $.ajax({
+//         url: DEV_API+'change-ebay-status',
+//         type: 'POST',
+//         data: {
+//           id: listingArr,
+//           status: statusVal,
+//         },
+//         dataType: 'json',
+//         success: function (data) {},
+//         error: function (request, error) {},
+//       })
+    })
   },
   components: {},
   data() {
@@ -145,25 +213,25 @@ export default {
       soldPrice: '',
       sportsList: [],
       sportFilter: '',
-      filter:null
+      filter: null,
       // card: {
       //   soldPrice: '',
       // },
     }
   },
   methods: {
-    getItems(page, filter=null) {
+    getItems(page, filter = null) {
       if (!this.requestInProcess) {
         try {
           this.showLoader()
           this.requestInProcess = true
           let payload = { page: page, search: this.searchTerm }
-          if(filter != null) payload['sport'] = filter.target.value
+          if (filter != null) payload['sport'] = filter.target.value
           this.$axios
             .post('get-ebay-list', payload)
             .then((res) => {
               if (res.status == 200) {
-                this.currentPage = page;
+                this.currentPage = page
                 this.items = res.data.data
                 this.page = res.data.next
                 this.sportsList = res.data.sportsList
@@ -216,18 +284,25 @@ export default {
     },
     statusChange(event, id, key) {
       if (!this.requestInProcess) {
+        if (key == false) {
+          var statusVal = event
+        } else {
+          var statusVal = event.target.value
+        }
         try {
           this.showLoader()
           this.requestInProcess = true
           this.$axios
             .$post('admin/change-ebay-status', {
               id: id,
-              status: event.target.value,
+              status: statusVal,
             })
             .then((res) => {
               this.requestInProcess = false
               this.hideLoader()
-              this.items[key].status = event.target.value
+              if (key != false) {
+                this.items[key].status = event.target.value
+              }
             })
         } catch (err) {
           this.hideLoader()

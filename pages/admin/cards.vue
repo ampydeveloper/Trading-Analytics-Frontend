@@ -16,7 +16,7 @@
             Create Slab
           </nuxt-link>
              <nuxt-link class="theme-green-btn card-btn pull-right" to="/admin/create-cards-excel" style="margin-right:5px">
-            Create Slab by CSV
+            Import Slabs via CSV
           </nuxt-link>
           <!-- <button class="theme-green-btn card-btn pull-right" style="margin-right:5px" @click="uploadExcel('soccer')">Upload Pokemon</button>
                   <button class="theme-green-btn card-btn pull-right" style="margin-right:5px" @click="uploadExcel('baseball')">Upload Baseball</button>
@@ -101,7 +101,7 @@
                     </button>
                   </td>
                   <td class="text-center">
-                    <button class="card-btn btn btn-primary  btn-table-spec" @click="addItem(card.id)">Add Listings</button>
+                    <button class="card-btn btn btn-primary  btn-table-spec" @click="addItem(card.id)">Add Listing</button>
                     <nuxt-link class="card-btn btn btn-primary  btn-table-spec" :to='`ebay-specific-listings?card=${card.id}`'>All Listings</nuxt-link>
                     <nuxt-link class="card-btn btn  btn-primary  btn-table-spec" :to='`all-sales-data?card_id=${card.id}`'>All Sales Data</nuxt-link>
                     <nuxt-link class="card-btn btn  btn-primary  btn-table-spec" :to='`edit-card?card_id=${card.id}`'>Edit Slab</nuxt-link>

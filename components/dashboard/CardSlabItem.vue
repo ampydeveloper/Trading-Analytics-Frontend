@@ -41,7 +41,7 @@
     <div class="text-center">
       <nuxt-link
         class="my-card-view-link"
-        :to="'/live-auctions/?id=' + itemdata.id"
+        :to="'/search/?id=' + itemdata.id"
       >
         View Live Listings
         <font-awesome-icon :icon="['fas', 'chevron-right']" />
@@ -216,12 +216,21 @@ export default {
 }
 .sx-pro-text {
   position: absolute;
-  top: 8px;
+  top: 18px;
   left: 8px;
   letter-spacing: 1.4px;
-  font-size: 11px;
-  color: #1ce783;
   z-index: 9;
+  border: 1px solid #1ce783;
+    text-transform: uppercase;
+    float: left;
+    margin-top: -10px;
+    font-family: 'CocogoosePro-Regular', Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    border-radius: 2px;
+    padding: 3px 5px 0px 5px;
+    color: #000;
+    font-size: 10px;
+    background: #1ce783;
 }
 .my-card {
   .bor-left {

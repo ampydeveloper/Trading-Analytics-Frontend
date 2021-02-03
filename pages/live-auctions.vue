@@ -106,7 +106,7 @@ export default {
         this.endingSoonListingItems = []
         this.requestInProcessEndingSoon = true;
         this.$axios
-          .$post('search/recent-listing', {
+          .$post('search/ending-soon-listing', {
             take: 12,
             filterBy: 'ending_soon',
           })

@@ -5,13 +5,13 @@
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">
-              <button class="theme-btn card-btn">Ebay Item Fetch</button>
+              <button class="theme-btn card-btn">Ebay Listing Fetch</button>
             </h5>
           </div>
           <div class="table_wrapper">
             <form class="form-inline" v-on:submit.prevent="getCard">
                 <div class="form_column">
-                    <label>Item Id</label>
+                    <label>Ebay Id</label>
                     <input v-model="card.itemId" type="text" class="form-control" placeholder="Item Id" required />
                 </div>
                 <div class="form_btns">

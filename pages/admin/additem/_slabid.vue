@@ -5,19 +5,19 @@
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">
-              <button class="theme-btn card-btn">Add Ebay Item</button>
+              <button class="theme-btn card-btn">Add Ebay Listing</button>
             </h5>
           </div>
           <div class="table_wrapper ap">
             <form class="form-inline" v-on:submit.prevent="createItem">
                 <div class="form_column search-form">
-                    <label>Item Id</label>
-                    <input v-model="item.itemId" type="text" class="form-control" style="width: calc(80% - 75px);" placeholder="Item Id" required />
+                    <label>Ebay Id</label>
+                    <input v-model="item.itemId" type="text" class="form-control" style="width: calc(80% - 75px);" placeholder="Ebay Id" required />
                     <button class="btn btn-outline-secondary btn-sm" type="button" @click="fetchDetails">Fetch</button>
                 </div>
                 <div class="form_column">
-                    <label>Title</label>
-                    <input v-model="item.title" type="text" class="form-control" placeholder="Item Title" required />
+                    <label>Listing Title</label>
+                    <input v-model="item.title" type="text" class="form-control" placeholder="Listing Title" required />
                 </div>
                 <div class="form_column">
                     <label>Price</label>
@@ -55,7 +55,7 @@
                 <h3 class="head-h3">Specifications</h3>
                 <div class="form_column" v-for="(field, key) of item.specifics" :key="key">
                     <label>{{field.Name}}</label>
-                    <input v-model="field.Value" type="text" class="form-control" :placeholder="'Item '+field.Name" required />
+                    <input v-model="field.Value" type="text" class="form-control" :placeholder="'Listing '+field.Name" required />
                     <!-- <button type="button" v-if="field.remove" @click="removeSpec(key)">Remove</button> -->
                 </div>
                  <h3 class="head-h3">Seller Info</h3>

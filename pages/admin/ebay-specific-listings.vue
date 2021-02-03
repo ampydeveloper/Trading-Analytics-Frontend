@@ -11,7 +11,7 @@
                 :to='`/admin/create-listings-excel?card_id=${card_id}`'
                 style="margin-right: 5px"
               >
-                Create Listing by CSV
+                Import Listing via CSV
               </nuxt-link>
             </h5>
           </div>
@@ -39,7 +39,7 @@
                     type="text"
                     class="form-control"
                     v-model="searchTerm"
-                    placeholder="Search Slabs"
+                    placeholder="Search Listings"
                     aria-label="Search term..."
                     aria-describedby="button-addon2"
                   />
@@ -61,6 +61,7 @@
             <table class="table table-striped">
               <thead>
                 <tr>
+                   <th><input type="checkbox"  /></th>
                   <th>Id</th>
                   <th>Title</th>
                   <th>Price</th>
@@ -72,6 +73,7 @@
               </thead>
               <tbody v-if="items.length > 0">
                 <tr v-for="(item, key) of items" :key="item.id">
+                  <td><input type="checkbox" /></td>
                   <td>{{ item.id }}</td>
                   <td>{{ item.title }}</td>
                   <td>${{ item.price }}</td>
@@ -105,7 +107,7 @@
                     <nuxt-link
                       class="card-btn btn btn-primary btn-table-spec"
                       :to="`edit-listing?listing_id=${item.id}`"
-                      >Edit Listings</nuxt-link
+                      >Edit Listing</nuxt-link
                     >
                   </td>
                 </tr>

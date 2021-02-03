@@ -54,7 +54,11 @@
                       :icon="['fas', 'long-arrow-alt-' + card.sx_icon]"
                     />&nbsp;&nbsp;{{ card.sx }}
                   </button>
-                  <div class="float-right icon_img">
+<span class="card-link" v-b-modal.openSeeProblemPopup>
+                Export Data
+                <font-awesome-icon :icon="['fas', 'chevron-right']" />
+              </span>
+                  <!-- <div class="float-right icon_img">
                     <img
                       class="gift-cart-title-ebay-img"
                       src="~/assets/img/icons/1heart-green.png"
@@ -96,11 +100,9 @@
                           </li>
                         </ul>
                       </div>
-                      <!-- <span class="share-icon" @click='chart2Img()'>
-                  <img src="~/assets/img/share-icon.png" alt />
-                </span> -->
                     </span>
-                  </div>
+                  </div> -->
+
                 </h5>
                 <div class="dashboard-apex-top">
                   <VueApexCharts
@@ -239,6 +241,35 @@
             </div>
           </div>
         </div>
+
+        <b-modal
+      id="openSeeProblemPopup"
+      title="EXPORT DATA"
+      hide-footer
+      v-model="dialogVisible"
+    >
+    
+      <div class="shar-text">Share Text</div>
+      <div class="g-main-text">
+        <span class="g-title"></span>
+        &nbsp;&nbsp;<span class="g-sx"></span> &nbsp;&nbsp;
+        <span class="g-to-sales"></span> &nbsp;&nbsp;
+        <span class="g-sales-diff"></span>
+        &nbsp;&nbsp; <span class="g-image-link"></span>
+      </div>
+
+      <div class="shar-text">Share Graphics</div>
+      <div class="g-img-full">
+        <img src="" alt="" class="slab_image"/>
+        <img :src="graphImage" alt="" class="slab_graph"/>
+      </div>
+      <div class="clearfix g-download-out">
+        <a href="#" class="g-download-slab" target="_blank" download></a>
+        <a :href="graphImage" class="g-download-graph" target="_blank" download></a>
+        <a href="#" class="g-download-img-all">Download Graphics</a>
+      </div>
+    </b-modal>
+
       </div>
     </div>
 
@@ -256,6 +287,7 @@
 import CardListItem from '~/components/dashboard/CardListItem'
 import AvailableListing from '~/components/dashboard/AvailableListing'
 import { BASE_URL } from '../constants/keys'
+import $ from 'jquery'
 export default {
   transition: 'fade',
   layout: 'dashboard',
@@ -273,6 +305,28 @@ export default {
     this.getData()
     this.updateGraph()
   },
+  watch: {
+    dialogVisible(visible) {
+      if (visible) {
+        $('.g-main-text .g-title').text(
+          $('.product-title').text()
+        )
+        $('.g-main-text .g-sx').text(
+          'Card Cost Change '+$('.card-title_new .theme-green-btn').text()
+        )
+        $('.g-main-text .g-to-sales').text(
+          $('.card-title_new .theme-btn').text()
+        )
+        // $('.g-main-text .g-sales-diff').text(
+        //   'Price Change $'+$('.g-dollar-d-val').text()
+        // )
+        $('.g-main-text .g-image-link').text(this.graphImage)
+        $('.g-img-full .slab_image').attr('src',$('.image-conatiner img').attr('src'))
+         $('.g-download-slab').attr('href',$('.my-card.active .image-container img').attr('src'))
+        
+      }
+    },
+  },
   components: {
     CardListItem,
     AvailableListing,
@@ -287,6 +341,7 @@ export default {
       initGraphLabelLength: 0,
       graphImage: '',
       graphDataEmpty: false,
+       dialogVisible: false,
       series: [
         {
           name: 'Card Value',
@@ -872,5 +927,38 @@ ul.my-card-listing {
 }
 .dashboard-apex-top{
     margin-left: -15px;
+}
+.g-main-text {
+  background: #272d33;
+  margin: 0 20px;
+  padding: 15px 15px;
+  border-radius: 2px;
+  text-transform: initial;
+}
+.shar-text {
+  margin-left: 20px;
+  padding: 10px 0 4px 0;
+}
+.g-img-full {
+  margin: -10px 20px 0 20px;
+  .slab_image{
+        width: calc(20% - 5px);
+    margin-right: 5px;
+    float: left;
+    margin-top: 10px;
+  }
+  .slab_graph{
+    width: 80%;
+  }
+}
+.g-download-img-all{
+      font-family: "CocogoosePro-Italic", Helvetica, Arial, sans-serif;
+    color: #1ce783;
+    text-transform: uppercase;
+    font-size: 9px;
+    letter-spacing: 1px;
+}
+.g-download-out{
+      margin: 20px 20px 0 20px;
 }
 </style>
