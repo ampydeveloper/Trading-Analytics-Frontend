@@ -36,7 +36,7 @@
                 <label>Card</label>
                 <input v-model="card.card" type="text" class="form-control" placeholder="Card" required/>
               </div>
-              <div class="form_column">
+              <div class="form_column"> 
                 <label>Title</label>
                 <input v-model="card.title" type="text" class="form-control" placeholder="Title" required/>
               </div>

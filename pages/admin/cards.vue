@@ -101,10 +101,10 @@
                     </button>
                   </td>
                   <td class="text-center">
-                    <button class="card-btn btn btn-primary  btn-table-spec" @click="addItem(card.id)">Add Listing</button>
-                    <nuxt-link class="card-btn btn btn-primary  btn-table-spec" :to='`ebay-specific-listings?card=${card.id}`'>All Listings</nuxt-link> <br>
-                    <nuxt-link class="card-btn btn  btn-primary  btn-table-spec" style="margin-top:8px;" :to='`all-sales-data?card_id=${card.id}`'>All Sales Data</nuxt-link>
-                    <nuxt-link class="card-btn btn  btn-primary  btn-table-spec" style="margin-top:8px;" :to='`edit-card?card_id=${card.id}`'>Edit Slab</nuxt-link>
+                    <button class="card-btn btn btn-primary  btn-table-spec" style="margin-top:4px;" @click="addItem(card.id)">Add Listing</button>
+                    <nuxt-link class="card-btn btn btn-primary  btn-table-spec" style="margin-top:4px;" :to='`ebay-specific-listings?card=${card.id}`'>All Listings</nuxt-link> <br>
+                    <nuxt-link class="card-btn btn  btn-primary  btn-table-spec" style="margin-top:4px;" :to='`all-sales-data?card_id=${card.id}`'>All Sales Data</nuxt-link>
+                    <nuxt-link class="card-btn btn  btn-primary  btn-table-spec" style="margin-top:4px;" :to='`edit-card?card_id=${card.id}`'>Edit Slab</nuxt-link>
                   </td>
                 </tr>
               </tbody>
