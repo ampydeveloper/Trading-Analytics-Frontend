@@ -130,22 +130,22 @@ export default {
           }
           this.requestInProcess = true
           this.$axios
-            .$post('search/get-card-list', {
+            .$post('search/get-recent-auction-list', {
               take: 6,
               page: this.page
             })
             .then(res => {
               this.requestInProcess = false
               if (res.status == 200) {
-                if (res.items.data != null && res.items.data.length > 0) {
-                  if (status) {
-                    res.items.data.map(item => {
-                      this.normalListingItems.push(item)
-                    })
-                  } else {
-                    this.normalListingItems = res.items.data
-                  }
-                  this.page = res.items.next
+                if (res.items != null && res.items.length > 0) {
+                  // if (status) {
+                  //   res.items.data.map(item => {
+                  //     this.normalListingItems.push(item)
+                  //   })
+                  // } else {
+                    this.normalListingItems = res.items
+                  // }
+                  this.page = 1
                 } else {
                   if (!status) {
                     this.normalListingItems = []

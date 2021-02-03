@@ -60,7 +60,7 @@
               </div>
             </div>
           </div>
-          <div class="card-body search-form">
+          <!-- <div class="card-body search-form">
               <div class="row">
               <div class="col-2">
             <select class="form-control text-capitalize main-sel-all">
@@ -70,12 +70,12 @@
             </select>
             </div>
             </div>
-          </div>
+          </div> -->
           <div class="table_wrapper ap">
             <table class="table table-striped">
               <thead>
                 <tr>
-                  <th><input type="checkbox" class="main-checkbox" /></th>
+                  <!-- <th><input type="checkbox" class="main-checkbox" /></th> -->
                   <th>Id</th>
                   <th>Title</th>
                   <th>Price</th>
@@ -87,13 +87,13 @@
               </thead>
               <tbody v-if="items.length > 0">
                 <tr v-for="(item, key) of items" :key="item.id">
-                  <td>
+                  <!-- <td>
                     <input
                       type="checkbox"
                       class="indi-checkbox"
                       :value="item.id"
                     />
-                  </td>
+                  </td> -->
                   <td>{{ item.id }}</td>
                   <td>{{ item.title }}</td>
                   <td>${{ item.price }}</td>

@@ -532,7 +532,7 @@ export default {
         this.featuredListingItems = []
         this.requestInProcessFeatured = true
         this.$axios
-          .$post('search/slab-listing', {
+          .$post('search/featured-listing', {
             take: 5,
             is_featured: 1,
           })

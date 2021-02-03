@@ -88,14 +88,14 @@
         </li>
         
       </ul>-->
-      <p class="sidebar-footer">
+      <!-- <p class="sidebar-footer">
         Powered by
         <img
           class="sibar-footer-ebay"
           src="~/assets/img/ebay-sibar-footer.png"
           alt
         />
-      </p>
+      </p> -->
     </div>
   </nav>
 </template>
@@ -197,7 +197,8 @@ export default {}
           background-image: url('~@/assets/img/icons/stoxticker-black.png');
         }
         .stox-request-icon {
-          background-image: url(~@/assets/img/icons/question_mark_icon.png);
+          // background-image: url(~@/assets/img/icons/question_mark_icon.png);
+          background-image: url(~@/assets/img/icons/stox-request2.png);
         }
         .my-stoxpro-icon {
           background-image: url('~@/assets/img/icons/my-stoxpro-black.png');

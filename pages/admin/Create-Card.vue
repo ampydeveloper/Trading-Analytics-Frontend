@@ -37,6 +37,14 @@
                 <input v-model="card.card" type="text" class="form-control" placeholder="Card" required/>
               </div>
               <div class="form_column">
+                <label>Title</label>
+                <input v-model="card.title" type="text" class="form-control" placeholder="Title" required/>
+              </div>
+              <!-- <div class="form_column">
+                <label>Slab Image</label>
+                <input name="image" @change="imageAdd()" type="file" class="form-control slab-image" required/>
+              </div> -->
+              <div class="form_column">
                 <label>RC</label>
                 <select v-model="card.rc" class="form-control">
                   <option value="0">YES</option>
@@ -142,6 +150,7 @@
 </template>
 
 <script>
+import $ from 'jquery'
 export default {
   transition: 'fade',
   layout: 'admin',
@@ -163,6 +172,8 @@ export default {
         rc: '0',
         variation: '',
         grade: '',
+        title:'',
+         image:'',
         qualifiers: '',
         qualifiers2: '',
         qualifiers3: '',
@@ -180,6 +191,10 @@ export default {
   methods: {
     back() {
       this.$router.go(-1);
+    },
+    imageAdd(){
+      console.log($('.slab-image').val());
+this.card.image = $('.slab-image').val();
     },
     create() {
       if (!this.requestInProcess) {
@@ -200,6 +215,8 @@ export default {
                     rc: '0',
                     variation: '',
                     grade: '',
+                    image:'',
+                    title:'',
                     qualifiers: '',
                     qualifiers2: '',
                     qualifiers3: '',
