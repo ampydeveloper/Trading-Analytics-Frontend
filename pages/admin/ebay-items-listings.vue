@@ -12,6 +12,16 @@
             <div class="row">
               <div class="col-2">
                 <select
+                  class="form-control text-capitalize main-sel-all"
+                  @change="updateStatus"
+                >
+                  <option>Change Status</option>
+                  <option value="0">Active</option>
+                  <option value="2">Disable</option>
+                </select>
+              </div>
+              <div class="col-2">
+                <select
                   id="sportFilter"
                   @change="getItems(currentPage, $event)"
                   class="form-control text-capitalize"
@@ -24,6 +34,7 @@
                     v-text="sport"
                     class="text-capitalize"
                   ></option>
+                  <option value="random_bin">Random Bin</option>
                 </select>
               </div>
               <div class="col-2">
@@ -33,7 +44,9 @@
                   class="form-control text-capitalize"
                 >
                   <option selected>Filter By</option>
-                  <option value="" class="text-capitalize">Ending Soon</option>
+                  <option value="ending_soon" class="text-capitalize">
+                    Ending Soon
+                  </option>
                 </select>
               </div>
               <div class="col-3">
@@ -60,22 +73,11 @@
               </div>
             </div>
           </div>
-          <!-- <div class="card-body search-form">
-              <div class="row">
-              <div class="col-2">
-            <select class="form-control text-capitalize main-sel-all">
-              <option disabled>Status</option>
-              <option value="0">Active</option>
-              <option value="2">Disable</option>
-            </select>
-            </div>
-            </div>
-          </div> -->
           <div class="table_wrapper ap">
             <table class="table table-striped">
               <thead>
                 <tr>
-                  <!-- <th><input type="checkbox" class="main-checkbox" /></th> -->
+                  <th><input type="checkbox" class="main-checkbox" /></th>
                   <th>Id</th>
                   <th>Title</th>
                   <th>Price</th>
@@ -87,13 +89,13 @@
               </thead>
               <tbody v-if="items.length > 0">
                 <tr v-for="(item, key) of items" :key="item.id">
-                  <!-- <td>
+                  <td>
                     <input
                       type="checkbox"
                       class="indi-checkbox"
                       :value="item.id"
                     />
-                  </td> -->
+                  </td>
                   <td>{{ item.id }}</td>
                   <td>{{ item.title }}</td>
                   <td>${{ item.price }}</td>
@@ -120,7 +122,7 @@
                       @change="statusChange($event, item.id, key)"
                       class="form-control text-capitalize"
                     >
-                      <option disabled>Status</option>
+                      <option>Change Status</option>
                       <option value="0">Active</option>
                       <option value="2">Disable</option>
                     </select>
@@ -129,29 +131,100 @@
               </tbody>
               <tbody v-if="items.length == 0 && requestInProcess">
                 <tr>
-                  <td colspan="6" class="text-center">loading...</td>
+                  <td colspan="8" class="text-center">loading...</td>
                 </tr>
               </tbody>
               <tbody v-if="items.length == 0 && requestInProcess == false">
                 <tr>
-                  <td colspan="6" class="text-center">No listings found.</td>
+                  <td colspan="8" class="text-center">No listings found.</td>
                 </tr>
               </tbody>
               <tfoot>
-                <tr>
-                  <td colspan="6">
-                    <button
-                      class="theme-btn card-btn"
-                      :disabled="page == 2"
-                      @click="getItems(page - 1)"
-                    >
-                      Previous
+                <tr v-if="page-1 == 1">
+                  <td colspan="8">
+                    <button class="theme-btn card-btn active-pagination" @click="getItems(1)">
+                      1
                     </button>
-                    <button class="theme-btn card-btn" @click="getItems(page)">
+                    <button class="theme-btn card-btn" @click="getItems(2)">
+                      2
+                    </button>
+                    <button class="theme-btn card-btn" @click="getItems(3)">
                       Next
                     </button>
                   </td>
                 </tr>
+                <tr v-if="page-1 == 2">
+                  <td colspan="8">
+                    <button class="theme-btn card-btn" @click="getItems(1)">
+                      1
+                    </button>
+                    <button class="theme-btn card-btn active-pagination" @click="getItems(2)">
+                      2
+                    </button>
+                    <button class="theme-btn card-btn" @click="getItems(3)">
+                      3
+                    </button>
+                    <button class="theme-btn card-btn" @click="getItems(4)">
+                      Next
+                    </button>
+                  </td>
+                </tr>
+                <tr v-if="page-1 == 3">
+                  <td colspan="8">
+                    <button
+                      class="theme-btn card-btn"
+                     
+                      @click="getItems(1)"
+                    >
+                      Previous
+                    </button>
+                    <button class="theme-btn card-btn" @click="getItems(2)">
+                      2
+                    </button>
+                    <button class="theme-btn card-btn active-pagination" @click="getItems(3)">
+                      3
+                    </button>
+                    <button class="theme-btn card-btn" @click="getItems(4)">
+                      4
+                    </button>
+                    <button class="theme-btn card-btn" @click="getItems(5)">
+                      Next
+                    </button>
+                  </td>
+                </tr>
+                <tr v-if="(page-1) > 3">
+                  <td colspan="8">
+                    <button
+                      class="theme-btn card-btn"
+                      
+                      @click="getItems(page - 2)"
+                    >
+                      Previous
+                    </button>
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getItems(page - 1)"
+                    >
+                      {{ page - 1 }}
+                    </button>
+                    <button class="theme-btn card-btn active-pagination" @click="getItems(page)">
+                      {{ page }}
+                    </button>
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getItems(page + 1)"
+                    >
+                      {{ page + 1 }}
+                    </button>
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getItems(page + 2)"
+                    >
+                      Next
+                    </button>
+                  </td>
+                </tr>
+
               </tfoot>
             </table>
           </div>
@@ -174,31 +247,16 @@ export default {
   },
   mounted() {
     this.getItems(this.page)
+    console.log(this.$route.query.item)
   },
   updated() {
-    $('.main-sel-all').change(function () {
-      var $this = $(this),
-        statusVal = $this.val(),
-        listingArr = []
-
-      $('.indi-checkbox').each(function () {
-        var $thisCheck = $(this)
-        if ($thisCheck.is(':checked')) {
-          listingArr.push($thisCheck.val())
-        }
-      })
-// console.log(token);
-//       $.ajax({
-//         url: DEV_API+'change-ebay-status',
-//         type: 'POST',
-//         data: {
-//           id: listingArr,
-//           status: statusVal,
-//         },
-//         dataType: 'json',
-//         success: function (data) {},
-//         error: function (request, error) {},
-//       })
+    this.searchItem(this.$route.query.item)
+    $('.main-checkbox').change(function () {
+      if ($('.main-checkbox').is(':checked')) {
+        $('.indi-checkbox').attr('checked', true)
+      } else {
+        $('.indi-checkbox').attr('checked', false)
+      }
     })
   },
   components: {},
@@ -220,6 +278,48 @@ export default {
     }
   },
   methods: {
+    updateStatus() {
+      var statusVal = $('.main-sel-all').val(),
+        listingArr = []
+
+      $('.indi-checkbox').each(function () {
+        var $thisCheck = $(this)
+        if ($thisCheck.is(':checked')) {
+          listingArr.push($thisCheck.val())
+        }
+      })
+
+      this.statusChange(statusVal, listingArr, false)
+    },
+    searchItem(searchItem) {
+      if (!this.requestInProcess) {
+        try {
+          this.showLoader()
+          this.requestInProcess = true
+          let payload = { page: 1, search: searchItem }
+          this.$axios
+            .post('get-ebay-list', payload)
+            .then((res) => {
+              if (res.status == 200) {
+                this.currentPage = page
+                this.items = res.data.data
+                this.page = res.data.next
+                this.sportsList = res.data.sportsList
+              }
+              this.requestInProcess = false
+              this.hideLoader()
+            })
+            .catch((err) => {
+              this.requestInProcess = false
+              this.hideLoader()
+            })
+        } catch (err) {
+          this.hideLoader()
+          this.requestInProcess = false
+          console.log(err)
+        }
+      }
+    },
     getItems(page, filter = null) {
       if (!this.requestInProcess) {
         try {
@@ -250,29 +350,6 @@ export default {
         }
       }
     },
-    // addRemoveCheckbox(id) {
-    //   const a = this.checkedItems.filter(item => item == id);
-    //   if(a.length == 1) {
-    //     this.checkedItems.splice(this.checkedItems.indexOf(id),1);
-    //   }else{
-    //     this.checkedItems.push(id);
-    //   }
-    // },
-    // toggleCheckbox(){
-    //   if(this.toggleCheckboxInput) {
-    //     this.checkedItems = []
-    //     this.checkedItems = this.data.map(item => {return item.id});
-    //   }else{
-    //     this.checkedItems = []
-    //   }
-    // },
-    // isChecked(id) {
-    //   const a = this.checkedItems.filter(item => item == id);
-    //   if(a.length == 1) {
-    //     return true;
-    //   }
-    //   return false;
-    // },
     getStatus(status) {
       if (status == 0) {
         return 'Active'
@@ -293,7 +370,7 @@ export default {
           this.showLoader()
           this.requestInProcess = true
           this.$axios
-            .$post('admin/change-ebay-status', {
+            .$post('change-ebay-status', {
               id: id,
               status: statusVal,
             })
@@ -302,6 +379,8 @@ export default {
               this.hideLoader()
               if (key != false) {
                 this.items[key].status = event.target.value
+              } else {
+                location.reload()
               }
             })
         } catch (err) {
@@ -323,6 +402,7 @@ export default {
             })
             .then((res) => {
               this.requestInProcess = false
+              this.soldPrice = ''
               this.hideLoader()
             })
         } catch (err) {
@@ -347,6 +427,10 @@ ul.my-card-listing {
 .card-link {
   line-height: 2;
   margin-top: 2px;
+}
+.active-pagination{
+      color: #1ce783;
+    background: #272d33;
 }
 .search-form.tabel-in {
   .form-control {

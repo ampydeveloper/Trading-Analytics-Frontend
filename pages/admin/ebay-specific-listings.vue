@@ -114,16 +114,16 @@
               </tbody>
               <tbody v-if="items.length == 0 && requestInProcess">
                 <tr>
-                  <td colspan="6" class="text-center">loading...</td>
+                  <td colspan="8" class="text-center">loading...</td>
                 </tr>
               </tbody>
               <tbody v-if="items.length == 0 && requestInProcess == false">
                 <tr>
-                  <td colspan="6" class="text-center">No listings found.</td>
+                  <td colspan="8" class="text-center">No listings found.</td>
                 </tr>
               </tbody>
               <tfoot>
-                <tr>
+                <!-- <tr>
                   <td colspan="6">
                     <button
                       class="theme-btn card-btn"
@@ -133,6 +133,90 @@
                       Previous
                     </button>
                     <button class="theme-btn card-btn" @click="getItems(page)">
+                      Next
+                    </button>
+                  </td>
+                </tr> -->
+                 <tr v-if="page-1 == 1">
+                  <td colspan="8">
+                    <button class="theme-btn card-btn active-pagination" @click="getItems(1)">
+                      1
+                    </button>
+                    <button class="theme-btn card-btn" @click="getItems(2)">
+                      2
+                    </button>
+                    <button class="theme-btn card-btn" @click="getItems(3)">
+                      Next
+                    </button>
+                  </td>
+                </tr>
+                <tr v-if="page-1 == 2">
+                  <td colspan="8">
+                    <button class="theme-btn card-btn" @click="getItems(1)">
+                      1
+                    </button>
+                    <button class="theme-btn card-btn active-pagination" @click="getItems(2)">
+                      2
+                    </button>
+                    <button class="theme-btn card-btn" @click="getItems(3)">
+                      3
+                    </button>
+                    <button class="theme-btn card-btn" @click="getItems(4)">
+                      Next
+                    </button>
+                  </td>
+                </tr>
+                <tr v-if="page-1 == 3">
+                  <td colspan="8">
+                    <button
+                      class="theme-btn card-btn"
+                     
+                      @click="getItems(1)"
+                    >
+                      Previous
+                    </button>
+                    <button class="theme-btn card-btn" @click="getItems(2)">
+                      2
+                    </button>
+                    <button class="theme-btn card-btn active-pagination" @click="getItems(3)">
+                      3
+                    </button>
+                    <button class="theme-btn card-btn" @click="getItems(4)">
+                      4
+                    </button>
+                    <button class="theme-btn card-btn" @click="getItems(5)">
+                      Next
+                    </button>
+                  </td>
+                </tr>
+                <tr v-if="(page-1) > 3">
+                  <td colspan="8">
+                    <button
+                      class="theme-btn card-btn"
+                      
+                      @click="getItems(page - 2)"
+                    >
+                      Previous
+                    </button>
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getItems(page - 1)"
+                    >
+                      {{ page - 1 }}
+                    </button>
+                    <button class="theme-btn card-btn active-pagination" @click="getItems(page)">
+                      {{ page }}
+                    </button>
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getItems(page + 1)"
+                    >
+                      {{ page + 1 }}
+                    </button>
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getItems(page + 2)"
+                    >
                       Next
                     </button>
                   </td>
@@ -256,6 +340,10 @@ ul.my-card-listing {
 .card-link {
   line-height: 2;
   margin-top: 2px;
+}
+.active-pagination{
+      color: #1ce783;
+    background: #272d33;
 }
 .search-form.tabel-in {
   .form-control {

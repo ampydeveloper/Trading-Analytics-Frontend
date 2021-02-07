@@ -27,6 +27,37 @@
       >Search Stox</button>
     </div> -->
     <b-navbar-nav class="top-nav-navbar">
+      <b-nav-item
+        class="top-nav-icon top-nav-icon2"
+        href="javascript:;"
+        @click="shownotification = !shownotification"
+      >
+        <img class="icon" src="~/assets/img/icons/bell.png" />
+        <div class="notification_wrap" v-if="shownotification">
+          <div class="notification_count">
+            <h5>All Notifications</h5>
+          </div>
+          <div class="notification_list">
+            <ul v-for="(item, key) of items">
+               <!-- <li class="text-center">
+                
+                <h6>Sorry No Notifications.</h6>
+                
+              </li> -->
+              <li class="listing-ended-li" @click="listingEnded(item.id)" >
+                <i class="fa fa-bell" aria-hidden="true"></i>
+                <h5>Listing Ending</h5>
+                <h6>{{ item.title }}</h6>
+                <span>Recently</span>
+              </li>
+        
+            </ul>
+          </div>
+          <!-- <div class="viewall">
+            <h5>View all Notifications</h5>
+          </div> -->
+        </div>
+      </b-nav-item>
       <b-nav-item-dropdown right>
         <!-- Using 'button-content' slot -->
         <template v-slot:button-content>
@@ -47,6 +78,8 @@ export default {
   data() {
     return {
       keyword: '',
+      shownotification: false,
+        items: [],
       profileImage: 'https://placekitten.com/300/300'
     }
   },
@@ -67,9 +100,38 @@ export default {
     },
     toggleAdvanceSearch() {
       this.$store.dispatch('advancesearch/toggle')
-    }
+    },
+    listingEnded(itemId){
+this.$router.push('/admin/ebay-items-listings?item='+itemId)
+    },
+    getItems() {
+      // if (!this.requestInProcess) {
+        try {
+          this.showLoader()
+          this.requestInProcess = true
+          this.$axios
+            .post('search/ended-listing')
+            .then((res) => {
+              if (res.status == 200) {
+                this.items = res.data.data
+              }
+              this.requestInProcess = false
+              this.hideLoader()
+            })
+            .catch((err) => {
+              this.requestInProcess = false
+              this.hideLoader()
+            })
+        } catch (err) {
+          this.hideLoader()
+          this.requestInProcess = false
+          console.log(err)
+        }
+      // }
+    },
   },
   mounted() {
+    this.getItems()
     if(this.user == null) {
       this.logout()
     }
@@ -177,6 +239,13 @@ export default {
           text-align: center;
         }
       }
+    }
+    .top-nav-icon2 .nav-link{
+    margin-top: 17px;
+    .icon{
+          padding: 3px;
+              width: 92%;
+    }
     }
   }
 }

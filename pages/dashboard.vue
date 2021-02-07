@@ -360,10 +360,17 @@
         <img src="" alt="" class="slab_image"/>
         <img :src="graphImage" alt="" class="slab_graph"/>
       </div>
-      <div class="clearfix g-download-out">
+      <div class="clearfix g-download-out text-center">
         <a href="#" class="g-download-slab" target="_blank" download></a>
         <a :href="graphImage" class="g-download-graph" target="_blank" download></a>
-        <a href="#" class="g-download-img-all">Download Graphics</a>
+        <a href="javascript:void(0);" @click="openImage(cardImage)" class="g-download-img-all mr-3">
+          <svg style="width:15px;height:15px" viewBox="0 0 24 24"><path fill="currentColor" d="M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z" /></svg>
+          Download Card Graphic
+        </a>
+        <a href="javascript:void(0);" @click="openImage(graphImage)" class="g-download-img-all">
+          <svg style="width:15px;height:15px" viewBox="0 0 24 24"><path fill="currentColor" d="M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z" /></svg>
+          Download Graph Graphic
+        </a>
       </div>
     </b-modal>
   </div>
@@ -409,6 +416,7 @@ export default {
       logo: null,
       baseUrl: BASE_URL,
       graphImage: '',
+      cardImage: '',
       liveAuction: [],
       ternder: [],
       watchlist: [],
@@ -428,6 +436,7 @@ export default {
         change_icon: 'up',
         last_updated: '',
       },
+      salesQty: [],
       series: [
         {
           name: 'Sales',
@@ -460,8 +469,8 @@ export default {
               fontSize: '10px',
               fontFamily: 'NexaBold',
             },
-            formatter: (value) => {
-              return '$' + value
+            formatter: (value, ind) => {
+              return `$${value}`
             },
           },
         },
@@ -486,6 +495,7 @@ export default {
   },
   watch: {
     dialogVisible(visible) {
+      const self = this
       if (visible) {
         $('.g-main-text .g-title').text(
           $('.featured-graph-title .fg-title').text()
@@ -499,21 +509,17 @@ export default {
         $('.g-main-text .g-sales-diff').text(
           'Price Change $'+$('.g-dollar-d-val').text()
         )
-        $('.g-main-text .g-image-link').text(this.graphImage)
+        $('.g-main-text .g-image-link').text(self.graphImage)
         $('.g-img-full .slab_image').attr('src',$('.my-card.active .image-container img').attr('src'))
-         $('.g-download-slab').attr('href',$('.my-card.active .image-container img').attr('src'))
- 
- $('.g-download-img-all').on('click', function(){
-  
-  // $('.g-download-slab').click();
-  // $('.g-download-graph').click();
-  // console.log('redd')
- });
-        
+        self.cardImage = $('.my-card.active .image-container img').attr('src')
+        $('.g-download-slab').attr('href',$('.my-card.active .image-container img').attr('src'))
       }
     },
   },
   methods: {
+    openImage(src){
+      window.open(src, '_blank')
+    },
     toggleCardActive(card) {
       this.cardActiveId = card.id
       this.cardActiveTitle = card.title
@@ -622,7 +628,27 @@ export default {
               if (this.initGraphLabelLength != res.data.labels.length) {
                 this.graphDataEmpty = false
                 this.series = [{ name: 'Sales', data: res.data.values }]
-                this.chartOptions = { xaxis: { categories: res.data.labels } }
+                this.salesQty = res.data.qty
+                this.chartOptions = { 
+                  xaxis: { 
+                    categories: res.data.labels 
+                  }, 
+                  yaxis: {
+                    labels: {
+                      style: {
+                        colors: '#edecec',
+                        fontSize: '10px',
+                        fontFamily: 'NexaBold',
+                      },
+                      formatter: (value, ind) => {
+                        let lblStr = `$${value}`
+                        if(typeof(ind) == "object") lblStr = `$${value} (${this.salesQty[ind.dataPointIndex]})`
+                        else lblStr = `$${value} (${this.salesQty[ind]})`
+                        return lblStr
+                      },
+                    }
+                  }
+                }
                 this.initGraphLabelLength = res.data.labels.length
                 this.doller_diff = dollerDiff.replace("-", "")
                 this.perc_diff = percDiff.toFixed(2)
@@ -644,7 +670,7 @@ export default {
       FB.ui({
         method: 'feed',
         name: 'StoxTicker@' + this.stoxtickerData.sale.toFixed(2),
-        link: encodeURI(this.graphImage), //this.baseUrl
+        link: encodeURI(thinitGraphLabelLengthis.graphImage), //this.baseUrl
         picture: this.graphImage,
         description: 'Check our StoxTicker value',
       })

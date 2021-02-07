@@ -4,52 +4,87 @@
       <div class="col-12 t-p-5">
         <div class="card ap">
           <div class="card-body">
-              <div class="row">
-                <div class="col-1">
-                  <h5 class="card-title">
-                    <button class="theme-btn card-btn">Slabs</button>
-                  </h5>
-                </div>
-               
-                <div class="col-11">
-                   <nuxt-link class="theme-green-btn card-btn pull-right" to="/admin/create-card">
-            Create Slab
-          </nuxt-link>
-             <nuxt-link class="theme-green-btn card-btn pull-right" to="/admin/create-cards-excel" style="margin-right:5px">
-            Import Slabs via CSV
-          </nuxt-link>
-          <!-- <button class="theme-green-btn card-btn pull-right" style="margin-right:5px" @click="uploadExcel('soccer')">Upload Pokemon</button>
-                  <button class="theme-green-btn card-btn pull-right" style="margin-right:5px" @click="uploadExcel('baseball')">Upload Baseball</button>
-                  <button class="theme-green-btn card-btn pull-right" style="margin-right:5px" @click="uploadExcel('basketball')">Upload Basketball</button>
-                  <button class="theme-green-btn card-btn pull-right" style="margin-right:5px" @click="uploadExcel('football')">Upload Football</button>
-                  <button class="theme-green-btn card-btn pull-right" style="margin-right:5px" @click="uploadExcel('soccer')">Upload Soccer</button> -->
-                  
-                </div>
+            <div class="row">
+              <div class="col-1">
+                <h5 class="card-title">
+                  <button class="theme-btn card-btn">Slabs</button>
+                </h5>
               </div>
-            <!-- </h5> -->
+
+              <div class="col-11">
+                <nuxt-link
+                  class="theme-green-btn card-btn pull-right"
+                  to="/admin/create-card"
+                >
+                  Create Slab
+                </nuxt-link>
+                <nuxt-link
+                  class="theme-green-btn card-btn pull-right"
+                  to="/admin/create-cards-excel"
+                  style="margin-right: 5px"
+                >
+                  Import Slabs via CSV
+                </nuxt-link>
+              </div>
+            </div>
           </div>
           <div class="card-body search-form">
-          <div class="row">
- <div class="col-2">
-                  <select id="sportFilter" @change='getCards(currentPage, $event)' class="form-control text-capitalize">
-                    <option selected>Select Sport</option>
-                    <option :value="sport" v-for='sport in sportsList' :key='sport' v-text='sport' class="text-capitalize"></option>
-                  </select>
-                </div>
-                <div class="col-3">
-                  <div class="input-group mb-3">
-                    <input type="text" class="form-control" v-model='searchTerm' placeholder="Search Slabs" aria-label="Search term..." aria-describedby="button-addon2">
-                    <div class="input-group-append">
-                      <button class="btn btn-outline-secondary" @click="getCards(currentPage)" type="button" id="button-addon2">Search</button>
-                    </div>
+            <div class="row">
+              <div class="col-2">
+                <select
+                  class="form-control text-capitalize main-sel-all"
+                  @change="updateStatus"
+                >
+                  <option>Change Status</option>
+                  <option value="0">Active</option>
+                  <option value="2">Disable</option>
+                </select>
+              </div>
+              <div class="col-2">
+                <select
+                  id="sportFilter"
+                  @change="getCards(currentPage, $event)"
+                  class="form-control text-capitalize"
+                >
+                  <option selected>Select Sport</option>
+                  <option
+                    :value="sport"
+                    v-for="sport in sportsList"
+                    :key="sport"
+                    v-text="sport"
+                    class="text-capitalize"
+                  ></option>
+                </select>
+              </div>
+              <div class="col-3">
+                <div class="input-group mb-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    v-model="searchTerm"
+                    placeholder="Search Slabs"
+                    aria-label="Search term..."
+                    aria-describedby="button-addon2"
+                  />
+                  <div class="input-group-append">
+                    <button
+                      class="btn btn-outline-secondary"
+                      @click="getCards(currentPage)"
+                      type="button"
+                      id="button-addon2"
+                    >
+                      Search
+                    </button>
                   </div>
                 </div>
-             </div>
-             </div>
+              </div>
+            </div>
+          </div>
           <div class="table_wrapper ap">
             <table class="table table-striped">
               <thead>
                 <tr>
+                  <th><input type="checkbox" class="main-checkbox" /></th>
                   <th>Id</th>
                   <th>Sport</th>
                   <th>player</th>
@@ -67,6 +102,13 @@
               </thead>
               <tbody v-if="cards.length > 0">
                 <tr v-for="card of cards" :key="card.id">
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="indi-checkbox"
+                      :value="card.id"
+                    />
+                  </td>
                   <td>{{ card.id }}</td>
                   <td>{{ card.sport }}</td>
                   <td>{{ card.player }}</td>
@@ -77,34 +119,81 @@
                   <td>{{ card.variation }}</td>
                   <td>{{ card.grade }}</td>
                   <td class="text-center">
-                    <button class="card-btn btn btn-danger btn-table-spec tag" v-if="card.active == 0" @click="setCardStatus(card.id,1)">
+                    <button
+                      class="card-btn btn btn-danger btn-table-spec tag"
+                      v-if="card.active == 0"
+                      @click="setCardStatus(card.id, 1)"
+                    >
                       <i class="fa fa-close" aria-hidden="true"></i> Unpublished
                     </button>
-                    <button class="card-btn btn btn-primary  btn-table-spec tag" v-if="card.active == 1" @click="setCardStatus(card.id,0)">
+                    <button
+                      class="card-btn btn btn-primary btn-table-spec tag"
+                      v-if="card.active == 1"
+                      @click="setCardStatus(card.id, 0)"
+                    >
                       <i class="fa fa-check" aria-hidden="true"></i> Published
                     </button>
                   </td>
                   <td class="text-center">
-                    <button class="card-btn btn btn-danger  btn-table-spec tag" v-if="card.is_featured == 0" @click="setFeaturedCard(card.id,1)">
-                      <i class="fa fa-close" aria-hidden="true"></i> Not Featured
+                    <button
+                      class="card-btn btn btn-danger btn-table-spec tag"
+                      v-if="card.is_featured == 0"
+                      @click="setFeaturedCard(card.id, 1)"
+                    >
+                      <i class="fa fa-close" aria-hidden="true"></i> Not
+                      Featured
                     </button>
-                    <button class="card-btn btn btn-primary  btn-table-spec tag" v-if="card.is_featured == 1" @click="setFeaturedCard(card.id,0)">
+                    <button
+                      class="card-btn btn btn-primary btn-table-spec tag"
+                      v-if="card.is_featured == 1"
+                      @click="setFeaturedCard(card.id, 0)"
+                    >
                       <i class="fa fa-check" aria-hidden="true"></i> Featured
                     </button>
                   </td>
                   <td class="text-center">
-                    <button class="card-btn btn btn-danger btn-table-spec tag" v-if="card.is_sx == 0" @click="setCardSx(card.id,1)">
+                    <button
+                      class="card-btn btn btn-danger btn-table-spec tag"
+                      v-if="card.is_sx == 0"
+                      @click="setCardSx(card.id, 1)"
+                    >
                       <i class="fa fa-close" aria-hidden="true"></i> Inactive
                     </button>
-                    <button class="card-btn btn btn-primary btn-table-spec tag" v-if="card.is_sx == 1" @click="setCardSx(card.id,0)">
+                    <button
+                      class="card-btn btn btn-primary btn-table-spec tag"
+                      v-if="card.is_sx == 1"
+                      @click="setCardSx(card.id, 0)"
+                    >
                       <i class="fa fa-check" aria-hidden="true"></i> Active
                     </button>
                   </td>
                   <td class="text-center">
-                    <button class="card-btn btn btn-primary  btn-table-spec" style="margin-top:4px;" @click="addItem(card.id)">Add Listing</button>
-                    <nuxt-link class="card-btn btn btn-primary  btn-table-spec" style="margin-top:4px;" :to='`ebay-specific-listings?card=${card.id}`'>All Listings</nuxt-link> <br>
-                    <nuxt-link class="card-btn btn  btn-primary  btn-table-spec" style="margin-top:4px;" :to='`all-sales-data?card_id=${card.id}`'>All Sales Data</nuxt-link>
-                    <nuxt-link class="card-btn btn  btn-primary  btn-table-spec" style="margin-top:4px;" :to='`edit-card?card_id=${card.id}`'>Edit Slab</nuxt-link>
+                    <button
+                      class="card-btn btn btn-primary btn-table-spec"
+                      style="margin-top: 4px"
+                      @click="addItem(card.id)"
+                    >
+                      Add Listing
+                    </button>
+                    <nuxt-link
+                      class="card-btn btn btn-primary btn-table-spec"
+                      style="margin-top: 4px"
+                      :to="`ebay-specific-listings?card=${card.id}`"
+                      >All Listings</nuxt-link
+                    >
+                    <br />
+                    <nuxt-link
+                      class="card-btn btn btn-primary btn-table-spec"
+                      style="margin-top: 4px"
+                      :to="`all-sales-data?card_id=${card.id}`"
+                      >All Sales Data</nuxt-link
+                    >
+                    <nuxt-link
+                      class="card-btn btn btn-primary btn-table-spec"
+                      style="margin-top: 4px"
+                      :to="`edit-card?card_id=${card.id}`"
+                      >Edit Slab</nuxt-link
+                    >
                   </td>
                 </tr>
               </tbody>
@@ -119,12 +208,102 @@
                 </tr>
               </tbody>
               <tfoot>
-                <tr>
+                <!-- <tr>
                   <td colspan="6">
-                    <button class="theme-btn card-btn" :disabled="page == 2" @click="getCards(page - 1)">
+                    <button
+                      class="theme-btn card-btn"
+                      :disabled="page == 2"
+                      @click="getCards(page - 1)"
+                    >
                       Previous
                     </button>
-                    <button class="theme-btn card-btn" @click="getCards(page)">Next</button>
+                    <button class="theme-btn card-btn" @click="getCards(page)">
+                      Next
+                    </button>
+                  </td>
+                </tr> -->
+                 <tr v-if="page-1 == 1">
+                  <td colspan="14">
+                    <button class="theme-btn card-btn active-pagination" @click="getCards(1)">
+                      1
+                    </button>
+                    <button class="theme-btn card-btn" @click="getCards(2)">
+                      2
+                    </button>
+                    <button class="theme-btn card-btn" @click="getCards(3)">
+                      Next
+                    </button>
+                  </td>
+                </tr>
+                <tr v-if="page-1 == 2">
+                  <td colspan="14">
+                    <button class="theme-btn card-btn" @click="getCards(1)">
+                      1
+                    </button>
+                    <button class="theme-btn card-btn active-pagination" @click="getCards(2)">
+                      2
+                    </button>
+                    <button class="theme-btn card-btn" @click="getCards(3)">
+                      3
+                    </button>
+                    <button class="theme-btn card-btn" @click="getCards(4)">
+                      Next
+                    </button>
+                  </td>
+                </tr>
+                <tr v-if="page-1 == 3">
+                  <td colspan="14">
+                    <button
+                      class="theme-btn card-btn"
+                     
+                      @click="getCards(1)"
+                    >
+                      Previous
+                    </button>
+                    <button class="theme-btn card-btn" @click="getCards(2)">
+                      2
+                    </button>
+                    <button class="theme-btn card-btn active-pagination" @click="getCards(3)">
+                      3
+                    </button>
+                    <button class="theme-btn card-btn" @click="getCards(4)">
+                      4
+                    </button>
+                    <button class="theme-btn card-btn" @click="getCards(5)">
+                      Next
+                    </button>
+                  </td>
+                </tr>
+                <tr v-if="(page-1) > 3">
+                  <td colspan="14">
+                    <button
+                      class="theme-btn card-btn"
+                      
+                      @click="getCards(page - 2)"
+                    >
+                      Previous
+                    </button>
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getCards(page - 1)"
+                    >
+                      {{ page - 1 }}
+                    </button>
+                    <button class="theme-btn card-btn active-pagination" @click="getCards(page)">
+                      {{ page }}
+                    </button>
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getCards(page + 1)"
+                    >
+                      {{ page + 1 }}
+                    </button>
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getCards(page + 2)"
+                    >
+                      Next
+                    </button>
                   </td>
                 </tr>
               </tfoot>
@@ -133,21 +312,36 @@
         </div>
       </div>
     </div>
-    <input type="file" style="display:none;" ref="excel" @change="uploadExcelNow()">
+    <input
+      type="file"
+      style="display: none"
+      ref="excel"
+      @change="uploadExcelNow()"
+    />
   </div>
 </template>
 
 <script>
+import $ from 'jquery'
 export default {
   transition: 'fade',
   layout: 'admin',
   head() {
     return {
-      title: 'Admin Dashboard - Slabstox'
+      title: 'Admin Dashboard - Slabstox',
     }
   },
   mounted() {
-   this.getCards(this.page)
+    this.getCards(this.page)
+  },
+  updated() {
+    $('.main-checkbox').change(function () {
+      if ($('.main-checkbox').is(':checked')) {
+        $('.indi-checkbox').attr('checked', true)
+      } else {
+        $('.indi-checkbox').attr('checked', false)
+      }
+    })
   },
   components: {},
   data() {
@@ -160,32 +354,68 @@ export default {
       uploadExcelType: null,
       sportsList: [],
       sportFilter: '',
-      filter:null
+      filter: null,
     }
   },
   methods: {
-    addItem(id){
-      this.$router.push('/admin/additem/'+id);
+    updateStatus() {
+      var statusVal = $('.main-sel-all').val(),
+        listingArr = []
+
+      $('.indi-checkbox').each(function () {
+        var $thisCheck = $(this)
+        if ($thisCheck.is(':checked')) {
+          listingArr.push($thisCheck.val())
+        }
+      })
+
+      this.statusChange(statusVal, listingArr)
     },
-    getCards(page, filter=null) {
+    statusChange(statusVal, id) {
+      if (!this.requestInProcess) {
+        try {
+          this.showLoader()
+          this.requestInProcess = true
+          this.$axios
+            .$post('change-card-status', {
+              id: id,
+              status: statusVal,
+            })
+            .then((res) => {
+              this.requestInProcess = false
+              this.hideLoader()
+              location.reload()
+            })
+        } catch (err) {
+          this.hideLoader()
+          this.requestInProcess = false
+          console.log(err)
+        }
+      }
+    },
+    addItem(id) {
+      this.$router.push('/admin/additem/' + id)
+    },
+    getCards(page, filter = null) {
       if (!this.requestInProcess) {
         try {
           this.showLoader()
           this.requestInProcess = true
           let payload = { page: page, search: this.searchTerm }
-          if(filter != null) payload['sport'] = filter.target.value
+          if (filter != null) payload['sport'] = filter.target.value
           this.$axios
             .post('get-cards-list-for-admin', payload)
-            .then(res => {
+            .then((res) => {
               if (res.status == 200) {
-                this.currentPage = page;
+                this.currentPage = page
                 this.cards = res.data.data
                 this.page = res.data.next
                 this.sportsList = res.data.sportsList
               }
               this.requestInProcess = false
-               this.hideLoader()
-            }).catch(err => {
+              this.hideLoader()
+            })
+            .catch((err) => {
               this.requestInProcess = false
               this.hideLoader()
             })
@@ -196,8 +426,8 @@ export default {
         }
       }
     },
-    setFeaturedCard(id,tstatus) {
-        console.log(id,' : ',tstatus);
+    setFeaturedCard(id, tstatus) {
+      console.log(id, ' : ', tstatus)
       if (!this.requestInProcess) {
         try {
           this.showLoader()
@@ -205,16 +435,17 @@ export default {
           this.$axios
             .post('set-featured-card', {
               is_featured: tstatus,
-              id: id
+              id: id,
             })
-            .then(res => {
+            .then((res) => {
               this.requestInProcess = false
               this.hideLoader()
               if (res.status == 200) {
-                this.$toast.success(res.data.message);
+                this.$toast.success(res.data.message)
                 this.getCards(this.currentPage)
               }
-            }).catch(err => {
+            })
+            .catch((err) => {
               this.requestInProcess = false
               this.hideLoader()
             })
@@ -225,8 +456,8 @@ export default {
         }
       }
     },
-     setCardSx(id,tstatus) {
-        console.log(id,' : ',tstatus);
+    setCardSx(id, tstatus) {
+      console.log(id, ' : ', tstatus)
       if (!this.requestInProcess) {
         try {
           this.showLoader()
@@ -234,16 +465,17 @@ export default {
           this.$axios
             .post('set-card-sx', {
               is_sx: tstatus,
-              id: id
+              id: id,
             })
-            .then(res => {
+            .then((res) => {
               this.requestInProcess = false
               this.hideLoader()
               if (res.status == 200) {
-                this.$toast.success(res.data.message);
+                this.$toast.success(res.data.message)
                 this.getCards(this.currentPage)
               }
-            }).catch(err => {
+            })
+            .catch((err) => {
               this.requestInProcess = false
               this.hideLoader()
             })
@@ -254,7 +486,7 @@ export default {
         }
       }
     },
-    setCardStatus(id,tstatus) {
+    setCardStatus(id, tstatus) {
       if (!this.requestInProcess) {
         try {
           this.showLoader()
@@ -262,16 +494,17 @@ export default {
           this.$axios
             .post('set-card-status', {
               status: tstatus,
-              id: id
+              id: id,
             })
-            .then(res => {
+            .then((res) => {
               this.requestInProcess = false
               this.hideLoader()
               if (res.status == 200) {
-                this.$toast.success(res.data.message);
+                this.$toast.success(res.data.message)
                 this.getCards(this.currentPage)
               }
-            }).catch(err => {
+            })
+            .catch((err) => {
               this.requestInProcess = false
               this.hideLoader()
             })
@@ -287,42 +520,46 @@ export default {
       this.$refs.excel.click()
     },
     uploadExcelNow() {
-      let formData = new FormData();
-      const files = this.$refs.excel.files;
+      let formData = new FormData()
+      const files = this.$refs.excel.files
       const file = files.item(0)
-      if(file.type== "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"){
-        formData.append('file', file);  
-        formData.append('for', this.uploadExcelType);  
+      if (
+        file.type ==
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+      ) {
+        formData.append('file', file)
+        formData.append('for', this.uploadExcelType)
         if (!this.requestInProcess) {
           try {
             this.showLoader()
             this.requestInProcess = true
             this.$axios
               .post('upload-slab-excel', formData)
-              .then(res => {
+              .then((res) => {
                 this.requestInProcess = false
                 this.hideLoader()
-                this.uploadExcelType = null;
+                this.uploadExcelType = null
                 if (res.status == 200) {
-                  this.$toast.success(res.data.message);
+                  this.$toast.success(res.data.message)
                   this.getCards(this.currentPage)
                 }
-              }).catch(err => {
+              })
+              .catch((err) => {
                 this.requestInProcess = false
                 this.hideLoader()
               })
           } catch (err) {
             this.hideLoader()
-            this.uploadExcelType = null;
+            this.uploadExcelType = null
             this.requestInProcess = false
             console.log(err)
           }
         }
-      }else{
-        this.$toast.error("Invalid File");
+      } else {
+        this.$toast.error('Invalid File')
       }
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -337,5 +574,9 @@ ul.my-card-listing {
 .card-link {
   line-height: 2;
   margin-top: 2px;
+}
+.active-pagination{
+      color: #1ce783;
+    background: #272d33;
 }
 </style>

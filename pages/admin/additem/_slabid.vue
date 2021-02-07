@@ -36,6 +36,14 @@
                     <input v-model="item.image" type="text" class="form-control" required />
                 </div>
                 <div class="form_column">
+                    <label>Auction Start Date</label>
+                    <input v-model="item.auction_start" type="text" class="form-control" required />
+                </div>
+                <div class="form_column">
+                    <label>Auction End Date</label>
+                    <input v-model="item.auction_end" type="text" class="form-control" required />
+                </div>
+                <div class="form_column">
                     <label>Ship To Locations</label>
                     <input v-model="item.shipToLocations" type="text" class="form-control" required />
                 </div>
@@ -220,6 +228,8 @@ export default {
                   this.item.time_left = data.TimeLeft
                   this.item.image = data.PictureURL[0]
                   this.item.location = data.Location
+                  this.item.auction_start = ''
+                  this.item.auction_end = ''                  
                   this.item.shipToLocations = data.ShipToLocations
                   this.item.ReturnPolicy = data.ReturnPolicy.ReturnsAccepted
                   this.item.web_link = data.ViewItemURLForNaturalSearch

@@ -22,27 +22,64 @@
               </div>
               <div class="form_column">
                 <label>Player</label>
-                <input v-model="card.player" type="text" class="form-control" placeholder="Player" required/>
+                <input
+                  v-model="card.player"
+                  type="text"
+                  class="form-control"
+                  placeholder="Player"
+                  required
+                />
               </div>
               <div class="form_column">
                 <label>Year</label>
-                <input v-model="card.year" type="number" class="form-control" placeholder="Year" required/>
+                <input
+                  v-model="card.year"
+                  type="number"
+                  class="form-control"
+                  placeholder="Year"
+                  required
+                />
               </div>
               <div class="form_column">
                 <label>Brand</label>
-                <input v-model="card.brand" type="text" class="form-control" placeholder="Brand" required/>
+                <input
+                  v-model="card.brand"
+                  type="text"
+                  class="form-control"
+                  placeholder="Brand"
+                  required
+                />
               </div>
               <div class="form_column">
                 <label>Card</label>
-                <input v-model="card.card" type="text" class="form-control" placeholder="Card" required/>
+                <input
+                  v-model="card.card"
+                  type="text"
+                  class="form-control"
+                  placeholder="Card"
+                  required
+                />
               </div>
-              <div class="form_column"> 
+              <div class="form_column">
                 <label>Title</label>
-                <input v-model="card.title" type="text" class="form-control" placeholder="Title" required/>
+                <input
+                  v-model="card.title"
+                  type="text"
+                  class="form-control"
+                  placeholder="Title"
+                  required
+                />
               </div>
               <!-- <div class="form_column">
                 <label>Slab Image</label>
-                <input name="image" @change="imageAdd()" type="file" class="form-control slab-image" required/>
+                <input
+                  name="image"
+                  @change="imageAdd"
+                  type="file"
+                  accept="image/*"
+                  class="form-control slab-image"
+                  required
+                />
               </div> -->
               <div class="form_column">
                 <label>RC</label>
@@ -54,7 +91,7 @@
               <div class="form_column">
                 <label>Variation</label>
                 <input
-                v-model="card.variation"
+                  v-model="card.variation"
                   type="text"
                   class="form-control"
                   placeholder="Variation"
@@ -63,12 +100,18 @@
               </div>
               <div class="form_column">
                 <label>Grade</label>
-                <input v-model="card.grade" type="text" class="form-control" placeholder="Grade" required/>
+                <input
+                  v-model="card.grade"
+                  type="text"
+                  class="form-control"
+                  placeholder="Grade"
+                  required
+                />
               </div>
               <div class="form_column">
                 <label>Qualifiers</label>
                 <textarea
-                v-model="card.qualifiers"
+                  v-model="card.qualifiers"
                   placeholder="Qualifiers"
                   class="form-control"
                   required
@@ -77,7 +120,7 @@
               <div class="form_column">
                 <label>Qualifiers2</label>
                 <textarea
-                v-model="card.qualifiers2"
+                  v-model="card.qualifiers2"
                   placeholder="Qualifiers"
                   class="form-control"
                 ></textarea>
@@ -85,7 +128,7 @@
               <div class="form_column">
                 <label>Qualifiers3</label>
                 <textarea
-                v-model="card.qualifiers3"
+                  v-model="card.qualifiers3"
                   placeholder="Qualifiers"
                   class="form-control"
                 ></textarea>
@@ -93,7 +136,7 @@
               <div class="form_column">
                 <label>Qualifiers4</label>
                 <textarea
-                v-model="card.qualifiers4"
+                  v-model="card.qualifiers4"
                   placeholder="Qualifiers"
                   class="form-control"
                 ></textarea>
@@ -101,7 +144,7 @@
               <div class="form_column">
                 <label>Qualifiers5</label>
                 <textarea
-                v-model="card.qualifiers5"
+                  v-model="card.qualifiers5"
                   placeholder="Qualifiers"
                   class="form-control"
                 ></textarea>
@@ -109,7 +152,7 @@
               <div class="form_column">
                 <label>Qualifiers6</label>
                 <textarea
-                v-model="card.qualifiers6"
+                  v-model="card.qualifiers6"
                   placeholder="Qualifiers"
                   class="form-control"
                 ></textarea>
@@ -117,7 +160,7 @@
               <div class="form_column">
                 <label>Qualifiers7</label>
                 <textarea
-                v-model="card.qualifiers7"
+                  v-model="card.qualifiers7"
                   placeholder="Qualifiers"
                   class="form-control"
                 ></textarea>
@@ -125,22 +168,33 @@
               <div class="form_column">
                 <label>Qualifiers8</label>
                 <textarea
-                v-model="card.qualifiers8"
+                  v-model="card.qualifiers8"
                   placeholder="Qualifiers"
                   class="form-control"
                 ></textarea>
               </div>
               <div class="form_btns">
                 <div class="left_btn">
-                  <button @click="back()" class="theme-green-btn card-btn btn-cancel">Cancel</button>
+                  <button
+                    @click="back()"
+                    class="theme-green-btn card-btn btn-cancel"
+                  >
+                    Cancel
+                  </button>
                 </div>
                 <div class="right_btn">
-                  <button type="submit" class="theme-green-btn card-btn btn-save" :disabled="requestInProcess">Create</button>
+                  <button
+                    type="submit"
+                    class="theme-green-btn card-btn btn-save"
+                    :disabled="requestInProcess"
+                  >
+                    Create
+                  </button>
                 </div>
               </div>
             </form>
             <div class="text-center message">
-              <p v-if="statusMessage">{{statusMessage}}</p>
+              <p v-if="statusMessage">{{ statusMessage }}</p>
             </div>
           </div>
         </div>
@@ -156,7 +210,7 @@ export default {
   layout: 'admin',
   head() {
     return {
-      title: 'Admin Dashboard - Slabstox'
+      title: 'Admin Dashboard - Slabstox',
     }
   },
   mounted() {},
@@ -172,8 +226,8 @@ export default {
         rc: '0',
         variation: '',
         grade: '',
-        title:'',
-         image:'',
+        title: '',
+        image: {},
         qualifiers: '',
         qualifiers2: '',
         qualifiers3: '',
@@ -190,47 +244,27 @@ export default {
   },
   methods: {
     back() {
-      this.$router.go(-1);
+      this.$router.go(-1)
     },
-    imageAdd(){
-      console.log($('.slab-image').val());
-this.card.image = $('.slab-image').val();
-    },
-    create() {
-      if (!this.requestInProcess) {
+    imageAdd(e) {
+      console.log(e.target.files[0])
+      this.card.image = e.target.files[0]
+      // this.card.title = 'redered';
+
+if (!this.requestInProcess) {
         try {
           this.showLoader()
           this.requestInProcess = true
           this.$axios
             .post('card-create', this.card)
-            .then(res => {
+            .then((res) => {
               if (res.status == 200) {
                 this.$toast.success(res.data.message)
-                this.card = {
-                    sport: 'basketball',
-                    player: '',
-                    year: '',
-                    brand: '',
-                    card: '',
-                    rc: '0',
-                    variation: '',
-                    grade: '',
-                    image:'',
-                    title:'',
-                    qualifiers: '',
-                    qualifiers2: '',
-                    qualifiers3: '',
-                    qualifiers4: '',
-                    qualifiers5: '',
-                    qualifiers6: '',
-                    qualifiers7: '',
-                    qualifiers8: '',
-                    readyforcron: 0,
-                  };
               }
               this.requestInProcess = false
               this.hideLoader()
-            }).catch(err => {
+            })
+            .catch((err) => {
               this.requestInProcess = false
               this.hideLoader()
             })
@@ -240,8 +274,55 @@ this.card.image = $('.slab-image').val();
           console.log(err)
         }
       }
-    }
-  }
+
+    },
+    create() {
+      if (!this.requestInProcess) {
+        try {
+          this.showLoader()
+          this.requestInProcess = true
+          this.$axios
+            .post('card-create', this.card)
+            .then((res) => {
+              if (res.status == 200) {
+                this.$toast.success(res.data.message)
+                this.card = {
+                  sport: 'basketball',
+                  player: '',
+                  year: '',
+                  brand: '',
+                  card: '',
+                  rc: '0',
+                  variation: '',
+                  grade: '',
+                  image: '',
+                  title: '',
+                  qualifiers: '',
+                  qualifiers2: '',
+                  qualifiers3: '',
+                  qualifiers4: '',
+                  qualifiers5: '',
+                  qualifiers6: '',
+                  qualifiers7: '',
+                  qualifiers8: '',
+                  readyforcron: 0,
+                }
+              }
+              this.requestInProcess = false
+              this.hideLoader()
+            })
+            .catch((err) => {
+              this.requestInProcess = false
+              this.hideLoader()
+            })
+        } catch (err) {
+          this.hideLoader()
+          this.requestInProcess = false
+          console.log(err)
+        }
+      }
+    },
+  },
 }
 </script>
 
@@ -257,7 +338,7 @@ ul.my-card-listing {
   line-height: 2;
   margin-top: 2px;
 }
-.message{
+.message {
   color: green;
 }
 </style>
