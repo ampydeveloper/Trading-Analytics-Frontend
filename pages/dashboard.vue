@@ -100,7 +100,9 @@
                 Export Data
                 <font-awesome-icon :icon="['fas', 'chevron-right']" />
               </span>
-<span class="total_sales" style="display:none">{{total_sales}}</span>
+              <span class="total_sales" style="display: none">{{
+                total_sales
+              }}</span>
               <!-- <span class="float-right share-lk-top">
                 <span class="share-icon">
                   <img src="~/assets/img/share-icon.png" alt />
@@ -318,11 +320,11 @@
             </p>
             <span
               class="card-text-link dash-list"
-              v-for="(item,index) in ternder"
+              v-for="(item, index) in ternder"
               :key="item.id"
             >
               <span class="card-text-s"
-                >{{ index+1 }}. {{ trimString(item.title) }}
+                >{{ index + 1 }}. {{ trimString(item.title) }}
               </span>
 
               <nuxt-link
@@ -345,7 +347,6 @@
       hide-footer
       v-model="dialogVisible"
     >
-    
       <div class="shar-text">Share Text</div>
       <div class="g-main-text">
         <span class="g-title"></span>
@@ -357,18 +358,41 @@
 
       <div class="shar-text">Share Graphics</div>
       <div class="g-img-full">
-        <img src="" alt="" class="slab_image"/>
-        <img :src="graphImage" alt="" class="slab_graph"/>
+        <img src="" alt="" class="slab_image" />
+        <img :src="graphImage" alt="" class="slab_graph" />
       </div>
       <div class="clearfix g-download-out text-center">
         <a href="#" class="g-download-slab" target="_blank" download></a>
-        <a :href="graphImage" class="g-download-graph" target="_blank" download></a>
-        <a href="javascript:void(0);" @click="openImage(cardImage)" class="g-download-img-all mr-3">
-          <svg style="width:15px;height:15px" viewBox="0 0 24 24"><path fill="currentColor" d="M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z" /></svg>
+        <a
+          :href="graphImage"
+          class="g-download-graph"
+          target="_blank"
+          download
+        ></a>
+        <a
+          href="javascript:void(0);"
+          @click="downloadImage(cardImage)"
+          class="g-download-img-all mr-3"
+        >
+          <svg style="width: 15px; height: 15px" viewBox="0 0 24 24">
+            <path
+              fill="currentColor"
+              d="M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z"
+            />
+          </svg>
           Download Card Graphic
         </a>
-        <a href="javascript:void(0);" @click="openImage(graphImage)" class="g-download-img-all">
-          <svg style="width:15px;height:15px" viewBox="0 0 24 24"><path fill="currentColor" d="M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z" /></svg>
+        <a
+          href="javascript:void(0);"
+          @click="downloadImage(graphImage)"
+          class="g-download-img-all"
+        >
+          <svg style="width: 15px; height: 15px" viewBox="0 0 24 24">
+            <path
+              fill="currentColor"
+              d="M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z"
+            />
+          </svg>
           Download Graph Graphic
         </a>
       </div>
@@ -424,11 +448,11 @@ export default {
       initGraphLabelLength: 0,
       graphDataEmpty: false,
       dialogVisible: false,
-      perc_diff:0,
-      doller_diff:0,
-      total_sales:0,
-      last_timestamp:0,
-      keyCount:0,
+      perc_diff: 0,
+      doller_diff: 0,
+      total_sales: 0,
+      last_timestamp: 0,
+      keyCount: 0,
       stoxtickerData: {
         total: 0,
         sale: 0,
@@ -504,21 +528,47 @@ export default {
           $('.featured-graph-title .btn-sxvalue').text()
         )
         $('.g-main-text .g-to-sales').text(
-          'Total Sales '+$('.total_sales').text()
+          'Total Sales ' + $('.total_sales').text()
         )
         $('.g-main-text .g-sales-diff').text(
-          'Price Change $'+$('.g-dollar-d-val').text()
+          'Price Change $' + $('.g-dollar-d-val').text()
         )
         $('.g-main-text .g-image-link').text(self.graphImage)
-        $('.g-img-full .slab_image').attr('src',$('.my-card.active .image-container img').attr('src'))
+        $('.g-img-full .slab_image').attr(
+          'src',
+          $('.my-card.active .image-container img').attr('src')
+        )
         self.cardImage = $('.my-card.active .image-container img').attr('src')
-        $('.g-download-slab').attr('href',$('.my-card.active .image-container img').attr('src'))
+        $('.g-download-slab').attr(
+          'href',
+          $('.my-card.active .image-container img').attr('src')
+        )
       }
     },
   },
   methods: {
-    openImage(src){
+    openImage(src) {
       window.open(src, '_blank')
+    },
+    downloadImage(src) {
+      console.log(src)
+      this.$axios
+        .$get(src, {
+          responseType: 'stream',
+          headers: {
+            'Content-Type': 'application/force-download',
+            'Content-Type': 'application/octet-stream',
+            'Content-Type': 'application/download',
+          },
+        })
+        .then((res) => {
+          new Promise((resolve, reject) => {
+            response.data
+              .pipe(fs.createWriteStream('red.png'))
+              .on('finish', () => resolve())
+              .on('error', (e) => reject(e))
+          })
+        })
     },
     toggleCardActive(card) {
       this.cardActiveId = card.id
@@ -623,16 +673,16 @@ export default {
           .then((res) => {
             if (res.status == 200) {
               this.activeDaysGraph = days
-              var percDiff = res.data.perc_diff;
-              var dollerDiff = String(res.data.doller_diff);
+              var percDiff = res.data.perc_diff
+              var dollerDiff = String(res.data.doller_diff)
               if (this.initGraphLabelLength != res.data.labels.length) {
                 this.graphDataEmpty = false
                 this.series = [{ name: 'Sales', data: res.data.values }]
                 this.salesQty = res.data.qty
-                this.chartOptions = { 
-                  xaxis: { 
-                    categories: res.data.labels 
-                  }, 
+                this.chartOptions = {
+                  xaxis: {
+                    categories: res.data.labels,
+                  },
                   yaxis: {
                     labels: {
                       style: {
@@ -642,15 +692,18 @@ export default {
                       },
                       formatter: (value, ind) => {
                         let lblStr = `$${value}`
-                        if(typeof(ind) == "object") lblStr = `$${value} (${this.salesQty[ind.dataPointIndex]})`
+                        if (typeof ind == 'object')
+                          lblStr = `$${value} (${
+                            this.salesQty[ind.dataPointIndex]
+                          })`
                         else lblStr = `$${value} (${this.salesQty[ind]})`
                         return lblStr
                       },
-                    }
-                  }
+                    },
+                  },
                 }
                 this.initGraphLabelLength = res.data.labels.length
-                this.doller_diff = dollerDiff.replace("-", "")
+                this.doller_diff = dollerDiff.replace('-', '')
                 this.perc_diff = percDiff.toFixed(2)
                 this.total_sales = res.data.total_sales
                 this.last_timestamp = res.data.last_timestamp
@@ -751,7 +804,7 @@ ul.featured-listing {
     width: calc(100% - 64px);
     display: inline-block;
     text-decoration: underline;
-        padding-right: 10px;
+    padding-right: 10px;
   }
 }
 .dash-watchlist,
@@ -863,24 +916,24 @@ ul.featured-listing {
 }
 .g-img-full {
   margin: -10px 20px 0 20px;
-  .slab_image{
-        width: calc(20% - 5px);
+  .slab_image {
+    width: calc(20% - 5px);
     margin-right: 5px;
     float: left;
     margin-top: 10px;
   }
-  .slab_graph{
+  .slab_graph {
     width: 80%;
   }
 }
-.g-download-img-all{
-      font-family: "CocogoosePro-Italic", Helvetica, Arial, sans-serif;
-    color: #1ce783;
-    text-transform: uppercase;
-    font-size: 9px;
-    letter-spacing: 1px;
+.g-download-img-all {
+  font-family: 'CocogoosePro-Italic', Helvetica, Arial, sans-serif;
+  color: #1ce783;
+  text-transform: uppercase;
+  font-size: 9px;
+  letter-spacing: 1px;
 }
-.g-download-out{
-      margin: 20px 20px 0 20px;
+.g-download-out {
+  margin: 20px 20px 0 20px;
 }
 </style>
