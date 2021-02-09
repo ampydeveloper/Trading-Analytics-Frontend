@@ -362,16 +362,16 @@
         <img :src="graphImage" alt="" class="slab_graph" />
       </div>
       <div class="clearfix g-download-out text-center">
-        <a href="#" class="g-download-slab" target="_blank" download></a>
+        <a href="http://slabstox.leagueofclicks.com/storage/basketball/F2.jpg" class="" download>11</a>
+        <a :href="cardImage" class="" download>22</a>
         <a
           :href="graphImage"
           class="g-download-graph"
-          target="_blank"
           download
-        ></a>
+        >33</a>
         <a
           href="javascript:void(0);"
-          @click="downloadImage(cardImage)"
+          @click="downloadImage('http://slabstox.leagueofclicks.com/storage/basketball/F2.jpg')"
           class="g-download-img-all mr-3"
         >
           <svg style="width: 15px; height: 15px" viewBox="0 0 24 24">

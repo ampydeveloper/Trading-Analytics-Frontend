@@ -246,13 +246,14 @@ export default {
     }
   },
   mounted() {
-    this.getItems(this.page)
-    // console.log(this.$route.query.item)
-  },
-  updated() {
     if(this.$route.query.item != null){
     this.searchItem(this.$route.query.item)
+    }else{
+this.getItems(this.page)
     }
+  },
+  updated() {
+    
     $('.main-checkbox').change(function () {
       if ($('.main-checkbox').is(':checked')) {
         $('.indi-checkbox').attr('checked', true)
@@ -302,11 +303,13 @@ export default {
           this.$axios
             .post('get-ebay-list', payload)
             .then((res) => {
+              console.log(res);
               if (res.status == 200) {
                 this.currentPage = page
                 this.items = res.data.data
                 this.page = res.data.next
                 this.sportsList = res.data.sportsList
+                console.log(res.data.data);
               }
               this.requestInProcess = false
               this.hideLoader()
