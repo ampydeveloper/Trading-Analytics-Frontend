@@ -36,8 +36,8 @@
                   @change="updateStatus"
                 >
                   <option>Change Status</option>
-                  <option value="0">Active</option>
-                  <option value="2">Disable</option>
+                  <option value="1">Active</option>
+                  <option value="0">Disable</option>
                 </select>
               </div>
               <div class="col-2">
@@ -384,7 +384,7 @@ export default {
             .then((res) => {
               this.requestInProcess = false
               this.hideLoader()
-              location.reload()
+              // location.reload()
             })
         } catch (err) {
           this.hideLoader()

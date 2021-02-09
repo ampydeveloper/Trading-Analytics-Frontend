@@ -23,7 +23,7 @@
               <div class="col-2">
                 <select
                   id="sportFilter"
-                  @change="getItems(currentPage, $event)"
+                  @change="getSportItems(currentPage, $event)"
                   class="form-control text-capitalize"
                 >
                   <option selected>Select Sport</option>
@@ -247,10 +247,12 @@ export default {
   },
   mounted() {
     this.getItems(this.page)
-    console.log(this.$route.query.item)
+    // console.log(this.$route.query.item)
   },
   updated() {
+    if(this.$route.query.item != null){
     this.searchItem(this.$route.query.item)
+    }
     $('.main-checkbox').change(function () {
       if ($('.main-checkbox').is(':checked')) {
         $('.indi-checkbox').attr('checked', true)
@@ -329,6 +331,36 @@ export default {
           if (filter != null) payload['sport'] = filter.target.value
           this.$axios
             .post('get-ebay-list', payload)
+            .then((res) => {
+              if (res.status == 200) {
+                this.currentPage = page
+                this.items = res.data.data
+                this.page = res.data.next
+                this.sportsList = res.data.sportsList
+              }
+              this.requestInProcess = false
+              this.hideLoader()
+            })
+            .catch((err) => {
+              this.requestInProcess = false
+              this.hideLoader()
+            })
+        } catch (err) {
+          this.hideLoader()
+          this.requestInProcess = false
+          console.log(err)
+        }
+      }
+    },
+    getSportItems(page, filter = null) {
+      if (!this.requestInProcess) {
+        try {
+          this.showLoader()
+          this.requestInProcess = true
+          let payload = { page: page, search: this.searchTerm }
+          if (filter != null) payload['sport'] = filter.target.value
+          this.$axios
+            .post('get-ebay-list-for-sport', payload)
             .then((res) => {
               if (res.status == 200) {
                 this.currentPage = page
