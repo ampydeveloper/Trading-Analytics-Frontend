@@ -209,7 +209,7 @@ export default {
           this.isSubmit = false
           if (e) {
             this.handelError(e.response)
-            this.errorMessage = 'Invalid Email and Password'
+            this.errorMessage = 'Invalid Email or Password.'
           }
         }
       }
@@ -237,7 +237,7 @@ export default {
       } catch (e) {
         this.hideLoader()
         this.handelError(e.response)
-        this.errorMessage = 'Login failed'
+        this.errorMessage = 'Login failed.'
       }
     },
     validation() {

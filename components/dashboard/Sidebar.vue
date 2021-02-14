@@ -21,30 +21,34 @@
             <div class="link-text">Live Listings</div>
           </nuxt-link>
         </li>
-        <!-- <li class="nav-item">
+         <!-- <li class="nav-item">
           <nuxt-link class="nav-link" to="/trenders">
             <div class="icon trenders-icon"></div>
             <div class="link-text">Trenders</div>
           </nuxt-link>
-        </li>
+        </li> -->
         <li class="nav-item">
           <nuxt-link class="nav-link" to="/head2head">
             <div class="icon head-to-head-icon"></div>
             <div class="link-text">Head 2 Head</div>
           </nuxt-link>
-        </li> -->
+        </li> 
         <!-- <li class="nav-item">
           <nuxt-link class="nav-link" to="/watch-list">
             <div class="icon watch-list-icon"></div>
             <div class="link-text">Watch List</div>
           </nuxt-link>
         </li> -->
-        <!-- <li class="nav-item">
-          <nuxt-link class="nav-link" to="/my-portfolio">
+        <li class="nav-item">
+          <nuxt-link class="nav-link" to="/my-portfolio" v-if="user.full_name != null">
             <div class="icon my-listing-icon"></div>
             <div class="link-text">My Portfolio</div>
           </nuxt-link>
-        </li> -->
+          <nuxt-link class="nav-link" to="/" v-if="user.full_name == null">
+            <div class="icon my-listing-icon"></div>
+            <div class="link-text">My Portfolio</div>
+          </nuxt-link>
+        </li>
         <!--<li class="nav-item">
           <nuxt-link class="nav-link" to="/sell-slabs">
             <div class="icon sell-card-icon"></div>
@@ -69,12 +73,12 @@
             <div class="link-text">Stoxticker</div>
           </nuxt-link>
         </li> -->
-        <li class="nav-item stox-request">
+        <!-- <li class="nav-item stox-request">
           <nuxt-link class="nav-link" to="/stox-requrest">
             <div class="icon stox-request-icon"></div>
             <div class="link-text">Stox Request</div>
           </nuxt-link>
-        </li>
+        </li> -->
       </ul>
       <!-- <div class="sibar-logo-middel">
         <img src="~/assets/img/dashboard-sidebar-middel-logo.png" alt="Slabstox" />

@@ -10,6 +10,9 @@ const User = {
                     appLoaded: false,
                     user_fullname: null,
                     showloader: true,
+                    // user: [],
+                    // watchListIds:[],
+                    // authenticated:false
                 }
             },
             computed: {
@@ -23,8 +26,7 @@ const User = {
                 this.appLoaded = true;
                 this.showloader = false;
                 if (this.user) {
-//                    this.user_fullname = this.user.first_name + ' ' + ((this.user.last_name != null) ? this.user.last_name : '')
-this.user_fullname = this.user.first_name
+                    this.user_fullname = this.user.first_name
                 }
             },
             methods: {
@@ -38,9 +40,9 @@ this.user_fullname = this.user.first_name
                     if (!this.authenticated) {
                         window.localStorage.clear()
                         this.$router.push('/')
-                    }else{
-                        if(this.user){
-                            if(this.user.roles[0].name != 'administrator'){
+                    } else {
+                        if (this.user) {
+                            if (this.user.roles[0].name != 'administrator') {
                                 this.$router.push('/dashboard')
                             }
                         }
@@ -50,9 +52,9 @@ this.user_fullname = this.user.first_name
                     if (!this.authenticated) {
                         window.localStorage.clear()
                         this.$router.push('/')
-                    }else{
-                        if(this.user){
-                            if(this.user.roles[0].name != 'user'){
+                    } else {
+                        if (this.user) {
+                            if (this.user.roles[0].name != 'user') {
                                 this.$router.push('/admin')
                             }
                         }
@@ -86,7 +88,7 @@ this.user_fullname = this.user.first_name
                     }
                 },
                 isInWatchList(id) {
-                    if(this.watchListIds){
+                    if (this.watchListIds) {
                         return (this.watchListIds.indexOf(id) != -1);
                     }
                     return false;

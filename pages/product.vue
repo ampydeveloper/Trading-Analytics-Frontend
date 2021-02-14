@@ -2,14 +2,14 @@
   <div class="col-md-12 col-sm-12 product-details" v-if="loaded">
     <div class="row">
       <div class="col-md-4 col-sm-4 t-p-5 product-details-col-md-4">
-        <div class="card" style="height: 100%;">
+        <div class="card" style="height: 100%">
           <div class="card-body product-image-card">
             <h5 class="card-title product-title">{{ data.title }}</h5>
             <div class="labels">
-              <label class="topps" v-if="data.card.brand == 'Topps Series 2'"
+              <label class="topps" v-if="data.card!=null && data.card.brand == 'Topps Series 2'"
                 >Topps</label
               >
-              <label class="chrome" v-if="data.card.brand == 'Prizm'"
+              <label class="chrome" v-if="data.card!=null && data.card.brand == 'Prizm'"
                 >Prizm</label
               >
               <label class="top-pick" v-if="false">top pick</label>
@@ -17,13 +17,13 @@
             </div>
             <div class="icons-container">
               <img
-                v-if="!isInWatchList(data.id)"
+                v-if="!isInWatchList(data.id) && user.full_name != null"
                 @click="addToWatchList()"
                 class="icons"
                 src="~/assets/img/icons/1heart-green.png"
               />
               <img
-                v-if="isInWatchList(data.id)"
+                v-if="isInWatchList(data.id) && user.full_name != null"
                 @click="removeToWatchList()"
                 class="icons heart-fill-icon"
                 src="~/assets/img/icons/heart-green.png"
@@ -48,37 +48,56 @@
               <div class="card-body">
                 <h5 class="card-title sx-stats-all">
                   <button class="theme-cart-btn card-btn">Listing Info</button>
-                  <button class="theme-btn card-btn">*$$ Value {{(data.card.value !=null) ? data.card.value.value : '0'}}</button>
-                  <button class="theme-green-btn card-btn" v-if="valueDifference > 0">
+                  <button class="theme-btn card-btn">
+                    *$$ Value
+                    {{ data.card != null ? data.card.value.value : '0' }}
+                  </button>
+                  <button
+                    class="theme-green-btn card-btn"
+                    v-if="valueDifference > 0"
+                  >
                     <font-awesome-icon
                       :icon="['fas', 'long-arrow-alt-up']"
                       v-if="valueDifference > 0"
-                    />&nbsp;&nbsp;{{getValueDifference()}}
+                    />&nbsp;&nbsp;{{ getValueDifference() }}
                   </button>
-                  <button class="theme-red-btn card-btn" v-if="valueDifference < 0">
+                  <button
+                    class="theme-red-btn card-btn"
+                    v-if="valueDifference < 0"
+                  >
                     <font-awesome-icon
                       :icon="['fas', 'long-arrow-alt-down']"
-                    />&nbsp;&nbsp;{{getValueDifference()}}
+                    />&nbsp;&nbsp;{{ getValueDifference() }}
                   </button>
-                  <!-- <a :href="data.viewItemURL" class="theme-btn card-btn">
-                View Card Data
-                <font-awesome-icon :icon="['fas', 'chevron-right']" />
-              </a> -->
-              <nuxt-link
-      class="theme-btn card-btn vsd-btn"
-      :to="'/card-data/?id=' + data.card_id"
-    >
-      View Slab Data
-      <font-awesome-icon :icon="['fas', 'chevron-right']" />
-    </nuxt-link>
+                  <nuxt-link
+                    class="theme-btn card-btn vsd-btn"
+                    :to="'/card-data/?id=' + data.card_id"
+                  >
+                    View Slab Data
+                    <font-awesome-icon :icon="['fas', 'chevron-right']" />
+                  </nuxt-link>
                 </h5>
                 <div class="listing-info-container">
                   <ul>
-                    <li>Buy it Now: ${{ data.selling_status.price }}</li>
-                    <li v-if="data.selling_status.timeLeft != null">
+                    <li>
+                      Buy it Now: ${{
+                        data.selling_status ? data.selling_status.price : 0
+                      }}
+                    </li>
+                    <li
+                      v-if="
+                        data.selling_status &&
+                        data.selling_status.timeLeft != null
+                      "
+                    >
                       Time left: {{ timeLeft.value }}
                     </li>
-                    <li v-if="data.selling_status.timeLeft == null">
+                    <li
+                      v-if="
+                        data.selling_status &&
+                        data.selling_status.timeLeft == null
+                      "
+                    >
                       Time left: 00:00
                     </li>
                   </ul>
@@ -100,12 +119,17 @@
                 </h5>
                 <div class="seller-info-container">
                   <p class="seller-name">
-                    {{ data.seller_info.sellerUserName }}
+                    {{
+                      data.seller_info ? data.seller_info.sellerUserName : ''
+                    }}
                   </p>
                   <p>
                     <a href="javascript:;" class="positive-feedback-link"
-                      >{{ data.seller_info.positiveFeedbackPercent }}% Positive
-                      Feedback</a
+                      >{{
+                        data.seller_info
+                          ? data.seller_info.positiveFeedbackPercent
+                          : 0
+                      }}% Positive Feedback</a
                     >
                   </p>
                   <p>
@@ -162,45 +186,33 @@
                 </div>
               </div>
             </div>
-            <div class="slab-specs-btn-group">
-               <button class="slab-specs-btn theme-green-btn beta-ver-hide">Place Bid</button>
-
-              <button
-                class="slab-specs-btn theme-buy-now-btn beta-ver-hide"
-                @click="buyNow(data)"
-                 v-if="data.listing_info.listingType != 'Auction'"
-              >
-                Buy Now
-              </button>
-
-              <button
-                class="slab-specs-btn theme-btn beta-ver-hide"
-                v-if="data.listing_info.listingType == 'Auction'"
-              >
-                Make Offer
-              </button> 
-
+            <div class="slab-specs-btn-group" v-if="user.full_name != null">
               <a
-                class="slab-specs-btn theme-green-btn staging-ver-hide"
+                class="slab-specs-btn theme-green-btn"
                 target="_blank"
-                v-if="data.listing_info.listingType == 'Auction'"
+                v-if="data.listing_info != null && data.listing_info.listingType == 'Auction'"
                 :href="data.viewItemURL"
                 >Place Bid</a
               >
               <a
-                class="slab-specs-btn theme-buy-now-btn staging-ver-hide"
+                class="slab-specs-btn theme-buy-now-btn"
                 target="_blank"
                 :href="data.viewItemURL"
-                v-if="data.listing_info.listingType != 'Auction'"
+                v-if="data.listing_info != null && data.listing_info.listingType != 'Auction'"
                 >Buy Now</a
               >
               <a
-                class="slab-specs-btn theme-btn staging-ver-hide"
-                v-if="data.listing_info.listingType == 'Auction'"
+                class="slab-specs-btn theme-btn"
+                v-if="data.listing_info != null && data.listing_info.listingType == 'Auction'"
                 target="_blank"
                 :href="data.viewItemURL"
                 >Make Offer</a
               >
+            </div>
+            <div class="slab-specs-btn-group" v-if="user.full_name == null">
+              <nuxt-link class="slab-specs-btn theme-btn" to="/">
+                Login To Buy
+              </nuxt-link>
             </div>
           </div>
           <div class="col-md-5 col-sm-5 purchase-info">
@@ -213,9 +225,9 @@
                   <p>
                     <span>Shipping</span>
                     {{
-                      data.shipping_info.shippingServiceCost != null
+                      data.shipping_info != null
                         ? '$' + data.shipping_info.shippingServiceCost
-                        : ''
+                        : '0'
                     }}
                     standard shipping
                     <!-- | <a href="javascript:;" class="see-deatils">see details</a> -->
@@ -226,7 +238,11 @@
                   </p>
                   <p>
                     <span>Shipping to</span>
-                    {{ data.shipping_info.shipToLocations }}
+                    {{
+                      data.shipping_info
+                        ? data.shipping_info.shipToLocations
+                        : ''
+                    }}
                     <!-- <a href="javascript:;" class="see-exclusions"
                       >See Exclusions</a
                     > -->
@@ -250,7 +266,7 @@
               </div>
             </div>
             <div class="subtitle">
-              <span v-b-modal.openSeeProblemPopup>
+              <span v-b-modal.openSeeProblemPopup v-if="user.full_name != null">
                 SEE A PROBLEM? FLAG LISTING
                 <font-awesome-icon :icon="['fas', 'chevron-right']" />
               </span>
@@ -278,22 +294,28 @@
         </template>
       </ul>
     </b-modal>
-    <b-modal
-      id="openSeeProblemPopup"
-      title="FLAG LISTING"
-      hide-footer
-    >
+    <b-modal id="openSeeProblemPopup" title="FLAG LISTING" hide-footer>
       <form class="" v-on:submit.prevent="submitSeeProblem">
-       
-          <div class="col-md-12">
-            <textarea class="form-control" placeholder="Describe your problem with this listing in a few words…" v-model="seeProblemMessage" required cols="30" rows="10"></textarea>
-          </div>
-          <div class="col-md-12 text-right">
-            <button type="submit" class="theme-green-btn form-submit-btn" :disabled="!seeProblemMessage">Submit</button>
-          </div>
-  
+        <div class="col-md-12">
+          <textarea
+            class="form-control"
+            placeholder="Describe your problem with this listing in a few words…"
+            v-model="seeProblemMessage"
+            required
+            cols="30"
+            rows="10"
+          ></textarea>
+        </div>
+        <div class="col-md-12 text-right">
+          <button
+            type="submit"
+            class="theme-green-btn form-submit-btn"
+            :disabled="!seeProblemMessage"
+          >
+            Submit
+          </button>
+        </div>
       </form>
-
     </b-modal>
   </div>
 </template>
@@ -305,7 +327,7 @@ export default {
   layout: 'dashboard',
   head() {
     return {
-      title: 'Product Details - Slabstox'
+      title: 'Product Details - Slabstox',
     }
   },
   async mounted() {
@@ -317,7 +339,7 @@ export default {
     this.getData()
   },
   components: {
-    RealtedProductList
+    RealtedProductList,
   },
   watchQuery(newQuery, oldQuery) {
     if (this.id != newQuery.id) {
@@ -340,8 +362,8 @@ export default {
         secs: 0,
         value: null,
         datetime: null,
-        intervalObject: null
-      }
+        intervalObject: null,
+      },
     }
   },
   methods: {
@@ -349,9 +371,9 @@ export default {
       try {
         const res = await this.$axios.$post('add-see-problem', {
           id: this.id,
-          message: this.seeProblemMessage
+          message: this.seeProblemMessage,
         })
-        console.log(res);
+        console.log(res)
         if (res.status == 200) {
           this.seeProblemMessage = null
           this.$bvModal.hide('openSeeProblemPopup')
@@ -362,26 +384,31 @@ export default {
       }
     },
     calculateValueDifference() {
-      if(this.data.card.value != null) {
-        this.valueDifference = (parseFloat(this.data.selling_status.price) - parseFloat(this.data.card.value.value)) 
-      }else{
+      if (this.data.card !=null && this.data.card.value != null) {
+        var sellingStatusPrice = this.data.selling_status
+          ? this.data.selling_status.price
+          : ''
+        this.valueDifference =
+          parseFloat(sellingStatusPrice) -
+          parseFloat(this.data.card.value.value)
+      } else {
         this.valueDifference = 0
       }
     },
-    getValueDifference(){
-      if(this.valueDifference > 0){
-        return this.valueDifference.toFixed(2);
-      }else{
-        let a = this.valueDifference * 2;
-        return (this.valueDifference - a).toFixed(2);
+    getValueDifference() {
+      if (this.valueDifference > 0) {
+        return this.valueDifference.toFixed(2)
+      } else {
+        let a = this.valueDifference * 2
+        return (this.valueDifference - a).toFixed(2)
       }
     },
     async getData() {
       try {
         const res = await this.$axios.$post('get-item-details', {
-          id: this.id
+          id: this.id,
         })
-        console.log(res);
+        console.log(res)
         if (res.status == 200) {
           this.data = res.data
           this.calculateValueDifference()
@@ -408,14 +435,14 @@ export default {
           const h = this.$moment(final).format('H')
           const m = this.$moment(final).format('mm')
           const s = this.$moment(final).format('ss')
-          if(d > 0){
-            this.timeLeft.value = d+'d '+h+'h' 
-          }else if(h > 1){
-            this.timeLeft.value = h+'h '+m+'m' 
-          }else if(m > 1){
-            this.timeLeft.value = m+'m '+s+'s' 
-          }else{
-            this.timeLeft.value = s+'s' 
+          if (d > 0) {
+            this.timeLeft.value = d + 'd ' + h + 'h'
+          } else if (h > 1) {
+            this.timeLeft.value = h + 'h ' + m + 'm'
+          } else if (m > 1) {
+            this.timeLeft.value = m + 'm ' + s + 's'
+          } else {
+            this.timeLeft.value = s + 's'
           }
         } else {
           this.timeLeft.value = '00:00'
@@ -438,9 +465,9 @@ export default {
       try {
         this.$axios
           .$post('watchlist/add', {
-            id: this.data.id
+            id: this.data.id,
           })
-          .then(res => {
+          .then((res) => {
             this.$store.dispatch('watchlist/fetchIds')
           })
       } catch (err) {
@@ -451,9 +478,9 @@ export default {
       try {
         this.$axios
           .$post('watchlist/remove', {
-            id: this.data.id
+            id: this.data.id,
           })
-          .then(res => {
+          .then((res) => {
             this.$store.dispatch('watchlist/fetchIds')
             this.$emit('onRemoveFromWatchList')
           })
@@ -466,7 +493,7 @@ export default {
     if (this.timeLeft.intervalObject != null) {
       clearInterval(this.timeLeft.intervalObject)
     }
-  }
+  },
 }
 </script>
 
@@ -836,7 +863,8 @@ export default {
   }
 }
 
-#specsDetails, #openSeeProblemPopup {
+#specsDetails,
+#openSeeProblemPopup {
   .modal-dialog {
     .modal-content {
       background: $theme-card-background-color;
@@ -861,35 +889,35 @@ export default {
           float: left;
           list-style: none;
         }
-        textarea{
+        textarea {
           width: 100%;
-    background: #39414a;
-    color: #ffffff;
-    font-size: 11px;
-    letter-spacing: 2px;
-    line-height: 20px;
-    font-family: 'NexaBold', Helvetica, Arial, sans-serif;
-    margin: 0px;
-    &:focus{
-          box-shadow: none;
-          outline: 0;
-              border: 1px solid #ced4da;
-    }
+          background: #39414a;
+          color: #ffffff;
+          font-size: 11px;
+          letter-spacing: 2px;
+          line-height: 20px;
+          font-family: 'NexaBold', Helvetica, Arial, sans-serif;
+          margin: 0px;
+          &:focus {
+            box-shadow: none;
+            outline: 0;
+            border: 1px solid #ced4da;
+          }
         }
-        .form-submit-btn{
-              padding: 8px 12px 5px 12px;
-    font-family: "Nexabold", Helvetica, Arial, sans-serif;
-    margin-top: 15px;
+        .form-submit-btn {
+          padding: 8px 12px 5px 12px;
+          font-family: 'Nexabold', Helvetica, Arial, sans-serif;
+          margin-top: 15px;
         }
       }
     }
   }
 }
-.vsd-btn{
+.vsd-btn {
   color: #212529;
-    display: inline-block;
-    &:hover{
-      text-decoration: none;
-    }
+  display: inline-block;
+  &:hover {
+    text-decoration: none;
+  }
 }
 </style>

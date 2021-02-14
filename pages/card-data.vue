@@ -10,9 +10,23 @@
             <ul class="labels">
               <!-- <li class="yellow">topps</li>
               <li class="grey">chrome</li> -->
-              <li class="green">{{card.brand}}</li>
+              <li class="green">{{ card.brand }}</li>
               <!-- <li class="orange">trender</li> -->
             </ul>
+            <div class="icons-container">
+              <img
+                v-if="!isInWatchList(id) && user.full_name != null"
+                @click="addToWatchList()"
+                class="icons"
+                src="~/assets/img/icons/1heart-green.png"
+              />
+              <img
+                v-if="isInWatchList(id) && user.full_name != null"
+                @click="removeToWatchList()"
+                class="icons heart-fill-icon"
+                src="~/assets/img/icons/heart-green.png"
+              />
+            </div>
             <div class="image-conatiner">
               <img :src="card.cardImage" alt="data.title" />
             </div>
@@ -26,6 +40,7 @@
             /></a>
             <button
               class="theme-green-btn card-btn add-my-port"
+              v-if="user.full_name != null"
               @click="addToMyPortfolio()"
             >
               Add to My Portfolio
@@ -54,10 +69,10 @@
                       :icon="['fas', 'long-arrow-alt-' + card.sx_icon]"
                     />&nbsp;&nbsp;{{ card.sx }}
                   </button>
-<span class="card-link" v-b-modal.openSeeProblemPopup>
-                Export Data
-                <font-awesome-icon :icon="['fas', 'chevron-right']" />
-              </span>
+                  <span class="card-link" v-b-modal.openSeeProblemPopup>
+                    Export Data
+                    <font-awesome-icon :icon="['fas', 'chevron-right']" />
+                  </span>
                   <!-- <div class="float-right icon_img">
                     <img
                       class="gift-cart-title-ebay-img"
@@ -102,7 +117,6 @@
                       </div>
                     </span>
                   </div> -->
-
                 </h5>
                 <div class="dashboard-apex-top">
                   <VueApexCharts
@@ -115,77 +129,105 @@
                 </div>
                 <div class="dashboard-graph-footer">
                   <ul class="dashboard-graph-footer-month-filter">
-                <li
-                  :class="
-                    'dashboard-graph-footer-month-filter-item ' +
-                      ((activeDaysGraph == 2 && graphDataEmpty == false) ? 'active' : '') +
-                      ((activeDaysGraph == 2 && graphDataEmpty == true) ? 'nodata' : '')
-                  "
-                  @click="updateGraph(2)"
-                >
-                  1D
-                </li>
-                <li
-                  :class="
-                    'dashboard-graph-footer-month-filter-item ' +
-                      ((activeDaysGraph == 7 && graphDataEmpty == false) ? 'active' : '') +
-                      ((activeDaysGraph == 7 && graphDataEmpty == true) ? 'nodata' : '')
-                  "
-                  @click="updateGraph(7)"
-                >
-                  1W
-                </li>
-                <li
-                  :class="
-                    'dashboard-graph-footer-month-filter-item ' +
-                      ((activeDaysGraph == 30 && graphDataEmpty == false) ? 'active' : '') +
-                      ((activeDaysGraph == 30 && graphDataEmpty == true) ? 'nodata' : '')
-                  "
-                  @click="updateGraph(30)"
-                >
-                  1M
-                </li>
-                <li
-                  :class="
-                    'dashboard-graph-footer-month-filter-item ' +
-                      ((activeDaysGraph == 90 && graphDataEmpty == false) ? 'active' : '') +
-                      ((activeDaysGraph == 90 && graphDataEmpty == true) ? 'nodata' : '')
-                  "
-                  @click="updateGraph(90)"
-                >
-                  3M
-                </li>
-                <li
-                  :class="
-                    'dashboard-graph-footer-month-filter-item ' +
-                      ((activeDaysGraph == 180 && graphDataEmpty == false) ? 'active' : '') +
-                      ((activeDaysGraph == 180 && graphDataEmpty == true) ? 'nodata' : '')
-                  "
-                  @click="updateGraph(180)"
-                >
-                  6M
-                </li>
-                <li
-                  :class="
-                    'dashboard-graph-footer-month-filter-item ' +
-                      ((activeDaysGraph == 365 && graphDataEmpty == false) ? 'active' : '') +
-                      ((activeDaysGraph == 365 && graphDataEmpty == true) ? 'nodata' : '')
-                  "
-                  @click="updateGraph(365)"
-                >
-                  1Y
-                </li>
-                <li
-                  :class="
-                    'dashboard-graph-footer-month-filter-item ' +
-                      ((activeDaysGraph == 1825 && graphDataEmpty == false) ? 'active' : '') +
-                      ((activeDaysGraph == 1825 && graphDataEmpty == true) ? 'nodata' : '')
-                  "
-                  @click="updateGraph(1825)"
-                >
-                  5Y
-                </li>
-              </ul>
+                    <li
+                      :class="
+                        'dashboard-graph-footer-month-filter-item ' +
+                        (activeDaysGraph == 2 && graphDataEmpty == false
+                          ? 'active'
+                          : '') +
+                        (activeDaysGraph == 2 && graphDataEmpty == true
+                          ? 'nodata'
+                          : '')
+                      "
+                      @click="updateGraph(2)"
+                    >
+                      1D
+                    </li>
+                    <li
+                      :class="
+                        'dashboard-graph-footer-month-filter-item ' +
+                        (activeDaysGraph == 7 && graphDataEmpty == false
+                          ? 'active'
+                          : '') +
+                        (activeDaysGraph == 7 && graphDataEmpty == true
+                          ? 'nodata'
+                          : '')
+                      "
+                      @click="updateGraph(7)"
+                    >
+                      1W
+                    </li>
+                    <li
+                      :class="
+                        'dashboard-graph-footer-month-filter-item ' +
+                        (activeDaysGraph == 30 && graphDataEmpty == false
+                          ? 'active'
+                          : '') +
+                        (activeDaysGraph == 30 && graphDataEmpty == true
+                          ? 'nodata'
+                          : '')
+                      "
+                      @click="updateGraph(30)"
+                    >
+                      1M
+                    </li>
+                    <li
+                      :class="
+                        'dashboard-graph-footer-month-filter-item ' +
+                        (activeDaysGraph == 90 && graphDataEmpty == false
+                          ? 'active'
+                          : '') +
+                        (activeDaysGraph == 90 && graphDataEmpty == true
+                          ? 'nodata'
+                          : '')
+                      "
+                      @click="updateGraph(90)"
+                    >
+                      3M
+                    </li>
+                    <li
+                      :class="
+                        'dashboard-graph-footer-month-filter-item ' +
+                        (activeDaysGraph == 180 && graphDataEmpty == false
+                          ? 'active'
+                          : '') +
+                        (activeDaysGraph == 180 && graphDataEmpty == true
+                          ? 'nodata'
+                          : '')
+                      "
+                      @click="updateGraph(180)"
+                    >
+                      6M
+                    </li>
+                    <li
+                      :class="
+                        'dashboard-graph-footer-month-filter-item ' +
+                        (activeDaysGraph == 365 && graphDataEmpty == false
+                          ? 'active'
+                          : '') +
+                        (activeDaysGraph == 365 && graphDataEmpty == true
+                          ? 'nodata'
+                          : '')
+                      "
+                      @click="updateGraph(365)"
+                    >
+                      1Y
+                    </li>
+                    <li
+                      :class="
+                        'dashboard-graph-footer-month-filter-item ' +
+                        (activeDaysGraph == 1825 && graphDataEmpty == false
+                          ? 'active'
+                          : '') +
+                        (activeDaysGraph == 1825 && graphDataEmpty == true
+                          ? 'nodata'
+                          : '')
+                      "
+                      @click="updateGraph(1825)"
+                    >
+                      5Y
+                    </li>
+                  </ul>
                   <p class="dashboard-graph-footer-update-at float-right">
                     Last Updated - {{ card.price_graph_updated }}
                   </p>
@@ -204,7 +246,11 @@
                     VIEW SALES HISTORY
                     <font-awesome-icon :icon="['fas', 'chevron-right']" />
                   </nuxt-link> -->
-                  <a href="javascript:;" class="card-link float-right" v-b-modal.viewSalesHistory>
+                  <a
+                    href="javascript:;"
+                    class="card-link float-right"
+                    v-b-modal.viewSalesHistory
+                  >
                     VIEW SALES HISTORY
                     <font-awesome-icon :icon="['fas', 'chevron-right']" />
                   </a>
@@ -243,43 +289,49 @@
         </div>
 
         <b-modal
-      id="openSeeProblemPopup"
-      title="EXPORT DATA"
-      hide-footer
-      v-model="dialogVisible"
-    >
-    
-      <div class="shar-text">Share Text</div>
-      <div class="g-main-text">
-        <span class="g-title"></span>
-        &nbsp;&nbsp;<span class="g-sx"></span> &nbsp;&nbsp;
-        <span class="g-to-sales"></span> &nbsp;&nbsp;
-        <span class="g-sales-diff"></span>
-        &nbsp;&nbsp; <span class="g-image-link"></span>
-      </div>
+          id="openSeeProblemPopup"
+          title="EXPORT DATA"
+          hide-footer
+          v-model="dialogVisible"
+        >
+          <div class="shar-text">Share Text</div>
+          <div class="g-main-text">
+            <span class="g-title"></span>
+            &nbsp;&nbsp;<span class="g-sx"></span> &nbsp;&nbsp;
+            <span class="g-to-sales"></span> &nbsp;&nbsp;
+            <span class="g-sales-diff"></span>
+            &nbsp;&nbsp; <span class="g-image-link"></span>
+          </div>
 
-      <div class="shar-text">Share Graphics</div>
-      <div class="g-img-full">
-        <img src="" alt="" class="slab_image"/>
-        <img :src="graphImage" alt="" class="slab_graph"/>
-      </div>
-      <div class="clearfix g-download-out">
-        <a href="#" class="g-download-slab" target="_blank" download></a>
-        <a :href="graphImage" class="g-download-graph" target="_blank" download></a>
-        <a href="#" class="g-download-img-all">Download Graphics</a>
-      </div>
-    </b-modal>
-
+          <div class="shar-text">Share Graphics</div>
+          <div class="g-img-full">
+            <img src="" alt="" class="slab_image" />
+            <img :src="graphImage" alt="" class="slab_graph" />
+          </div>
+          <div class="clearfix g-download-out">
+            <a href="#" class="g-download-slab" target="_blank" download></a>
+            <a
+              :href="graphImage"
+              class="g-download-graph"
+              target="_blank"
+              download
+            ></a>
+            <a href="#" class="g-download-img-all">Download Graphics</a>
+          </div>
+        </b-modal>
       </div>
     </div>
 
     <AvailableListing :cardId="parseInt(id)" :datascroll="true" />
 
-     <b-modal id="viewSalesHistory" title="View Sales history" size="xl" hide-footer>
-      <div class="row">
-      View Sales history
-      </div>
-         </b-modal>
+    <b-modal
+      id="viewSalesHistory"
+      title="View Sales history"
+      size="xl"
+      hide-footer
+    >
+      <div class="row">View Sales history</div>
+    </b-modal>
   </div>
 </template>
 
@@ -293,7 +345,7 @@ export default {
   layout: 'dashboard',
   head() {
     return {
-      title: 'Buy & Sell Sports Cards Online - Slabstox'
+      title: 'Buy & Sell Sports Cards Online - Slabstox',
     }
   },
   mounted() {
@@ -308,11 +360,9 @@ export default {
   watch: {
     dialogVisible(visible) {
       if (visible) {
-        $('.g-main-text .g-title').text(
-          $('.product-title').text()
-        )
+        $('.g-main-text .g-title').text($('.product-title').text())
         $('.g-main-text .g-sx').text(
-          'Card Cost Change '+$('.card-title_new .theme-green-btn').text()
+          'Card Cost Change ' + $('.card-title_new .theme-green-btn').text()
         )
         $('.g-main-text .g-to-sales').text(
           $('.card-title_new .theme-btn').text()
@@ -321,16 +371,21 @@ export default {
         //   'Price Change $'+$('.g-dollar-d-val').text()
         // )
         $('.g-main-text .g-image-link').text(this.graphImage)
-        $('.g-img-full .slab_image').attr('src',$('.image-conatiner img').attr('src'))
-         $('.g-download-slab').attr('href',$('.my-card.active .image-container img').attr('src'))
-        
+        $('.g-img-full .slab_image').attr(
+          'src',
+          $('.image-conatiner img').attr('src')
+        )
+        $('.g-download-slab').attr(
+          'href',
+          $('.my-card.active .image-container img').attr('src')
+        )
       }
     },
   },
   components: {
     CardListItem,
     AvailableListing,
-    VueApexCharts: () => import('vue-apexcharts')
+    VueApexCharts: () => import('vue-apexcharts'),
   },
   data() {
     return {
@@ -341,89 +396,89 @@ export default {
       initGraphLabelLength: 0,
       graphImage: '',
       graphDataEmpty: false,
-       dialogVisible: false,
+      dialogVisible: false,
       series: [
         {
           name: 'Card Value',
-          data: []
-        }
+          data: [],
+        },
       ],
       chartOptions: {
         chart: {
           toolbar: {
-            show: false
+            show: false,
           },
           height: 350,
           type: 'area',
           background: '#39414a',
           zoom: {
-            enabled: false
-          }
+            enabled: false,
+          },
         },
         colors: ['#14f078'],
         dataLabels: {
-          enabled: false
+          enabled: false,
         },
         stroke: {
-          curve: 'smooth'
+          curve: 'smooth',
         },
         yaxis: {
           labels: {
             style: {
               colors: '#edecec',
               fontSize: '10px',
-              fontFamily: 'NexaBold'
-            }
-          }
+              fontFamily: 'NexaBold',
+            },
+          },
         },
         xaxis: {
           labels: {
             style: {
               colors: '#edecec',
               fontSize: '10px',
-              fontFamily: 'NexaBold'
-            }
+              fontFamily: 'NexaBold',
+            },
           },
           type: 'category',
-          categories: []
+          categories: [],
         },
         tooltip: {
           x: {
-            format: 'dd/MM/yy'
-          }
-        }
+            format: 'dd/MM/yy',
+          },
+        },
       },
       barseries: [
         {
           name: 'Sales',
-          data: [0, 0, 0, 0, 0, 0, 0]
-        }
+          data: [0, 0, 0, 0, 0, 0, 0],
+        },
       ],
       barchartOptions: {
         chart: {
           type: 'bar',
           height: 200,
           toolbar: {
-            show: false
-          }
+            show: false,
+          },
         },
         plotOptions: {
           bar: {
             horizontal: false,
             endingShape: 'rounded',
-            columnWidth: '45%'
-          }
+            columnWidth: '45%',
+          },
         },
         dataLabels: {
-          enabled: false
+          enabled: false,
         },
         legend: {
           showForSingleSeries: false,
           showForNullSeries: false,
           showForZeroSeries: false,
           tooltip: {
-            enabled: false
-          }
+            enabled: false,
+          },
         },
         colors: '#15df93',
         yaxis: {
@@ -431,9 +486,9 @@ export default {
             style: {
               colors: '#edecec',
               fontSize: '10px',
-              fontFamily: 'NexaBold'
-            }
-          }
+              fontFamily: 'NexaBold',
+            },
+          },
         },
         xaxis: {
           categories: ['1D', '1W', '1M', '3M', '6M', '1Y', '5Y'],
@@ -441,17 +496,44 @@ export default {
             style: {
               colors: '#edecec',
               fontSize: '10px',
-              fontFamily: 'NexaBold'
-            }
-          }
-        }
-      }
+              fontFamily: 'NexaBold',
+            },
+          },
+        },
+      },
     }
   },
   methods: {
+    addToWatchList() {
+      try {
+        this.$axios
+          .$post('watchlist/add', {
+            id: this.id,
+          })
+          .then((res) => {
+            this.$store.dispatch('watchlist/fetchIds')
+          })
+      } catch (err) {
+        console.log(err)
+      }
+    },
+    removeToWatchList() {
+      try {
+        this.$axios
+          .$post('watchlist/remove', {
+            id: this.id,
+          })
+          .then((res) => {
+            this.$store.dispatch('watchlist/fetchIds')
+            this.$emit('onRemoveFromWatchList')
+          })
+      } catch (err) {
+        console.log(err)
+      }
+    },
     getData() {
       try {
-        this.$axios.$get('get-card-data/' + this.id).then(res => {
+        this.$axios.$get('get-card-data/' + this.id).then((res) => {
           if (res.status == 200) {
             this.card = res.data
             // this.series = [{name: 'Card Values', data: res.data.price_graph_values}];
@@ -466,17 +548,17 @@ export default {
     },
     addToMyPortfolio() {
       try {
-        this.$axios.$post('portfolio/add', { id: this.id }).then(res => {})
+        this.$axios.$post('portfolio/add', { id: this.id }).then((res) => {})
       } catch (error) {}
     },
     updateGraph(days = 2) {
       try {
-        this.$axios.$get(`get-card-graph/${this.id}/${days}`).then(res => {
+        this.$axios.$get(`get-card-graph/${this.id}/${days}`).then((res) => {
           if (res.status == 200) {
             this.activeDaysGraph = days
             if (this.initGraphLabelLength != res.data.values.length) {
               this.series = [{ name: 'Card Values', data: res.data.values }]
-              this.chartOptions = {xaxis: { categories: res.data.labels }};
+              this.chartOptions = { xaxis: { categories: res.data.labels } }
               this.initGraphLabelLength = res.data.labels.length
             }
             setTimeout(() => {
@@ -493,27 +575,33 @@ export default {
     shareFb() {
       FB.ui({
         method: 'feed',
-        name: encodeURI(this.card.player+'-'+ this.card.year+'@'+this.card.details.currentPrice),
-        link:  encodeURI(this.graphImage), //this.baseUrl
+        name: encodeURI(
+          this.card.player +
+            '-' +
+            this.card.year +
+            '@' +
+            this.card.details.currentPrice
+        ),
+        link: encodeURI(this.graphImage), //this.baseUrl
         picture: this.graphImage,
-        description: 'Check our Slab value'
+        description: 'Check our Slab value',
       })
     },
     generateImageOfGraph() {
       const chartInstance = this.$refs.cardDataChart.chart.dataURI()
-      chartInstance.then(val => {
+      chartInstance.then((val) => {
         let img = new Image()
         img.src = val.imgURI
         this.$axios
           .$post('generate-graph-image', { image: img.src, prefix: 'cdc' })
-          .then(res => {
+          .then((res) => {
             if (res.status == 200) {
               this.graphImage = res.url
             }
           })
       })
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -737,6 +825,25 @@ ul.my-card-listing {
       max-height: 75% !important;
     }
   }
+  .icons-container {
+    position: absolute;
+    padding: 10px;
+    right: 0px;
+    margin-top: 10px;
+    margin-right: -10px;
+    z-index: 1;
+    .icons {
+      width: 32px;
+      height: 32px;
+      float: right;
+      margin-top: -10px;
+    }
+    .heart-fill-icon {
+      height: auto;
+      width: 30px;
+      cursor: pointer;
+    }
+  }
   .card-title {
     padding: 7px 12px 5px 12px;
     background: #000000;
@@ -912,21 +1019,21 @@ ul.my-card-listing {
 .card {
   border: 0px;
 }
-.share-card-data{
-  span{
-        margin: 0;
-        img{
-              width: 26px;
-    margin-top: 3px;
-    height: auto;
-        }
+.share-card-data {
+  span {
+    margin: 0;
+    img {
+      width: 26px;
+      margin-top: 3px;
+      height: auto;
+    }
   }
-  .share-all-outer{
+  .share-all-outer {
     top: 30px;
   }
 }
-.dashboard-apex-top{
-    margin-left: -15px;
+.dashboard-apex-top {
+  margin-left: -15px;
 }
 .g-main-text {
   background: #272d33;
@@ -941,24 +1048,24 @@ ul.my-card-listing {
 }
 .g-img-full {
   margin: -10px 20px 0 20px;
-  .slab_image{
-        width: calc(20% - 5px);
+  .slab_image {
+    width: calc(20% - 5px);
     margin-right: 5px;
     float: left;
     margin-top: 10px;
   }
-  .slab_graph{
+  .slab_graph {
     width: 80%;
   }
 }
-.g-download-img-all{
-      font-family: "CocogoosePro-Italic", Helvetica, Arial, sans-serif;
-    color: #1ce783;
-    text-transform: uppercase;
-    font-size: 9px;
-    letter-spacing: 1px;
+.g-download-img-all {
+  font-family: 'CocogoosePro-Italic', Helvetica, Arial, sans-serif;
+  color: #1ce783;
+  text-transform: uppercase;
+  font-size: 9px;
+  letter-spacing: 1px;
 }
-.g-download-out{
-      margin: 20px 20px 0 20px;
+.g-download-out {
+  margin: 20px 20px 0 20px;
 }
 </style>

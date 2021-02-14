@@ -12,6 +12,7 @@
         <b-nav-item
           class="top-nav-icon"
           href="javascript:;"
+          v-if="user.full_name != null"
           @click="shownotification = !shownotification"
         >
           <img class="icon" src="~/assets/img/icons/bell.png" />
@@ -22,8 +23,7 @@
             cartItemsCount
           }}</span>
         </b-nav-item>
-        <b-nav-item-dropdown right class>
-          <!-- Using 'button-content' slot -->
+        <b-nav-item-dropdown right v-if="user.full_name != null">
           <template v-slot:button-content>
             <b-avatar variant="info" :src="user.picture" class></b-avatar>
             <em>{{ user.full_name }}</em>
@@ -39,6 +39,8 @@
             />Logout</b-dropdown-item
           >
         </b-nav-item-dropdown>
+
+       
       </b-navbar-nav>
     </div>
 
@@ -120,7 +122,7 @@
       <div
         class="nav-bar-form-input custom-smart-search"
         v-bind:class="{
-          'nav-bar-form-input_search_bar_open': showAdvanceSearch
+          'nav-bar-form-input_search_bar_open': showAdvanceSearch,
         }"
       >
         <input
@@ -137,15 +139,17 @@
             : 'Advanced&nbsp;&nbsp;search'
         }}</span>
         <div class="display_keyword" v-if="showSmartSearch">
-          <ul  v-click-outside="hideSmartSearch">
+          <ul v-click-outside="hideSmartSearch">
             <li
               v-for="(item, key) of smartKeyword"
               :key="key"
               @click="selectKeyword(item.id)"
             >
-              {{ item.player +' '+ item.title }}
+              {{ item.player + ' ' + item.title }}
             </li>
-            <li v-if="smartKeyword.length ==0">No results found for this search</li>
+            <li v-if="smartKeyword.length == 0">
+              No results found for this search
+            </li>
           </ul>
         </div>
       </div>
@@ -162,6 +166,7 @@
       <b-nav-item
         class="top-nav-icon"
         href="javascript:;"
+        v-if="user.full_name != null"
         @click="shownotification = !shownotification"
       >
         <img class="icon" src="~/assets/img/icons/bell.png" />
@@ -171,10 +176,8 @@
           </div>
           <div class="notification_list">
             <ul>
-               <li class="text-center">
-                
+              <li class="text-center">
                 <h6>Sorry No Notifications.</h6>
-                
               </li>
               <!-- <li>
                 <i class="fa fa-bell" aria-hidden="true"></i>
@@ -182,8 +185,6 @@
                 <h6>New card listing added.</h6>
                 <span>1 Min Ago</span>
               </li> -->
-
-         
             </ul>
           </div>
           <div class="viewall">
@@ -197,8 +198,7 @@
           cartItemsCount
         }}</span>
       </b-nav-item> -->
-      <b-nav-item-dropdown right>
-        <!-- Using 'button-content' slot -->
+      <b-nav-item-dropdown right v-if="user.full_name != null">
         <template v-slot:button-content>
           <b-avatar variant="info" :src="user.picture"></b-avatar>
           <em>{{ user.full_name }}</em>
@@ -212,6 +212,7 @@
           <img class="icon" src="~/assets/img/icons/logout_icon.png" />Logout
         </b-dropdown-item>
       </b-nav-item-dropdown>
+      
     </b-navbar-nav>
   </nav>
 </template>
@@ -222,7 +223,7 @@ import vClickOutside from 'v-click-outside'
 
 export default {
   directives: {
-      clickOutside: vClickOutside.directive
+    clickOutside: vClickOutside.directive,
   },
   data() {
     return {
@@ -231,39 +232,41 @@ export default {
       mobileNavShow: false,
       smartKeyword: [],
       requestInProcess: false,
-      showSmartSearch: false
+      showSmartSearch: false,
     }
   },
   computed: {
     ...mapGetters({
       cartItemsCount: 'cart/itemsCount',
-      showAdvanceSearch: 'advancesearch/show'
-    })
+      showAdvanceSearch: 'advancesearch/show',
+    }),
   },
   watch: {
-    $route () {
-      if(this.$route.path !='/search'){
-        this.keyword = '';
+    $route() {
+      if (this.$route.path != '/search') {
+        this.keyword = ''
         this.showSmartSearch = false
       }
-    }
+    },
   },
   methods: {
     async logout() {
       await this.$auth.logout()
       this.$router.push('/')
     },
-    hideSmartSearch(event){
-      this.showSmartSearch = false;
+    hideSmartSearch(event) {
+      this.showSmartSearch = false
     },
     searchNow() {
       this.$store.dispatch('advancesearch/reset_filter')
-      this.$store.dispatch('advancesearch/update_keyword', this.keyword).then((res) => {
-        this.$router.push('/search/?keyword='+res)
-     })
+      this.$store
+        .dispatch('advancesearch/update_keyword', this.keyword)
+        .then((res) => {
+          this.$router.push('/search/?keyword=' + res)
+        })
     },
     toggleAdvanceSearch() {
-      this.keyword = '';
+      this.keyword = ''
       this.$store.dispatch('advancesearch/update_keyword', '')
       this.$store.dispatch('advancesearch/toggle')
     },
@@ -275,16 +278,16 @@ export default {
         this.requestInProcess = true
         this.$axios
           .$post('search/get-smart-keyword', { keyword: this.keyword })
-          .then(res => {
+          .then((res) => {
             this.requestInProcess = false
             if (res.status == 200) {
-              if(this.keyword == res.keyword){
+              if (this.keyword == res.keyword) {
                 this.smartKeyword = res.data
                 this.showSmartSearch = true
               }
             }
           })
-          .catch(err => {
+          .catch((err) => {
             this.requestInProcess = false
             console.log(err)
           })
@@ -294,17 +297,19 @@ export default {
       }
     },
     selectKeyword(value) {
-      this.$store.dispatch('advancesearch/update_search_card_id', value).then(() => {
-        this.$router.push('/search/?id='+value)
-     })
+      this.$store
+        .dispatch('advancesearch/update_search_card_id', value)
+        .then(() => {
+          this.$router.push('/search/?id=' + value)
+        })
       this.showSmartSearch = false
-    }
+    },
   },
   mounted() {
     if (this.user == null) {
       this.logout()
     }
-  }
+  },
 }
 </script>
 
