@@ -46,7 +46,7 @@
               </li> -->
               <li class="listing-ended-li" @click="listingEnded(item.id)" >
                 <i class="fa fa-bell" aria-hidden="true"></i>
-                <h5>Listing Ending</h5>
+                <h5>Listing Ended</h5>
                 <h6>{{ item.title }}</h6>
                 <span>Recently</span>
               </li>

@@ -67,7 +67,8 @@ import CardListItem from '~/components/dashboard/CardListItem'
 import LiveListingCard from '~/components/dashboard/LiveListingCard'
 export default {
   transition: 'fade',
-  layout: 'dashboard',
+  layout: 'guestOuter',
+    // auth: false,
   head() {
     return {
       title: 'Live Listings - Slabstox'

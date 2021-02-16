@@ -1,14 +1,129 @@
 <template>
   <div class="col-md-12 col-sm-12 analytics_page">
-    <div class="row ">
-        <div class="col-md-11 col-sm-11 pr-0 inner_wrap">
+    
+    <div class="row">
+        <div class="col-md-12">
+            <div class="top-btn">
+                <button class="card-btn custom-stox">
+          <font-awesome-icon :icon="['fas', 'plus']" />    
+create custom stoxticker</button>
+
+<button class="card-btn search-stox">Search stoxticker board 
+<font-awesome-icon :icon="['fas', 'chevron-down']" /> 
+</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 mb-3">
+            <div class="search-stox-box">
+                <div class="inner-wrap">
+                    <div class="search-field">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <div class="search-bar">
+                                    <input type="text" placeholder="STOXTICKER BOARD SEARCH" value="" />
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="close-btn">
+                                    <span>
+                                      <font-awesome-icon :icon="['fas', 'chevron-up']" />
+                                      Close</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="select-cat">    
+                                    <h6>SELECT CATEGORIES</h6>
+                                </div>
+                            </div>
+                            <div class="cat-wrap">
+                                <div class="cat-btn">
+                                    <ul>
+                                        <li><a href="#" class="theme-btn card-btn">BASKETBALL</a></li>
+                                        <li class="active"><a href="#" class="theme-btn card-btn">Baseball</a></li>
+                                        <li><a href="#" class="theme-btn card-btn">Football</a></li>
+                                        <li><a href="#" class="theme-btn card-btn">Hockey</a></li>
+                                        <li><a href="#" class="theme-btn card-btn">Soccer</a></li>
+                                        <li><a href="#" class="theme-btn card-btn">Pokemon</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="search-wrap">
+                                <div class="search">  
+                                    <button class="card-btn custom-stox">search stoxticker board 
+                                       <font-awesome-icon :icon="['fas', 'chevron-circle-right']" />
+ </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-6 col-sm-6 mb-4">
+            <div class="search-board">
+                <img src="~/assets/img/graph.jpg" style="width: 100%;">
+            </div>
+        </div>
+
+        <div class="col-md-6 col-sm-6 mb-4">
+            <div class="search-board">
+                <img src="~/assets/img/graph.jpg" style="width: 100%;">
+            </div>
+        </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 col-sm-6 mb-4">
+            <div class="search-board">
+                <img src="~/assets/img/graph.jpg" style="width: 100%;">
+            </div>
+        </div>
+
+        <div class="col-md-6 col-sm-6 mb-4">
+            <div class="search-board">
+                <img src="~/assets/img/graph.jpg" style="width: 100%;">
+            </div>
+        </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 mb-5">
+                    <div class="load-more-btn text-center">
+                        <button class="card-btn custom-stox">Load more boards</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <!-- <div class="row">
+        <div class="col-md-12 pr-0 mb-3">
+        <div class="col-md-12 col-sm-12 pl-0">
+            <img src="~/assets/img/graph.jpg" style="width: 100%;">
+        </div>
+        </div>
+    </div> -->
+
+    <div class="row">
+        <div class="col-md-12 pr-0 inner_wrap">
             <div class="col-md-12 col-sm-12 pl-0">
         <div class="card green_box stoxticker_page">
           <div class="card-body">
             <h5 class="card-title">
               <button class="theme-btn card-btn">STOXTICKER</button>
                <nuxt-link class="card-link float-right" to="/">
-                      SLABSTOX.COM 
+                      SLABSTOX.COM
               </nuxt-link>
             </h5>
               <div class="row">
@@ -131,21 +246,34 @@
 <script>
 import { BASE_URL } from '../constants/keys'
 import CardListItem from '~/components/dashboard/CardListItem'
+import $ from 'jquery'
+
 export default {
   transition: 'fade',
   layout: 'dashboard',
   head() {
     return {
-      title: 'Stoxticker - Slabstox'
+      title: 'Stoxticker - Slabstox',
     }
   },
   mounted() {
     this.getData()
     this.logo = document.getElementById('sidebarLogo').src
+
+    $('.search-stox').on('click', function(){
+      $(this).toggleClass('active');
+      $('.search-stox-box').toggleClass('active');
+    });
+    $('.close-btn').on('click', function(){
+      $('.search-stox').removeClass('active');
+      $('.search-stox-box').removeClass('active');
+    });
+    
   },
   components: {
     CardListItem,
-    VueApexCharts: () => import('vue-apexcharts')
+    // ChevronUpIcon,
+    VueApexCharts: () => import('vue-apexcharts'),
   },
   data() {
     return {
@@ -156,7 +284,7 @@ export default {
         sale: 0,
         change: 0,
         change_icon: 'up',
-        last_updated: ''
+        last_updated: '',
       },
       sampleMyList: {
         category: 'Basketball Cards',
@@ -165,29 +293,29 @@ export default {
         id: 43,
         itemId: '363020170125',
         price: '720.0',
-        title: '2018-19 Luka Doncic Panini Prizm RC Rookie #280 Silver Prizm'
+        title: '2018-19 Luka Doncic Panini Prizm RC Rookie #280 Silver Prizm',
       },
       series: [
         {
           name: 'series1',
-          data: [31, 40, 28, 51, 42, 109, 100]
-        }
+          data: [31, 40, 28, 51, 42, 109, 100],
+        },
       ],
       chartOptions: {
         chart: {
           toolbar: {
-            show: false
+            show: false,
           },
           height: 350,
           type: 'area',
-          background: 'transparent'
+          background: 'transparent',
         },
         colors: ['#14f078'],
         dataLabels: {
-          enabled: false
+          enabled: false,
         },
         stroke: {
-          curve: 'smooth'
+          curve: 'smooth',
         },
         yaxis: {},
         xaxis: {
@@ -199,21 +327,21 @@ export default {
             '2018-09-19T03:30:00.000Z',
             '2018-09-19T04:30:00.000Z',
             '2018-09-19T05:30:00.000Z',
-            '2018-09-19T06:30:00.000Z'
-          ]
+            '2018-09-19T06:30:00.000Z',
+          ],
         },
         tooltip: {
           x: {
-            format: 'dd/MM/yy HH:mm'
-          }
-        }
-      }
+            format: 'dd/MM/yy HH:mm',
+          },
+        },
+      },
     }
   },
   methods: {
     getData() {
       try {
-        this.$axios.$get('get-stoxticker-data').then(res => {
+        this.$axios.$get('get-stoxticker-data').then((res) => {
           if (res.status == 200) {
             this.data = res.data
           } else {
@@ -230,7 +358,7 @@ export default {
         name: 'StoxTicker@' + this.data.sale.toFixed(2),
         link: this.baseUrl,
         picture: this.logo,
-        description: 'Check our StoxTicker value'
+        description: 'Check our StoxTicker value',
       })
     },
     embedStatsCode() {
@@ -239,16 +367,21 @@ export default {
     embedSellsCode() {
       this.$bvModal.show('embedSellsCode')
     },
-    intToString (value) {
-        var suffixes = ["", "k", "m", "b","t"];
-        var suffixNum = Math.floor((""+value).length/3);
-        var shortValue = parseFloat((suffixNum != 0 ? (value / Math.pow(1000,suffixNum)) : value).toPrecision(2));
-        if (shortValue % 1 != 0) {
-            shortValue = shortValue.toFixed(1);
-        }
-        return shortValue+suffixes[suffixNum];
-    }
-  }
+    intToString(value) {
+      var suffixes = ['', 'k', 'm', 'b', 't']
+      var suffixNum = Math.floor(('' + value).length / 3)
+      var shortValue = parseFloat(
+        (suffixNum != 0
+          ? value / Math.pow(1000, suffixNum)
+          : value
+        ).toPrecision(2)
+      )
+      if (shortValue % 1 != 0) {
+        shortValue = shortValue.toFixed(1)
+      }
+      return shortValue + suffixes[suffixNum]
+    },
+  },
 }
 </script>
 
@@ -336,4 +469,206 @@ ul.my-card-listing {
 .embed-link {
   color: #fff;
 }
+
+// .top-btn {
+//   margin-bottom: 20px;
+// }
+
+.custom-stox {
+  font-family: 'CocogoosePro-Regular', Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  border-radius: 2px;
+  background: linear-gradient(
+    to left,
+    rgba(10, 178, 95, 0.76) 0%,
+    rgba(27, 231, 131, 0.76) 33%,
+    rgba(5, 251, 98, 0.76) 100%
+  );
+  padding: 20px 35px 17px 35px;
+  color: #000;
+  font-size: 12px;
+  text-align: center;
+  border: 0;
+  text-transform: uppercase;
+  outline: none;
+  margin-right: 10px;
+  svg{
+    vertical-align: baseline;
+        margin-right: 5px;
+  }
+}
+
+.search-stox {
+  font-family: 'CocogoosePro-Regular', Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  border-radius: 2px;
+  background-color: #fff;
+  padding: 20px 35px 17px 35px;
+  color: #000;
+  font-size: 12px;
+  text-align: center;
+  text-transform: uppercase;
+  outline: none;
+  border:0;
+  &:after{
+    display:none;
+  }
+  &.active{
+        background: #272d33;
+    color: #39414a;
+    border: 13px solid #39414a;
+  }
+  svg{
+     margin-left: 5px;
+  }
+}
+.stoxticker_page .bs-stats {
+  height: auto;
+}
+.search-stox-box {
+  background-color: #39414a;
+  padding: 15px;
+  border-radius: 2px;
+  display: none;
+  &.active{
+    display: block;
+  }
+}
+.search-stox-box .inner-wrap {
+  padding: 15px;
+  background-color: #fff;
+  border-radius: 2px;
+}
+.search-stox-box {
+  .search-bar {
+    input {
+      background-color: #f5f5f5;
+      width: 100%;
+      border: 0px;
+      border-radius: 2px;
+      outline: none;
+      font-family: 'CocogoosePro-Regular', Helvetica, Arial, sans-serif;
+      font-weight: 400;
+      font-size: 11px;
+      letter-spacing: 2px;
+      padding: 12px 20px 8px 20px;
+      font-style: normal;
+
+      &::placeholder {
+        color: #cdcbcb;
+      }
+    }
+  }
+  .close-btn {
+    text-align: right;
+    margin-top: 7px;
+    text-transform: uppercase;
+    font-style: normal;
+    font-family: 'CocogoosePro-Regular', Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: 1px;
+    cursor: pointer;
+  }
+  .select-cat {
+    margin-top: 10px;
+    h6 {
+      font-size: 9px;
+      color: #b1b1b1;
+      font-family: 'CocogoosePro-Regular', Helvetica, Arial, sans-serif;
+      letter-spacing: 1px;
+      font-weight: 400;
+      margin-top: 15px;
+    }
+  }
+}
+
+.cat-btn {
+  ul {
+    padding: 0px;
+    margin: 0 -1px;
+    list-style-type: none;
+    li {
+      width: auto;
+      display: inline-block;
+      margin-right: 1px;
+      margin-left: 1px;
+      margin-bottom: 5px;
+      a {
+        font-family: 'CocogoosePro-Regular', Helvetica, Arial, sans-serif;
+        font-weight: 400;
+        border-radius: 2px;
+        background-color: #f5f5f5;
+        padding: 12px 30px 10px 30px;
+        color: #000;
+        font-size: 11px;
+        text-decoration: none;
+        display: block;
+        text-align: center;
+        border: 0;
+        text-transform: uppercase;
+        outline: none;
+      }
+    }
+  }
+}
+.cat-btn ul li.active a {
+  background-color: #1ce783;
+}
+.search-field .search .card-btn {
+  padding: 9px 20px 8px 20px;
+  font-size: 12px;
+  font-weight: 500;
+  margin: 0;
+}
+.load-more-btn .custom-stox {
+  padding: 12px 35px 11px 35px;
+}
+.top-btn.active {
+  margin-bottom: 0px;
+}
+.top-btn .search-stox.active {
+  border-radius: 0;
+  background-color: #272d33;
+  border: 10px solid #39414a;
+  color: #fff;
+}
+.cat-wrap {
+  padding-left: 12px;
+  padding-right: 12px;
+}
+.search-wrap {
+  width: calc(100% - 863px);
+  text-align: right;
+  padding-right: 12px;
+}
+@media (max-width: 991px) {
+  .cat-wrap,
+  .search-wrap {
+    max-width: 100%;
+    text-align: center;
+    flex: 100%;
+  }
+}
+
+@media (max-width: 570px) {
+  .top-btn .card-btn {
+    width: 100%;
+    margin-bottom: 7px;
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+}
+@media (max-width: 400px) {
+  .cat-btn ul li {
+    width: 100%;
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+  .search-field .search .card-btn {
+    margin-right: 0;
+    width: 100%;
+  }
+}
 </style>
+

@@ -298,7 +298,7 @@
           </div>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-6" v-if="addPortfolioVar.quantity != 2">
           <div class="form-group row">
             <label
               for="staticPurchaseQuantity"
@@ -592,7 +592,7 @@ export default {
       this.portfolioPopUpTitle = 'Update ' + tarr.title
       this.addPortfolioVar.isedit = 'yes'
       this.addPortfolioVar.id = tarr.portfolio_id
-      this.addPortfolioVar.quantity = tarr.purchase_quantity
+      this.addPortfolioVar.quantity = 2
       this.addPortfolioVar.price = tarr.purchase_price
       this.$bvModal.show('addToPortfolioPurchasePrice')
     },
@@ -978,5 +978,6 @@ export default {
     border-bottom-left-radius: 0;
   }
 }
+
 
 </style>

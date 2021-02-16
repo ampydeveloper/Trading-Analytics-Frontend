@@ -30,6 +30,7 @@
     "vue-cropperjs": "^4.1.0",
     "vue-select": "^3.10.8",
     "vue2-dropzone": "^3.6.0",
+    "vuedraggable": "^2.24.3",
     "vuex-persistedstate": "^3.0.1"
   },
   "devDependencies": {

@@ -1,3 +1,4 @@
+import { faHourglassEnd } from "@fortawesome/free-solid-svg-icons";
 import { DEV_API, PROD_API, STAGING_API } from "./constants/keys";
 
 export default {

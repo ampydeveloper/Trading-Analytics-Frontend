@@ -12,7 +12,7 @@
         <b-nav-item
           class="top-nav-icon"
           href="javascript:;"
-          v-if="user.full_name != null"
+          v-if="user != null && user.full_name != null"
           @click="shownotification = !shownotification"
         >
           <img class="icon" src="~/assets/img/icons/bell.png" />
@@ -23,7 +23,7 @@
             cartItemsCount
           }}</span>
         </b-nav-item>
-        <b-nav-item-dropdown right v-if="user.full_name != null">
+        <b-nav-item-dropdown right v-if="user != null && user.full_name != null">
           <template v-slot:button-content>
             <b-avatar variant="info" :src="user.picture" class></b-avatar>
             <em>{{ user.full_name }}</em>
@@ -166,7 +166,7 @@
       <b-nav-item
         class="top-nav-icon"
         href="javascript:;"
-        v-if="user.full_name != null"
+        v-if="user != null && user.full_name != null"
         @click="shownotification = !shownotification"
       >
         <img class="icon" src="~/assets/img/icons/bell.png" />
@@ -198,7 +198,7 @@
           cartItemsCount
         }}</span>
       </b-nav-item> -->
-      <b-nav-item-dropdown right v-if="user.full_name != null">
+      <b-nav-item-dropdown right v-if="user != null && user.full_name != null">
         <template v-slot:button-content>
           <b-avatar variant="info" :src="user.picture"></b-avatar>
           <em>{{ user.full_name }}</em>

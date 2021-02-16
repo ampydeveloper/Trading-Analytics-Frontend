@@ -30,17 +30,25 @@
           </div>
           <div class="card-body search-form">
             <div class="row">
-              <div class="col-2">
+              <div class="col-4">
                 <select
                   class="form-control text-capitalize main-sel-all"
-                  @change="updateStatus"
                 >
                   <option>Change Status</option>
-                  <option value="1">Active</option>
-                  <option value="0">Disable</option>
+                  <option value="1">Published</option>
+                  <option value="0">Unpublished</option>
+                  <option value="4">Delete</option>
                 </select>
+                    <button
+                      class="btn btn-outline-secondary"
+                      @click="updateStatus"
+                      type="button"
+                      id="button-addon2"
+                    >
+                      Apply
+                    </button>
               </div>
-              <div class="col-2">
+              <div class="col-3">
                 <select
                   id="sportFilter"
                   @change="getCards(currentPage, $event)"
@@ -56,7 +64,7 @@
                   ></option>
                 </select>
               </div>
-              <div class="col-3">
+              <div class="col-4">
                 <div class="input-group mb-3">
                   <input
                     type="text"
@@ -370,6 +378,8 @@ export default {
       })
 
       this.statusChange(statusVal, listingArr)
+      
+      setTimeout(() => this.getCards(1), 500);
     },
     statusChange(statusVal, id) {
       if (!this.requestInProcess) {
@@ -397,6 +407,7 @@ export default {
       this.$router.push('/admin/additem/' + id)
     },
     getCards(page, filter = null) {
+      console.log('reddd');
       if (!this.requestInProcess) {
         try {
           this.showLoader()
@@ -578,5 +589,9 @@ ul.my-card-listing {
 .active-pagination{
       color: #1ce783;
     background: #272d33;
+}
+.main-sel-all{
+  width: calc(100% - 82px);
+    float: left;
 }
 </style>

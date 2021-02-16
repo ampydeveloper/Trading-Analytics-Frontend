@@ -232,7 +232,10 @@ export default {
     font-size: 10px;
     background: #1ce783;
 }
-.my-card {
+.my-card-view-link{
+  display:none;
+}
+.featured-listing .my-card {
   .bor-left {
     border-left: 2px solid #39414a;
     height: calc(100% - 60px);

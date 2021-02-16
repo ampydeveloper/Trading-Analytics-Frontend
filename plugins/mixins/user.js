@@ -62,8 +62,12 @@ const User = {
                 },
                 guestMiddleware() {
                     if (this.authenticated) {
-                        this.$router.push('/dashboard')
+                        // console.log(this.$route.path);
+                        // console.log(this.$auth.loggedIn);
+                            this.$router.push('/dashboard')
                     }
+
+                   
                 },
                 addToCart(data) {
                     try {

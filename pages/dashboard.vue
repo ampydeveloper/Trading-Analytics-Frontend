@@ -361,39 +361,21 @@
         <img src="" alt="" class="slab_image" />
         <img :src="graphImage" alt="" class="slab_graph" />
       </div>
-      <div class="clearfix g-download-out text-center">
-        <a href="http://slabstox.leagueofclicks.com/storage/basketball/F2.jpg" class="" download>11</a>
+      <div class="clearfix g-download-out text-right">
+        <!-- <a href="http://slabstox.leagueofclicks.com/storage/basketball/F2.jpg" class="" download>11</a>
         <a :href="cardImage" class="" download>22</a>
         <a
           :href="graphImage"
           class="g-download-graph"
           download
-        >33</a>
+        >33</a> -->
+        
         <a
           href="javascript:void(0);"
-          @click="downloadImage('http://slabstox.leagueofclicks.com/storage/basketball/F2.jpg')"
-          class="g-download-img-all mr-3"
-        >
-          <svg style="width: 15px; height: 15px" viewBox="0 0 24 24">
-            <path
-              fill="currentColor"
-              d="M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z"
-            />
-          </svg>
-          Download Card Graphic
-        </a>
-        <a
-          href="javascript:void(0);"
-          @click="downloadImage(graphImage)"
+          @click="downloadImage"
           class="g-download-img-all"
         >
-          <svg style="width: 15px; height: 15px" viewBox="0 0 24 24">
-            <path
-              fill="currentColor"
-              d="M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z"
-            />
-          </svg>
-          Download Graph Graphic
+          Download Graphics
         </a>
       </div>
     </b-modal>
@@ -409,7 +391,8 @@ import $ from 'jquery'
 
 export default {
   transition: 'fade',
-  layout: 'dashboard',
+  layout: 'guestOuter',
+    // auth: false,
   head() {
     return {
       title: 'Dashboard - Slabstox',
@@ -531,7 +514,7 @@ export default {
           'Total Sales ' + $('.total_sales').text()
         )
         $('.g-main-text .g-sales-diff').text(
-          'Price Change $' + $('.g-dollar-d-val').text()
+          'Price Change ' + $('.g-dollar-d-val').text()
         )
         $('.g-main-text .g-image-link').text(self.graphImage)
         $('.g-img-full .slab_image').attr(
@@ -550,25 +533,26 @@ export default {
     openImage(src) {
       window.open(src, '_blank')
     },
-    downloadImage(src) {
-      console.log(src)
-      this.$axios
-        .$get(src, {
-          responseType: 'stream',
-          headers: {
-            'Content-Type': 'application/force-download',
-            'Content-Type': 'application/octet-stream',
-            'Content-Type': 'application/download',
-          },
-        })
-        .then((res) => {
-          new Promise((resolve, reject) => {
-            response.data
-              .pipe(fs.createWriteStream('red.png'))
-              .on('finish', () => resolve())
-              .on('error', (e) => reject(e))
-          })
-        })
+    downloadImage() {
+      $('.apexcharts-toolbar .exportPNG').click();
+      // console.log(src)
+      // this.$axios
+      //   .$get(src, {
+      //     responseType: 'stream',
+      //     headers: {
+      //       'Content-Type': 'application/force-download',
+      //       'Content-Type': 'application/octet-stream',
+      //       'Content-Type': 'application/download',
+      //     },
+      //   })
+      //   .then((res) => {
+      //     new Promise((resolve, reject) => {
+      //       response.data
+      //         .pipe(fs.createWriteStream('red.png'))
+      //         .on('finish', () => resolve())
+      //         .on('error', (e) => reject(e))
+      //     })
+      //   })
     },
     toggleCardActive(card) {
       this.cardActiveId = card.id
@@ -623,19 +607,21 @@ export default {
       }
     },
     getTernder() {
-      try {
-        this.$axios
-          .$post('search/slab-listing', {
+        try {
+          this.$axios
+            .$post('portfolio/listing', {
             take: 6,
           })
-          .then((res) => {
-            if (res.status == 200) {
-              this.ternder = res.data
-            }
-          })
-      } catch (err) {
-        console.log(err)
-      }
+            .then((res) => {
+              if (res.status == 200) {
+                this.ternder = res.data
+              }
+            })
+        } catch (err) {
+          this.hiuestInProcess = false
+          console.log(err)
+        }
+
     },
     getWatchlist() {
       try {

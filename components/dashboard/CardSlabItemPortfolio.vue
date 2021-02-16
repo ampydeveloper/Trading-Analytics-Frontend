@@ -58,11 +58,7 @@ export default {
       return title
     },
     editPortfolioData(itemArr) {
-      try {
         this.$emit('onEditPortfolioOwned', itemArr)
-      } catch (err) {
-        console.log(err)
-      }
     },
   },
 }
@@ -200,6 +196,11 @@ display:none;
       padding-top: 2px;
       font-style: italic;
     }
+  }
+}
+.watchlist-card-listing{
+  .my-card-view-listing-on-ebay{
+    display:none;
   }
 }
 </style>
