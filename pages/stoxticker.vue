@@ -1,250 +1,434 @@
 <template>
-  <div class="col-md-12 col-sm-12 analytics_page">
-    
-    <div class="row">
-        <div class="col-md-12">
-            <div class="top-btn">
-                <button class="card-btn custom-stox">
-          <font-awesome-icon :icon="['fas', 'plus']" />    
-create custom stoxticker</button>
+  <div class="col-md-12 col-sm-12">
+    <div class="row analytics_page">
+      <div class="col-md-12">
+        <div class="top-btn">
+          <button class="card-btn custom-stox">
+            <font-awesome-icon :icon="['fas', 'plus']" />
+            create custom stoxticker
+          </button>
 
-<button class="card-btn search-stox">Search stoxticker board 
-<font-awesome-icon :icon="['fas', 'chevron-down']" /> 
-</button>
-            </div>
+          <button class="card-btn search-stox">
+            Search stoxticker board
+            <font-awesome-icon :icon="['fas', 'chevron-down']" />
+          </button>
         </div>
+      </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-12 mb-3">
-            <div class="search-stox-box">
-                <div class="inner-wrap">
-                    <div class="search-field">
-                        <div class="row">
-                            <div class="col-md-10">
-                                <div class="search-bar">
-                                    <input type="text" placeholder="STOXTICKER BOARD SEARCH" value="" />
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="close-btn">
-                                    <span>
-                                      <font-awesome-icon :icon="['fas', 'chevron-up']" />
-                                      Close</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="select-cat">    
-                                    <h6>SELECT CATEGORIES</h6>
-                                </div>
-                            </div>
-                            <div class="cat-wrap">
-                                <div class="cat-btn">
-                                    <ul>
-                                        <li><a href="#" class="theme-btn card-btn">BASKETBALL</a></li>
-                                        <li class="active"><a href="#" class="theme-btn card-btn">Baseball</a></li>
-                                        <li><a href="#" class="theme-btn card-btn">Football</a></li>
-                                        <li><a href="#" class="theme-btn card-btn">Hockey</a></li>
-                                        <li><a href="#" class="theme-btn card-btn">Soccer</a></li>
-                                        <li><a href="#" class="theme-btn card-btn">Pokemon</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="search-wrap">
-                                <div class="search">  
-                                    <button class="card-btn custom-stox">search stoxticker board 
-                                       <font-awesome-icon :icon="['fas', 'chevron-circle-right']" />
- </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- <div class="row">
-        <div class="col-md-12">
-            <div class="row">
-                <div class="col-md-6 col-sm-6 mb-4">
-            <div class="search-board">
-                <img src="~/assets/img/graph.jpg" style="width: 100%;">
-            </div>
-        </div>
-
-        <div class="col-md-6 col-sm-6 mb-4">
-            <div class="search-board">
-                <img src="~/assets/img/graph.jpg" style="width: 100%;">
-            </div>
-        </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6 col-sm-6 mb-4">
-            <div class="search-board">
-                <img src="~/assets/img/graph.jpg" style="width: 100%;">
-            </div>
-        </div>
-
-        <div class="col-md-6 col-sm-6 mb-4">
-            <div class="search-board">
-                <img src="~/assets/img/graph.jpg" style="width: 100%;">
-            </div>
-        </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-12 mb-5">
-                    <div class="load-more-btn text-center">
-                        <button class="card-btn custom-stox">Load more boards</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
-
-    <!-- <div class="row">
-        <div class="col-md-12 pr-0 mb-3">
-        <div class="col-md-12 col-sm-12 pl-0">
-            <img src="~/assets/img/graph.jpg" style="width: 100%;">
-        </div>
-        </div>
-    </div> -->
-
-    <div class="row">
-        <div class="col-md-12 pr-0 inner_wrap">
-            <div class="col-md-12 col-sm-12 pl-0">
-        <div class="card green_box stoxticker_page">
-          <div class="card-body">
-            <h5 class="card-title">
-              <button class="theme-btn card-btn">STOXTICKER</button>
-               <nuxt-link class="card-link float-right" to="/">
-                      SLABSTOX.COM
-              </nuxt-link>
-            </h5>
+    <div class="row analytics_page">
+      <div class="col-md-12 mb-3">
+        <div class="search-stox-box">
+          <div class="inner-wrap">
+            <div class="search-field">
               <div class="row">
-                  <div class="col-md-2 bs-stats">
-                      <h2>SX</h2>
+                <div class="col-md-10">
+                  <div class="search-bar">
+                    <input
+                      type="text"
+                      placeholder="STOXTICKER BOARD SEARCH"
+                      v-model="searchKeyword"
+                    />
                   </div>
-                  <div class="col-md-2 bs-stats">
-                      <h3>{{intToString(data.total)}}@</h3>
-                      <span class="tot-sla">TOTAL SLABS</span>
+                </div>
+                <div class="col-md-2">
+                  <div class="close-btn">
+                    <span>
+                      <font-awesome-icon :icon="['fas', 'chevron-up']" />
+                      Close</span
+                    >
                   </div>
-                   <div class="col-md-5 bs-stats">
-                      <h2>{{data.sale.toFixed(2)}}</h2>
-                      <span class="avg-sla">AVG. SLAB SALE</span>
-                  </div>
-                  <div class="col-md-3 bs-stats">
-                       <div class="up_img">
-                        <font-awesome-icon :icon="['fas', 'caret-'+data.change_arrow]" />
-                        </div>
-                      <h2>{{data.change}}</h2>
-                      <span class="cha-amo">CHANGE AMOUNT</span>
-                  </div>
+                </div>
               </div>
-            
-              <span class="date">LAST UPDATED - {{data.last_updated}}</span>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="select-cat">
+                    <h6>SELECT CATEGORIES</h6>
+                  </div>
+                </div>
+                <div class="cat-wrap">
+                  <div class="cat-btn">
+                    <ul>
+                      <li>
+                        <a href="#" class="theme-btn card-btn">BASKETBALL</a>
+                      </li>
+                      <li class="active">
+                        <a href="#" class="theme-btn card-btn">Baseball</a>
+                      </li>
+                      <li>
+                        <a href="#" class="theme-btn card-btn">Football</a>
+                      </li>
+                      <li><a href="#" class="theme-btn card-btn">Hockey</a></li>
+                      <li><a href="#" class="theme-btn card-btn">Soccer</a></li>
+                      <li>
+                        <a href="#" class="theme-btn card-btn">Pokemon</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="search-wrap">
+                  <div class="search">
+                    <button
+                      class="card-btn custom-stox-search"
+                      @click="searchBoard()"
+                    >
+                      search stoxticker board
+                      <font-awesome-icon
+                        :icon="['fas', 'chevron-circle-right']"
+                      />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="social_share">
-             <h5>SHARE ON SOCIAL</h5>
-             <ul>
-                <li><a href="javascript:;" @click="shareFb()"><img src="~/assets/img/icons/facebook.svg" alt /></a></li>
-                <!-- <li><a href="#"><img src="~/assets/img/icons/instagram.svg" alt /></a></li> -->
-                <li><a :href="'https://twitter.com/intent/tweet?url='+encodeURI(baseUrl)+'&text=StoxTicker@'+data.sale.toFixed(2)" target="_blank"><img src="~/assets/img/icons/twitter.svg" alt /></a></li>
-                <li><a :href="'http://pinterest.com/pin/create/button/?url='+encodeURI(baseUrl)+'&media='+logo+'&description='+encodeURI('Buy & Sell Sports Cards Online')" target="_blank"><img src="~/assets/img/pinterest.png" alt /></a></li>
-                <li><a :href="'http://www.linkedin.com/shareArticle?mini=true&url='+encodeURI(baseUrl)" target="_blank"><img src="~/assets/img/icons/linkedin-circled.svg" alt /></a></li>
-             </ul>
-             <h4> <a class="embed-link" href="javascript:;" @click="embedStatsCode()">EMBEDD CODE </></a> </h4>
+
+        <div class="search-add-box">
+          <div class="inner-wrap">
+            <div class="search-field">
+              <div class="row">
+                <div class="col-md-10">
+                  <div class="search-bar">
+                    <input
+                      type="text"
+                      placeholder="SLABS SEARCH"
+                      v-model="keyword"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="close-btn">
+                    <span>
+                      <font-awesome-icon :icon="['fas', 'chevron-up']" />
+                      Close</span
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="search-wrap col-sm-12">
+                  <div class="search">
+                    <button
+                      class="card-btn custom-stox-search"
+                      @click="getSmartKeyword()"
+                    >
+                      search
+                      <font-awesome-icon
+                        :icon="['fas', 'chevron-circle-right']"
+                      />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-      </div> 
+        </div>
+      </div>
+    </div>
 
-      <b-modal id="embedStatsCode" title="" size="xl" hide-footer>
-        <h5>Copy code and paste to your website.</h5>
-        <p class="code-text">
-          <textarea cols="3" rows="10">
+    <div class="row analytics_page">
+      <div class="col-md-12 pr-0 inner_wrap">
+        <div class="col-md-12 col-sm-12 pl-0 stoxticker_page-outer">
+          <div class="card green_box stoxticker_page">
+            <div class="card-body">
+              <h5 class="card-title">
+                <button class="theme-btn card-btn">STOXTICKER</button>
+                <nuxt-link class="card-link float-right" to="/">
+                  SLABSTOX.COM
+                </nuxt-link>
+              </h5>
+              <div class="row">
+                <div class="col-md-2 bs-stats">
+                  <h2>SX</h2>
+                </div>
+                <div class="col-md-2 bs-stats">
+                  <h3>{{ intToString(data.total) }}@</h3>
+                  <span class="tot-sla">TOTAL SLABS</span>
+                </div>
+                <div class="col-md-5 bs-stats">
+                  <h2>{{ data.sale.toFixed(2) }}</h2>
+                  <span class="avg-sla">AVG. SLAB SALE</span>
+                </div>
+                <div class="col-md-3 bs-stats">
+                  <div class="up_img">
+                    <font-awesome-icon
+                      :icon="['fas', 'caret-' + data.change_arrow]"
+                    />
+                  </div>
+                  <h2>{{ data.change }}</h2>
+                  <span class="cha-amo">CHANGE AMOUNT</span>
+                </div>
+              </div>
+
+              <span class="date">LAST UPDATED - {{ data.last_updated }}</span>
+            </div>
+          </div>
+          <div class="social_share">
+            <h5>SHARE ON SOCIAL</h5>
+            <ul>
+              <li>
+                <a href="javascript:;" @click="shareFb()"
+                  ><img src="~/assets/img/icons/facebook.svg" alt
+                /></a>
+              </li>
+              <!-- <li><a href="#"><img src="~/assets/img/icons/instagram.svg" alt /></a></li> -->
+              <li>
+                <a
+                  :href="
+                    'https://twitter.com/intent/tweet?url=' +
+                    encodeURI(baseUrl) +
+                    '&text=StoxTicker@' +
+                    data.sale.toFixed(2)
+                  "
+                  target="_blank"
+                  ><img src="~/assets/img/icons/twitter.svg" alt
+                /></a>
+              </li>
+              <li>
+                <a
+                  :href="
+                    'http://pinterest.com/pin/create/button/?url=' +
+                    encodeURI(baseUrl) +
+                    '&media=' +
+                    logo +
+                    '&description=' +
+                    encodeURI('Buy & Sell Sports Cards Online')
+                  "
+                  target="_blank"
+                  ><img src="~/assets/img/pinterest.png" alt
+                /></a>
+              </li>
+              <li>
+                <a
+                  :href="
+                    'http://www.linkedin.com/shareArticle?mini=true&url=' +
+                    encodeURI(baseUrl)
+                  "
+                  target="_blank"
+                  ><img src="~/assets/img/icons/linkedin-circled.svg" alt
+                /></a>
+              </li>
+            </ul>
+            <h4>
+              <a
+                class="embed-link"
+                href="javascript:;"
+                @click="embedStatsCode()"
+                >EMBEDD CODE </>
+              </a>
+            </h4>
+          </div>
+        </div>
+
+        <b-modal id="embedStatsCode" title="" size="xl" hide-footer>
+          <h5>Copy code and paste to your website.</h5>
+          <p class="code-text">
+            <textarea cols="3" rows="10">
             <iframe src="https://staging.slabstox.com/stoxticker-stats" width="1400" height="260" style="border:none;" frameborder="0"></iframe>
-          </textarea>
-        </p>
-      </b-modal>
+          </textarea
+            >
+          </p>
+        </b-modal>
 
-      <div class="col-md-12 col-sm-12 pl-0 beta-ver-hide">
-        <div class="card stoxticker_page stoxticker_listing">
-          <div class="card-body">
-            <h5 class="card-title">
-              <button class="theme-btn card-btn">SX STOXTICKER</button>
-              <nuxt-link class="card-link float-right" to="/">
-                SLABSTOX.COM 
-              </nuxt-link>
-            </h5>
+        <div class="col-md-12 col-sm-12 pl-0 stoxticker_listing-outer">
+          <div class="card stoxticker_page stoxticker_listing">
+            <div class="card-body">
+              <h5 class="card-title">
+                <button class="theme-btn card-btn">SX STOXTICKER</button>
+                <nuxt-link class="card-link float-right" to="/">
+                  SLABSTOX.COM
+                </nuxt-link>
+              </h5>
               <ul>
                 <li>
                   <h3 class="h3-title">BASKETBALL</h3>
                   <marquee direction="left">
-                  <h4>LEBRON JAMES 2003 TOPPS CHROME $ 45.75</h4><h5>LEBRON JAMES 2003...</h5>
+                    <h4>LEBRON JAMES 2003 TOPPS CHROME $ 45.75</h4>
+                    <h5>LEBRON JAMES 2003...</h5>
                   </marquee>
-                  </li>
-                   <li>
+                </li>
+                <li>
                   <h3 class="h3-title">FOOTBALL</h3>
                   <marquee direction="left">
-                  <h4>LEBRON JAMES 2003 TOPPS CHROME $ 45.75</h4><h5>LEBRON JAMES 2003...</h5>
+                    <h4>LEBRON JAMES 2003 TOPPS CHROME $ 45.75</h4>
+                    <h5>LEBRON JAMES 2003...</h5>
                   </marquee>
-                  </li>
-                   <li>
+                </li>
+                <li>
                   <h3 class="h3-title">BASEBALL</h3>
                   <marquee direction="left">
-                  <h4>LEBRON JAMES 2003 TOPPS CHROME $ 45.75</h4><h5>LEBRON JAMES 2003...</h5>
+                    <h4>LEBRON JAMES 2003 TOPPS CHROME $ 45.75</h4>
+                    <h5>LEBRON JAMES 2003...</h5>
                   </marquee>
-                  </li>
-                   <li>
+                </li>
+                <li>
                   <h3 class="h3-title">SOCCER</h3>
                   <marquee direction="left">
-                  <h4>LEBRON JAMES 2003 TOPPS CHROME $ 45.75</h4><h5>LEBRON JAMES 2003...</h5>
+                    <h4>LEBRON JAMES 2003 TOPPS CHROME $ 45.75</h4>
+                    <h5>LEBRON JAMES 2003...</h5>
                   </marquee>
-                  </li>
-                   <li>
+                </li>
+                <li>
                   <h3 class="h3-title">HOCKEY</h3>
                   <marquee direction="left">
-                  <h4>LEBRON JAMES 2003 TOPPS CHROME $ 45.75</h4><h5>LEBRON JAMES 2003...</h5>
+                    <h4>LEBRON JAMES 2003 TOPPS CHROME $ 45.75</h4>
+                    <h5>LEBRON JAMES 2003...</h5>
                   </marquee>
-                  </li>
-              
+                </li>
               </ul>
-              <span class="date">LAST UPDATED MAY 13 2020 - 07:57:39 AM CST</span>
+              <span class="date"
+                >LAST UPDATED MAY 13 2020 - 07:57:39 AM CST</span
+              >
+            </div>
+          </div>
+          <div class="social_share">
+            <h5>SHARE ON SOCIAL</h5>
+            <ul>
+              <li>
+                <a href="javascript:;" @click="shareFb()"
+                  ><img src="~/assets/img/icons/facebook.svg" alt
+                /></a>
+              </li>
+              <li>
+                <a
+                  :href="
+                    'https://twitter.com/intent/tweet?url=' +
+                    encodeURI(baseUrl) +
+                    '&text=StoxTicker@' +
+                    data.sale.toFixed(2)
+                  "
+                  target="_blank"
+                  ><img src="~/assets/img/icons/twitter.svg" alt
+                /></a>
+              </li>
+              <li>
+                <a
+                  :href="
+                    'http://pinterest.com/pin/create/button/?url=' +
+                    encodeURI(baseUrl) +
+                    '&media=' +
+                    logo +
+                    '&description=' +
+                    encodeURI('Buy & Sell Sports Cards Online')
+                  "
+                  target="_blank"
+                  ><img src="~/assets/img/pinterest.png" alt
+                /></a>
+              </li>
+              <li>
+                <a
+                  :href="
+                    'http://www.linkedin.com/shareArticle?mini=true&url=' +
+                    encodeURI(baseUrl)
+                  "
+                  target="_blank"
+                  ><img src="~/assets/img/icons/linkedin-circled.svg" alt
+                /></a>
+              </li>
+            </ul>
+            <h4>
+              <a class="embed-link" href="#" @click="embedSellsCode()"
+                >EMBEDD CODE </>
+              </a>
+            </h4>
           </div>
         </div>
-        <div class="social_share">
-             <h5>SHARE ON SOCIAL</h5>
-             <ul>
-                <li><a href="javascript:;" @click="shareFb()"><img src="~/assets/img/icons/facebook.svg" alt /></a></li>
-                <!-- <li><a href="#"><img src="~/assets/img/icons/instagram.svg" alt /></a></li> -->
-                <li><a :href="'https://twitter.com/intent/tweet?url='+encodeURI(baseUrl)+'&text=StoxTicker@'+data.sale.toFixed(2)" target="_blank"><img src="~/assets/img/icons/twitter.svg" alt /></a></li>
-                <li><a :href="'http://pinterest.com/pin/create/button/?url='+encodeURI(baseUrl)+'&media='+logo+'&description='+encodeURI('Buy & Sell Sports Cards Online')" target="_blank"><img src="~/assets/img/pinterest.png" alt /></a></li>
-                <li><a :href="'http://www.linkedin.com/shareArticle?mini=true&url='+encodeURI(baseUrl)" target="_blank"><img src="~/assets/img/icons/linkedin-circled.svg" alt /></a></li>
-             </ul>
-             <h4> <a class="embed-link" href="#" @click="embedSellsCode()">EMBEDD CODE </></a> </h4>
-          </div>
-      </div> 
-      <b-modal id="embedSellsCode" title="" size="xl" hide-footer>
-        <h5>Copy code and paste to your website.</h5>
-        <p class="code-text">
-          <textarea cols="3" rows="10">
+        <b-modal id="embedSellsCode" title="" size="xl" hide-footer>
+          <h5>Copy code and paste to your website.</h5>
+          <p class="code-text">
+            <textarea cols="3" rows="10">
             <iframe src="https://staging.slabstox.com/stoxticker-sells" width="1400" height="260" style="border:none;" frameborder="0"></iframe>
-          </textarea>
-        </p>
-      </b-modal>
-
-        </div>
+          </textarea
+            >
+          </p>
+        </b-modal>
+      </div>
     </div>
+
+      <div class="card card-single-row-outer search-slabs-out" style="display:none;">
+        <div class="card-body">
+          <h5 class="card-title custom-smart-search-player-name">
+            <button class="card-btn theme-btn">Slabs</button>
+            
+          </h5>
+          <div class="dataloader" v-if="requestInProcess">
+            <b-spinner variant="success" label="Spinning"></b-spinner>
+          </div>
+                    <ul
+              class="my-card-listing"
+            >
+              <li
+                class="my-card"   v-for="itemdata in searchSlabs"
+              :key="itemdata.id" :data-card_id="itemdata.id"
+              >
+                <h4 class="my-card-title" :title="itemdata.title">
+                  {{ trimTitle(itemdata.title) }}
+                </h4>
+                <div class="image-container">
+                  <img
+                    class="card-image"
+                    :title="itemdata.title"
+                    :src="itemdata.cardImage"
+                    :alt="itemdata.id"
+                  />
+                </div>
+                <button class="my-card-view-listing add-to-board">
+                  Add to Board
+                  <font-awesome-icon :icon="['fas', 'chevron-circle-right']" />
+                </button>
+              </li>
+            </ul>
+
+          <div
+            class="empty-result"
+            v-if="data.length == 0 && !requestInProcess"
+          >
+            <p>There are no cards here. Check again soon.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card search-name-out" style="display:none;">
+        <div class="card-body" style="padding:0;">
+          <h5 class="card-title custom-smart-search-player-name">
+            <button class="card-btn theme-btn">Create Board</button>
+          </h5>
+          <div class="search-bar">
+          <input type="text" placeholder="ENTER BOARD NAME" style="margin-bottom: 15px;">
+</div>
+          <div class="create-board-out my-card text-center">
+ <button class="my-card-view-listing create-board" @click="createBoard()">
+                  Create Board
+                  <font-awesome-icon :icon="['fas', 'chevron-circle-right']" />
+                </button>
+          </div>
+ </div>
+    </div>
+
+    <div class="row board-search-list-outer" style="display:none;">
+      <div class="col-sm-6 board-search-list"  v-for="itemdata in boardSearch" >
+<h5 class="card-title custom-smart-search-player-name">
+            <button class="card-btn theme-btn">{{ itemdata.name }}</button>
+          </h5>
+      </div>
+
+      <div class="create-board-out my-card text-center">
+ <button class="my-card-view-listing create-board" @click="searchBoard()">
+                  Load More Boards
+                  <font-awesome-icon :icon="['fas', 'chevron-circle-right']" />
+                </button>
+          </div>
+    </div>
+   
   </div>
 </template>
 
 <script>
 import { BASE_URL } from '../constants/keys'
+import CardSlabItem from '~/components/dashboard/CardSlabItem'
 import CardListItem from '~/components/dashboard/CardListItem'
 import $ from 'jquery'
 
@@ -260,25 +444,63 @@ export default {
     this.getData()
     this.logo = document.getElementById('sidebarLogo').src
 
-    $('.search-stox').on('click', function(){
-      $(this).toggleClass('active');
-      $('.search-stox-box').toggleClass('active');
-    });
-    $('.close-btn').on('click', function(){
-      $('.search-stox').removeClass('active');
-      $('.search-stox-box').removeClass('active');
-    });
-    
+    $('.custom-stox').on('click', function () {
+      $(this).addClass('active')
+      $('.search-add-box').addClass('active')
+      $('.search-stox-box').removeClass('active')
+      $('.search-stox').removeClass('active')
+      $('.search-name-out').hide()
+      $('.stoxticker_page-outer').hide()
+      $('.stoxticker_listing-outer').hide()
+       $('.board-search-list-outer').hide()
+    })
+
+    $('.search-stox').on('click', function () {
+      $(this).addClass('active')
+      $('.search-stox-box').addClass('active')
+      $('.search-add-box').removeClass('active')
+      $('.custom-stox').removeClass('active')
+      $('.search-name-out').hide()
+      $('.stoxticker_page-outer').hide()
+      $('.stoxticker_listing-outer').hide()
+    })
+
+    $('.close-btn').on('click', function () {
+      $('.custom-stox').removeClass('active')
+      $('.search-stox').removeClass('active')
+      $('.search-stox-box').removeClass('active')
+      $('.search-add-box').removeClass('active')
+      $('.search-name-out').hide()
+      $('.board-search-list-outer').hide()
+      $('.stoxticker_page-outer').show()
+      $('.stoxticker_listing-outer').show()
+    })
+
+    $('.cat-btn li a').on('click', function (e) {
+      $(this).parent().toggleClass('active')
+      e.preventDefault()
+    })
+
+    $(document).on('click', '.add-to-board', function (e) {
+      $(this).parent().addClass('active')
+      e.preventDefault()
+    })
   },
   components: {
     CardListItem,
-    // ChevronUpIcon,
+    CardSlabItem,
     VueApexCharts: () => import('vue-apexcharts'),
   },
   data() {
     return {
       logo: null,
       baseUrl: BASE_URL,
+      keyword: null,
+      searchKeyword: null,
+      requestInProcess: false,
+      searchSlabs: [],
+      boardSearch: [],
+      boardPage:1,
       data: {
         total: 0,
         sale: 0,
@@ -339,6 +561,119 @@ export default {
     }
   },
   methods: {
+    searchBoard() {
+      var sportList = []
+      $('.cat-btn li.active').each(function () {
+        var $this = $(this)
+        sportList.push($this.find('a').text())
+      })
+      $('.stoxticker_page-outer').hide()
+      $('.stoxticker_listing-outer').hide()
+      try {
+        this.requestInProcess = true
+        this.$axios
+          .$post('stoxticker/search-board', {
+            keyword: this.searchKeyword,
+            sport: sportList,
+            page:this.boardPage
+          })
+          .then((res) => {
+            this.requestInProcess = false
+            if (res.status == 200) {
+              // $('.search-name-out').show()
+                $('.board-search-list-outer').show()
+              this.boardSearch = res.data
+              this.boardPage = res.page
+            }
+          })
+          .catch((err) => {
+            this.requestInProcess = false
+            console.log(err)
+          })
+      } catch (err) {
+        this.requestInProcess = false
+        console.log(err)
+      }
+    },
+    getSmartKeyword() {
+      var sportList = []
+      $('.cat-btn li.active').each(function () {
+        var $this = $(this)
+        sportList.push($this.find('a').text())
+      })
+      $('.stoxticker_page-outer').hide()
+      $('.stoxticker_listing-outer').hide()
+      try {
+        this.requestInProcess = true
+        this.$axios
+          .$post('stoxticker/slab-search', {
+            keyword: this.keyword,
+            sport: sportList,
+          })
+          .then((res) => {
+            this.requestInProcess = false
+            if (res.status == 200) {
+              $('.search-slabs-out').show()
+              $('.search-name-out').show()
+              this.searchSlabs = res.data
+            }
+          })
+          .catch((err) => {
+            this.requestInProcess = false
+            console.log(err)
+          })
+      } catch (err) {
+        this.requestInProcess = false
+        console.log(err)
+      }
+    },
+    createBoard() {
+      var cardList = []
+      $('.search-slabs-out li.active').each(function () {
+        var $this = $(this)
+        cardList.push($this.attr('data-card_id'))
+      })
+      try {
+        this.requestInProcess = true
+        this.$axios
+          .$post('stoxticker/create-board', {
+            name: $('.search-name-out input').val(),
+            cards: cardList,
+          })
+          .then((res) => {
+            this.requestInProcess = false
+            if (res.status == 200) {
+              $('.search-name-out input').val('')
+              $('.search-slabs-out').hide()
+              $('.search-name-out').hide()
+              $('.custom-stox').removeClass('active')
+              $('.search-stox').removeClass('active')
+              $('.search-stox-box').removeClass('active')
+              $('.search-add-box').removeClass('active')
+              $('.stoxticker_page-outer').show()
+              $('.stoxticker_listing-outer').show()
+              
+              $('.search-stox-box .search-bar input').val('')
+              this.searchSlabs = res.data
+            }
+          })
+          .catch((err) => {
+            this.requestInProcess = false
+            console.log(err)
+          })
+      } catch (err) {
+        this.requestInProcess = false
+        console.log(err)
+      }
+    },
+    trimTitle(title) {
+      if (title.length > 53) {
+        title = title.substring(0, 53)
+        title += '...'
+        return title
+      }
+      return title
+    },
     getData() {
       try {
         this.$axios.$get('get-stoxticker-data').then((res) => {
@@ -474,6 +809,7 @@ ul.my-card-listing {
 //   margin-bottom: 20px;
 // }
 
+.custom-stox-search,
 .custom-stox {
   font-family: 'CocogoosePro-Regular', Helvetica, Arial, sans-serif;
   font-weight: 400;
@@ -492,9 +828,17 @@ ul.my-card-listing {
   text-transform: uppercase;
   outline: none;
   margin-right: 10px;
-  svg{
+  &:after {
+    display: none;
+  }
+  &.active {
+    background: #272d33;
+    color: #39414a;
+    border: 13px solid #39414a;
+  }
+  svg {
     vertical-align: baseline;
-        margin-right: 5px;
+    margin-right: 5px;
   }
 }
 
@@ -509,37 +853,38 @@ ul.my-card-listing {
   text-align: center;
   text-transform: uppercase;
   outline: none;
-  border:0;
-  &:after{
-    display:none;
+  border: 0;
+  &:after {
+    display: none;
   }
-  &.active{
-        background: #272d33;
+  &.active {
+    background: #272d33;
     color: #39414a;
     border: 13px solid #39414a;
   }
-  svg{
-     margin-left: 5px;
+  svg {
+    margin-left: 5px;
   }
 }
 .stoxticker_page .bs-stats {
   height: auto;
 }
-.search-stox-box {
+
+.search-stox-box,
+.search-add-box,
+.search-name-out {
   background-color: #39414a;
   padding: 15px;
   border-radius: 2px;
   display: none;
-  &.active{
+  &.active {
     display: block;
   }
-}
-.search-stox-box .inner-wrap {
-  padding: 15px;
-  background-color: #fff;
-  border-radius: 2px;
-}
-.search-stox-box {
+  .inner-wrap {
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 2px;
+  }
   .search-bar {
     input {
       background-color: #f5f5f5;
@@ -637,6 +982,11 @@ ul.my-card-listing {
   padding-left: 12px;
   padding-right: 12px;
 }
+.search-add-box{
+.search-wrap {
+  margin-top: 15px;
+}
+}
 .search-wrap {
   width: calc(100% - 863px);
   text-align: right;
@@ -668,6 +1018,123 @@ ul.my-card-listing {
   .search-field .search .card-btn {
     margin-right: 0;
     width: 100%;
+  }
+}
+.analytics_page .card-single-row-outer {
+  height: auto;
+}
+html body main .card.search-slabs-out .my-card-listing .my-card {
+  width: 16.66%;
+}
+.my-card {
+  &.active {
+    .add-to-board {
+      background: linear-gradient(
+        to left,
+        rgba(10, 178, 95, 0.76) 0%,
+        rgba(27, 231, 131, 0.76) 33%,
+        rgba(5, 251, 98, 0.76) 100%
+      );
+      &:hover {
+        background: linear-gradient(
+          to left,
+          rgba(10, 178, 95, 0.76) 0%,
+          rgba(27, 231, 131, 0.76) 33%,
+          rgba(5, 251, 98, 0.76) 100%
+        );
+      }
+    }
+  }
+  display: inline-block;
+  width: 200px;
+  padding: 0px 8px;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+  .my-card-title {
+    font-family: 'CocogoosePro-SemiLightItalic', Helvetica, Arial, sans-serif;
+    color: $theme-off-white;
+    text-decoration: underline;
+    font-size: 11px;
+    letter-spacing: 1px;
+    height: 43px;
+  }
+  .image-container {
+    position: relative;
+    padding: 5px;
+    margin-bottom: 7px;
+    text-align: center;
+    background: #272d33;
+    // border-radiupx;
+    height: 12vw;
+    .icons-container {
+      position: absolute;
+      padding: 10px;
+      right: 0;
+      top: 9px;
+      .icons {
+        width: 32px;
+        height: 32px;
+        float: right;
+        margin-top: -10px;
+        cursor: pointer;
+      }
+    }
+    .card-image {
+      margin-top: 0px;
+      width: auto;
+      max-width: 100%;
+      position: absolute;
+      height: auto;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      padding: 5px;
+      max-height: 12vw;
+    }
+  }
+  .my-card-view-listing {
+    font-family: 'CocogoosePro-Regular', Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    width: 100%;
+    border-radius: 2px;
+    background: #edecec;
+    padding: 6px 5px 5px 5px;
+    color: #000;
+    font-size: 12px;
+    display: block;
+    text-align: center;
+    border: 0;
+    text-transform: uppercase;
+    &:focus {
+      outline: 0;
+    }
+    &:hover {
+      text-decoration: none;
+      background: #d4d4d4;
+    }
+  }
+}
+.create-board-out {
+  width: 100%;
+  margin-bottom: 10px;
+  .create-board {
+    width: auto;
+    padding: 6px 25px 5px 25px;
+    display: inline-block;
+    background: linear-gradient(
+      to left,
+      rgba(10, 178, 95, 0.76) 0%,
+      rgba(27, 231, 131, 0.76) 33%,
+      rgba(5, 251, 98, 0.76) 100%
+    );
+    &:hover {
+      background: linear-gradient(
+        to left,
+        rgba(10, 178, 95, 0.76) 0%,
+        rgba(27, 231, 131, 0.76) 33%,
+        rgba(5, 251, 98, 0.76) 100%
+      );
+    }
   }
 }
 </style>
