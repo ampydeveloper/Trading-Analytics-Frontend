@@ -3725,11 +3725,15 @@ html body #__nuxt .b-profileImage .dropdown-menu {
   font-size: 13px !important;
   border-radius: 2px !important;
   color: #000 !important;
+  text{
+    fill: rgb(237, 236, 236) !important;
+  }
 }
-
+// .h2h-apex-graph{
 .apexcharts-toolbar {
-  display: none;
+  display: none !important;
 }
+// }
 
 .apexcharts-tooltip.apexcharts-theme-light {
   padding: 5px 7px 0px 7px !important;

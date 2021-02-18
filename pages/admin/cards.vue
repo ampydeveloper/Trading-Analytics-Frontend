@@ -183,6 +183,14 @@
                     >
                       Add Listing
                     </button>
+                    <!-- <button
+                      class="card-btn btn btn-primary btn-table-spec"
+                      style="margin-top: 4px"
+                      @click="scrapItem(card.id)"
+                    >
+                      Add Scrap Listing
+                    </button> -->
+                   
                     <nuxt-link
                       class="card-btn btn btn-primary btn-table-spec"
                       style="margin-top: 4px"
@@ -405,6 +413,9 @@ export default {
     },
     addItem(id) {
       this.$router.push('/admin/additem/' + id)
+    },
+    scrapItem(id) {
+      this.$router.push('/admin/scrapitem/' + id)
     },
     getCards(page, filter = null) {
       console.log('reddd');

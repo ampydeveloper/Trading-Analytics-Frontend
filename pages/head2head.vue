@@ -167,10 +167,10 @@
               <ul>
                 <li>SlabStox Value: ${{ selectedCardOne.details.currentPrice }}</li>
                 <li>Overall Rank: {{ card_one.rank }}</li>
-                <li>Last Sale Price: N/A</li>
-                <li>Last Sale Date:N/A</li>
-                <li>High Sale: N/A</li>
-                <li>Low Sale: N/A</li>
+                <li>Last Sale Price: ${{ (card_one.last_sale?card_one.last_sale.cost:0) }}</li>
+                <li>Last Sale Date:{{ (card_one.last_sale? this.$moment(card_one.last_sale.timestamp).format('M/D'):'') }}</li>
+                <li>High Sale: ${{ (card_one.high_sale?card_one.high_sale.cost:0) }}</li>
+                <li>Low Sale: ${{ (card_one.low_sale?card_one.low_sale.cost:0) }}</li>
               </ul>
             </div>
           </div>
@@ -180,10 +180,10 @@
               <ul>
                 <li>SlabStox Value: ${{ selectedCardTwo.details.currentPrice }}</li>
                 <li>Overall Rank: {{ card_two.rank }}</li>
-                <li>Last Sale Price: N/A</li>
-                <li>Last Sale Date: N/A</li>
-                <li>High Sale: N/A</li>
-                <li>Low Sale: N/A</li>
+                <li>Last Sale Price: ${{ (card_two.last_sale?card_two.last_sale.cost:0) }}</li>
+                <li>Last Sale Date: {{ (card_two.last_sale? this.$moment(card_two.last_sale.timestamp).format('M/D'):'') }}</li>
+                <li>High Sale: ${{ (card_two.high_sale?card_two.high_sale.cost:0) }}</li>
+                <li>Low Sale: ${{ (card_two.low_sale?card_two.low_sale.cost:0) }}</li>
               </ul>
             </div>
           </div>
@@ -298,13 +298,19 @@ export default {
         keyword: null,
         items: [],
         selectedCard: null,
-        rank: null
+        rank: null,
+        last_sale: null,
+        high_sale: null,
+        low_sale: null,
       },
       card_two: {
         keyword: null,
         items: [],
         selectedCard: null,
-        rank: null
+        rank: null,
+        last_sale: null,
+        high_sale: null,
+        low_sale: null,
       },
       series: [
         {
@@ -319,11 +325,11 @@ export default {
       chartOptions: {
         chart: {
           toolbar: {
-            show: false
+            show: true
           },
           height: 350,
           type: 'area',
-          background: 'transparent',
+          background: ['#14f078', '#e57c13'],
           zoom: {
             enabled: false
           }
@@ -518,13 +524,19 @@ export default {
         this.$axios.$get('get-card-graph/'+cardIds+'/'+days).then(res => {
           if (res.status == 200) {
             this.activeDaysGraph = days;
-            if(this.initGraphLabelLength != res.data.labels.length){
+            // if(this.initGraphLabelLength != res.data.labels.length){
               this.series = [{name: 'SX Value', data: res.data.values1}, {name: 'SX Value', data: res.data.values2}];
-              this.chartOptions = { xaxis:{ categories: res.data.labels }};
-              this.initGraphLabel1Length = res.data.labels.length;
-            }
+              this.chartOptions = { xaxis:{ categories: res.data.lable1 }};
+              this.initGraphLabel1Length = res.data.lable1.length;
+            // }
             this.card_one.rank = res.data.rank1
             this.card_two.rank = res.data.rank2
+             this.card_one.low_sale = res.data.low_sale1
+              this.card_two.low_sale = res.data.low_sale2
+               this.card_one.high_sale = res.data.high_sale1
+              this.card_two.high_sale = res.data.high_sale2
+              this.card_one.last_sale = res.data.last_sale1
+              this.card_two.last_sale = res.data.last_sale2
           } else {
             this.$router.push('/404')
           }
@@ -532,6 +544,7 @@ export default {
       } catch (error) {
         console.log(error)
       }
+      
     },
     resultSelect(card) {
       // if (this.autoselected.one.open || this.autoselected.two.open) {

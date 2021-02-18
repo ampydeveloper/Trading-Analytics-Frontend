@@ -102,13 +102,13 @@ export default {
     }
   },
   mounted() {
-    // this.card.card_id = this.$route.query.item
      this.getData(this.$route.query.sale_id)
   },
   components: {},
   data() {
     return {
       card: {
+        id: '',
         card_id: '',
         timestamp: '',
         quantity: '',
@@ -127,10 +127,10 @@ export default {
     getData(sale_id) {
       try {
         this.$axios.$get('get-edit-sales/' + sale_id).then(res => {
-            console.log(res);
           if (res.status == 200) {
             this.card = {
                 id: res.data.id,
+                card_id: res.data.card_id,
                     timestamp: res.data.timestamp,
                     quantity: res.data.quantity,
                     cost: res.data.cost,
@@ -155,6 +155,7 @@ export default {
                 this.$toast.success(res.data.message)
               }
               this.requestInProcess = false
+               this.$router.push("all-sales-data?card_id="+this.card.card_id)
               this.hideLoader()
             })
             .catch((err) => {

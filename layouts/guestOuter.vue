@@ -31,6 +31,7 @@ import Footer from '~/components/dashboard/Footer'
 import { BSpinner } from 'bootstrap-vue'
 
 export default {
+  // middleware: 'guest',
   head() {
     return {
       link: [{ rel: 'stylesheet', href: '/css/layout/dashboard.css' }],
@@ -55,6 +56,7 @@ export default {
   },
   mounted() {
     this.guestMiddleware()
+    // this.$router.push('/dashboard')
   },
 }
 </script>

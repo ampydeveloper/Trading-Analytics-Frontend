@@ -143,6 +143,7 @@ export default {
                 }
               }
               this.requestInProcess = false
+              this.$router.push("all-sales-data?card_id="+this.$route.query.item)
               this.hideLoader()
             })
             .catch((err) => {

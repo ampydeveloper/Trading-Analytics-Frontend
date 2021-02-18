@@ -10,9 +10,6 @@ const User = {
                     appLoaded: false,
                     user_fullname: null,
                     showloader: true,
-                    // user: [],
-                    // watchListIds:[],
-                    // authenticated:false
                 }
             },
             computed: {
@@ -37,6 +34,7 @@ const User = {
                     document.getElementById('spinner-holder').style.display = "none";
                 },
                 authAdminMiddleware() {
+                    console.log('user');
                     if (!this.authenticated) {
                         window.localStorage.clear()
                         this.$router.push('/')
@@ -49,6 +47,7 @@ const User = {
                     }
                 },
                 authMiddleware() {
+                    console.log('admin');
                     if (!this.authenticated) {
                         window.localStorage.clear()
                         this.$router.push('/')
@@ -62,8 +61,8 @@ const User = {
                 },
                 guestMiddleware() {
                     if (this.authenticated) {
-                        // console.log(this.$route.path);
-                        // console.log(this.$auth.loggedIn);
+                    //     // console.log(this.$route.path);
+                    //     // console.log(this.$auth.loggedIn);
                             this.$router.push('/dashboard')
                     }
 

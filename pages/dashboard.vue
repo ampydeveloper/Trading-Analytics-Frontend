@@ -352,24 +352,19 @@
         <span class="g-title"></span>
         &nbsp;&nbsp;<span class="g-sx"></span> &nbsp;&nbsp;
         <span class="g-to-sales"></span> &nbsp;&nbsp;
-        <span class="g-sales-diff"></span>
-        &nbsp;&nbsp; <span class="g-image-link"></span>
+        <span class="g-sales-diff"></span>&nbsp;&nbsp; 
+        <span class="g-image-link"></span>&nbsp;&nbsp;
+        <span class="slab-image-link"></span>
       </div>
 
       <div class="shar-text">Share Graphics</div>
-      <div class="g-img-full">
-        <img src="" alt="" class="slab_image" />
+      <div class="g-img-full" id="g-img-full">
+        <!-- <img src="https://images.unsplash.com/photo-1556629538-fc3eba61504e?auto=format&fit=crop&w=1300&q=80" alt="Cityscape" crossorigin="anonymous" class="slab_image" /> -->
+        <img src="" class="slab_image" alt="Slab Title" crossorigin="anonymous" />
+        <canvas class="slab_image_canvas"></canvas>
         <img :src="graphImage" alt="" class="slab_graph" />
       </div>
       <div class="clearfix g-download-out text-right">
-        <!-- <a href="http://slabstox.leagueofclicks.com/storage/basketball/F2.jpg" class="" download>11</a>
-        <a :href="cardImage" class="" download>22</a>
-        <a
-          :href="graphImage"
-          class="g-download-graph"
-          download
-        >33</a> -->
-        
         <a
           href="javascript:void(0);"
           @click="downloadImage"
@@ -392,7 +387,8 @@ import $ from 'jquery'
 export default {
   transition: 'fade',
   layout: 'guestOuter',
-    // auth: false,
+  // auth: false,
+  // middleware: 'guest',
   head() {
     return {
       title: 'Dashboard - Slabstox',
@@ -516,16 +512,18 @@ export default {
         $('.g-main-text .g-sales-diff').text(
           'Price Change ' + $('.g-dollar-d-val').text()
         )
-        $('.g-main-text .g-image-link').text(self.graphImage)
+        
         $('.g-img-full .slab_image').attr(
           'src',
           $('.my-card.active .image-container img').attr('src')
         )
         self.cardImage = $('.my-card.active .image-container img').attr('src')
-        $('.g-download-slab').attr(
-          'href',
-          $('.my-card.active .image-container img').attr('src')
-        )
+        // $('.g-download-slab').attr(
+        //   'href',
+        //   $('.my-card.active .image-container img').attr('src')
+        // )
+        $('.g-main-text .g-image-link').text(self.graphImage)
+        $('.g-main-text .slab-image-link').text(self.cardImage)
       }
     },
   },
@@ -534,25 +532,44 @@ export default {
       window.open(src, '_blank')
     },
     downloadImage() {
-      $('.apexcharts-toolbar .exportPNG').click();
-      // console.log(src)
-      // this.$axios
-      //   .$get(src, {
-      //     responseType: 'stream',
-      //     headers: {
-      //       'Content-Type': 'application/force-download',
-      //       'Content-Type': 'application/octet-stream',
-      //       'Content-Type': 'application/download',
-      //     },
-      //   })
-      //   .then((res) => {
-      //     new Promise((resolve, reject) => {
-      //       response.data
-      //         .pipe(fs.createWriteStream('red.png'))
-      //         .on('finish', () => resolve())
-      //         .on('error', (e) => reject(e))
-      //     })
-      //   })
+      $('.apexcharts-toolbar .exportPNG').click()
+
+      const wrapper = document.getElementById('g-img-full')
+      const img = wrapper.querySelector('.slab_image')
+      const canvas = wrapper.querySelector('.slab_image_canvas')
+      // img.addEventListener('load', () => {
+          canvas.width = img.width
+          canvas.height = img.height
+          const ctx = canvas.getContext('2d')
+          ctx.drawImage(img, 0, 0, img.width, img.height)
+        // }, false)
+
+setTimeout(() => {
+      canvas.toBlob((blob) => {
+        console.log(blob)
+        const downloadLink = downloadBlob(blob)
+      })
+}, 1000)
+      function downloadBlob(blob) {
+        // const url2 = canvas.toDataURL('image/png')
+        const url = URL.createObjectURL(blob)
+
+        const a = document.createElement('a')
+        a.href = url
+        // a.download = filename || 'download';
+        a.download = 'download'
+
+        const clickHandler = () => {
+          setTimeout(() => {
+            URL.revokeObjectURL(url)
+            this.removeEventListener('click', clickHandler)
+          }, 150)
+        }
+        a.addEventListener('click', clickHandler, false)
+        a.click()
+        $('.slab_image_canvas').hide();
+        return a
+      }
     },
     toggleCardActive(card) {
       this.cardActiveId = card.id
@@ -607,21 +624,20 @@ export default {
       }
     },
     getTernder() {
-        try {
-          this.$axios
-            .$post('portfolio/listing', {
+      try {
+        this.$axios
+          .$post('portfolio/listing', {
             take: 6,
           })
-            .then((res) => {
-              if (res.status == 200) {
-                this.ternder = res.data
-              }
-            })
-        } catch (err) {
-          this.hiuestInProcess = false
-          console.log(err)
-        }
-
+          .then((res) => {
+            if (res.status == 200) {
+              this.ternder = res.data
+            }
+          })
+      } catch (err) {
+        this.hiuestInProcess = false
+        console.log(err)
+      }
     },
     getWatchlist() {
       try {
@@ -676,6 +692,28 @@ export default {
                         fontSize: '10px',
                         fontFamily: 'NexaBold',
                       },
+                      formatter: (value, ind) => {
+                        let lblStr = `$${value}`
+                        // if (typeof ind == 'object')
+                        //   lblStr = `$${value} (${
+                        //     this.salesQty[ind.dataPointIndex]
+                        //   })`
+                        // else lblStr = `$${value} (${this.salesQty[ind]})`
+                        return lblStr
+                      },
+                    },
+                  },
+                  // xaxis: {
+                  //   labels: {
+                  //     formatter: (value) => {
+                  //       // return this.$moment(value).format('M/D')
+                  //       return value
+                  //     },
+                  //   },
+                  // },
+                  tooltip: {
+                    enabled: true,
+                    y: {
                       formatter: (value, ind) => {
                         let lblStr = `$${value}`
                         if (typeof ind == 'object')
@@ -921,5 +959,9 @@ ul.featured-listing {
 }
 .g-download-out {
   margin: 20px 20px 0 20px;
+}
+.slab_image_canvas{
+  position: absolute;
+    left: 20px;
 }
 </style>

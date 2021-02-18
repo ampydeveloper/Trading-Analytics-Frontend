@@ -19,6 +19,7 @@ import Footer from '~/components/guest/Footer'
 import { BSpinner } from 'bootstrap-vue'
 
 export default {
+  // middleware: 'guest',
   loading: '~/components/loading.vue',
   head() {
     return {
@@ -33,7 +34,7 @@ export default {
     Footer
   },
   mounted() {
-    this.guestMiddleware()
+    // this.guestMiddleware()
   },
 }
 </script>

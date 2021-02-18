@@ -68,6 +68,7 @@ import LiveListingCard from '~/components/dashboard/LiveListingCard'
 export default {
   transition: 'fade',
   layout: 'guestOuter',
+  // middleware: 'guest',
     // auth: false,
   head() {
     return {

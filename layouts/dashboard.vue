@@ -31,6 +31,7 @@ import Footer from '~/components/dashboard/Footer'
 import { BSpinner } from 'bootstrap-vue'
 
 export default {
+  // middleware: 'auth',
   head() {
     return {
       link: [{ rel: 'stylesheet', href: '/css/layout/dashboard.css' }],
@@ -56,12 +57,12 @@ export default {
   mounted() {
     // console.log(this.user);
     this.authMiddleware()
-    this.$store.dispatch('advancesearch/fetchAttributes').then(() => {
-    // console.log("This would be printed after dispatch!!")
-   })
-   this.$store.dispatch('watchlist/fetchIds').then(() => {
-    // console.log("This would be printed after dispatch!!")
-   })
+  //   this.$store.dispatch('advancesearch/fetchAttributes').then(() => {
+  //   // console.log("This would be printed after dispatch!!")
+  //  })
+  //  this.$store.dispatch('watchlist/fetchIds').then(() => {
+  //   // console.log("This would be printed after dispatch!!")
+  //  })
   },
 }
 </script>

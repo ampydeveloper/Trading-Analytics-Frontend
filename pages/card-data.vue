@@ -299,24 +299,31 @@
             <span class="g-title"></span>
             &nbsp;&nbsp;<span class="g-sx"></span> &nbsp;&nbsp;
             <span class="g-to-sales"></span> &nbsp;&nbsp;
-            <span class="g-sales-diff"></span>
-            &nbsp;&nbsp; <span class="g-image-link"></span>
+            <span class="g-sales-diff"></span> &nbsp;&nbsp;
+            <span class="g-image-link"></span> &nbsp;&nbsp;
+            <span class="slab-image-link"></span>
           </div>
 
           <div class="shar-text">Share Graphics</div>
-          <div class="g-img-full">
-            <img src="" alt="" class="slab_image" />
+          <div class="g-img-full" id="g-img-full">
+            <!-- <img src="https://images.unsplash.com/photo-1556629538-fc3eba61504e?auto=format&fit=crop&w=1300&q=80" alt="Cityscape" crossorigin="anonymous" class="slab_image" /> -->
+            <img
+              src=""
+              class="slab_image"
+              alt="Slab Title"
+              crossorigin="anonymous"
+            />
+            <canvas class="slab_image_canvas"></canvas>
             <img :src="graphImage" alt="" class="slab_graph" />
           </div>
-          <div class="clearfix g-download-out">
-            <a href="#" class="g-download-slab" target="_blank" download></a>
+          <div class="clearfix g-download-out text-right">
             <a
-              :href="graphImage"
-              class="g-download-graph"
-              target="_blank"
-              download
-            ></a>
-            <a href="#" class="g-download-img-all">Download Graphics</a>
+              href="javascript:void(0);"
+              @click="downloadImage"
+              class="g-download-img-all"
+            >
+              Download Graphics
+            </a>
           </div>
         </b-modal>
       </div>
@@ -367,18 +374,18 @@ export default {
         $('.g-main-text .g-to-sales').text(
           $('.card-title_new .theme-btn').text()
         )
-        // $('.g-main-text .g-sales-diff').text(
-        //   'Price Change $'+$('.g-dollar-d-val').text()
-        // )
         $('.g-main-text .g-image-link').text(this.graphImage)
+        $('.g-main-text .slab-image-link').text(
+          $('.image-conatiner img').attr('src')
+        )
         $('.g-img-full .slab_image').attr(
           'src',
           $('.image-conatiner img').attr('src')
         )
-        $('.g-download-slab').attr(
-          'href',
-          $('.my-card.active .image-container img').attr('src')
-        )
+        // $('.g-download-slab').attr(
+        //   'href',
+        //   $('.my-card.active .image-container img').attr('src')
+        // )
       }
     },
   },
@@ -504,6 +511,46 @@ export default {
     }
   },
   methods: {
+    downloadImage() {
+      $('.apexcharts-toolbar .exportPNG').click()
+
+      const wrapper = document.getElementById('g-img-full')
+      const img = wrapper.querySelector('.slab_image')
+      const canvas = wrapper.querySelector('.slab_image_canvas')
+      // img.addEventListener('load', () => {
+      canvas.width = img.width
+      canvas.height = img.height
+      const ctx = canvas.getContext('2d')
+      ctx.drawImage(img, 0, 0, img.width, img.height)
+      // }, false)
+
+      setTimeout(() => {
+        canvas.toBlob((blob) => {
+          console.log(blob)
+          const downloadLink = downloadBlob(blob)
+        })
+      }, 1000)
+      function downloadBlob(blob) {
+        // const url2 = canvas.toDataURL('image/png')
+        const url = URL.createObjectURL(blob)
+
+        const a = document.createElement('a')
+        a.href = url
+        // a.download = filename || 'download';
+        a.download = 'download'
+
+        const clickHandler = () => {
+          setTimeout(() => {
+            URL.revokeObjectURL(url)
+            this.removeEventListener('click', clickHandler)
+          }, 150)
+        }
+        a.addEventListener('click', clickHandler, false)
+        a.click()
+        $('.slab_image_canvas').hide()
+        return a
+      }
+    },
     addToWatchList() {
       try {
         this.$axios
@@ -553,21 +600,23 @@ export default {
     },
     updateGraph(days = 2) {
       try {
-        this.$axios.$get(`get-card-graph/${this.id}/${days}`).then((res) => {
-          if (res.status == 200) {
-            this.activeDaysGraph = days
-            if (this.initGraphLabelLength != res.data.values.length) {
-              this.series = [{ name: 'Card Values', data: res.data.values }]
-              this.chartOptions = { xaxis: { categories: res.data.labels } }
-              this.initGraphLabelLength = res.data.labels.length
+        this.$axios
+          .$get(`get-single-card-graph/${this.id}/${days}`)
+          .then((res) => {
+            if (res.status == 200) {
+              this.activeDaysGraph = days
+              if (this.initGraphLabelLength != res.data.values.length) {
+                this.series = [{ name: 'Card Values', data: res.data.values }]
+                this.chartOptions = { xaxis: { categories: res.data.labels } }
+                this.initGraphLabelLength = res.data.labels.length
+              }
+              setTimeout(() => {
+                this.generateImageOfGraph()
+              }, 100)
+            } else {
+              this.$router.push('/404')
             }
-            setTimeout(() => {
-              this.generateImageOfGraph()
-            }, 100)
-          } else {
-            this.$router.push('/404')
-          }
-        })
+          })
       } catch (error) {
         console.log(error)
       }
@@ -1067,5 +1116,9 @@ ul.my-card-listing {
 }
 .g-download-out {
   margin: 20px 20px 0 20px;
+}
+.slab_image_canvas {
+  position: absolute;
+  left: 20px;
 }
 </style>
