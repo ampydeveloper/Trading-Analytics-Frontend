@@ -67,7 +67,7 @@ import CardListItem from '~/components/dashboard/CardListItem'
 import LiveListingCard from '~/components/dashboard/LiveListingCard'
 export default {
   transition: 'fade',
-  layout: 'guestOuter',
+  layout: 'dashboard',
   // middleware: 'guest',
     // auth: false,
   head() {

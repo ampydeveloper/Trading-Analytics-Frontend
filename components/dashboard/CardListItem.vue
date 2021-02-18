@@ -16,7 +16,7 @@
           Buy Now
         </a>
         
-        <img
+        <!-- <img
           v-if="!isInWatchList(itemdata.id)"
           @click="addToWatchList()"
           class="icons"
@@ -27,7 +27,7 @@
           @click="removeToWatchList()"
           class="icons heart-fill-icon"
           src="~/assets/img/icons/heart-green.png"
-        />
+        /> -->
       </div>
       <img
         class="card-image"

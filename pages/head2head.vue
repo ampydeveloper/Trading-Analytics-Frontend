@@ -624,6 +624,7 @@ export default {
       // float: left;
       padding-right: 10px;
       // width: 70%;
+      width: 100%;
       .form-control {
         font-size: 12px;
         height: 30px;
@@ -800,10 +801,10 @@ ul.my-card-listing {
       background: #ffffff;
       list-style: none;
       padding: 0px;
-      width: 87%;
+      width: calc(100% - 12px);
       font-size: 10px;
       li {
-        border-bottom: 1px solid #d8d8d8;
+        border-bottom: 1px solid #b15f5f;
         line-height: 2;
         padding: 5px;
         font-weight: normal;

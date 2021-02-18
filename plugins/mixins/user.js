@@ -34,7 +34,6 @@ const User = {
                     document.getElementById('spinner-holder').style.display = "none";
                 },
                 authAdminMiddleware() {
-                    console.log('user');
                     if (!this.authenticated) {
                         window.localStorage.clear()
                         this.$router.push('/')
@@ -47,7 +46,6 @@ const User = {
                     }
                 },
                 authMiddleware() {
-                    console.log('admin');
                     if (!this.authenticated) {
                         window.localStorage.clear()
                         this.$router.push('/')
@@ -65,8 +63,6 @@ const User = {
                     //     // console.log(this.$auth.loggedIn);
                             this.$router.push('/dashboard')
                     }
-
-                   
                 },
                 addToCart(data) {
                     try {
@@ -92,7 +88,7 @@ const User = {
                 },
                 isInWatchList(id) {
                     if (this.watchListIds) {
-                        return (this.watchListIds.indexOf(id) != -1);
+                        return (this.watchListIds.indexOf(parseInt(id)) != -1);
                     }
                     return false;
                 }

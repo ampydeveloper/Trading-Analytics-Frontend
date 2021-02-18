@@ -386,7 +386,7 @@ import $ from 'jquery'
 
 export default {
   transition: 'fade',
-  layout: 'guestOuter',
+  layout: 'dashboard',
   // auth: false,
   // middleware: 'guest',
   head() {
@@ -626,7 +626,7 @@ setTimeout(() => {
     getTernder() {
       try {
         this.$axios
-          .$post('portfolio/listing', {
+          .$post('portfolio/dashboard-listing', {
             take: 6,
           })
           .then((res) => {
@@ -635,7 +635,6 @@ setTimeout(() => {
             }
           })
       } catch (err) {
-        this.hiuestInProcess = false
         console.log(err)
       }
     },

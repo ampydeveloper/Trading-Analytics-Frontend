@@ -15,13 +15,13 @@
             </ul>
             <div class="icons-container">
               <img
-                v-if="!isInWatchList(id) && user.full_name != null"
+                v-if="!isInWatchList(id)"
                 @click="addToWatchList()"
                 class="icons"
                 src="~/assets/img/icons/1heart-green.png"
               />
               <img
-                v-if="isInWatchList(id) && user.full_name != null"
+                v-if="isInWatchList(id)"
                 @click="removeToWatchList()"
                 class="icons heart-fill-icon"
                 src="~/assets/img/icons/heart-green.png"
@@ -349,7 +349,7 @@ import { BASE_URL } from '../constants/keys'
 import $ from 'jquery'
 export default {
   transition: 'fade',
-  layout: 'guestOuter',
+  layout: 'dashboard',
   head() {
     return {
       title: 'Buy & Sell Sports Cards Online - Slabstox',
@@ -363,8 +363,14 @@ export default {
     }
     this.getData()
     this.updateGraph()
+    // console.log('REDD');
+    // (this.watchListIds.indexOf(id) != -1)
+    // console.log(this.watchListIds);
+    // console.log(typeof this.id);
+    // console.log(this.watchListIds.indexOf(parseInt(this.id)));
   },
   watch: {
+       
     dialogVisible(visible) {
       if (visible) {
         $('.g-main-text .g-title').text($('.product-title').text())
@@ -559,6 +565,7 @@ export default {
           })
           .then((res) => {
             this.$store.dispatch('watchlist/fetchIds')
+            this.$router.push('/my-portfolio')
           })
       } catch (err) {
         console.log(err)
@@ -573,6 +580,7 @@ export default {
           .then((res) => {
             this.$store.dispatch('watchlist/fetchIds')
             this.$emit('onRemoveFromWatchList')
+            this.$router.push('/my-portfolio')
           })
       } catch (err) {
         console.log(err)
@@ -886,6 +894,7 @@ ul.my-card-listing {
       height: 32px;
       float: right;
       margin-top: -10px;
+          cursor: pointer;
     }
     .heart-fill-icon {
       height: auto;

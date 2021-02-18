@@ -15,7 +15,7 @@
               <label class="top-pick" v-if="false">top pick</label>
               <label class="trender" v-if="false">Trender</label>
             </div>
-            <div class="icons-container">
+            <!-- <div class="icons-container">
               <img
                 v-if="!isInWatchList(data.id) && user.full_name != null"
                 @click="addToWatchList()"
@@ -28,7 +28,7 @@
                 class="icons heart-fill-icon"
                 src="~/assets/img/icons/heart-green.png"
               />
-            </div>
+            </div> -->
             <div class="image-conatiner">
               <img :src="getImage()" :alt="data.title" />
             </div>
