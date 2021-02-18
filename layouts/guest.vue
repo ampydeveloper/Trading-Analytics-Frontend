@@ -34,7 +34,7 @@ export default {
     Footer
   },
   mounted() {
-    // this.guestMiddleware()
+    this.guestMiddleware()
   },
 }
 </script>

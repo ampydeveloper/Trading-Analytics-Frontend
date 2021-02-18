@@ -56,7 +56,7 @@ export default {
   },
   mounted() {
     // console.log(this.user);
-    this.authMiddleware()
+    this.guestMiddleware()
   //   this.$store.dispatch('advancesearch/fetchAttributes').then(() => {
   //   // console.log("This would be printed after dispatch!!")
   //  })

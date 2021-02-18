@@ -387,7 +387,7 @@ import $ from 'jquery'
 export default {
   transition: 'fade',
   layout: 'dashboard',
-  // auth: false,
+  auth: 'guest',
   // middleware: 'guest',
   head() {
     return {
