@@ -40,7 +40,8 @@
       :class="'my-card-view-listing ' + timeEndClass"
       :to="'/product?id=' + itemdata.id + '&slag=' + itemdata.title"
     >
-      View Listing
+      <!-- View Listing -->
+      {{ viewListingText }}
       <font-awesome-icon :icon="['fas', 'chevron-circle-right']" />
     </nuxt-link>
     <div class="my-card-view-listing-on-ebay">
@@ -72,7 +73,8 @@ export default {
         datetime: null,
         intervalObject: null,
       },
-      timeEndClass: '',
+       timeEndClass: '',
+      viewListingText: '',
       valueDifference: 0,
     }
   },
@@ -135,10 +137,13 @@ export default {
           }else{
             this.timeLeft.value = s+'s' 
           }
+          
+          this.viewListingText= 'View Listing';
         } else {
           this.timeLeft.value = '00:00'
           clearInterval(this.timeLeft.intervalObject)
           this.timeEndClass= 'time-end-grey';
+          this.viewListingText= 'Sold Listing';
         }
       }, 1000)
     },
@@ -222,7 +227,8 @@ text-align: left;
     text-align: center;
     background: #272d33;
     // border-radius: 2px;
-    height: 238px;
+    // height: 238px;
+     height: 16vw;
     .icons-container {
       position: absolute;
       padding: 10px;
@@ -271,7 +277,8 @@ text-align: left;
       top: 50%;
       transform: translate(-50%, -50%);
       padding: 5px;
-      max-height: 238px;
+      // max-height: 238px;
+      max-height: 16vw;
       min-width: auto;
     }
   }

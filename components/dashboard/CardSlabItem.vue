@@ -144,7 +144,7 @@ export default {
     background: #272d33;
     // border-radius: 2px;
     // height: 245px;
-    height: 12vw;
+    height: 16vw;
     .icons-container {
       position: absolute;
       padding: 10px;
@@ -168,7 +168,7 @@ export default {
       top: 50%;
       transform: translate(-50%, -50%);
       padding: 5px;
-      max-height: 12vw;
+      max-height: 16vw;
       // max-height: 245px;
     }
   }

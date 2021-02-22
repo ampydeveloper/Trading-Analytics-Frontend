@@ -318,7 +318,10 @@
       <div class="row">
         <div class="col-sm-12 text-center">
           <button class="update-search-result" @click="addToMyPortfolio()">
-            Submit
+            Save
+          </button>
+            <button class="update-search-result" @click="deleteMyPortfolio()"  v-if="addPortfolioVar.isedit != 'no'">
+            Delete Portfolio
           </button>
         </div>
       </div>
@@ -615,6 +618,33 @@ export default {
           this.requestInProcess = true
           this.$axios
             .$post('portfolio/add', this.addPortfolioVar)
+            .then((res) => {
+              this.hideLoader()
+              this.requestInProcess = false
+              if (res.status == 200) {
+                this.getCards()
+                this.$bvModal.hide('addToPortfolio')
+                this.$bvModal.hide('addToPortfolioPurchasePrice')
+                this.addPortfolioVar.id = 0
+                this.addPortfolioVar.quantity = 0
+                this.addPortfolioVar.price = 0
+              }
+            })
+        } catch (err) {
+          this.hideLoader()
+          this.requestInProcess = false
+          console.log(err)
+        }
+      }
+    },
+     deleteMyPortfolio() {
+      if (!this.requestInProcess) {
+        try {
+          this.showLoader()
+          this.searchItems = []
+          this.requestInProcess = true
+          this.$axios
+            .$post('portfolio/delete', this.addPortfolioVar)
             .then((res) => {
               this.hideLoader()
               this.requestInProcess = false

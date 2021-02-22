@@ -411,8 +411,69 @@
     <div class="row board-search-list-outer" style="display:none;">
       <div class="col-sm-6 board-search-list"  v-for="itemdata in boardSearch" >
 <h5 class="card-title custom-smart-search-player-name">
-            <button class="card-btn theme-btn">{{ itemdata.name }}</button>
-          </h5>
+       
+            <nuxt-link
+                      class=""
+                     
+                      :to="`stoxticker-details?board=${itemdata.id}`"
+                      >{{ itemdata.name }}</nuxt-link
+                    >
+ </h5>
+
+            <div class="card">
+              <div class="card-body dashboard-graph">
+                <h5 class="card-title_new">
+                   <button class="theme-btn card-btn">
+                   {{ itemdata.name }} 
+                   <!-- ${{ card.details.currentPrice }} -->
+                 </button>
+                  <!-- <button
+                    :class="
+                      (card.sx_icon == 'up'
+                        ? 'theme-green-btn'
+                        : 'theme-red-btn') + ' card-btn'
+                    "
+                  >
+                    <font-awesome-icon
+                      :icon="['fas', 'long-arrow-alt-' + card.sx_icon]"
+                    />&nbsp;&nbsp;{{ card.sx }}
+                  </button> -->
+</h5>
+<div class="dashboard-apex-top">
+                  <VueApexCharts
+                    ref="cardDataChart"
+                    type="area"
+                    height="350"
+                    :options="chartOptions"
+                    :series="series"
+                  ></VueApexCharts>
+                </div>
+                <div class="dashboard-graph-footer">
+                  <ul class="dashboard-graph-footer-month-filter">
+                    <li
+                      :class="
+                        'dashboard-graph-footer-month-filter-item ' +
+                        (activeDaysGraph == 2 && graphDataEmpty == false
+                          ? 'active'
+                          : '') +
+                        (activeDaysGraph == 2 && graphDataEmpty == true
+                          ? 'nodata'
+                          : '')
+                      "
+                      @click="updateGraph(2)"
+                    >
+                      1D
+                    </li>
+                  </ul>
+                  <!-- <p class="dashboard-graph-footer-update-at float-right">
+                    Last Updated - {{ card.price_graph_updated }}
+                  </p> -->
+                </div>
+
+                </div>
+            </div>
+        
+         
       </div>
 
       <div class="create-board-out my-card text-center">
@@ -452,7 +513,7 @@ export default {
       $('.search-name-out').hide()
       $('.stoxticker_page-outer').hide()
       $('.stoxticker_listing-outer').hide()
-       $('.board-search-list-outer').hide()
+      $('.board-search-list-outer').hide()
     })
 
     $('.search-stox').on('click', function () {
@@ -500,7 +561,7 @@ export default {
       requestInProcess: false,
       searchSlabs: [],
       boardSearch: [],
-      boardPage:1,
+      boardPage: 1,
       data: {
         total: 0,
         sale: 0,
@@ -575,15 +636,61 @@ export default {
           .$post('stoxticker/search-board', {
             keyword: this.searchKeyword,
             sport: sportList,
-            page:this.boardPage
+            page: this.boardPage,
           })
           .then((res) => {
             this.requestInProcess = false
             if (res.status == 200) {
               // $('.search-name-out').show()
-                $('.board-search-list-outer').show()
+              $('.board-search-list-outer').show()
               this.boardSearch = res.data
               this.boardPage = res.page
+
+              this.activeDaysGraph = 2
+              //  var percDiff = res.data.perc_diff
+              // var dollerDiff = String(res.data.doller_diff)
+
+              this.series = [
+                { name: 'Card Values', data: res.card_data.values },
+              ]
+              this.chartOptions = {
+                xaxis: {
+                  categories: res.card_data.labels,
+                },
+                yaxis: {
+                  labels: {
+                    style: {
+                      colors: '#edecec',
+                      fontSize: '10px',
+                      fontFamily: 'NexaBold',
+                    },
+                    formatter: (value, ind) => {
+                      let lblStr = `$${value}`
+                      return lblStr
+                    },
+                  },
+                },
+                tooltip: {
+                  enabled: true,
+                  y: {
+                    formatter: (value, ind) => {
+                      let lblStr = `$${value}`
+                      if (typeof ind == 'object')
+                        lblStr = `$${value} (${
+                          this.salesQty[ind.dataPointIndex]
+                        })`
+                      else lblStr = `$${value} (${this.salesQty[ind]})`
+                      return lblStr
+                    },
+                  },
+                },
+              }
+              // this.last_timestamp = res.data.last_timestamp
+              // this.initGraphLabelLength = res.card_data.labels.length
+
+              // setTimeout(() => {
+              //   this.generateImageOfGraph()
+              // }, 100)
             }
           })
           .catch((err) => {
@@ -652,7 +759,7 @@ export default {
               $('.search-add-box').removeClass('active')
               $('.stoxticker_page-outer').show()
               $('.stoxticker_listing-outer').show()
-              
+
               $('.search-stox-box .search-bar input').val('')
               this.searchSlabs = res.data
             }
@@ -716,6 +823,20 @@ export default {
       }
       return shortValue + suffixes[suffixNum]
     },
+  },
+  generateImageOfGraph() {
+    const chartInstance = this.$refs.cardDataChart.chart.dataURI()
+    chartInstance.then((val) => {
+      let img = new Image()
+      img.src = val.imgURI
+      this.$axios
+        .$post('generate-graph-image', { image: img.src, prefix: 'cdc' })
+        .then((res) => {
+          if (res.status == 200) {
+            this.graphImage = res.url
+          }
+        })
+    })
   },
 }
 </script>
@@ -982,10 +1103,10 @@ ul.my-card-listing {
   padding-left: 12px;
   padding-right: 12px;
 }
-.search-add-box{
-.search-wrap {
-  margin-top: 15px;
-}
+.search-add-box {
+  .search-wrap {
+    margin-top: 15px;
+  }
 }
 .search-wrap {
   width: calc(100% - 863px);

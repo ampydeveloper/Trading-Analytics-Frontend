@@ -5,7 +5,9 @@
         <div class="card card-single-row-outer myportfolio">
           <div class="card-body">
             <h5 class="card-title">
-              <button class="theme-light-grey-btn card-btn">Top Trenders</button>
+              <button class="theme-light-grey-btn card-btn">
+                Top Trenders
+              </button>
               <!-- <input  v-model="keyword" @keyup="getRecentListing()" class="card-title-search-field" type="text" placeholder="search"> -->
               <nuxt-link class="card-link float-right" :to="'/top-trenders'">
                 View Top 25
@@ -16,10 +18,17 @@
               <b-spinner variant="success" label="Spinning"></b-spinner>
             </div>
             <ul class="my-card-listing rfive-columns">
-              <CardSlabItem v-for="item in recentListingItems" :key="item.id" :itemdata="item" />
+              <CardSlabItem
+                v-for="item in recentListingItems"
+                :key="item.id"
+                :itemdata="item"
+              />
             </ul>
 
-            <div class="empty-result" v-if="recentListingItems.length == 0 && !requestInProcessRecent">
+            <div
+              class="empty-result"
+              v-if="recentListingItems.length == 0 && !requestInProcessRecent"
+            >
               <p>There are no cards here. Check again soon.</p>
             </div>
           </div>
@@ -27,14 +36,23 @@
       </div>
     </div>
 
-    <LiveListingSlabTenders v-for="(card, key) in cards" :key="key" :card="card" :showFilters="true" />
+    <LiveListingSlabTenders
+      v-for="(card, key) in cards"
+      :key="key"
+      :card="card"
+      :showFilters="true"
+    />
 
     <div class="row">
       <div class="col-12 t-p-5">
         <div class="card no_bg">
           <div class="card-body">
             <ul class="my-card-listing">
-              <CardSlabItem v-for="item in normalListingItems" :key="item.id" :itemdata="item" />
+              <CardSlabItem
+                v-for="item in normalListingItems"
+                :key="item.id"
+                :itemdata="item"
+              />
             </ul>
           </div>
         </div>
@@ -51,7 +69,7 @@ export default {
   layout: 'dashboard',
   head() {
     return {
-      title: 'Trenders - Slabstox'
+      title: 'Trenders - Slabstox',
     }
   },
   mounted() {
@@ -62,7 +80,7 @@ export default {
   },
   components: {
     CardSlabItem,
-    LiveListingSlabTenders
+    LiveListingSlabTenders,
   },
   data() {
     return {
@@ -75,75 +93,69 @@ export default {
       requestInProcessEndingSoon: true,
       noMoreData: false,
       keyword: null,
-      cards: [
-        'soccer',
-        'football', 
-        'baseball', 
-        'basketball', 
-        'pokemon',
-      ]
+      cards: ['soccer', 'football', 'baseball', 'basketball', 'pokemon'],
     }
   },
   methods: {
     getRecentListing() {
       try {
         this.recentListingItems = []
-        this.requestInProcessRecent = true;
+        this.requestInProcessRecent = true
         this.$axios
           .$post('search/slab-listing', {
             take: 6,
             search: this.keyword,
-            top_trend:true
+            top_trend: true,
           })
-          .then(res => {
-            this.requestInProcessRecent = false;
+          .then((res) => {
+            this.requestInProcessRecent = false
             if (res.status == 200) {
               this.recentListingItems = res.data
             }
           })
       } catch (err) {
-        this.requestInProcessRecent = false;
+        this.requestInProcessRecent = false
         console.log(err)
       }
     },
     getEndingSoonListing() {
       try {
         this.endingSoonListingItems = []
-        this.requestInProcessEndingSoon = true;
+        this.requestInProcessEndingSoon = true
         this.$axios
           .$post('search/ending-soon-listing', {
-            take: 6
+            take: 6,
           })
-          .then(res => {
-            this.requestInProcessEndingSoon = false;
+          .then((res) => {
+            this.requestInProcessEndingSoon = false
             if (res.status == 200) {
               this.endingSoonListingItems = res.data
             }
           })
       } catch (err) {
-        this.requestInProcessEndingSoon = false;
+        this.requestInProcessEndingSoon = false
         console.log(err)
       }
     },
     getNormalRecentListing(status = false) {
-      if(!this.requestInProcess) {
+      if (!this.requestInProcess) {
         try {
           if (!status) {
             this.page = 1
             this.normalListingItems = []
           }
-          this.requestInProcess = true;
+          this.requestInProcess = true
           this.$axios
             .$post('search/slab-listing', {
               take: 6,
-              page: this.page
+              page: this.page,
             })
-            .then(res => {
-              this.requestInProcess = false;
+            .then((res) => {
+              this.requestInProcess = false
               if (res.status == 200) {
                 if (res.data != null && res.data.length > 0) {
                   if (status) {
-                    res.data.map(item => {
+                    res.data.map((item) => {
                       this.normalListingItems.push(item)
                     })
                   } else {
@@ -160,7 +172,7 @@ export default {
               }
             })
         } catch (err) {
-          this.requestInProcess = false;
+          this.requestInProcess = false
           console.log(err)
         }
       }
@@ -178,8 +190,8 @@ export default {
           }
         }
       }
-    }
-  }
+    },
+  },
 }
 </script> 
 

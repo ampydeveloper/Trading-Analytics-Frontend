@@ -168,7 +168,7 @@
                 <li>SlabStox Value: ${{ selectedCardOne.details.currentPrice }}</li>
                 <li>Overall Rank: {{ card_one.rank }}</li>
                 <li>Last Sale Price: ${{ (card_one.last_sale?card_one.last_sale.cost:0) }}</li>
-                <li>Last Sale Date:{{ (card_one.last_sale? this.$moment(card_one.last_sale.timestamp).format('M/D'):'') }}</li>
+                <li>Last Sale Date:{{ (card_one.last_sale? this.$moment(card_one.last_sale.timestamp).format('M/D/Y'):'N/A') }}</li>
                 <li>High Sale: ${{ (card_one.high_sale?card_one.high_sale.cost:0) }}</li>
                 <li>Low Sale: ${{ (card_one.low_sale?card_one.low_sale.cost:0) }}</li>
               </ul>
@@ -181,7 +181,7 @@
                 <li>SlabStox Value: ${{ selectedCardTwo.details.currentPrice }}</li>
                 <li>Overall Rank: {{ card_two.rank }}</li>
                 <li>Last Sale Price: ${{ (card_two.last_sale?card_two.last_sale.cost:0) }}</li>
-                <li>Last Sale Date: {{ (card_two.last_sale? this.$moment(card_two.last_sale.timestamp).format('M/D'):'') }}</li>
+                <li>Last Sale Date: {{ (card_two.last_sale? this.$moment(card_two.last_sale.timestamp).format('M/D'):'N/A') }}</li>
                 <li>High Sale: ${{ (card_two.high_sale?card_two.high_sale.cost:0) }}</li>
                 <li>Low Sale: ${{ (card_two.low_sale?card_two.low_sale.cost:0) }}</li>
               </ul>
@@ -314,11 +314,11 @@ export default {
       },
       series: [
         {
-          name: 'SX Value',
+          name: 'Sales',
           data: []
         },
         {
-          name: 'SX Value',
+          name: 'Sales',
           data: []
         }
       ],
@@ -329,12 +329,12 @@ export default {
           },
           height: 350,
           type: 'area',
-          background: ['#14f078', '#e57c13'],
+          background: ['#e57c13', '#14f078'],
           zoom: {
             enabled: false
           }
         },
-        colors: ['#14f078', '#e57c13'],
+        colors: ['#e57c13', '#14f078'],
         dataLabels: {
           enabled: false
         },
@@ -525,8 +525,51 @@ export default {
           if (res.status == 200) {
             this.activeDaysGraph = days;
             // if(this.initGraphLabelLength != res.data.labels.length){
-              this.series = [{name: 'SX Value', data: res.data.values1}, {name: 'SX Value', data: res.data.values2}];
-              this.chartOptions = { xaxis:{ categories: res.data.lable1 }};
+              this.series = [{name: '<span class="sales-t1">Sales</span>', data: res.data.values1}, {name: '<span class="sales-t2">Sales</span>', data: res.data.values2}];
+              this.salesQty = [{data: res.data.qty1},{data: res.data.qty2}]
+              this.chartOptions = {
+                  xaxis: {
+                    categories: res.data.lable1,
+                  },
+                  yaxis: {
+                    labels: {
+                      style: {
+                        colors: '#edecec',
+                        fontSize: '10px',
+                        fontFamily: 'NexaBold',
+                      },
+                      formatter: (value, ind) => {
+                        if (value == "undefined"){
+                          return 0
+                        }
+                        return `$${value}`
+                      },
+                    },
+                  },
+                  tooltip: {
+                    enabled: true,
+                    y: {
+                      formatter: (value, ind) => {
+                        if (value == "undefined"){
+                           return 0
+                        }
+                        let lblStr = `$${value}`
+                        if (typeof ind == 'object')
+                        var salesQtyVal = this.salesQty[ind.seriesIndex];
+                        
+                        let quantity = salesQtyVal.data[ind.dataPointIndex];
+                        // console.log(quantity);
+                        // if (quantity == "undefined"){
+                        //    quantity = 0
+                        // }
+                          lblStr = `$${value} (${
+                            quantity
+                          })`
+                        return lblStr
+                      },
+                    },
+                  },
+                }
               this.initGraphLabel1Length = res.data.lable1.length;
             // }
             this.card_one.rank = res.data.rank1
@@ -1148,4 +1191,5 @@ ul.my-card-listing {
   }
 }
 }
+
 </style>

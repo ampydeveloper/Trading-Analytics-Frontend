@@ -55,7 +55,7 @@
 import CardListItem from '~/components/dashboard/CardListItem'
 export default {
   transition: 'fade',
-  layout: 'basic',
+  layout: 'dashboard',
   head() {
     return {
       title: 'Stoxticker - Slabstox'

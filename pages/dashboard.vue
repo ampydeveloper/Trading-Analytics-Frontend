@@ -702,14 +702,6 @@ setTimeout(() => {
                       },
                     },
                   },
-                  // xaxis: {
-                  //   labels: {
-                  //     formatter: (value) => {
-                  //       // return this.$moment(value).format('M/D')
-                  //       return value
-                  //     },
-                  //   },
-                  // },
                   tooltip: {
                     enabled: true,
                     y: {

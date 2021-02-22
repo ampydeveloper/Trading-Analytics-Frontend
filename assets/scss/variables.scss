@@ -119,9 +119,9 @@ $theme-nav-badge-color: #de3030;
   background: #272d33;
   color: #1ce783;
   font-size: 10px;
-    padding: 6px 12px 5px 12px !important;
-    margin-top: -3px;
-    margin-right: 12px !important;
+  padding: 6px 12px 5px 12px !important;
+  margin-top: -3px;
+  margin-right: 12px !important;
 }
 
 .card {
@@ -424,6 +424,7 @@ html body main .my-card-listing {
     font-family: "Nexa", Helvetica, Arial, sans-serif;
     border-bottom: 1px solid #242b33;
     border-top: 1px solid #242b33;
+    vertical-align: middle;
   }
 }
 
@@ -535,7 +536,8 @@ html body main .my-card-listing {
     max-width: 244px;
 
     .b-calendar-nav {
-        max-width: 227px;
+      max-width: 227px;
+
       .flex-fill {
         padding: 4px 4px;
       }
@@ -578,25 +580,28 @@ html body main .my-card-listing {
     display: none;
   }
 
-  .btn-table-spec{
+  .btn-table-spec {
     border: none;
-  border-radius: 2px;
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-      padding: 8px 12px 5px 12px;
-  font-family: "Nexabold", Helvetica, Arial, sans-serif;
-}
-.btn-table-spec.tag{
-padding: 4px 6px 2px 6px;
-}
-.btn-table-spec.btn-primary{
-  background-color: #272d33
-}
-.btn-table-spec.btn-danger{
+    border-radius: 2px;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 8px 12px 5px 12px;
+    font-family: "Nexabold", Helvetica, Arial, sans-serif;
+  }
+
+  .btn-table-spec.tag {
+    padding: 4px 6px 2px 6px;
+  }
+
+  .btn-table-spec.btn-primary {
+    background-color: #272d33
+  }
+
+  .btn-table-spec.btn-danger {
     background-color: #f76573;
 
-}
+  }
 }
 
 .form_column {
@@ -3725,15 +3730,35 @@ html body #__nuxt .b-profileImage .dropdown-menu {
   font-size: 13px !important;
   border-radius: 2px !important;
   color: #000 !important;
-  text{
+
+  text {
     fill: rgb(237, 236, 236) !important;
   }
 }
-// .h2h-apex-graph{
+
 .apexcharts-toolbar {
   display: none !important;
 }
-// }
+
+.apexcharts-tooltip {
+  .sales-t1 {
+    color: #e57c13 !important;
+  }
+
+  .sales-t2 {
+    color: #14f078 !important;
+  }
+}
+.headtohead_serach-out{
+.apexcharts-tooltip.apexcharts-theme-light{ 
+  background: rgb(39, 45, 51) !important;
+  border: 1px solid rgb(39, 45, 51) !important;
+    
+}
+.apexcharts-tooltip .apexcharts-tooltip-text-value{
+  color: rgb(237, 236, 236) !important;
+}
+}
 
 .apexcharts-tooltip.apexcharts-theme-light {
   padding: 5px 7px 0px 7px !important;
@@ -3851,159 +3876,194 @@ html body #__nuxt .b-profileImage .dropdown-menu {
     display: inline-block;
   }
 }
-#openSeeProblemPopup{
-.modal-dialog {
-  .modal-content {
-    background: $theme-card-background-color;
-    font-family: 'NexaBold', Helvetica, Arial, sans-serif;
-    .modal-title {
-      background: $theme-background-color;
-      color: $theme-off-white;
-      border: none;
-      border-radius: 2px;
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      padding: 5px 15px 4px;
-    }
-    .modal-body {
-      color: $theme-off-white;
-      text-transform: uppercase;
-      padding: 20px 0px !important;
-      font-size: 12px;
-      ul li {
-        width: 49%;
-        float: left;
-        list-style: none;
+
+#openSeeProblemPopup {
+  .modal-dialog {
+    .modal-content {
+      background: $theme-card-background-color;
+      font-family: 'NexaBold', Helvetica, Arial, sans-serif;
+
+      .modal-title {
+        background: $theme-background-color;
+        color: $theme-off-white;
+        border: none;
+        border-radius: 2px;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        padding: 5px 15px 4px;
       }
-      textarea{
-        width: 100%;
-  background: #39414a;
-  color: #ffffff;
-  font-size: 11px;
-  letter-spacing: 2px;
-  line-height: 20px;
-  font-family: 'NexaBold', Helvetica, Arial, sans-serif;
-  margin: 0px;
-  &:focus{
-        box-shadow: none;
-        outline: 0;
+
+      .modal-body {
+        color: $theme-off-white;
+        text-transform: uppercase;
+        padding: 20px 0px !important;
+        font-size: 12px;
+
+        ul li {
+          width: 49%;
+          float: left;
+          list-style: none;
+        }
+
+        textarea {
+          width: 100%;
+          background: #39414a;
+          color: #ffffff;
+          font-size: 11px;
+          letter-spacing: 2px;
+          line-height: 20px;
+          font-family: 'NexaBold', Helvetica, Arial, sans-serif;
+          margin: 0px;
+
+          &:focus {
+            box-shadow: none;
+            outline: 0;
             border: 1px solid #ced4da;
-  }
-      }
-      .form-submit-btn{
-            padding: 8px 12px 5px 12px;
-  font-family: "Nexabold", Helvetica, Arial, sans-serif;
-  margin-top: 15px;
+          }
+        }
+
+        .form-submit-btn {
+          padding: 8px 12px 5px 12px;
+          font-family: "Nexabold", Helvetica, Arial, sans-serif;
+          margin-top: 15px;
+        }
       }
     }
   }
 }
-}
+
 #openSeeProblemPopup___BV_modal_outer_ .modal-dialog {
   width: 80%;
   max-width: 1000px;
 }
+
 #addToPortfolioPurchasePrice .modal-content {
   .advance-search-wrapper {
-      padding: 0;
-      .form-group label {
-          max-width: 30%;
-          flex: 0 0 22.666667%;
-      }
+    padding: 0;
+
+    .form-group label {
+      max-width: 30%;
+      flex: 0 0 22.666667%;
+    }
   }
+
   .modal-body {
-      padding: 0;
+    padding: 0;
   }
+
   background: #ffffff !important;
   border-bottom-left-radius: 0px;
   padding: 20px;
   border: 1px solid rgba(0, 0, 0, 0.125);
   border-radius: 0.25rem;
+
   .modal-header {
-      padding: 0;
-      border: 0;
-      h5 {
-          text-transform: uppercase;
-          color: #212529;
-          font-size: 11px;
-          letter-spacing: 2px;
-          padding: 0px;
-          margin-bottom: 15px;
-      }
-  }
-  .col-form-label {
+    padding: 0;
+    border: 0;
+
+    h5 {
       text-transform: uppercase;
+      color: #212529;
       font-size: 11px;
       letter-spacing: 2px;
-      padding-left: 0px;
-      padding-right: 0px;
+      padding: 0px;
+      margin-bottom: 15px;
+    }
   }
+
+  .col-form-label {
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 2px;
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
   .form-control-plaintext {
+    background-color: #f4f4f4;
+    height: 30px;
+    border-radius: 2px;
+    padding: 0px 10px;
+    font-family: 'NexaBold', Helvetica, Arial, sans-serif;
+
+    &:focus {
+      outline: none;
+    }
+
+    &::placeholder {
+      color: #000;
+      opacity: 1;
+    }
+  }
+
+  .select_wrap {
+    position: relative;
+
+    &:before {
+      content: '\f107';
+      position: absolute;
+      font-family: FontAwesome;
+      top: 3px;
+      right: 17px;
+      left: auto;
+      font-weight: 900;
+    }
+
+    .form-control-select {
       background-color: #f4f4f4;
       height: 30px;
+      width: 100%;
+      border: none;
       border-radius: 2px;
       padding: 0px 10px;
       font-family: 'NexaBold', Helvetica, Arial, sans-serif;
+      font-size: 12px;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+
       &:focus {
-          outline: none;
+        outline: none;
       }
-      &::placeholder {
-          color: #000;
-          opacity: 1;
-      }
+    }
   }
-  .select_wrap {
-      position: relative;
-      &:before {
-          content: '\f107';
-          position: absolute;
-          font-family: FontAwesome;
-          top: 3px;
-          right: 17px;
-          left: auto;
-          font-weight: 900;
-      }
-      .form-control-select {
-          background-color: #f4f4f4;
-          height: 30px;
-          width: 100%;
-          border: none;
-          border-radius: 2px;
-          padding: 0px 10px;
-          font-family: 'NexaBold', Helvetica, Arial, sans-serif;
-          font-size: 12px;
-          -webkit-appearance: none;
-          -moz-appearance: none;
-          appearance: none;
-          &:focus {
-              outline: none;
-          }
-      }
-  }
+
   .update-search-result {
-      border: none;
-      border-radius: 2px;
-      text-transform: uppercase;
-      font-family: "CocogoosePro-Italic", Helvetica, Arial, sans-serif;
-      border-radius: 2px;
-      background: linear-gradient(to left, rgba(10, 178, 95, 0.76) 0%, rgba(27, 231, 131, 0.76) 33%, rgba(5, 251, 98, 0.76) 100%);
-      padding: 7px 35px;
-      color: #000000;
-      font-size: 13px;
-      position: relative;
-      transition-duration: 0.4s;
-      text-decoration: none;
-      overflow: hidden;
-      margin-top: 20px;
+    border: none;
+    border-radius: 2px;
+    text-transform: uppercase;
+    font-family: "CocogoosePro-Italic", Helvetica, Arial, sans-serif;
+    border-radius: 2px;
+    background: linear-gradient(to left, rgba(10, 178, 95, 0.76) 0%, rgba(27, 231, 131, 0.76) 33%, rgba(5, 251, 98, 0.76) 100%);
+    padding: 7px 35px;
+    color: #000000;
+    font-size: 13px;
+    position: relative;
+    transition-duration: 0.4s;
+    text-decoration: none;
+    overflow: hidden;
+    margin-top: 20px;
   }
 }
 
 @media (max-width: 768px) {
   #addToPortfolioPurchasePrice {
-      padding: 0 !important;
-      .modal-dialog {
-          max-width: 96%;
+    padding: 0 !important;
+
+    .modal-dialog {
+      max-width: 96%;
+    }
+  }
+}
+
+.my-card-listing.rfive-columns {
+  .my-card {
+    .image-container {
+      height: 21vw;
+      .card-image {
+        max-height: 21vw;
       }
+    }
   }
 }
