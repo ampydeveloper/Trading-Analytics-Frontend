@@ -327,7 +327,7 @@
         </div>
       </div>
 
-      <div class="col-md-6 col-sm-6 payment-option-left">
+      <!-- <div class="col-md-6 col-sm-6 payment-option-left">
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">
@@ -350,7 +350,7 @@
             </button>
           </div>
         </div>
-      </div>
+      </div> -->
       <!-- <div class="col-md-6 col-sm-6 payment-option-side-cards"> -->
         <!-- <div class="card">
           <div class="card-body">

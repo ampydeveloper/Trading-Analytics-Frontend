@@ -256,7 +256,7 @@
                   </a>
                 </h5>
 
-                <div class="sales_graph">
+                <div class="sales_graph dashboard-apex-top">
                   <!-- <img
                     class="gift-cart-title-ebay-img"
                     src="~/assets/img/graph.jpg"
@@ -364,14 +364,9 @@ export default {
     }
     this.getData()
     this.updateGraph()
-    // console.log('REDD');
-    // (this.watchListIds.indexOf(id) != -1)
-    // console.log(this.watchListIds);
-    // console.log(typeof this.id);
-    // console.log(this.watchListIds.indexOf(parseInt(this.id)));
+    this.getSalesGraph()
   },
   watch: {
-       
     dialogVisible(visible) {
       if (visible) {
         $('.g-main-text .g-title').text($('.product-title').text())
@@ -389,10 +384,6 @@ export default {
           'src',
           $('.image-conatiner img').attr('src')
         )
-        // $('.g-download-slab').attr(
-        //   'href',
-        //   $('.my-card.active .image-container img').attr('src')
-        // )
       }
     },
   },
@@ -417,6 +408,7 @@ export default {
           data: [],
         },
       ],
+        salesQty: [],
       chartOptions: {
         chart: {
           toolbar: {
@@ -494,7 +486,7 @@ export default {
             enabled: false,
           },
         },
-        colors: '#15df93',
+        colors: '#1de783',
         yaxis: {
           labels: {
             style: {
@@ -615,8 +607,42 @@ export default {
             if (res.status == 200) {
               this.activeDaysGraph = days
               if (this.initGraphLabelLength != res.data.values.length) {
-                this.series = [{ name: 'Card Values', data: res.data.values }]
-                this.chartOptions = { xaxis: { categories: res.data.labels } }
+                this.series = [{ name: 'Sales', data: res.data.values }]
+                // this.chartOptions = { xaxis: { categories: res.data.labels } }
+this.salesQty = res.data.qty
+                this.chartOptions = {
+                  xaxis: {
+                    categories: res.data.labels,
+                  },
+                  yaxis: {
+                    labels: {
+                      style: {
+                        colors: '#edecec',
+                        fontSize: '10px',
+                        fontFamily: 'NexaBold',
+                      },
+                      formatter: (value, ind) => {
+                        let lblStr = `$${value}`
+                        return lblStr
+                      },
+                    },
+                  },
+                  tooltip: {
+                    enabled: true,
+                    y: {
+                      formatter: (value, ind) => {
+                        let lblStr = `$${value}`
+                        if (typeof ind == 'object')
+                          lblStr = `$${value} (${
+                            this.salesQty[ind.dataPointIndex]
+                          })`
+                        else lblStr = `$${value} (${this.salesQty[ind]})`
+                        return lblStr
+                      },
+                    },
+                  },
+                }
+
                 this.initGraphLabelLength = res.data.labels.length
               }
               setTimeout(() => {
@@ -626,6 +652,29 @@ export default {
               this.$router.push('/404')
             }
           })
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    getSalesGraph() {
+      try {
+        this.$axios.$get(`get-card-all-graph/${this.id}`).then((res) => {
+          if (res.status == 200) {
+            this.barseries = [{ name: 'Sales', data: res.data.values }]
+            this.barchartOptions = {
+              xaxis: { categories: res.data.labels },
+              plotOptions: {
+                bar: {
+                  horizontal: false,
+                  endingShape: 'rounded',
+                  columnWidth: '45%',
+                },
+              },
+            }
+          } else {
+            this.$router.push('/404')
+          }
+        })
       } catch (error) {
         console.log(error)
       }
@@ -895,7 +944,7 @@ ul.my-card-listing {
       height: 32px;
       float: right;
       margin-top: -10px;
-          cursor: pointer;
+      cursor: pointer;
     }
     .heart-fill-icon {
       height: auto;

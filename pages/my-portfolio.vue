@@ -321,7 +321,7 @@
             Save
           </button>
             <button class="update-search-result" @click="deleteMyPortfolio()"  v-if="addPortfolioVar.isedit != 'no'">
-            Delete Portfolio
+            Delete From Portfolio
           </button>
         </div>
       </div>

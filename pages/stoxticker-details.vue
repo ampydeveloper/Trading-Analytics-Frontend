@@ -4,8 +4,16 @@
       <div class="row">
         <div class="col-md-12 pl-1 mb-4 mt-2">
             <div class="top-btn">
-                <button class="card-btn custom-stox"> 
-<font-awesome-icon :icon="['fas', 'chevron-left']" /> Back to board search</button>
+                <!-- <button class="card-btn custom-stox"> 
+<font-awesome-icon :icon="['fas', 'chevron-left']" /> Back to board search</button> -->
+
+<nuxt-link
+                      class="card-btn custom-stox"
+                      :to="`stoxticker`"
+                      >
+                      <font-awesome-icon :icon="['fas', 'chevron-left']" />
+                       Back to board search</nuxt-link
+                    >
             </div>
         </div>
     </div>
@@ -24,7 +32,10 @@
               
                 {{ stoxtickerDetails.board.name }}   $12,160
               </button>
-              
+              <button data-v-6fc4d46b="" class="theme-green-btn card-btn"><svg data-v-6fc4d46b="" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="long-arrow-alt-up" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" class="svg-inline--fa fa-long-arrow-alt-up fa-w-8"><path data-v-6fc4d46b="" fill="currentColor" d="M88 166.059V468c0 6.627 5.373 12 12 12h56c6.627 0 12-5.373 12-12V166.059h46.059c21.382 0 32.09-25.851 16.971-40.971l-86.059-86.059c-9.373-9.373-24.569-9.373-33.941 0l-86.059 86.059c-15.119 15.119-4.411 40.971 16.971 40.971H88z" class=""></path></svg>&nbsp;&nbsp;
+              <span data-v-6fc4d46b="" class="g-dollar-d-val"> $0</span></button>
+              <button data-v-6fc4d46b="" class="theme-btn card-btn"><svg data-v-6fc4d46b="" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="long-arrow-alt-up" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" class="svg-inline--fa fa-long-arrow-alt-up fa-w-8"><path data-v-6fc4d46b="" fill="currentColor" d="M88 166.059V468c0 6.627 5.373 12 12 12h56c6.627 0 12-5.373 12-12V166.059h46.059c21.382 0 32.09-25.851 16.971-40.971l-86.059-86.059c-9.373-9.373-24.569-9.373-33.941 0l-86.059 86.059c-15.119 15.119-4.411 40.971 16.971 40.971H88z" class=""></path></svg>&nbsp;&nbsp;100.00%
+            </button>
               <!-- <button
                 :class="
                   (stoxtickerData.change_arrow &&
@@ -64,7 +75,7 @@
               <span class="float-right share-lk-top">
                 <span class="share-icon">
                   Share
-                  <img src="~/assets/img/share-icon.png" alt />
+                  <img src="~/assets/img/share-icon-white.png" alt />
                 </span>
                 <div class="share-all-outer">
                   <ul>
@@ -96,13 +107,13 @@
               </span>
             </h5>
             <div class="dashboard-apex-top" ref="dashboardApexChart">
-              <!-- <VueApexCharts
+              <VueApexCharts
                 ref="dashChart"
                 type="area"
                 height="350"
                 :options="chartOptions"
                 :series="series"
-              ></VueApexCharts> -->
+              ></VueApexCharts>
             </div>
             <div class="dashboard-graph-footer">
               <ul class="dashboard-graph-footer-month-filter">
@@ -171,17 +182,23 @@
                 </li>
               </ul>
               <p class="dashboard-graph-footer-update-at float-right">
-                Last Updated - {{ stoxtickerData.last_updated }}
+                Last Updated - 
+                <!-- {{ stoxtickerData.last_updated }} -->
+                 FEBRUARY 20 2021 - 11:58:47 AM
               </p>
             </div>
           </div>
         </div>
       </div>
-        
-        
+<div class="social_share ss-h4">
+        <h4>
+              <a class="embed-link" href="#" >EMBEDD CODE </>
+              </a>
+            </h4>
+        </div>
     </div>
       
-        <div class="row">
+        <div class="row slabs-ticker">
         <div class="col-md-12 col-sm-12 t-p-5">
             <div class="card">
                 <div class="card-body">
@@ -328,6 +345,41 @@ export default {
           if (res.status == 200) {
             this.stoxtickerDetails.board = res.board
             this.stoxtickerDetails.cards = res.cards
+
+            this.series = [{ name: 'Sales', data: res.card_data.values }]
+            this.chartOptions = {
+                xaxis: {
+                  categories: res.card_data.labels,
+                },
+                yaxis: {
+                  labels: {
+                    style: {
+                      colors: '#edecec',
+                      fontSize: '10px',
+                      fontFamily: 'NexaBold',
+                    },
+                    formatter: (value, ind) => {
+                      let lblStr = `$${value}`
+                      return lblStr
+                    },
+                  },
+                },
+                colors: ['#14f078'],
+                tooltip: {
+                  enabled: true,
+                  y: {
+                    formatter: (value, ind) => {
+                      let lblStr = `$${value}`
+                      if (typeof ind == 'object')
+                        lblStr = `$${value} (${
+                          this.salesQty[ind.dataPointIndex]
+                        })`
+                      else lblStr = `$${value} (${this.salesQty[ind]})`
+                      return lblStr
+                    },
+                  },
+                },
+              }
           } else {
             this.$router.push('/404')
           }
@@ -453,7 +505,20 @@ ul.featured-listing{
     }
   }
 }
-
+.share-lk-top span{
+  font-family: "Nexabold", Helvetica, Arial, sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #edecec;
+    margin: 0;
+    line-height: 25px;
+    display: inline-block;
+}
+.share-all-outer{
+  left: 32px;
+    top: 25px;
+}
 .custom-stox {
     font-family: 'CocogoosePro-Regular', Helvetica, Arial, sans-serif;
     font-weight: 400;
@@ -470,6 +535,9 @@ ul.featured-listing{
     svg{
          margin-right: 5px;
   }
+  &:hover{
+    text-decoration: none;
+  }
 }
 
 @media (max-width: 1200px) {
@@ -485,5 +553,19 @@ ul.featured-listing{
     .top-btn {
         margin-left: 15px;
     }
+}
+.embed-link {
+  color: #fff;
+}
+.ss-h4{
+      text-align: right;
+    width: 100%;
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+.slabs-ticker{
+  .my-card-listing .my-card{
+        width: 20% !important;
+  }
 }
 </style>

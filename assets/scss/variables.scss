@@ -3416,6 +3416,7 @@ html body #__nuxt .b-profileImage .dropdown-menu {
       margin-bottom: 0;
       letter-spacing: 1px;
       font-size: 10px;
+      font-style: italic;
     }
   }
 }
@@ -3735,7 +3736,25 @@ html body #__nuxt .b-profileImage .dropdown-menu {
     fill: rgb(237, 236, 236) !important;
   }
 }
-
+.apexcharts-text{
+  font-family: "NexaBold", Helvetica, Arial, sans-serif !important;
+    color: #edecec !important;
+    text-transform: uppercase !important;
+    font-size: 11px !important;
+    fill: rgb(237, 236, 236) !important;
+  text {
+    font-family: "NexaBold", Helvetica, Arial, sans-serif !important;
+    color: #edecec !important;
+    text-transform: uppercase !important;
+    font-size: 11px !important;
+    fill: rgb(237, 236, 236) !important;
+  }
+}
+.sales_graph .apexcharts-series {
+  path {
+    fill: #1de783;
+  }
+}
 .apexcharts-toolbar {
   display: none !important;
 }

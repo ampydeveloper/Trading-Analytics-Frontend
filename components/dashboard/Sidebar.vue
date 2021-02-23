@@ -76,12 +76,12 @@
             <div class="link-text">Stoxticker</div>
           </nuxt-link>
         </li>  -->
-        <!-- <li class="nav-item stox-request">
+        <li class="nav-item stox-request">
           <nuxt-link class="nav-link" to="/stox-requrest">
             <div class="icon stox-request-icon"></div>
             <div class="link-text">Stox Request</div>
           </nuxt-link>
-        </li> -->
+        </li>
       </ul>
       <!-- <div class="sibar-logo-middel">
         <img src="~/assets/img/dashboard-sidebar-middel-logo.png" alt="Slabstox" />

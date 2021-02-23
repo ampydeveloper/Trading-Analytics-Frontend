@@ -362,7 +362,7 @@
         <!-- <img src="https://images.unsplash.com/photo-1556629538-fc3eba61504e?auto=format&fit=crop&w=1300&q=80" alt="Cityscape" crossorigin="anonymous" class="slab_image" /> -->
         <img src="" class="slab_image" alt="Slab Title" crossorigin="anonymous" />
         <canvas class="slab_image_canvas"></canvas>
-        <img :src="graphImage" alt="" class="slab_graph" />
+        <img :src="graphImageBase" alt="" class="slab_graph" />
       </div>
       <div class="clearfix g-download-out text-right">
         <a
@@ -419,6 +419,7 @@ export default {
       logo: null,
       baseUrl: BASE_URL,
       graphImage: '',
+      graphImageBase:'',
       cardImage: '',
       liveAuction: [],
       ternder: [],
@@ -524,6 +525,8 @@ export default {
         // )
         $('.g-main-text .g-image-link').text(self.graphImage)
         $('.g-main-text .slab-image-link').text(self.cardImage)
+
+        // console.log(graphImageBase);
       }
     },
   },
@@ -749,6 +752,7 @@ setTimeout(() => {
       chartInstance.then((val) => {
         let img = new Image()
         img.src = val.imgURI
+        this.graphImageBase = img.src
         this.$axios
           .$post('generate-image', { image: img.src, prefix: 'sd' })
           .then((res) => {

@@ -129,6 +129,198 @@
       </div>
     </div>
 
+    <!-- <div class="row">
+      <div class="col-md-12 col-sm-12 t-p-5">
+        <div class="card">
+          <div
+            class="card-body dashboard-graph sx-stats-all"
+            id="dashboard-graph-outer"
+            ref="shareImage"
+          >
+          
+            <h5 class="card-title">
+             <button class="theme-btn card-btn btn-sxvalue float-right">
+                Slabstox ${{ stoxtickerData.total }}
+              </button>
+
+              <button
+                :class="
+                  (stoxtickerData.change_arrow &&
+                  stoxtickerData.change_arrow == 'up'
+                    ? 'theme-green-btn'
+                    : 'theme-red-btn') + ' card-btn'
+                "
+              >
+                <font-awesome-icon
+                  v-if="stoxtickerData.change_arrow !== undefined"
+                  :icon="[
+                    'fas',
+                    'long-arrow-alt-' + stoxtickerData.change_arrow,
+                  ]"
+                />&nbsp;&nbsp;
+                <span class="g-dollar-d-val"> ${{ doller_diff }}</span>
+              </button>
+              <button
+                :class="
+                  (stoxtickerData.change_arrow &&
+                  stoxtickerData.change_arrow == 'up'
+                    ? 'theme-btn'
+                    : 'theme-red-btn') + ' card-btn'
+                "
+              >
+                <font-awesome-icon
+                  v-if="stoxtickerData.change_arrow !== undefined"
+                  :icon="[
+                    'fas',
+                    'long-arrow-alt-' + stoxtickerData.change_arrow,
+                  ]"
+                />&nbsp;&nbsp;{{ perc_diff }}%
+              </button>
+              <span class="card-link" v-b-modal.openSeeProblemPopup>
+                Export Data
+                <font-awesome-icon :icon="['fas', 'chevron-right']" />
+              </span>
+              <span class="total_sales" style="display: none">{{
+                total_sales
+              }}</span>
+             <span class="float-right share-lk-top">
+                <span class="share-icon">
+                  <img src="~/assets/img/share-icon.png" alt />
+                </span>
+                <div class="share-all-outer">
+                  <ul>
+                    <li>
+                      <a href="javascript:;" @click="shareFb()"
+                        ><img src="~/assets/img/icons/facebook.svg" alt
+                      /></a>
+                    </li>
+                    <li>
+                      <a
+                        :href="
+                          'https://twitter.com/intent/tweet?url=' +
+                          encodeURI(baseUrl) +
+                          '&text=StoxTicker@' +
+                          stoxtickerData.sale.toFixed(2)
+                        "
+                        target="_blank"
+                        ><img src="~/assets/img/icons/twitter.svg" alt
+                      /></a>
+                    </li>
+                    <li>
+                      <a
+                        :href="
+                          'http://pinterest.com/pin/create/button/?url=' +
+                          encodeURI(this.baseUrl) +
+                          '&media=' +
+                          encodeURI(this.graphImage) +
+                          '&description=' +
+                          encodeURI('Buy & Sell Sports Cards Online')
+                        "
+                        target="_blank"
+                        ><img src="~/assets/img/pinterest.png" alt
+                      /></a>
+                    </li>
+                    <li>
+                      <a
+                        :href="
+                          'https://www.linkedin.com/shareArticle?mini=true&url=' +
+                          encodeURI(baseUrl)
+                        "
+                        target="_blank"
+                        ><img src="~/assets/img/icons/linkedin-circled.svg" alt
+                      /></a>
+                    </li>
+                  </ul>
+                </div>
+                <span class="share-icon" @click='chart2Img()'>
+                  <img src="~/assets/img/share-icon.png" alt />
+                </span> 
+              </span> 
+            </h5>
+            <div class="dashboard-apex-top" ref="dashboardApexChart">
+              <VueApexCharts
+                ref="dashChart"
+                type="area"
+                height="350"
+                :options="chartOptions"
+                :series="series"
+              ></VueApexCharts>
+            </div>
+            <div class="dashboard-graph-footer">
+              <ul class="dashboard-graph-footer-month-filter">
+                <li
+                  :class="
+                    'dashboard-graph-footer-month-filter-item ' +
+                    (activeDaysGraph == 2 ? 'active' : '')
+                  "
+                  @click="updateGraph(2)"
+                >
+                  1D
+                </li>
+                <li
+                  :class="
+                    'dashboard-graph-footer-month-filter-item ' +
+                    (activeDaysGraph == 7 ? 'active' : '')
+                  "
+                  @click="updateGraph(7)"
+                >
+                  1W
+                </li>
+                <li
+                  :class="
+                    'dashboard-graph-footer-month-filter-item ' +
+                    (activeDaysGraph == 30 ? 'active' : '')
+                  "
+                  @click="updateGraph(30)"
+                >
+                  1M
+                </li>
+                <li
+                  :class="
+                    'dashboard-graph-footer-month-filter-item ' +
+                    (activeDaysGraph == 90 ? 'active' : '')
+                  "
+                  @click="updateGraph(90)"
+                >
+                  3M
+                </li>
+                <li
+                  :class="
+                    'dashboard-graph-footer-month-filter-item ' +
+                    (activeDaysGraph == 180 ? 'active' : '')
+                  "
+                  @click="updateGraph(180)"
+                >
+                  6M
+                </li>
+                <li
+                  :class="
+                    'dashboard-graph-footer-month-filter-item ' +
+                    (activeDaysGraph == 365 ? 'active' : '')
+                  "
+                  @click="updateGraph(365)"
+                >
+                  1Y
+                </li>
+                <li
+                  :class="
+                    'dashboard-graph-footer-month-filter-item ' +
+                    (activeDaysGraph == 1825 ? 'active' : '')
+                  "
+                  @click="updateGraph(1825)"
+                >
+                  5Y
+                </li>
+              </ul>
+              <p class="dashboard-graph-footer-update-at float-right">
+                Last Updated - {{ last_timestamp }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
     <div class="row analytics_page">
       <div class="col-md-12 pr-0 inner_wrap">
         <div class="col-md-12 col-sm-12 pl-0 stoxticker_page-outer">
@@ -410,24 +602,20 @@
 
     <div class="row board-search-list-outer" style="display:none;">
       <div class="col-sm-6 board-search-list"  v-for="itemdata in boardSearch" >
-<h5 class="card-title custom-smart-search-player-name">
-       
-            <nuxt-link
-                      class=""
-                     
-                      :to="`stoxticker-details?board=${itemdata.id}`"
-                      >{{ itemdata.name }}</nuxt-link
-                    >
- </h5>
 
             <div class="card">
               <div class="card-body dashboard-graph">
                 <h5 class="card-title_new">
-                   <button class="theme-btn card-btn">
-                   {{ itemdata.name }} 
-                   <!-- ${{ card.details.currentPrice }} -->
-                 </button>
-                  <!-- <button
+                 <nuxt-link
+                      class="theme-btn card-btn"
+                      :to="`stoxticker-details?board=${itemdata.id}`"
+                      >{{ itemdata.name }}</nuxt-link
+                    >
+<button data-v-6fc4d46b="" class="theme-green-btn card-btn"><svg data-v-6fc4d46b="" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="long-arrow-alt-up" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" class="svg-inline--fa fa-long-arrow-alt-up fa-w-8"><path data-v-6fc4d46b="" fill="currentColor" d="M88 166.059V468c0 6.627 5.373 12 12 12h56c6.627 0 12-5.373 12-12V166.059h46.059c21.382 0 32.09-25.851 16.971-40.971l-86.059-86.059c-9.373-9.373-24.569-9.373-33.941 0l-86.059 86.059c-15.119 15.119-4.411 40.971 16.971 40.971H88z" class=""></path></svg>&nbsp;&nbsp;
+              <span data-v-6fc4d46b="" class="g-dollar-d-val"> $0</span></button>
+              <button data-v-6fc4d46b="" class="theme-btn card-btn"><svg data-v-6fc4d46b="" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="long-arrow-alt-up" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" class="svg-inline--fa fa-long-arrow-alt-up fa-w-8"><path data-v-6fc4d46b="" fill="currentColor" d="M88 166.059V468c0 6.627 5.373 12 12 12h56c6.627 0 12-5.373 12-12V166.059h46.059c21.382 0 32.09-25.851 16.971-40.971l-86.059-86.059c-9.373-9.373-24.569-9.373-33.941 0l-86.059 86.059c-15.119 15.119-4.411 40.971 16.971 40.971H88z" class=""></path></svg>&nbsp;&nbsp;100.00%
+            </button>
+                   <!-- <button
                     :class="
                       (card.sx_icon == 'up'
                         ? 'theme-green-btn'
@@ -451,23 +639,16 @@
                 <div class="dashboard-graph-footer">
                   <ul class="dashboard-graph-footer-month-filter">
                     <li
-                      :class="
-                        'dashboard-graph-footer-month-filter-item ' +
-                        (activeDaysGraph == 2 && graphDataEmpty == false
-                          ? 'active'
-                          : '') +
-                        (activeDaysGraph == 2 && graphDataEmpty == true
-                          ? 'nodata'
-                          : '')
-                      "
-                      @click="updateGraph(2)"
+                      :class="'dashboard-graph-footer-month-filter-item active'"
                     >
                       1D
                     </li>
                   </ul>
-                  <!-- <p class="dashboard-graph-footer-update-at float-right">
-                    Last Updated - {{ card.price_graph_updated }}
-                  </p> -->
+                  <p class="dashboard-graph-footer-update-at float-right">
+                    Last Updated - 
+                    <!-- {{ card.price_graph_updated }} -->
+                    FEBRUARY 20 2021 - 11:58:47 AM
+                  </p>
                 </div>
 
                 </div>
@@ -476,7 +657,7 @@
          
       </div>
 
-      <div class="create-board-out my-card text-center">
+      <div class="create-board-out my-card text-center" style="display:none">
  <button class="my-card-view-listing create-board" @click="searchBoard()">
                   Load More Boards
                   <font-awesome-icon :icon="['fas', 'chevron-circle-right']" />
@@ -651,9 +832,11 @@ export default {
               //  var percDiff = res.data.perc_diff
               // var dollerDiff = String(res.data.doller_diff)
 
-              this.series = [
-                { name: 'Card Values', data: res.card_data.values },
-              ]
+
+if(res.data > 4){
+$('.create-board-out').show();
+}
+              this.series = [{ name: 'Sales', data: res.card_data.values }]
               this.chartOptions = {
                 xaxis: {
                   categories: res.card_data.labels,
@@ -671,6 +854,7 @@ export default {
                     },
                   },
                 },
+                colors: ['#14f078'],
                 tooltip: {
                   enabled: true,
                   y: {
@@ -1256,6 +1440,27 @@ html body main .card.search-slabs-out .my-card-listing .my-card {
         rgba(27, 231, 131, 0.76) 33%,
         rgba(5, 251, 98, 0.76) 100%
       );
+    }
+  }
+}
+.board-search-list {
+      margin-bottom: 30px;
+  .dashboard-graph-footer-month-filter {
+    width: auto !important;
+  }
+  a.theme-btn.card-btn {
+    color: #000;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+  .dashboard-graph {
+    .dashboard-graph-footer {
+      margin-top: -25px;
+      .dashboard-graph-footer-update-at {
+        margin-top: 18px;
+        
+      }
     }
   }
 }
