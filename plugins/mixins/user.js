@@ -39,8 +39,11 @@ const User = {
                         this.$router.push('/')
                     } else {
                         if (this.user) {
+                            console.log(this.user);
                             if (this.user.roles[0].name != 'administrator') {
                                 this.$router.push('/dashboard')
+                            } else {
+                                this.$router.push('/admin')
                             }
                         }
                     }
@@ -58,15 +61,21 @@ const User = {
                     }
                 },
                 guestMiddleware() {
-                    console.log(this.$route.path);
-                    if(this.$route.path == '/'){
-                        if(this.user != null) this.$router.push('/dashboard')
-                    }else if(this.$route.path != '/register') this.$router.push('/dashboard')
-                    // if (this.authenticated) {
-                        // console.log(this.user);
-                    //     // console.log(this.$auth.loggedIn);
-                            // this.$router.push('/dashboard')
-                    // }
+                    // console.log(this.$route.path);
+
+                    if (this.user) {
+                        if (this.user.roles && this.user.roles[0].name != 'user') {
+                            this.$router.push('/admin')
+                        } else {
+                            this.$router.push('/dashboard')
+                        }
+                    } else {
+                        if (this.$route.path == '/') {
+                            if (this.user != null) this.$router.push('/dashboard')
+                        } else if (this.$route.path != '/register') {
+                            this.$router.push('/dashboard')
+                        }
+                    }
                 },
                 addToCart(data) {
                     try {

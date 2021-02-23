@@ -70,12 +70,12 @@
           </nuxt-link>
         </li> 
         
-         <li class="nav-item">
+         <!-- <li class="nav-item">
           <nuxt-link class="nav-link" to="/stoxticker-details">
             <div class="icon stoxticker-icon"></div>
             <div class="link-text">Stoxticker</div>
           </nuxt-link>
-        </li> 
+        </li>  -->
         <!-- <li class="nav-item stox-request">
           <nuxt-link class="nav-link" to="/stox-requrest">
             <div class="icon stox-request-icon"></div>

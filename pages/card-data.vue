@@ -349,7 +349,8 @@ import { BASE_URL } from '../constants/keys'
 import $ from 'jquery'
 export default {
   transition: 'fade',
-  layout: 'dashboard',
+  layout: 'guestOuter',
+  auth: 'guest',
   head() {
     return {
       title: 'Buy & Sell Sports Cards Online - Slabstox',

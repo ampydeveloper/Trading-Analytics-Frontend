@@ -215,32 +215,32 @@ export default {
           this.showLoader()
           this.requestInProcess = true
           this.$axios
-              .post('fetch-card-by-item-id-for-admin', {
+              .post('scrap-item-for-admin', {
                 itemid: this.item.itemId
               })
               .then(res => {
                 if (res.status == 200) {
                   let data = res.data.data
                   // console.log(data)
-                  this.item.title = data.Title
-                  this.item.price = data.CurrentPrice
-                  this.item.condition = data.ConditionDisplayName
-                  this.item.time_left = data.TimeLeft
-                  this.item.image = data.PictureURL[0]
-                  this.item.location = data.Location
-                  this.item.auction_start = ''
-                  this.item.auction_end = ''                  
-                  this.item.shipToLocations = data.ShipToLocations
-                  this.item.ReturnPolicy = data.ReturnPolicy.ReturnsAccepted
-                  this.item.web_link = data.ViewItemURLForNaturalSearch
-                  this.item.seller_name = data.Seller.UserID
-                  this.item.positiveFeedbackPercent = data.Seller.PositiveFeedbackPercent
-                  this.item.seller_contact_link = ''
-                  this.item.seller_store_link = ''
+                  // this.item.title = data.Title
+                  // this.item.price = data.CurrentPrice
+                  // this.item.condition = data.ConditionDisplayName
+                  // this.item.time_left = data.TimeLeft
+                  // this.item.image = data.PictureURL[0]
+                  // this.item.location = data.Location
+                  // this.item.auction_start = ''
+                  // this.item.auction_end = ''                  
+                  // this.item.shipToLocations = data.ShipToLocations
+                  // this.item.ReturnPolicy = data.ReturnPolicy.ReturnsAccepted
+                  // this.item.web_link = data.ViewItemURLForNaturalSearch
+                  // this.item.seller_name = data.Seller.UserID
+                  // this.item.positiveFeedbackPercent = data.Seller.PositiveFeedbackPercent
+                  // this.item.seller_contact_link = ''
+                  // this.item.seller_store_link = ''
                   
 
-                  this.item.specifics = data.ItemSpecifics.NameValueList
-                  this.item.details = data
+                  // this.item.specifics = data.ItemSpecifics.NameValueList
+                  // this.item.details = data
                   // console.log(res.data)
                 }
                 this.requestInProcess = false

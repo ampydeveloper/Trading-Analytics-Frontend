@@ -66,7 +66,8 @@ import CardSlabItem from '~/components/dashboard/CardSlabItem'
 import LiveListingSlabTenders from '~/components/dashboard/LiveListingSlabTenders'
 export default {
   transition: 'fade',
-  layout: 'dashboard',
+  layout: 'guestOuter',
+  auth: 'guest',
   head() {
     return {
       title: 'Trenders - Slabstox',
