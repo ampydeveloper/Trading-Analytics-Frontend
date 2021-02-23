@@ -235,7 +235,8 @@ export default {
 ul.my-card-listing {
   list-style: none;
   padding: 0px;
-  display: inline-block;
+  // display: inline-block;
+  // width: 100%;
 }
 .no-result-found {
   text-transform: uppercase;

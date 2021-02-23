@@ -549,7 +549,7 @@ export default {
 
 setTimeout(() => {
       canvas.toBlob((blob) => {
-        console.log(blob)
+        // console.log(blob)
         const downloadLink = downloadBlob(blob)
       })
 }, 1000)

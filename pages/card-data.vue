@@ -314,7 +314,7 @@
               crossorigin="anonymous"
             />
             <canvas class="slab_image_canvas"></canvas>
-            <img :src="graphImage" alt="" class="slab_graph" />
+            <img :src="graphImageBase" alt="" class="slab_graph" />
           </div>
           <div class="clearfix g-download-out text-right">
             <a
@@ -400,6 +400,7 @@ export default {
       activeDaysGraph: 2,
       initGraphLabelLength: 0,
       graphImage: '',
+      graphImageBase:'',
       graphDataEmpty: false,
       dialogVisible: false,
       series: [
@@ -511,7 +512,7 @@ export default {
   },
   methods: {
     downloadImage() {
-      $('.apexcharts-toolbar .exportPNG').click()
+      $('.dashboard-graph .apexcharts-toolbar .exportPNG').click()
 
       const wrapper = document.getElementById('g-img-full')
       const img = wrapper.querySelector('.slab_image')
@@ -525,7 +526,7 @@ export default {
 
       setTimeout(() => {
         canvas.toBlob((blob) => {
-          console.log(blob)
+          // console.log(blob)
           const downloadLink = downloadBlob(blob)
         })
       }, 1000)
@@ -699,6 +700,8 @@ this.salesQty = res.data.qty
       chartInstance.then((val) => {
         let img = new Image()
         img.src = val.imgURI
+        this.graphImageBase = img.src 
+        // console.log(this.graphImageBase);
         this.$axios
           .$post('generate-graph-image', { image: img.src, prefix: 'cdc' })
           .then((res) => {
