@@ -56,7 +56,7 @@
               <div class="card-body dashboard-graph">
                 <h5 class="card-title_new">
                   <button class="theme-btn card-btn">
-                    Card Value ${{ card.details.currentPrice }}
+                    Card Value ${{ slabstoxValue }}
                   </button>
                   <button
                     :class="
@@ -229,7 +229,7 @@
                     </li>
                   </ul>
                   <p class="dashboard-graph-footer-update-at float-right">
-                    Last Updated - {{ card.price_graph_updated }}
+                    Last Updated - {{ (lastSaleDate?this.$moment(lastSaleDate).format('MMMM DD Y - hh:mm:ss A'):'N/A') }}
                   </p>
                 </div>
               </div>
@@ -276,12 +276,12 @@
             <div class="stat_box">
               <h3>stats</h3>
               <ul>
-                <li>SlabStox Value: {{ card.details.currentPrice }}</li>
+                <li>SlabStox Value: {{ slabstoxValue }}</li>
                 <li>Overall Rank: {{ card.rank }}</li>
-                <li>Last Sale Price: N/A</li>
-                <li>Last Sale Date: N/A</li>
-                <li>High Sale: N/A</li>
-                <li>Low Sale: N/A</li>
+                <li>Last Sale Price: ${{ lastSalePrice }}</li>
+                <li>Last Sale Date: {{ this.$moment(lastSaleDate).format('M/D/Y') }}</li>
+                <li>High Sale: {{ highestSale }}</li>
+                <li>Low Sale: {{ lowestSale }}</li>
               </ul>
               <!-- <span>READ MORE ABOUT OUR STATS</span> -->
             </div>
@@ -403,9 +403,14 @@ export default {
       graphImageBase:'',
       graphDataEmpty: false,
       dialogVisible: false,
+      lastSalePrice:'N/A',
+      lastSaleDate:'N/A',
+      highestSale:'N/A',
+      lowestSale:'N/A',
+      slabstoxValue:0,
       series: [
         {
-          name: 'Card Value',
+          name: 'Sales',
           data: [],
         },
       ],
@@ -644,7 +649,12 @@ this.salesQty = res.data.qty
                   },
                 }
 
+                this.highestSale = res.data.highestSale
+                this.lowestSale = res.data.lowestSale
+                this.lastSaleDate = res.data.lastSaleDate
+                this.lastSalePrice = res.data.lastSalePrice
                 this.initGraphLabelLength = res.data.labels.length
+                this.slabstoxValue = res.data.slabstoxValue
               }
               setTimeout(() => {
                 this.generateImageOfGraph()

@@ -1,7 +1,7 @@
 <template>
   <div>
     <template v-if="appLoaded">
-      <Navbar />
+      <NavbarGuestOuter />
       <div class="container-fluid">
         <div class="row">
           <Sidebar />
@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import Navbar from '~/components/dashboard/Navbar'
+import NavbarGuestOuter from '~/components/dashboard/NavbarGuestOuter'
 import AdvanceSearch from '~/components/dashboard/AdvanceSearch'
 import Sidebar from '~/components/dashboard/Sidebar'
 import Footer from '~/components/dashboard/Footer'
@@ -49,7 +49,7 @@ export default {
     }
   },
   components: {
-    Navbar,
+    NavbarGuestOuter,
     Sidebar,
     Footer,
     AdvanceSearch,
