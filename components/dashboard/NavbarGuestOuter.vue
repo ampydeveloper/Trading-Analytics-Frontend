@@ -211,7 +211,7 @@
         </b-dropdown-item>
       </b-nav-item-dropdown>
     </b-navbar-nav>
-    <ul class="upper-links list-inline">
+    <ul class="upper-links list-inline" v-if="user == null || user.full_name == null">
       <li>
         <a href="/"><i>Sign In</i></a>
       </li>
