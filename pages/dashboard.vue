@@ -388,10 +388,22 @@ export default {
   transition: 'fade',
   layout: 'guestOuter',
   auth: 'guest',
-  // middleware: 'guest',
   head() {
     return {
       title: 'Dashboard - Slabstox',
+      meta: [
+        { name: 'Dashboard - Slabstox', content: 'Check Slabstox Featured Slabs' },
+        { property: 'og:title', content: 'Check Slabstox Featured Slabs' },
+        { property: 'og:image', content: this.logo },
+        {
+          property: 'og:description',
+          content:
+            'StoxTicker@' + (this.stoxtickerData.total ? this.stoxtickerData.total.toFixed(2) : ''),
+        },
+        { property: 'og:url', content: this.baseUrl },
+        { property: 'og:site_name', content: 'Slabstox' },
+        { property: 'og:type', content: 'website' },
+      ],
     }
   },
   mounted() {
@@ -763,26 +775,12 @@ setTimeout(() => {
           })
       })
     },
+    
   },
 }
 </script>
 
 <style lang="scss" scoped>
-.dashboard-graph {
-  .share-lk-top {
-    position: relative;
-    &:hover {
-      .share-all-outer {
-        display: block;
-      }
-    }
-    svg {
-      cursor: pointer;
-      margin-right: 10px;
-      color: #1ce783;
-    }
-  }
-}
 .t-p-5 {
   padding: 5px;
 }

@@ -54,7 +54,7 @@
                   <button class="theme-cart-btn card-btn">Listing Info</button>
                   <button class="theme-btn card-btn">
                     *$$ Value
-                    {{ data.card != null ? data.card.value.value : '0' }}
+                    {{ data.card != null && data.card.value != null ? data.card.value.value : '0' }}
                   </button>
                   <button
                     class="theme-green-btn card-btn"
@@ -138,14 +138,14 @@
                   </p>
                   <p>
                     <a
-                      href="https://contact.ebay.com/ws/eBayISAPI.dll?FindAnswers&redirect=0&iid=164254838107&requested=fansonlycollectibles"
+                      :href="(data.seller_info?data.seller_info.seller_contact_link:'')"
                       target="_blank"
                       >Contact Seller</a
                     >
                   </p>
                   <p>
                     <a
-                      href="https://www.ebay.com/str/90s-cards?_trksid=p2047675.l2563"
+                      :href="(data.seller_info?data.seller_info.seller_store_link:'')"
                       target="_blank"
                       >Visit Store</a
                     >
@@ -950,6 +950,7 @@ export default {
   display: inline-block;
   &:hover {
     text-decoration: none;
+    color: #212529;
   }
 }
 </style>

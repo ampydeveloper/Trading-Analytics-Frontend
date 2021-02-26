@@ -1003,7 +1003,6 @@ html body main .my-card-listing {
 
   .date {
     display: block;
-    text-align: right;
     font-size: 9px;
     letter-spacing: 1px;
     margin-top: 35px;
@@ -2181,7 +2180,21 @@ html body #__nuxt .b-profileImage .dropdown-menu {
   align-items: center;
   justify-content: flex-end;
 }
-
+// .dashboard-graph {
+  .share-lk-top {
+    position: relative;
+    &:hover {
+      .share-all-outer {
+        display: block;
+      }
+    }
+    svg {
+      cursor: pointer;
+      margin-right: 10px;
+      color: #1ce783;
+    }
+  }
+// }
 .stoxticker_listing ul {
   padding: 0px;
   margin: 0px;
@@ -3657,7 +3670,8 @@ html body #__nuxt .b-profileImage .dropdown-menu {
 }
 
 #embedSellsCode___BV_modal_outer_,
-#embedStatsCode___BV_modal_outer_ {
+#embedStatsCode___BV_modal_outer_,
+#embedStoxtickerCode___BV_modal_outer_ {
   .modal-header {
     padding: 0;
     border: 0;
@@ -3693,6 +3707,7 @@ html body #__nuxt .b-profileImage .dropdown-menu {
       border: 0;
       color: #fff;
       font-size: 14px;
+      padding: 10px 15px;
     }
   }
 }
@@ -4085,4 +4100,13 @@ html body #__nuxt .b-profileImage .dropdown-menu {
       }
     }
   }
+}
+.embed-link {
+  color: #fff;
+}
+.ss-h4 {
+  text-align: right;
+  width: 100%;
+  margin-top: 15px;
+  margin-bottom: 20px;
 }

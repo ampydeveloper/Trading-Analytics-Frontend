@@ -4,7 +4,7 @@
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">
-            <button class="theme-cart-btn card-btn">Available Listing</button>
+            <button class="theme-cart-btn card-btn">Available Listings</button>
             <input
               v-model="keyword"
               @keyup="card_one()"

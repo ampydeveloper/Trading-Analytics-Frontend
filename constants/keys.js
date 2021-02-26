@@ -12,4 +12,4 @@ export const DEV_API = 'http://api.slabstox.leagueofclicks.com/api/';
 export const PROD_API = 'http://api.slabstox.leagueofclicks.com/api/';
 export const STAGING_API = 'http://api.slabstox.leagueofclicks.com/api/';
 
-export const BASE_URL = 'https://slabstox.com';
+export const BASE_URL = 'https://pro.slabstox.com';

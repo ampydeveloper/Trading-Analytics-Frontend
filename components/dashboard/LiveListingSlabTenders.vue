@@ -186,11 +186,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.t-p-5 {
+  padding: 5px;
+}
 ul.my-card-listing {
   list-style: none;
   padding: 0px;
-  display: inline-block;
-  width: 100%;
+  // display: inline-block;
+  // width: 100%;
 }
 .no-result-found {
   text-transform: uppercase;
@@ -200,7 +203,7 @@ ul.my-card-listing {
 .trender-cards-footer {
   display: inline-block;
       margin-left: 5px;
-      width: calc(100% - 420px);
+      width: calc(100% - 453px);
     text-align: left;
     padding-left: 15px;
   .trender-cards-footer-month-filter {

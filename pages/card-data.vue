@@ -56,7 +56,7 @@
               <div class="card-body dashboard-graph">
                 <h5 class="card-title_new">
                   <button class="theme-btn card-btn">
-                    Card Value ${{ slabstoxValue }}
+                    *SX Value ${{ slabstoxValue }}
                   </button>
                   <button
                     :class="
@@ -69,16 +69,26 @@
                       :icon="['fas', 'long-arrow-alt-' + card.sx_icon]"
                     />&nbsp;&nbsp;{{ card.sx }}
                   </button>
-                  <span class="card-link" v-b-modal.openSeeProblemPopup>
+                  <button
+                    :class="
+                      (card.sx_icon == 'up'
+                        ? 'theme-green-btn'
+                        : 'theme-red-btn') + ' card-btn'
+                    "
+                  >
+                    <font-awesome-icon
+                      :icon="['fas', 'long-arrow-alt-' + card.sx_icon]"
+                    />&nbsp;&nbsp;{{ card.sx }}
+                  </button>
+                  <span
+                    class="card-link"
+                    v-b-modal.openSeeProblemPopup
+                    style="margin-left: 20px"
+                  >
                     Export Data
                     <font-awesome-icon :icon="['fas', 'chevron-right']" />
                   </span>
-                  <!-- <div class="float-right icon_img">
-                    <img
-                      class="gift-cart-title-ebay-img"
-                      src="~/assets/img/icons/1heart-green.png"
-                      alt
-                    />
+                  <div class="float-right icon_img">
                     <span class="float-right share-lk-top share-card-data">
                       <span class="share-icon">
                         <img src="~/assets/img/icons/upload_icon.png" alt />
@@ -92,21 +102,50 @@
                           </li>
                           <li>
                             <a
-                              :href="'https://twitter.com/intent/tweet?url='+encodeURI(baseUrl)+'&text='+encodeURI(card.player+'-'+ card.year+'@'+card.details.currentPrice)"
+                              :href="
+                                'https://twitter.com/intent/tweet?url=' +
+                                encodeURI(currentUrl) +
+                                '&text=' +
+                                encodeURI(
+                                  card.player +
+                                    ' ' +
+                                    card.year +
+                                    '@' +
+                                    card.sx
+                                ) +
+                                ' ' +
+                                encodeURI(this.graphImage)
+                              "
                               target="_blank"
                               ><img src="~/assets/img/icons/twitter.svg" alt
                             /></a>
                           </li>
                           <li>
-                            <a 
-                              :href="'http://pinterest.com/pin/create/button/?url='+encodeURI(baseUrl)+'&media=' + this.graphImage + '&description='+encodeURI(card.player+'-'+ card.year+'@'+card.details.currentPrice)"
+                            <a
+                              :href="
+                                'http://pinterest.com/pin/create/button/?url=' +
+                                encodeURI(currentUrl) +
+                                '&media=' +
+                                this.graphImage +
+                                '&description=' +
+                                encodeURI(
+                                  card.player +
+                                    ' ' +
+                                    card.year +
+                                    '@' +
+                                    card.sx
+                                )
+                              "
                               target="_blank"
                               ><img src="~/assets/img/pinterest.png" alt
                             /></a>
                           </li>
                           <li>
                             <a
-                              :href="'https://www.linkedin.com/shareArticle?mini=true&url='+encodeURI(baseUrl)"
+                              :href="
+                                'https://www.linkedin.com/sharing/share-offsite/?url=' +
+                                encodeURI(currentUrl)
+                              "
                               target="_blank"
                               ><img
                                 src="~/assets/img/icons/linkedin-circled.svg"
@@ -116,7 +155,7 @@
                         </ul>
                       </div>
                     </span>
-                  </div> -->
+                  </div>
                 </h5>
                 <div class="dashboard-apex-top">
                   <VueApexCharts
@@ -229,7 +268,14 @@
                     </li>
                   </ul>
                   <p class="dashboard-graph-footer-update-at float-right">
-                    Last Updated - {{ (lastSaleDate?this.$moment(lastSaleDate).format('MMMM DD Y - hh:mm:ss A'):'N/A') }}
+                    Last Updated -
+                    {{
+                      lastSaleDate
+                        ? this.$moment(lastSaleDate).format(
+                            'MMMM DD Y - hh:mm:ss A'
+                          )
+                        : 'N/A'
+                    }}
                   </p>
                 </div>
               </div>
@@ -242,10 +288,7 @@
               <div class="card-body sales_graph-graph">
                 <h5 class="card-title1">
                   <button class="theme-btn card-btn">SALES</button>
-                  <!-- <nuxt-link class="card-link float-right" to="/">
-                    VIEW SALES HISTORY
-                    <font-awesome-icon :icon="['fas', 'chevron-right']" />
-                  </nuxt-link> -->
+
                   <a
                     href="javascript:;"
                     class="card-link float-right"
@@ -257,11 +300,6 @@
                 </h5>
 
                 <div class="sales_graph dashboard-apex-top">
-                  <!-- <img
-                    class="gift-cart-title-ebay-img"
-                    src="~/assets/img/graph.jpg"
-                    alt
-                  /> -->
                   <VueApexCharts
                     type="bar"
                     height="350"
@@ -278,10 +316,22 @@
               <ul>
                 <li>SlabStox Value: {{ slabstoxValue }}</li>
                 <li>Overall Rank: {{ card.rank }}</li>
-                <li>Last Sale Price: ${{ lastSalePrice }}</li>
-                <li>Last Sale Date: {{ this.$moment(lastSaleDate).format('M/D/Y') }}</li>
-                <li>High Sale: {{ highestSale }}</li>
-                <li>Low Sale: {{ lowestSale }}</li>
+                <li>
+                  Last Sale Price:
+                  {{ lastSalePrice ? '$' + lastSalePrice : 'N/A' }}
+                </li>
+                <li>
+                  Last Sale Date:
+                  {{
+                    lastSaleDate
+                      ? this.$moment(lastSaleDate).format('M/D/Y')
+                      : 'N/A'
+                  }}
+                </li>
+                <li>
+                  High Sale: {{ highestSale ? '$' + highestSale : 'N/A' }}
+                </li>
+                <li>Low Sale: {{ lowestSale ? '$' + lowestSale : 'N/A' }}</li>
               </ul>
               <!-- <span>READ MORE ABOUT OUR STATS</span> -->
             </div>
@@ -353,7 +403,22 @@ export default {
   auth: 'guest',
   head() {
     return {
-      title: 'Buy & Sell Sports Cards Online - Slabstox',
+      title: this.card.title + ' - Slabstox',
+      meta: [
+        {
+          name: this.card.title + ' - Slabstox',
+          content: this.card.title + ' ' + '@' + this.card.sx,
+        },
+        { property: 'og:title', content: this.card.title+' - Slabstox' },
+        { property: 'og:image', content: this.graphImage },
+        {
+          property: 'og:description',
+          content: this.card.title+' '+'@'+this.card.sx,
+        },
+        { property: 'og:url', content: this.currentUrl },
+        { property: 'og:site_name', content: 'Slabstox' },
+        { property: 'og:type', content: 'website' },
+      ],
     }
   },
   mounted() {
@@ -365,6 +430,7 @@ export default {
     this.getData()
     this.updateGraph()
     this.getSalesGraph()
+    // console.log(location.href)
   },
   watch: {
     dialogVisible(visible) {
@@ -396,25 +462,33 @@ export default {
     return {
       baseUrl: BASE_URL,
       id: null,
-      card: null,
+      card: [
+        {
+          title: '',
+          // details: [{
+          //   currentPrice: 0,
+          // }],
+        },
+      ],
       activeDaysGraph: 2,
       initGraphLabelLength: 0,
       graphImage: '',
-      graphImageBase:'',
+      graphImageBase: '',
       graphDataEmpty: false,
       dialogVisible: false,
-      lastSalePrice:'N/A',
-      lastSaleDate:'N/A',
-      highestSale:'N/A',
-      lowestSale:'N/A',
-      slabstoxValue:0,
+      lastSalePrice: '',
+      lastSaleDate: '',
+      highestSale: '',
+      lowestSale: '',
+      slabstoxValue: 0,
+      currentUrl: location.href,
       series: [
         {
           name: 'Sales',
           data: [],
         },
       ],
-        salesQty: [],
+      salesQty: [],
       chartOptions: {
         chart: {
           toolbar: {
@@ -522,21 +596,17 @@ export default {
       const wrapper = document.getElementById('g-img-full')
       const img = wrapper.querySelector('.slab_image')
       const canvas = wrapper.querySelector('.slab_image_canvas')
-      // img.addEventListener('load', () => {
       canvas.width = img.width
       canvas.height = img.height
       const ctx = canvas.getContext('2d')
       ctx.drawImage(img, 0, 0, img.width, img.height)
-      // }, false)
 
       setTimeout(() => {
         canvas.toBlob((blob) => {
-          // console.log(blob)
           const downloadLink = downloadBlob(blob)
         })
       }, 1000)
       function downloadBlob(blob) {
-        // const url2 = canvas.toDataURL('image/png')
         const url = URL.createObjectURL(blob)
 
         const a = document.createElement('a')
@@ -614,8 +684,7 @@ export default {
               this.activeDaysGraph = days
               if (this.initGraphLabelLength != res.data.values.length) {
                 this.series = [{ name: 'Sales', data: res.data.values }]
-                // this.chartOptions = { xaxis: { categories: res.data.labels } }
-this.salesQty = res.data.qty
+                this.salesQty = res.data.qty
                 this.chartOptions = {
                   xaxis: {
                     categories: res.data.labels,
@@ -698,11 +767,11 @@ this.salesQty = res.data.qty
             '-' +
             this.card.year +
             '@' +
-            this.card.details.currentPrice
+            this.card.sx
         ),
         link: encodeURI(this.graphImage), //this.baseUrl
         picture: this.graphImage,
-        description: 'Check our Slab value',
+        description: this.card.title,
       })
     },
     generateImageOfGraph() {
@@ -710,7 +779,7 @@ this.salesQty = res.data.qty
       chartInstance.then((val) => {
         let img = new Image()
         img.src = val.imgURI
-        this.graphImageBase = img.src 
+        this.graphImageBase = img.src
         // console.log(this.graphImageBase);
         this.$axios
           .$post('generate-graph-image', { image: img.src, prefix: 'cdc' })

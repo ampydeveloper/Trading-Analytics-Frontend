@@ -47,7 +47,7 @@
 import CardListItem from '~/components/dashboard/CardListItem'
 export default {
   transition: 'fade',
-  layout: 'dashboard',
+  layout: 'guestOuter',
   head() {
     return {
       title: 'Stoxticker - Slabstox'
@@ -60,56 +60,7 @@ export default {
   },
   data() {
     return {
-      sampleMyList: {
-        category: 'Basketball Cards',
-        galleryURL:
-          'https://thumbs2.ebaystatic.com/m/mRwha6cB-2q2Fjdol6S5wNQ/140.jpg',
-        id: 43,
-        itemId: '363020170125',
-        price: '720.0',
-        title: '2018-19 Luka Doncic Panini Prizm RC Rookie #280 Silver Prizm'
-      },
-      series: [
-        {
-          name: 'series1',
-          data: [31, 40, 28, 51, 42, 109, 100]
-        }
-      ],
-      chartOptions: {
-        chart: {
-          toolbar: {
-            show: false
-          },
-          height: 350,
-          type: 'area',
-          background: 'transparent'
-        },
-        colors: ['#14f078'],
-        dataLabels: {
-          enabled: false
-        },
-        stroke: {
-          curve: 'smooth'
-        },
-        yaxis: {},
-        xaxis: {
-          type: 'datetime',
-          categories: [
-            '2018-09-19T00:00:00.000Z',
-            '2018-09-19T01:30:00.000Z',
-            '2018-09-19T02:30:00.000Z',
-            '2018-09-19T03:30:00.000Z',
-            '2018-09-19T04:30:00.000Z',
-            '2018-09-19T05:30:00.000Z',
-            '2018-09-19T06:30:00.000Z'
-          ]
-        },
-        tooltip: {
-          x: {
-            format: 'dd/MM/yy HH:mm'
-          }
-        }
-      }
+      
     }
   },
   methods: {

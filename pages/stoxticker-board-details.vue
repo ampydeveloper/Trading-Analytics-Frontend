@@ -1,23 +1,5 @@
 <template>
-  <div class="col-md-11 col-sm-11 dashboard_page">
-      
-      <div class="row">
-        <div class="col-md-12 pl-1 mb-4 mt-2">
-            <div class="top-btn">
-                <!-- <button class="card-btn custom-stox"> 
-<font-awesome-icon :icon="['fas', 'chevron-left']" /> Back to board search</button> -->
-
-<nuxt-link
-                      class="card-btn custom-stox"
-                      :to="`stoxticker`"
-                      >
-                      <font-awesome-icon :icon="['fas', 'chevron-left']" />
-                       Back to board search</nuxt-link
-                    >
-            </div>
-        </div>
-    </div>
-    
+  <div class="col-md-11 col-sm-11 dashboard_page"> 
     
     <div class="row">
       <div class="col-md-12 col-sm-12 t-p-5">
@@ -69,42 +51,8 @@
                   ]"
                 />&nbsp;&nbsp;3.89%
               </button> -->
-                
-                
-             
-              <span class="float-right share-lk-top">
-                <span class="share-icon">
-                  Share
-                  <img src="~/assets/img/share-icon-white.png" alt />
-                </span>
-                <div class="share-all-outer">
-                  <ul>
-                    <li>
-                      <a href="javascript:;" @click="shareFb()"
-                        ><img src="~/assets/img/icons/facebook.svg" alt
-                      /></a>
-                    </li>
-                    <li>
-                      <a
-                        :href="'https://twitter.com/intent/tweet?url='+encodeURI(baseUrl)+'&text=Check Stoxticker: '+stoxtickerDetails.board.name+' valued@ '+stoxtickerData.sale.toFixed(2)+' ' +encodeURI(this.graphImage)"
-                        target="_blank"
-                        ><img src="~/assets/img/icons/twitter.svg" alt
-                      /></a>
-                    </li>
-                    <li>
-                      <a :href="'http://pinterest.com/pin/create/button/?url='+encodeURI(this.baseUrl)+'&media='+encodeURI(this.graphImage)+'&description='+encodeURI('Check Stoxticker: '+stoxtickerDetails.board.name)" target="_blank"
-                        ><img src="~/assets/img/pinterest.png" alt
-                      /></a>
-                    </li>
-                    <li>
-                      <a :href="'https://www.linkedin.com/sharing/share-offsite/?url='+encodeURI(baseUrl)" target="_blank"
-                        ><img src="~/assets/img/icons/linkedin-circled.svg" alt
-                      /></a>
-                    </li>
-                  </ul>
-                </div>
-             
-              </span>
+              
+
             </h5>
             <div class="dashboard-apex-top" ref="dashboardApexChart">
               <VueApexCharts
@@ -190,43 +138,7 @@
           </div>
         </div>
       </div>
-<div class="social_share ss-h4">
-        <h4>
-              <a class="embed-link" href="javascript:;"  @click="embedStatsCode()">EMBEDD CODE </>
-              </a>
-            </h4>
-        </div>
-    </div>
-    <b-modal id="embedStatsCode" title="" size="xl" hide-footer>
-          <h5>Copy code and paste to your website.</h5>
-          <p class="code-text">
-            <textarea cols="3" rows="10"><iframe src="https://pro.slabstox.com/stoxticker-board-details" width="1400" height="260" style="border:none;" frameborder="0"></iframe>
-          </textarea
-            >
-          </p>
-        </b-modal>
-      
-        <div class="row slabs-ticker">
-        <div class="col-md-12 col-sm-12 t-p-5">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">
-                      <button class="theme-btn card-btn">slabs in ticker</button>
-                    </h5>
-                    <div class="dataloader" v-if="requestInProcessFeatured">
-                      <b-spinner variant="success" label="Spinning"></b-spinner>
-                    </div>
-                    <ul class="my-card-listing">
-                      <CardSlabItem v-for="item in stoxtickerDetails.cards" :key="item.id" :itemdata="item" />
-                    </ul>
-
-                    <div class="empty-result" v-if="stoxtickerDetails.cards.length == 0 && !requestInProcessFeatured">
-                      <p>There are no cards here. Check again soon.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    </div>    
       
   </div>
 </template>

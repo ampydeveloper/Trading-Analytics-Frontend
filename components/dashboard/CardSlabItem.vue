@@ -95,6 +95,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.t-p-5 {
+  padding: 5px;
+}
 .rfive-columns .my-card {
   width: 20% !important;
 }

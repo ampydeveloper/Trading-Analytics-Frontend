@@ -232,6 +232,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.t-p-5 {
+  padding: 5px;
+}
 ul.my-card-listing {
   list-style: none;
   padding: 0px;
