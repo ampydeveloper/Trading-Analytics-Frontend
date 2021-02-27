@@ -552,21 +552,17 @@ export default {
       const wrapper = document.getElementById('g-img-full')
       const img = wrapper.querySelector('.slab_image')
       const canvas = wrapper.querySelector('.slab_image_canvas')
-      // img.addEventListener('load', () => {
           canvas.width = img.width
           canvas.height = img.height
           const ctx = canvas.getContext('2d')
           ctx.drawImage(img, 0, 0, img.width, img.height)
-        // }, false)
 
 setTimeout(() => {
       canvas.toBlob((blob) => {
-        // console.log(blob)
         const downloadLink = downloadBlob(blob)
       })
 }, 1000)
       function downloadBlob(blob) {
-        // const url2 = canvas.toDataURL('image/png')
         const url = URL.createObjectURL(blob)
 
         const a = document.createElement('a')

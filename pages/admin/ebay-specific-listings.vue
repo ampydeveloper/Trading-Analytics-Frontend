@@ -325,6 +325,28 @@ export default {
         }
       }
     },
+     saveSoldPrice(id) {
+      if (!this.requestInProcess) {
+        try {
+          this.showLoader()
+          this.requestInProcess = true
+          this.$axios
+            .$post('save-sold-price', {
+              id: id,
+              sold_price: this.soldPrice,
+            })
+            .then((res) => {
+              this.requestInProcess = false
+              this.soldPrice = ''
+              this.hideLoader()
+            })
+        } catch (err) {
+          this.hideLoader()
+          this.requestInProcess = false
+          console.log(err)
+        }
+      }
+    },
   },
 }
 </script>

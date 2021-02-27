@@ -201,7 +201,7 @@
                       <a
                         :href="
                           'https://twitter.com/intent/tweet?url=' +
-                          encodeURI(location.href) +
+                          encodeURI(currentUrl) +
                           '&text=StoxTicker@' +
                          (stoxtickerData.sale?stoxtickerData.sale.toFixed(2):'') +
                          ' ' +encodeURI(this.sxGraphImage)
@@ -214,7 +214,7 @@
                       <a
                         :href="
                           'http://pinterest.com/pin/create/button/?url=' +
-                          encodeURI(location.href) +
+                          encodeURI(currentUrl) +
                           '&media=' +
                           encodeURI(this.sxGraphImage) +
                           '&description=' +
@@ -228,7 +228,7 @@
                       <a
                         :href="
                           'https://www.linkedin.com/sharing/share-offsite/?url=' +
-                          encodeURI(location.href)
+                          encodeURI(currentUrl)
                         "
                         target="_blank"
                         ><img src="~/assets/img/icons/linkedin-circled.svg" alt
@@ -516,43 +516,58 @@ slabstox.com
                 <li>
                   <h3 class="h3-title">BASKETBALL</h3>
                   <marquee direction="left">
-                    <h4>LEBRON JAMES 2003 TOPPS CHROME $ 45.75</h4>
-                    <h5>LEBRON JAMES 2003...</h5>
+                    <!-- <h4>LEBRON JAMES 2003 TOPPS CHROME $ 45.75</h4>
+                    <h5>LEBRON JAMES 2003...</h5> -->
+                    <template v-for="list in soldListing.basketball">
+                    <h4>{{list.title}}&nbsp;&nbsp;</h4>
+                      </template>
+                      <template v-if="soldListing.basketball==0">
+                    <h4>No recent sold listings.</h4>
+                      </template>
                   </marquee>
                 </li>
                 <li>
                   <h3 class="h3-title">FOOTBALL</h3>
                   <marquee direction="left">
-                    <h4>LEBRON JAMES 2003 TOPPS CHROME $ 45.75</h4>
-                    <h5>LEBRON JAMES 2003...</h5>
+                   <template v-if="soldListing.football>0" v-for="list in soldListing.football">
+                    <h4>{{list.title}}&nbsp;&nbsp;</h4>
+                      </template>
+                  <template v-if="soldListing.football==0">
+                    <h4>No recent sold listings.</h4>
+                      </template>
                   </marquee>
                 </li>
                 <li>
                   <h3 class="h3-title">BASEBALL</h3>
                   <marquee direction="left">
-                    <h4>LEBRON JAMES 2003 TOPPS CHROME $ 45.75</h4>
-                    <h5>LEBRON JAMES 2003...</h5>
+                    <template v-for="list in soldListing.baseball">
+                    <h4>{{list.title}}&nbsp;&nbsp;</h4>
+                      </template>
+                      <template v-if="soldListing.baseball==0">
+                    <h4>No recent sold listings.</h4>
+                      </template>
                   </marquee>
                 </li>
                 <li>
                   <h3 class="h3-title">SOCCER</h3>
                   <marquee direction="left">
-                    <h4>LEBRON JAMES 2003 TOPPS CHROME $ 45.75</h4>
-                    <h5>LEBRON JAMES 2003...</h5>
-                  </marquee>
-                </li>
-                <li>
-                  <h3 class="h3-title">HOCKEY</h3>
-                  <marquee direction="left">
-                    <h4>LEBRON JAMES 2003 TOPPS CHROME $ 45.75</h4>
-                    <h5>LEBRON JAMES 2003...</h5>
+                   <template v-for="list in soldListing.soccer">
+                    <h4>{{list.title}}&nbsp;&nbsp;</h4>
+                      </template>
+                      <template v-if="soldListing.soccer==0">
+                    <h4>No recent sold listings.</h4>
+                      </template>
                   </marquee>
                 </li>
                 <li>
                   <h3 class="h3-title">POKEMON</h3>
                   <marquee direction="left">
-                    <h4>LEBRON JAMES 2003 TOPPS CHROME $ 45.75</h4>
-                    <h5>LEBRON JAMES 2003...</h5>
+                   <template v-for="list in soldListing.pokemon">
+                    <h4>{{list.title}}&nbsp;&nbsp;</h4>
+                      </template>
+                      <template v-if="soldListing.pokemon==0">
+                    <h4>No recent sold listings.</h4>
+                      </template>
                   </marquee>
                 </li>
               </ul>
@@ -747,6 +762,204 @@ slabstox.com
           </div>
     </div>
    
+
+   <div class="row dashboard-graph-row">
+      <div class="col-md-12 col-sm-12" v-for="(itemdata, key) in allBoardGraph">
+        <div class="card">
+          <div
+            class="card-body dashboard-graph sx-stats-all"
+            id="dashboard-graph-outer"
+            ref="shareImage"
+          >
+          
+            <h5 class="card-title">
+             <!-- <button class="theme-btn card-btn">
+                Slabstox ${{ stoxtickerData.total }}
+              </button>
+
+              <button
+                :class="
+                  (stoxtickerData.change_arrow &&
+                  stoxtickerData.change_arrow == 'up'
+                    ? 'theme-green-btn'
+                    : 'theme-red-btn') + ' card-btn'
+                "
+              >
+                <font-awesome-icon
+                  v-if="stoxtickerData.change_arrow !== undefined"
+                  :icon="[
+                    'fas',
+                    'long-arrow-alt-' + stoxtickerData.change_arrow,
+                  ]"
+                />&nbsp;&nbsp;
+                <span class="g-dollar-d-val"> ${{ stoxtickerData.doller_diff }}</span>
+              </button>
+              <button
+                :class="
+                  (stoxtickerData.change_arrow &&
+                  stoxtickerData.change_arrow == 'up'
+                    ? 'theme-btn'
+                    : 'theme-red-btn') + ' card-btn'
+                "
+              >
+                <font-awesome-icon
+                  v-if="stoxtickerData.change_arrow !== undefined"
+                  :icon="[
+                    'fas',
+                    'long-arrow-alt-' + stoxtickerData.change_arrow,
+                  ]"
+                />&nbsp;&nbsp;{{ stoxtickerData.perc_diff }}%
+              </button> -->
+<!--              
+              <span class="total_sales" style="display: none">{{
+                stoxtickerData.total_sales
+              }}</span> -->
+             <!-- <span class="float-right share-lk-top">
+                <span class="share-icon">
+                  Share
+                  <img src="~/assets/img/share-icon-white.png" alt />
+                </span>
+                <div class="share-all-outer">
+                  <ul>
+                    <li>
+                      <a href="javascript:;" @click="shareFb()"
+                        ><img src="~/assets/img/icons/facebook.svg" alt
+                      /></a>
+                    </li>
+                    <li>
+                      <a
+                        :href="
+                          'https://twitter.com/intent/tweet?url=' +
+                          encodeURI(currentUrl) +
+                          '&text=StoxTicker@' +
+                         (stoxtickerData.sale?stoxtickerData.sale.toFixed(2):'') +
+                         ' ' +encodeURI(this.sxGraphImage)
+                        "
+                        target="_blank"
+                        ><img src="~/assets/img/icons/twitter.svg" alt
+                      /></a>
+                    </li>
+                    <li>
+                      <a
+                        :href="
+                          'http://pinterest.com/pin/create/button/?url=' +
+                          encodeURI(currentUrl) +
+                          '&media=' +
+                          encodeURI(this.sxGraphImage) +
+                          '&description=' +
+                          encodeURI('Check Our Stoxticker')
+                        "
+                        target="_blank"
+                        ><img src="~/assets/img/pinterest.png" alt
+                      /></a>
+                    </li>
+                    <li>
+                      <a
+                        :href="
+                          'https://www.linkedin.com/sharing/share-offsite/?url=' +
+                          encodeURI(currentUrl)
+                        "
+                        target="_blank"
+                        ><img src="~/assets/img/icons/linkedin-circled.svg" alt
+                      /></a>
+                    </li>
+                  </ul>
+                </div>
+             
+              </span>  -->
+            </h5>
+            <div class="dashboard-apex-top" ref="dashboardApexChart">
+              <!-- <VueApexCharts
+                ref="dashChart"
+                type="area"
+                height="350"
+                :options="boardChartOptions[key]"
+                :series="boardSeries[key]"
+              ></VueApexCharts> -->
+            </div>
+            <div class="dashboard-graph-footer">
+              <ul class="dashboard-graph-footer-month-filter">
+                <li
+                  :class="
+                    'dashboard-graph-footer-month-filter-item ' +
+                    (sxActiveDaysGraph == 2 ? 'active' : '')
+                  "
+                  @click="allBoardGraph(2)"
+                >
+                  1D
+                </li>
+                <li
+                  :class="
+                    'dashboard-graph-footer-month-filter-item ' +
+                    (sxActiveDaysGraph == 7 ? 'active' : '')
+                  "
+                  @click="allBoardGraph(7)"
+                >
+                  1W
+                </li>
+                <li
+                  :class="
+                    'dashboard-graph-footer-month-filter-item ' +
+                    (sxActiveDaysGraph == 30 ? 'active' : '')
+                  "
+                  @click="allBoardGraph(30)"
+                >
+                  1M
+                </li>
+                <li
+                  :class="
+                    'dashboard-graph-footer-month-filter-item ' +
+                    (sxActiveDaysGraph == 90 ? 'active' : '')
+                  "
+                  @click="allBoardGraph(90)"
+                >
+                  3M
+                </li>
+                <li
+                  :class="
+                    'dashboard-graph-footer-month-filter-item ' +
+                    (sxActiveDaysGraph == 180 ? 'active' : '')
+                  "
+                  @click="allBoardGraph(180)"
+                >
+                  6M
+                </li>
+                <li
+                  :class="
+                    'dashboard-graph-footer-month-filter-item ' +
+                    (sxActiveDaysGraph == 365 ? 'active' : '')
+                  "
+                  @click="allBoardGraph(365)"
+                >
+                  1Y
+                </li>
+                <li
+                  :class="
+                    'dashboard-graph-footer-month-filter-item ' +
+                    (sxActiveDaysGraph == 1825 ? 'active' : '')
+                  "
+                  @click="allBoardGraph(1825)"
+                >
+                  5Y
+                </li>
+              </ul>
+              <p class="dashboard-graph-footer-update-at float-right">
+                Last Updated - 
+                <!-- {{ stoxtickerData.last_timestamp }} -->
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="social_share ss-h4">
+        <h4>
+              <a class="embed-link" href="javascript:;"
+                @click="embedStoxtickerCode()" >EMBEDD CODE </>
+              </a>
+            </h4>
+        </div>
+    </div>
+
   </div>
 </template>
 
@@ -781,6 +994,9 @@ export default {
   mounted() {
     this.getData()
     this.slabstoxGraph()
+    this.getSoldListing()
+    this.getAllBoards()
+    this.allBoardGraphFunc(2)
     this.logo = document.getElementById('sidebarLogo').src
 
     $('.custom-stox').on('click', function () {
@@ -852,6 +1068,11 @@ export default {
       total_sales: 0,
       last_timestamp: 'N/A',
       currentUrl: location.href,
+      soldListing: '',
+      allBoards: '',
+      allBoardGraph: '',
+      boardChartOptions: [],
+      boardSeries: [],
       data: {
         total: 0,
         sale: 0,
@@ -1131,6 +1352,32 @@ export default {
         this.$router.push('/404')
       }
     },
+    getAllBoards() {
+      try {
+        this.$axios.$get('stoxticker/all-boards').then((res) => {
+          if (res.status == 200) {
+            this.allBoards = res.data
+          } else {
+            this.$router.push('/404')
+          }
+        })
+      } catch (error) {
+        this.$router.push('/404')
+      }
+    },
+    getSoldListing() {
+      try {
+        this.$axios.$get('stoxticker/sold-listings').then((res) => {
+          if (res.status == 200) {
+            this.soldListing = res.data
+          } else {
+            this.$router.push('/404')
+          }
+        })
+      } catch (error) {
+        this.$router.push('/404')
+      }
+    },
     shareFb() {
       FB.ui({
         method: 'feed',
@@ -1229,6 +1476,101 @@ export default {
             // }else{
             //   this.graphDataEmpty = true;
             // }
+          }
+        })
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    allBoardGraphFunc(days = 2) {
+      try {
+        // this.graphDataEmpty = false;
+        this.$axios.$get(`stoxticker/all-boards/${days}`).then((res) => {
+          if (res.status == 200) {
+            this.sxActiveDaysGraph = days
+            // if (this.initGraphLabelLength != res.data.labels.length) {
+            // this.graphDataEmpty = false;
+            this.allBoardGraph = res.data
+            // this.stoxtickerData.sale = res.data.sale
+            // this.stoxtickerData.perc_diff = res.data.perc_diff
+            // this.stoxtickerData.doller_diff = res.data.doller_diff
+            // this.stoxtickerData.change_arrow = res.data.change_arrow
+            // this.stoxtickerData.last_timestamp = res.data.last_timestamp
+            if (res.data != null && res.data.length > 0) {
+              res.data.map((item, key) => {
+                //  console.log(key);
+                //  console.log(item);
+                if (typeof item != 'undefined') {
+                  this.boardSeries.push({
+                    name: 'Sales',
+                    data: item.sales_graph.values,
+                  })
+                  this.boardSalesQty.push(item.sales_graph.qty)
+                  this.boardChartOptions.push({
+                    chart: {
+                      toolbar: {
+                        show: false,
+                      },
+                      height: 350,
+                      type: 'area',
+                      background: 'transparent',
+                      zoom: {
+                        enabled: false,
+                      },
+                    },
+                    colors: ['#14f078'],
+                    dataLabels: {
+                      enabled: false,
+                    },
+                    stroke: {
+                      curve: 'smooth',
+                    },
+                    xaxis: {
+                      labels: {
+                        style: {
+                          colors: '#edecec',
+                          fontSize: '10px',
+                          fontFamily: 'NexaBold',
+                        },
+                      },
+                      type: 'category',
+                      categories: item.sales_graph.labels,
+                    },
+                    yaxis: {
+                      labels: {
+                        style: {
+                          colors: '#edecec',
+                          fontSize: '10px',
+                          fontFamily: 'NexaBold',
+                        },
+                        formatter: (value, ind) => {
+                          let lblStr = `$${value}`
+                          return lblStr
+                        },
+                      },
+                    },
+                    tooltip: {
+                      enabled: true,
+                      y: {
+                        formatter: (value, ind) => {
+                          let lblStr = `$${value}`
+                          if (typeof ind == 'object')
+                            lblStr = `$${value} (${
+                              this.boardSalesQty[ind.dataPointIndex]
+                            })`
+                          else lblStr = `$${value} (${this.boardSalesQty[ind]})`
+                          return lblStr
+                        },
+                      },
+                    },
+                  })
+                }
+              })
+            }
+            // console.log(this.boardSeries)
+            // setTimeout(() => {
+            //   this.generateImageOfGraph(this.$refs.dashChart.chart.dataURI())
+            // }, 1000)
           }
         })
       } catch (error) {

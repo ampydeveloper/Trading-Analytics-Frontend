@@ -107,11 +107,7 @@
                                 encodeURI(currentUrl) +
                                 '&text=' +
                                 encodeURI(
-                                  card.player +
-                                    ' ' +
-                                    card.year +
-                                    '@' +
-                                    card.sx
+                                  card.player + ' ' + card.year + '@' + card.sx
                                 ) +
                                 ' ' +
                                 encodeURI(this.graphImage)
@@ -129,11 +125,7 @@
                                 this.graphImage +
                                 '&description=' +
                                 encodeURI(
-                                  card.player +
-                                    ' ' +
-                                    card.year +
-                                    '@' +
-                                    card.sx
+                                  card.player + ' ' + card.year + '@' + card.sx
                                 )
                               "
                               target="_blank"
@@ -356,7 +348,6 @@
 
           <div class="shar-text">Share Graphics</div>
           <div class="g-img-full" id="g-img-full">
-            <!-- <img src="https://images.unsplash.com/photo-1556629538-fc3eba61504e?auto=format&fit=crop&w=1300&q=80" alt="Cityscape" crossorigin="anonymous" class="slab_image" /> -->
             <img
               src=""
               class="slab_image"
@@ -387,7 +378,33 @@
       size="xl"
       hide-footer
     >
-      <div class="row">View Sales history</div>
+      <div class="sale-h-out">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Source</th>
+              <th>Type</th>
+              <th>Quantity</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          <tbody v-if="cardHistory.length > 0">
+            <tr v-for="card of cardHistory" :key="card.id">
+              <td>{{ $moment(card.timestamp).format('MMMM DD Y hh:mm:ss A') }}</td>
+              <td>{{ card.source }}</td>
+              <td>{{ card.type }}</td>
+              <td>{{ card.quantity }}</td>
+              <td>${{ card.cost }}</td>
+            </tr>
+          </tbody>
+          <tbody v-if="cardHistory.length == 0">
+            <tr>
+              <td colspan="5" class="text-center">No sales history found.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </b-modal>
   </div>
 </template>
@@ -409,11 +426,11 @@ export default {
           name: this.card.title + ' - Slabstox',
           content: this.card.title + ' ' + '@' + this.card.sx,
         },
-        { property: 'og:title', content: this.card.title+' - Slabstox' },
+        { property: 'og:title', content: this.card.title + ' - Slabstox' },
         { property: 'og:image', content: this.graphImage },
         {
           property: 'og:description',
-          content: this.card.title+' '+'@'+this.card.sx,
+          content: this.card.title + ' ' + '@' + this.card.sx,
         },
         { property: 'og:url', content: this.currentUrl },
         { property: 'og:site_name', content: 'Slabstox' },
@@ -482,6 +499,7 @@ export default {
       lowestSale: '',
       slabstoxValue: 0,
       currentUrl: location.href,
+      cardHistory: [],
       series: [
         {
           name: 'Sales',
@@ -740,6 +758,7 @@ export default {
       try {
         this.$axios.$get(`get-card-all-graph/${this.id}`).then((res) => {
           if (res.status == 200) {
+            this.cardHistory = res.data.card_history
             this.barseries = [{ name: 'Sales', data: res.data.values }]
             this.barchartOptions = {
               xaxis: { categories: res.data.labels },
@@ -763,11 +782,7 @@ export default {
       FB.ui({
         method: 'feed',
         name: encodeURI(
-          this.card.player +
-            '-' +
-            this.card.year +
-            '@' +
-            this.card.sx
+          this.card.player + '-' + this.card.year + '@' + this.card.sx
         ),
         link: encodeURI(this.graphImage), //this.baseUrl
         picture: this.graphImage,
@@ -1261,5 +1276,20 @@ ul.my-card-listing {
 .slab_image_canvas {
   position: absolute;
   left: 20px;
+}
+.sale-h-out {
+  padding: 0 20px;
+  table {
+    margin: 0;
+    color: #edecec;
+    thead {
+      border: 0 !important;
+    }
+    tbody {
+      td {
+        border: 0;
+      }
+    }
+  }
 }
 </style>

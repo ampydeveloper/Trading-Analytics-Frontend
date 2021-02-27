@@ -62,13 +62,13 @@
             <div class="link-text">Flag a Listing</div>
           </nuxt-link>
         </li>
-         <!-- <li class="nav-item">
+          <li class="nav-item">
           <nuxt-link class="nav-link" to="/admin/search-terms">
             <div class="icon my-listing-icon"></div>
             <div class="link-text">Search Terms</div>
           </nuxt-link>
         </li>
-        <li class="nav-item">
+        <!--<li class="nav-item">
           <nuxt-link class="nav-link" to="/admin/settings">
             <div class="icon my-listing-icon"></div>
             <div class="link-text">Settings</div>

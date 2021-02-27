@@ -6,13 +6,19 @@
           <div class="card-body">
             <h5 class="card-title">
               <button class="theme-btn card-btn">Add Ebay Listing</button>
+                <button
+                      class="theme-green-btn card-btn pull-right"
+                      @click="addItem(card.id)"
+                    >
+                      Add Listing via API
+                    </button>
             </h5>
           </div>
           <div class="table_wrapper ap">
             <form class="form-inline" v-on:submit.prevent="createItem">
                 <div class="form_column search-form">
-                    <label>Ebay Id</label>
-                    <input v-model="item.itemId" type="text" class="form-control" style="width: calc(80% - 75px);" placeholder="Ebay Id" required />
+                    <label>Ebay URL</label>
+                    <input v-model="item.itemId" type="text" class="form-control" style="width: calc(80% - 75px);" placeholder="Ebay URL" required />
                     <button class="btn btn-outline-secondary btn-sm" type="button" @click="fetchDetails">Fetch</button>
                 </div>
                 <div class="form_column">
@@ -24,6 +30,19 @@
                     <input v-model="item.price" type="text" class="form-control" required />
                 </div>
                 <div class="form_column">
+                    <label>Category</label>
+                    <!-- <input v-model="item.category" type="text" class="form-control" required /> -->
+                    <select v-model="item.category" class="form-control">
+                      <option selected>Select Category</option>
+                      <option
+                       :value="cat.id"
+                    v-for="cat in categories"
+                    :key="cat.categoryId"
+                    v-text="cat.name"
+                  ></option>
+                    </select>
+                </div>
+                <div class="form_column">
                     <label>Condition</label>
                     <input v-model="item.condition" type="text" class="form-control" required />
                 </div>
@@ -31,17 +50,17 @@
                     <label>Time Left</label>
                     <input v-model="item.time_left" type="text" class="form-control" required />
                 </div>
-<div class="form_column">
+                <div class="form_column">
                     <label>Image</label>
                     <input v-model="item.image" type="text" class="form-control" required />
                 </div>
                 <div class="form_column">
                     <label>Auction Start Date</label>
-                    <input v-model="item.auction_start" type="text" class="form-control" required />
+                    <input v-model="item.auction_start" type="text" class="form-control" />
                 </div>
                 <div class="form_column">
                     <label>Auction End Date</label>
-                    <input v-model="item.auction_end" type="text" class="form-control" required />
+                    <input v-model="item.auction_end" type="text" class="form-control" />
                 </div>
                 <div class="form_column">
                     <label>Ship To Locations</label>
@@ -55,15 +74,11 @@
                     <label>Return Policy</label>
                     <input v-model="item.ReturnPolicy" type="text" class="form-control" required />
                 </div>
-                <div class="form_column">
-                    <label>Web Link</label>
-                    <input v-model="item.web_link" type="text" class="form-control" required />
-                </div>
 
                 <h3 class="head-h3">Specifications</h3>
                 <div class="form_column" v-for="(field, key) of item.specifics" :key="key">
-                    <label>{{field.Name}}</label>
-                    <input v-model="field.Value" type="text" class="form-control" :placeholder="'Listing '+field.Name" required />
+                    <label>{{key}}</label>
+                    <input  type="text" class="form-control" required :value="field" />
                     <!-- <button type="button" v-if="field.remove" @click="removeSpec(key)">Remove</button> -->
                 </div>
                  <h3 class="head-h3">Seller Info</h3>
@@ -77,25 +92,13 @@
                 </div>
                 <div class="form_column">
                     <label>Seller Contact Link</label>
-                    <input v-model="item.seller_contact_link" type="text" class="form-control" required />
+                    <input v-model="item.seller_contact_link" type="text" class="form-control" />
                 </div>
                 <div class="form_column">
                     <label>Seller Store Link</label>
-                    <input v-model="item.seller_store_link" type="text" class="form-control" required />
+                    <input v-model="item.seller_store_link" type="text" class="form-control" />
                 </div>
                 
-                
-                 <!-- <div class="form_btns">
-                    <div class="left_btn">
-                      <select v-model="newSpec" style="width: 250px">
-                        <option value="">Select</option>
-                        <template v-for="(item, key) in specList" >
-                          <option v-if="notInSpec(item.name)" :key="key" :value="item.name">{{item.name}}</option>
-                        </template>
-                      </select>
-                      <button @click="addNewSpecifics()" type="button" class="theme-green-btn card-btn">Add new Specifics</button>
-                    </div>
-                </div> -->
                 <div class="form_btns">
                     <div class="left_btn">
                       <button @click="back()" type="button" class="theme-green-btn card-btn btn-cancel">Cancel</button>
@@ -145,13 +148,10 @@ export default {
         card_id: '',
         itemId: '',
         title: '',
-        specifics: [
-          {Name:'Player', Value: '', remove: false},
-          {Name:'Sport', Value: '', remove: false},
-          {Name:'Team', Value: '', remove: false},
-          {Name:'Year', Value: '', remove: false},
-        ],
+        category:'',
+        specifics: [],
       },
+      categories:[],
       requestInProcess: false,
       statusMessage: null,
       newSpec: null,
@@ -166,6 +166,10 @@ export default {
       this.$axios.get('get-ebay-spec-distinct-name')
       .then(res => {
         this.specList = res.data.data;
+      })
+      this.$axios.get('get-listing-categories')
+      .then(res => {
+        this.categories = res.data.data;
       })
     },
     notInSpec(name){
@@ -221,26 +225,23 @@ export default {
               .then(res => {
                 if (res.status == 200) {
                   let data = res.data.data
-                  // console.log(data)
-                  // this.item.title = data.Title
-                  // this.item.price = data.CurrentPrice
-                  // this.item.condition = data.ConditionDisplayName
-                  // this.item.time_left = data.TimeLeft
-                  // this.item.image = data.PictureURL[0]
-                  // this.item.location = data.Location
-                  // this.item.auction_start = ''
-                  // this.item.auction_end = ''                  
-                  // this.item.shipToLocations = data.ShipToLocations
-                  // this.item.ReturnPolicy = data.ReturnPolicy.ReturnsAccepted
-                  // this.item.web_link = data.ViewItemURLForNaturalSearch
-                  // this.item.seller_name = data.Seller.UserID
-                  // this.item.positiveFeedbackPercent = data.Seller.PositiveFeedbackPercent
-                  // this.item.seller_contact_link = ''
-                  // this.item.seller_store_link = ''
-                  
-
-                  // this.item.specifics = data.ItemSpecifics.NameValueList
-                  // this.item.details = data
+                  this.item.title = data.name
+                  this.item.price = data.price
+                  this.item.condition = data.condition
+                  this.item.time_left = data.timeLeft
+                  this.item.image = data.image
+                  this.item.location = data.location
+                  this.item.auction_start = ''
+                  this.item.auction_end = ''                  
+                  this.item.shipToLocations = data.shipToLocations
+                  this.item.ReturnPolicy = data.returns
+                  this.item.web_link = this.item.itemId
+                  this.item.seller_name = data.seller.name
+                  this.item.positiveFeedbackPercent = data.seller.feedback
+                  this.item.seller_contact_link = data.seller.contact
+                  this.item.seller_store_link = ''
+                  this.item.specifics = data.specifics
+                  this.item.details = data
                   // console.log(res.data)
                 }
                 this.requestInProcess = false

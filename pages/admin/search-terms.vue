@@ -13,14 +13,13 @@
               <thead>
                 <tr>
                   <th>Id</th>
-                  <th>Search Term</th>
+                  <th>Search Terms</th>
                 </tr>
               </thead>
               <tbody v-if="cards.length > 0">
                 <tr v-for="card of cards" :key="card.id">
                   <td>{{ card.id }}</td>
-                  <td>{{ card.user.full_name }}</td>
-                 
+                  <td>{{ card.title }}</td>
                 </tr>
               </tbody>
               <tbody v-if="cards.length == 0 && requestInProcess">
@@ -78,13 +77,11 @@ export default {
           this.showLoader()
           this.requestInProcess = true
           this.$axios
-            .post('card/get-request-slab-list-for-admin', {
-              page: page
-            })
+            .get('searched-cards')
             .then(res => {
               if (res.status == 200) {
                 this.cards = res.data.data
-                this.page = res.data.next
+                // this.page = res.data.next
               }
               this.requestInProcess = false
                this.hideLoader()
@@ -95,7 +92,6 @@ export default {
         } catch (err) {
           this.hideLoader()
           this.requestInProcess = false
-          console.log(err)
         }
       }
     },
