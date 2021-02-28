@@ -698,7 +698,7 @@ slabstox.com
     </div>
 
     <div class="row board-search-list-outer" style="display:none;">
-      <div class="col-sm-6 board-search-list"  v-for="itemdata in boardSearch" >
+      <div class="col-sm-6 board-search-list"  v-for="(itemdata, key) in boardSearch" >
 
             <div class="card">
               <div class="card-body dashboard-graph">
@@ -729,8 +729,8 @@ slabstox.com
                     ref="cardDataChart"
                     type="area"
                     height="350"
-                    :options="chartOptions"
-                    :series="series"
+                    :options="searchChartOptions[key]"
+                    :series="searchSeries[key]"
                   ></VueApexCharts>
                 </div>
                 <div class="dashboard-graph-footer">
@@ -763,7 +763,7 @@ slabstox.com
     </div>
    
 
-   <div class="row dashboard-graph-row">
+   <div class="row dashboard-graph-row all-public-boards-list-out">
       <div class="col-md-12 col-sm-12" v-for="(itemdata, key) in allBoardGraph">
         <div class="card">
           <div
@@ -773,11 +773,12 @@ slabstox.com
           >
           
             <h5 class="card-title">
-             <!-- <button class="theme-btn card-btn">
-                Slabstox ${{ stoxtickerData.total }}
+              <button class="theme-btn card-btn">
+                {{allBoardGraph[key].name}} $1234
+                <!-- ${{ stoxtickerData.total }} -->
               </button>
 
-              <button
+              <!--<button
                 :class="
                   (stoxtickerData.change_arrow &&
                   stoxtickerData.change_arrow == 'up'
@@ -869,13 +870,13 @@ slabstox.com
               </span>  -->
             </h5>
             <div class="dashboard-apex-top" ref="dashboardApexChart">
-              <!-- <VueApexCharts
+              <VueApexCharts
                 ref="dashChart"
                 type="area"
                 height="350"
                 :options="boardChartOptions[key]"
                 :series="boardSeries[key]"
-              ></VueApexCharts> -->
+              ></VueApexCharts>
             </div>
             <div class="dashboard-graph-footer">
               <ul class="dashboard-graph-footer-month-filter">
@@ -884,7 +885,7 @@ slabstox.com
                     'dashboard-graph-footer-month-filter-item ' +
                     (sxActiveDaysGraph == 2 ? 'active' : '')
                   "
-                  @click="allBoardGraph(2)"
+                  @click="allBoardGraphSingleFunc(2,allBoardGraph[key].id,key)"
                 >
                   1D
                 </li>
@@ -893,7 +894,7 @@ slabstox.com
                     'dashboard-graph-footer-month-filter-item ' +
                     (sxActiveDaysGraph == 7 ? 'active' : '')
                   "
-                  @click="allBoardGraph(7)"
+                  @click="allBoardGraphSingleFunc(7,allBoardGraph[key].id,key)"
                 >
                   1W
                 </li>
@@ -902,7 +903,7 @@ slabstox.com
                     'dashboard-graph-footer-month-filter-item ' +
                     (sxActiveDaysGraph == 30 ? 'active' : '')
                   "
-                  @click="allBoardGraph(30)"
+                  @click="allBoardGraphSingleFunc(30,allBoardGraph[key].id,key)"
                 >
                   1M
                 </li>
@@ -911,7 +912,7 @@ slabstox.com
                     'dashboard-graph-footer-month-filter-item ' +
                     (sxActiveDaysGraph == 90 ? 'active' : '')
                   "
-                  @click="allBoardGraph(90)"
+                  @click="allBoardGraphSingleFunc(90,allBoardGraph[key].id,key)"
                 >
                   3M
                 </li>
@@ -920,7 +921,7 @@ slabstox.com
                     'dashboard-graph-footer-month-filter-item ' +
                     (sxActiveDaysGraph == 180 ? 'active' : '')
                   "
-                  @click="allBoardGraph(180)"
+                  @click="allBoardGraphSingleFunc(180,allBoardGraph[key].id,key)"
                 >
                   6M
                 </li>
@@ -929,7 +930,7 @@ slabstox.com
                     'dashboard-graph-footer-month-filter-item ' +
                     (sxActiveDaysGraph == 365 ? 'active' : '')
                   "
-                  @click="allBoardGraph(365)"
+                  @click="allBoardGraphSingleFunc(365,allBoardGraph[key].id,key)"
                 >
                   1Y
                 </li>
@@ -938,26 +939,28 @@ slabstox.com
                     'dashboard-graph-footer-month-filter-item ' +
                     (sxActiveDaysGraph == 1825 ? 'active' : '')
                   "
-                  @click="allBoardGraph(1825)"
+                  @click="allBoardGraphSingleFunc(1825,allBoardGraph[key].id,key)"
                 >
                   5Y
                 </li>
               </ul>
               <p class="dashboard-graph-footer-update-at float-right">
                 Last Updated - 
-                <!-- {{ stoxtickerData.last_timestamp }} -->
+                {{ (allBoardGraph[key].sales_graph.last_timestamp?allBoardGraph[key].sales_graph.last_timestamp:'') }}
               </p>
             </div>
           </div>
         </div>
-      </div>
-      <div class="social_share ss-h4">
+
+        <div class="social_share ss-h4">
         <h4>
               <a class="embed-link" href="javascript:;"
                 @click="embedStoxtickerCode()" >EMBEDD CODE </>
               </a>
             </h4>
         </div>
+      </div>
+      
     </div>
 
   </div>
@@ -1009,6 +1012,7 @@ export default {
       $('.stoxticker_listing-outer').hide()
       $('.board-search-list-outer').hide()
       $('.dashboard-graph-row').hide()
+      $('.all-public-boards-list-out').hide()
     })
 
     $('.search-stox').on('click', function () {
@@ -1021,6 +1025,7 @@ export default {
       $('.stoxticker_listing-outer').hide()
       $('.dashboard-graph-row').hide()
       $('.search-slabs-out').hide()
+      $('.all-public-boards-list-out').hide()
     })
 
     $('.close-btn').on('click', function () {
@@ -1032,6 +1037,7 @@ export default {
       $('.board-search-list-outer').hide()
       $('.stoxticker_page-outer').show()
       $('.stoxticker_listing-outer').show()
+      $('.all-public-boards-list-out').show()
     })
 
     $('.cat-btn li a').on('click', function (e) {
@@ -1070,9 +1076,13 @@ export default {
       currentUrl: location.href,
       soldListing: '',
       allBoards: '',
-      allBoardGraph: '',
+      allBoardGraph: [],
       boardChartOptions: [],
       boardSeries: [],
+      boardSalesQty:[],
+      searchChartOptions: [],
+      searchSeries: [],
+      searchSalesQty:[],
       data: {
         total: 0,
         sale: 0,
@@ -1206,47 +1216,84 @@ export default {
               this.boardSearch = res.data
               this.boardPage = res.page
 
-              this.activeDaysGraph = 2
+              // this.activeDaysGraph = 2
               //  var percDiff = res.data.perc_diff
               // var dollerDiff = String(res.data.doller_diff)
 
-              if (res.data > 4) {
+              if (res.data.length == 4) {
                 $('.create-board-out').show()
               }
-              this.series = [{ name: 'Sales', data: res.card_data.values }]
-              this.chartOptions = {
-                xaxis: {
-                  categories: res.card_data.labels,
-                },
-                yaxis: {
-                  labels: {
-                    style: {
-                      colors: '#edecec',
-                      fontSize: '10px',
-                      fontFamily: 'NexaBold',
+if (res.data != null && res.data.length > 0) {
+              res.data.map((item, key) => {
+                if (typeof item != 'undefined') {
+                  this.boardSearch[key] = item
+                  this.searchSeries[key] = [{
+                    name: 'Sales',
+                    data: item.sales_graph.values,
+                  }];
+                  this.searchSalesQty.push(item.sales_graph.qty)
+                  this.searchChartOptions.push({
+                    chart: {
+                      toolbar: {
+                        show: false,
+                      },
+                      height: 350,
+                      type: 'area',
+                      background: 'transparent',
+                      zoom: {
+                        enabled: false,
+                      },
                     },
-                    formatter: (value, ind) => {
-                      let lblStr = `$${value}`
-                      return lblStr
+                    colors: ['#14f078'],
+                    dataLabels: {
+                      enabled: false,
                     },
-                  },
-                },
-                colors: ['#14f078'],
-                tooltip: {
-                  enabled: true,
-                  y: {
-                    formatter: (value, ind) => {
-                      let lblStr = `$${value}`
-                      if (typeof ind == 'object')
-                        lblStr = `$${value} (${
-                          this.salesQty[ind.dataPointIndex]
-                        })`
-                      else lblStr = `$${value} (${this.salesQty[ind]})`
-                      return lblStr
+                    stroke: {
+                      curve: 'smooth',
                     },
-                  },
-                },
-              }
+                    xaxis: {
+                      labels: {
+                        style: {
+                          colors: '#edecec',
+                          fontSize: '10px',
+                          fontFamily: 'NexaBold',
+                        },
+                      },
+                      type: 'category',
+                      categories: item.sales_graph.labels,
+                    },
+                    yaxis: {
+                      labels: {
+                        style: {
+                          colors: '#edecec',
+                          fontSize: '10px',
+                          fontFamily: 'NexaBold',
+                        },
+                        formatter: (value, ind) => {
+                          let lblStr = `$${value}`
+                          return lblStr
+                        },
+                      },
+                    },
+                    tooltip: {
+                      enabled: true,
+                      y: {
+                        formatter: (value, ind) => {
+                          let lblStr = `$${value}`
+                          if (typeof ind == 'object')
+                            lblStr = `$${value} (${
+                              this.searchSalesQty[key][ind.dataPointIndex]
+                            })`
+                          else lblStr = `$${value} (${this.searchSalesQty[key][ind]})`
+                          return lblStr
+                        },
+                      },
+                    },
+                  })
+                }
+              })
+            }
+
               // this.last_timestamp = res.data.last_timestamp
               // this.initGraphLabelLength = res.card_data.labels.length
             }
@@ -1490,7 +1537,6 @@ export default {
             this.sxActiveDaysGraph = days
             // if (this.initGraphLabelLength != res.data.labels.length) {
             // this.graphDataEmpty = false;
-            this.allBoardGraph = res.data
             // this.stoxtickerData.sale = res.data.sale
             // this.stoxtickerData.perc_diff = res.data.perc_diff
             // this.stoxtickerData.doller_diff = res.data.doller_diff
@@ -1498,13 +1544,12 @@ export default {
             // this.stoxtickerData.last_timestamp = res.data.last_timestamp
             if (res.data != null && res.data.length > 0) {
               res.data.map((item, key) => {
-                //  console.log(key);
-                //  console.log(item);
                 if (typeof item != 'undefined') {
-                  this.boardSeries.push({
+                  this.allBoardGraph[key] = item
+                  this.boardSeries[key] = [{
                     name: 'Sales',
                     data: item.sales_graph.values,
-                  })
+                  }];
                   this.boardSalesQty.push(item.sales_graph.qty)
                   this.boardChartOptions.push({
                     chart: {
@@ -1556,9 +1601,9 @@ export default {
                           let lblStr = `$${value}`
                           if (typeof ind == 'object')
                             lblStr = `$${value} (${
-                              this.boardSalesQty[ind.dataPointIndex]
+                              this.boardSalesQty[key][ind.dataPointIndex]
                             })`
-                          else lblStr = `$${value} (${this.boardSalesQty[ind]})`
+                          else lblStr = `$${value} (${this.boardSalesQty[key][ind]})`
                           return lblStr
                         },
                       },
@@ -1567,10 +1612,94 @@ export default {
                 }
               })
             }
-            // console.log(this.boardSeries)
-            // setTimeout(() => {
-            //   this.generateImageOfGraph(this.$refs.dashChart.chart.dataURI())
-            // }, 1000)
+            console.log(this.allBoardGraph);
+          }
+        })
+      } catch (error) {
+        console.log(error)
+      }
+    },
+     allBoardGraphSingleFunc(days, board, boardKey) {
+      try {
+        // this.graphDataEmpty = false;
+        this.$axios.$get(`stoxticker/single-graph-board/${days}/${board}`).then((res) => {
+          if (res.status == 200) {
+            // this.sxActiveDaysGraph = days
+            // if (this.initGraphLabelLength != res.data.labels.length) {
+            // this.graphDataEmpty = false;
+            // this.stoxtickerData.sale = res.data.sale
+            // this.stoxtickerData.perc_diff = res.data.perc_diff
+            // this.stoxtickerData.doller_diff = res.data.doller_diff
+            // this.stoxtickerData.change_arrow = res.data.change_arrow
+            // this.stoxtickerData.last_timestamp = res.data.last_timestamp
+            
+                  this.allBoardGraph[boardKey] = res.data
+                  this.boardSeries[boardKey] = [{
+                    name: 'Sales',
+                    data: res.data.sales_graph.values,
+                  }];
+                  this.boardSalesQty[boardKey] = res.data.sales_graph.qty
+                  this.boardChartOptions[boardKey] = {
+                    chart: {
+                      toolbar: {
+                        show: false,
+                      },
+                      height: 350,
+                      type: 'area',
+                      background: 'transparent',
+                      zoom: {
+                        enabled: false,
+                      },
+                    },
+                    colors: ['#14f078'],
+                    dataLabels: {
+                      enabled: false,
+                    },
+                    stroke: {
+                      curve: 'smooth',
+                    },
+                    xaxis: {
+                      labels: {
+                        style: {
+                          colors: '#edecec',
+                          fontSize: '10px',
+                          fontFamily: 'NexaBold',
+                        },
+                      },
+                      type: 'category',
+                      categories: res.data.sales_graph.labels,
+                    },
+                    yaxis: {
+                      labels: {
+                        style: {
+                          colors: '#edecec',
+                          fontSize: '10px',
+                          fontFamily: 'NexaBold',
+                        },
+                        formatter: (value, ind) => {
+                          let lblStr = `$${value}`
+                          return lblStr
+                        },
+                      },
+                    },
+                    tooltip: {
+                      enabled: true,
+                      y: {
+                        formatter: (value, ind) => {
+                          let lblStr = `$${value}`
+                          if (typeof ind == 'object')
+                            lblStr = `$${value} (${
+                              this.boardSalesQty[ind.dataPointIndex]
+                            })`
+                          else lblStr = `$${value} (${this.boardSalesQty[ind]})`
+                          return lblStr
+                        },
+                      },
+                    },
+                  }
+                  console.log(boardKey);
+                console.log(this.allBoardGraph[boardKey]);
+            
           }
         })
       } catch (error) {

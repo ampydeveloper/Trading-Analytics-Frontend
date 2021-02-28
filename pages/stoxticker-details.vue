@@ -36,6 +36,18 @@
               <span data-v-6fc4d46b="" class="g-dollar-d-val"> $0</span></button>
               <button data-v-6fc4d46b="" class="theme-btn card-btn"><svg data-v-6fc4d46b="" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="long-arrow-alt-up" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" class="svg-inline--fa fa-long-arrow-alt-up fa-w-8"><path data-v-6fc4d46b="" fill="currentColor" d="M88 166.059V468c0 6.627 5.373 12 12 12h56c6.627 0 12-5.373 12-12V166.059h46.059c21.382 0 32.09-25.851 16.971-40.971l-86.059-86.059c-9.373-9.373-24.569-9.373-33.941 0l-86.059 86.059c-15.119 15.119-4.411 40.971 16.971 40.971H88z" class=""></path></svg>&nbsp;&nbsp;100.00%
             </button>
+            <button
+            :class="
+                  (boardFollow
+                    ? 'theme-green-btn'
+                    : 'theme-btn') + ' card-btn'
+                " @click="followBoard()">
+              
+              {{ (boardFollow
+                    ? 'Unfollow'
+                    : 'Follow') }}
+              </button>
+            
               <!-- <button
                 :class="
                   (stoxtickerData.change_arrow &&
@@ -122,7 +134,7 @@
                     'dashboard-graph-footer-month-filter-item ' +
                       (activeDaysGraph == 2 ? 'active' : '')
                   "
-                  @click="updateGraph(2)"
+                  @click="getStoxtickerData(2)"
                 >
                   1D
                 </li>
@@ -131,7 +143,7 @@
                     'dashboard-graph-footer-month-filter-item ' +
                       (activeDaysGraph == 7 ? 'active' : '')
                   "
-                  @click="updateGraph(7)"
+                  @click="getStoxtickerData(7)"
                 >
                   1W
                 </li>
@@ -140,7 +152,7 @@
                     'dashboard-graph-footer-month-filter-item ' +
                       (activeDaysGraph == 30 ? 'active' : '')
                   "
-                  @click="updateGraph(30)"
+                  @click="getStoxtickerData(30)"
                 >
                   1M
                 </li>
@@ -149,7 +161,7 @@
                     'dashboard-graph-footer-month-filter-item ' +
                       (activeDaysGraph == 90 ? 'active' : '')
                   "
-                  @click="updateGraph(90)"
+                  @click="getStoxtickerData(90)"
                 >
                   3M
                 </li>
@@ -158,7 +170,7 @@
                     'dashboard-graph-footer-month-filter-item ' +
                       (activeDaysGraph == 180 ? 'active' : '')
                   "
-                  @click="updateGraph(180)"
+                  @click="getStoxtickerData(180)"
                 >
                   6M
                 </li>
@@ -167,7 +179,7 @@
                     'dashboard-graph-footer-month-filter-item ' +
                       (activeDaysGraph == 365 ? 'active' : '')
                   "
-                  @click="updateGraph(365)"
+                  @click="getStoxtickerData(365)"
                 >
                   1Y
                 </li>
@@ -176,15 +188,15 @@
                     'dashboard-graph-footer-month-filter-item ' +
                       (activeDaysGraph == 1825 ? 'active' : '')
                   "
-                  @click="updateGraph(1825)"
+                  @click="getStoxtickerData(1825)"
                 >
                   5Y
                 </li>
               </ul>
               <p class="dashboard-graph-footer-update-at float-right">
                 Last Updated - 
-                <!-- {{ stoxtickerData.last_updated }} -->
-                 FEBRUARY 20 2021 - 11:58:47 AM
+                {{ stoxtickerDetails.last_timestamp }}
+                 <!-- FEBRUARY 20 2021 - 11:58:47 AM -->
               </p>
             </div>
           </div>
@@ -217,7 +229,7 @@
                       <b-spinner variant="success" label="Spinning"></b-spinner>
                     </div>
                     <ul class="my-card-listing">
-                      <CardSlabItem v-for="item in stoxtickerDetails.cards" :key="item.id" :itemdata="item" />
+                      <CardSlabItem v-for="item in stoxtickerDetails.cards" :key="item.card_data.id" :itemdata="item.card_data" />
                     </ul>
 
                     <div class="empty-result" v-if="stoxtickerDetails.cards.length == 0 && !requestInProcessFeatured">
@@ -260,12 +272,12 @@ export default {
   },
   mounted() {
     if (this.$route.query.board != null) {
-      this.getStoxtickerData(this.$route.query.board)
+      this.getStoxtickerData()
     } else {
       //error
     }
 
-    this.updateGraph()
+    // this.updateGraph()
   },
   components: {
     // CardListItem,
@@ -283,6 +295,7 @@ export default {
       activeDaysGraph: 2,
       initGraphLabelLength: 0,
       graphDataEmpty: false,
+      boardFollow: false,
       stoxtickerDetails: {
         board: 0,
         cards: 0,
@@ -294,6 +307,7 @@ export default {
         change_icon: 'up',
         last_updated: '',
       },
+      salesQty:[],
       series: [
         {
           name: 'Stoxticker',
@@ -359,14 +373,18 @@ export default {
 embedStatsCode() {
       this.$bvModal.show('embedStatsCode')
     },
-    getStoxtickerData(board) {
+    getStoxtickerData(days = 2) {
       try {
-        this.$axios.$get(`stoxticker/board-details/${board}`).then((res) => {
+        this.$axios.$get(`stoxticker/board-details/${this.$route.query.board}/${days}`).then((res) => {
           if (res.status == 200) {
+            this.activeDaysGraph = days
             this.stoxtickerDetails.board = res.board
             this.stoxtickerDetails.cards = res.cards
+            this.stoxtickerDetails.last_timestamp = res.card_data.last_timestamp
+            this.boardFollow = (res.follow!=null?true:false)
 
             this.series = [{ name: 'Sales', data: res.card_data.values }]
+            this.salesQty = res.card_data.qty
             this.chartOptions = {
               xaxis: {
                 categories: res.card_data.labels,
@@ -400,6 +418,10 @@ embedStatsCode() {
                 },
               },
             }
+
+            setTimeout(() => {
+                this.generateImageOfGraph()
+              }, 1000)
           } else {
             this.$router.push('/404')
           }
@@ -408,29 +430,29 @@ embedStatsCode() {
         console.log(error)
       }
     },
-    updateGraph(days = 2) {
-      try {
-        this.graphDataEmpty = false
-        this.$axios.$get(`get-dashboard-graph/${days}`).then((res) => {
-          if (res.status == 200) {
-            this.activeDaysGraph = days
-            if (this.initGraphLabelLength != res.data.labels.length) {
-              this.graphDataEmpty = false
-              this.series = [{ name: 'Stoxticker', data: res.data.values }]
-              this.chartOptions = { xaxis: { categories: res.data.labels } }
-              this.initGraphLabelLength = res.data.labels.length
-              setTimeout(() => {
-                this.generateImageOfGraph()
-              }, 1000)
-            } else {
-              this.graphDataEmpty = true
-            }
-          }
-        })
-      } catch (error) {
-        console.log(error)
-      }
-    },
+    // updateGraph(days = 2) {
+    //   try {
+    //     this.graphDataEmpty = false
+    //     this.$axios.$get(`get-dashboard-graph/${days}`).then((res) => {
+    //       if (res.status == 200) {
+    //         this.activeDaysGraph = days
+    //         if (this.initGraphLabelLength != res.data.labels.length) {
+    //           this.graphDataEmpty = false
+    //           this.series = [{ name: 'Stoxticker', data: res.data.values }]
+    //           this.chartOptions = { xaxis: { categories: res.data.labels } }
+    //           this.initGraphLabelLength = res.data.labels.length
+    //           setTimeout(() => {
+    //             this.generateImageOfGraph()
+    //           }, 1000)
+    //         } else {
+    //           this.graphDataEmpty = true
+    //         }
+    //       }
+    //     })
+    //   } catch (error) {
+    //     console.log(error)
+    //   }
+    // },
     shareFb() {
       FB.ui({
         method: 'feed',
@@ -455,6 +477,15 @@ embedStatsCode() {
           })
       })
     },
+    followBoard(){
+      this.$axios
+          .$post('stoxticker/follow-board', { board: this.$route.query.board })
+          .then((res) => {
+            if (res.status == 200) {
+              this.boardFollow = res.board_create
+            }
+          })
+    }
   },
 }
 </script>

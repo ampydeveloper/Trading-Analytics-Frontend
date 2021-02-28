@@ -55,6 +55,8 @@ export default {
     AdvanceSearch,
   },
   mounted() {
+    // window._epn = {campaign: 5338756216, smartPopover:false};
+
     this.guestMiddleware()
     // this.$router.push('/dashboard')
   },

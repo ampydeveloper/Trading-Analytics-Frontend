@@ -31,9 +31,8 @@
                 </div>
                 <div class="form_column">
                     <label>Category</label>
-                    <!-- <input v-model="item.category" type="text" class="form-control" required /> -->
-                    <select v-model="item.category" class="form-control">
-                      <option selected>Select Category</option>
+                    <select v-model="item.category" class="form-control" required>
+                      <option>Select Category</option>
                       <option
                        :value="cat.id"
                     v-for="cat in categories"

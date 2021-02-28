@@ -274,12 +274,12 @@ export default {
               ReturnPolicy: res.data.items.returnsAccepted == 1 ? 'yes' : 'no',
               web_link: res.data.items.viewItemURL,
               specifics: res.data.itemsSpecs,
-              seller_id: res.data.itemSellerInfo.id,
-              seller_name: res.data.itemSellerInfo.sellerUserName,
+              seller_id: (res.data.itemSellerInfo?res.data.itemSellerInfo.id:''),
+              seller_name: (res.data.itemSellerInfo?res.data.itemSellerInfo.sellerUserName:''),
               positiveFeedbackPercent:
-                res.data.itemSellerInfo.positiveFeedbackPercent,
-              seller_contact_link: res.data.itemSellerInfo.seller_contact_link,
-              seller_store_link: res.data.itemSellerInfo.seller_store_link,
+                (res.data.itemSellerInfo?res.data.itemSellerInfo.positiveFeedbackPercent:''),
+              seller_contact_link: (res.data.itemSellerInfo?res.data.itemSellerInfo.seller_contact_link:''),
+              seller_store_link: (res.data.itemSellerInfo?res.data.itemSellerInfo.seller_store_link:''),
             }
           }
         })

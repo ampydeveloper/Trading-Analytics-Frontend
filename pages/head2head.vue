@@ -1,6 +1,84 @@
 <template>
   <div class="col-md-12 col-sm-12 headtohead_serach-out">
-    <div class="row headtohead_serach">
+
+    <div class="row headtohead_serach sec-h2h-out" style="display:none;">
+      <div class="col-md-6 col-sm-6">
+        <div class="dashboard-nav-bar clearfix">
+          <div class="nav-bar-form">
+            <div class="nav-bar-form-input">
+              <input
+                @keydown.down="resultDown('card_one')"
+                @keydown.up="resultUp('card_one')"
+                @keydown.enter="resultSelect('card_one')"
+                class="form-control"
+                v-model="card_one.keyword"
+                type="text"
+                aria-label="Search"
+              />
+              <!-- <span
+                class="advance-search-label"
+                @click="openAdvanceSearch('card_one')"
+              >Advanced&nbsp;&nbsp;search</span> -->
+              <div class="autoselected" v-if="autoselected.one.open && card_one.items.length > 0">
+                <ul>
+                  <li
+                    v-for="(item, key) in card_one.items"
+                    :key="'card-one-item-'+item.id"
+                    :class="{'selected': resultIsActive(key, 'card_one')}"
+                    @click="selectItemForCard(item, 'card_one')"
+                  >{{item.title}}</li>
+                </ul>
+              </div>
+            </div>
+            <button
+              type="button"
+              @click="searchNow('card_one')"
+              class="nav-bar-search-btn"
+            >Search Stox</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-sm-6 " v-if="card_one.selectedCard != null">
+        <div class="dashboard-nav-bar clearfix">
+          <div class="nav-bar-form">
+            <div class="nav-bar-form-input">
+              <input
+                @keydown.down="resultDown('card_two')"
+                @keydown.up="resultUp('card_two')"
+                @keydown.enter="resultSelect('card_two')"
+                class="form-control"
+                v-model="card_two.keyword"
+                type="text"
+                aria-label="Search"
+              />
+              <!-- <span
+                class="advance-search-label"
+                @click="openAdvanceSearch('card_two')"
+              >Advanced&nbsp;&nbsp;search</span> -->
+              <div class="autoselected" v-if="autoselected.two.open && card_two.items.length > 0">
+                <ul>
+                  <li
+                    v-for="(item, key) in card_two.items"
+                    :key="'card-two-item-'+item.id"
+                    :class="{'selected': resultIsActive(key, 'card_two')}"
+                    @click="selectItemForCard(item, 'card_two')"
+                  >{{item.title}}</li>
+                </ul>
+              </div>
+            </div>
+            <button
+              type="button"
+              @click="searchNow('card_two')"
+              class="nav-bar-search-btn"
+            >Search Stox</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row headtohead_serach first-h2h-out">
       <div class="t-p-5 first-slab-out">
         <div class="dashboard-nav-bar">
           <div class="nav-bar-form">
@@ -265,6 +343,7 @@
 import { mapGetters } from 'vuex'
 import AvailableListing from '~/components/dashboard/AvailableListing'
 import { FILTERS } from '../constants/advance_search_filter'
+import $ from 'jquery'
 export default {
   transition: 'fade',
   layout: 'dashboard',
@@ -523,6 +602,9 @@ export default {
         let cardIds = this.card_one.selectedCard.id+'|'+this.card_two.selectedCard.id;
         this.$axios.$get('get-card-graph/'+cardIds+'/'+days).then(res => {
           if (res.status == 200) {
+        
+              $('.sec-h2h-out').show();
+                  $('.first-h2h-out').hide();
             this.activeDaysGraph = days;
             // if(this.initGraphLabelLength != res.data.labels.length){
               this.series = [{name: '<span class="sales-t1">Sales</span>', data: res.data.values1}, {name: '<span class="sales-t2">Sales</span>', data: res.data.values2}];
@@ -670,7 +752,7 @@ export default {
       width: 100%;
       .form-control {
         font-size: 12px;
-        height: 30px;
+        height: 32px;
         border-radius: 2px;
         position: relative;
         &:focus {
@@ -1191,5 +1273,16 @@ ul.my-card-listing {
   }
 }
 }
-
+.sec-h2h-out.headtohead_serach{
+  border: 0;
+    padding: 0;
+   .nav-bar-form .nav-bar-form-input{
+width: calc(100% - 151px);
+    float: left;
+    }
+     .nav-bar-form .nav-bar-search-btn{
+padding: 7px 10px 5px;
+    float: left;
+    }
+}
 </style>

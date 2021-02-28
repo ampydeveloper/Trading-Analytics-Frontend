@@ -94,7 +94,7 @@
                     </button>
                   </td>
                   <td>{{ item.itemId }}</td>
-                  <td>{{ item.status == 1 ? 'Active' : 'Inactive' }}</td>
+                  <td>{{ item.status == 0 ? 'Active' : 'Inactive' }}</td>
                   <td>
                     <select
                       @change="statusChange($event, item.id, key)"

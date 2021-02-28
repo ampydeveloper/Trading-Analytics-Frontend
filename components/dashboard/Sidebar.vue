@@ -77,7 +77,7 @@
           </nuxt-link>
         </li> -->
         
-        <li class="nav-item stox-request">
+        <li class="nav-item">
           <nuxt-link class="nav-link" to="/stox-requrest">
             <div class="icon stox-request-icon"></div>
             <div class="link-text">Stox Request</div>

@@ -67,7 +67,7 @@ const User = {
                         if (this.user.roles && this.user.roles[0].name != 'user') {
                             this.$router.push('/admin')
                         } else {
-                            this.$router.push('/dashboard')
+                            this.$router.push(this.$route.path)
                         }
                     } else {
                         if (this.$route.path == '/') {

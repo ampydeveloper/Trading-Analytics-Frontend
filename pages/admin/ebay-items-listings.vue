@@ -116,7 +116,7 @@
                     </button>
                   </td>
                   <td>{{ item.itemId }}</td>
-                  <td>{{ item.status == 1 ? 'Active' : 'Inactive' }}</td>
+                  <td>{{ item.status == 0 ? 'Active' : 'Inactive' }}</td>
                   <td>
                     <select
                       @change="statusChange($event, item.id, key)"
@@ -252,8 +252,10 @@ export default {
 this.getItems(this.page)
     }
   },
+  watch() {
+  console.log('redd');
+  },
   updated() {
-    
     $('.main-checkbox').change(function () {
       if ($('.main-checkbox').is(':checked')) {
         $('.indi-checkbox').attr('checked', true)
@@ -305,7 +307,7 @@ this.getItems(this.page)
             .then((res) => {
               console.log(res);
               if (res.status == 200) {
-                this.currentPage = page
+                this.currentPage = 1
                 this.items = res.data.data
                 this.page = res.data.next
                 this.sportsList = res.data.sportsList
