@@ -6,6 +6,13 @@
           <div class="card-body">
             <h5 class="card-title">
               <button class="theme-btn card-btn">All Listings</button>
+              <nuxt-link
+                class="theme-green-btn card-btn pull-right"
+                :to='`/admin/create-listings-excel`'
+                style="margin-right: 5px"
+              >
+                Import Listing via CSV
+              </nuxt-link>
             </h5>
           </div>
           <div class="card-body search-form">

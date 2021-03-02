@@ -93,7 +93,7 @@ export default {
     }
   },
   mounted() {
-    this.card_id = this.$route.query.card_id
+    // this.card_id = this.$route.query.card_id
   },
   components: {},
   data() {
@@ -104,7 +104,7 @@ export default {
       //     imageFile: '',
       //   },
       sport: '',
-      card_id: '',
+      // card_id: '',
       uploadExcelType: null,
       uploadImageType: null,
       requestInProcess: false,
@@ -153,7 +153,7 @@ this.$toast.error('Select Sport')
       formData.append('file', file)
       formData.append('for', this.uploadExcelType)
       formData.append('imageType', this.uploadImageType)
-      formData.append('card_id', this.card_id)
+      // formData.append('card_id', this.card_id)
       if (!this.requestInProcess) {
         try {
           this.showLoader()

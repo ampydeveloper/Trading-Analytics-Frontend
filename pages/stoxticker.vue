@@ -100,7 +100,22 @@
                       type="text"
                       placeholder="SEARCH SLABS"
                       v-model="keyword"
+                     
                     />
+                     <!-- <div class="display_keyword" v-if="showSmartSearch">
+          <ul v-click-outside="hideSmartSearch">
+            <li
+              v-for="(item, key) of smartKeyword"
+              :key="key"
+              @click="selectKeyword(item.id)"
+            >
+              {{ item.player + ' ' + item.title }}
+            </li>
+            <li v-if="smartKeyword.length == 0">
+              No results found for this search
+            </li>
+          </ul>
+              </div> -->
                   </div>
                 </div>
                 <div class="col-md-2">
@@ -241,7 +256,7 @@
             </h5>
             <div class="dashboard-apex-top" ref="dashboardApexChart">
               <VueApexCharts
-                ref="dashChart"
+                ref="sxDashChart"
                 type="area"
                 height="350"
                 :options="sxChartOptions"
@@ -686,7 +701,7 @@ slabstox.com
             <button class="card-btn theme-btn">Create Board</button>
           </h5>
           <div class="search-bar">
-          <input type="text" placeholder="ENTER BOARD NAME" style="margin-bottom: 15px;">
+          <input type="text" :value="user.first_name + ' ' + (user.last_name != 'null') ? user.last_name : ''" placeholder="ENTER BOARD NAME" style="margin-bottom: 15px;">
 </div>
           <div class="create-board-out my-card text-center">
  <button class="my-card-view-listing create-board" @click="createBoard()">
@@ -706,23 +721,34 @@ slabstox.com
                  <nuxt-link
                       class="theme-btn card-btn"
                       :to="`stoxticker-details?board=${itemdata.id}`"
-                      >{{ itemdata.name }}</nuxt-link
+                      style="margin-right: 4px;"
+                      >{{ itemdata.name }}
+                      ${{ boardSearch[key].total_card_value }}
+                      </nuxt-link
                     >
-<button data-v-6fc4d46b="" class="theme-green-btn card-btn"><svg data-v-6fc4d46b="" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="long-arrow-alt-up" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" class="svg-inline--fa fa-long-arrow-alt-up fa-w-8"><path data-v-6fc4d46b="" fill="currentColor" d="M88 166.059V468c0 6.627 5.373 12 12 12h56c6.627 0 12-5.373 12-12V166.059h46.059c21.382 0 32.09-25.851 16.971-40.971l-86.059-86.059c-9.373-9.373-24.569-9.373-33.941 0l-86.059 86.059c-15.119 15.119-4.411 40.971 16.971 40.971H88z" class=""></path></svg>&nbsp;&nbsp;
-              <span data-v-6fc4d46b="" class="g-dollar-d-val"> $0</span></button>
-              <button data-v-6fc4d46b="" class="theme-btn card-btn"><svg data-v-6fc4d46b="" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="long-arrow-alt-up" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" class="svg-inline--fa fa-long-arrow-alt-up fa-w-8"><path data-v-6fc4d46b="" fill="currentColor" d="M88 166.059V468c0 6.627 5.373 12 12 12h56c6.627 0 12-5.373 12-12V166.059h46.059c21.382 0 32.09-25.851 16.971-40.971l-86.059-86.059c-9.373-9.373-24.569-9.373-33.941 0l-86.059 86.059c-15.119 15.119-4.411 40.971 16.971 40.971H88z" class=""></path></svg>&nbsp;&nbsp;100.00%
-            </button>
-                   <!-- <button
+
+                   <button
                     :class="
-                      (card.sx_icon == 'up'
+                      (boardSearch[key].sx_icon == 'up'
                         ? 'theme-green-btn'
                         : 'theme-red-btn') + ' card-btn'
                     "
                   >
                     <font-awesome-icon
-                      :icon="['fas', 'long-arrow-alt-' + card.sx_icon]"
-                    />&nbsp;&nbsp;{{ card.sx }}
-                  </button> -->
+                      :icon="['fas', 'long-arrow-alt-' + boardSearch[key].sx_icon]"
+                    />&nbsp;&nbsp; ${{ boardSearch[key].sx_value }}
+                  </button>
+                  <button
+                    :class="
+                      (boardSearch[key].sx_icon == 'up'
+                        ? 'theme-green-btn'
+                        : 'theme-red-btn') + ' card-btn'
+                    "
+                  >
+                    <font-awesome-icon
+                      :icon="['fas', 'long-arrow-alt-' + boardSearch[key].sx_icon]"
+                    />&nbsp;&nbsp;{{ boardSearch[key].pert_diff }}%
+                  </button>
 </h5>
 <div class="dashboard-apex-top">
                   <VueApexCharts
@@ -743,8 +769,7 @@ slabstox.com
                   </ul>
                   <p class="dashboard-graph-footer-update-at float-right">
                     Last Updated - 
-                    <!-- {{ card.price_graph_updated }} -->
-                    FEBRUARY 20 2021 - 11:58:47 AM
+                    {{ boardSearch[key].sales_graph.last_timestamp }}
                   </p>
                 </div>
 
@@ -773,44 +798,53 @@ slabstox.com
           >
           
             <h5 class="card-title">
-              <button class="theme-btn card-btn">
-                {{allBoardGraph[key].name}} $1234
-                <!-- ${{ stoxtickerData.total }} -->
-              </button>
+              <!-- <button class="theme-btn card-btn">
+                {{allBoardGraph[key].name}} 
+                ${{ allBoardGraph[key].total_card_value }}
+              </button> -->
 
-              <!--<button
+              <nuxt-link
+                      class="theme-btn card-btn thb-btn"
+                      :to="`stoxticker-details?board=${allBoardGraph[key].id}`"
+                      style="margin-right: 4px;"
+                      >{{ allBoardGraph[key].name }}
+                      ${{ allBoardGraph[key].total_card_value }}
+                      </nuxt-link
+                    >
+
+              <button
                 :class="
-                  (stoxtickerData.change_arrow &&
-                  stoxtickerData.change_arrow == 'up'
+                  (allBoardGraph[key].sx_icon &&
+                  allBoardGraph[key].sx_icon == 'up'
                     ? 'theme-green-btn'
                     : 'theme-red-btn') + ' card-btn'
                 "
               >
                 <font-awesome-icon
-                  v-if="stoxtickerData.change_arrow !== undefined"
+                  v-if="allBoardGraph[key].sx_icon !== undefined"
                   :icon="[
                     'fas',
-                    'long-arrow-alt-' + stoxtickerData.change_arrow,
+                    'long-arrow-alt-' + allBoardGraph[key].sx_icon,
                   ]"
                 />&nbsp;&nbsp;
-                <span class="g-dollar-d-val"> ${{ stoxtickerData.doller_diff }}</span>
+                <span class="g-dollar-d-val"> ${{ allBoardGraph[key].sx_value }}</span>
               </button>
               <button
                 :class="
-                  (stoxtickerData.change_arrow &&
-                  stoxtickerData.change_arrow == 'up'
+                  (allBoardGraph[key].sx_icon &&
+                  allBoardGraph[key].sx_icon == 'up'
                     ? 'theme-btn'
                     : 'theme-red-btn') + ' card-btn'
                 "
               >
                 <font-awesome-icon
-                  v-if="stoxtickerData.change_arrow !== undefined"
+                  v-if="allBoardGraph[key].sx_icon !== undefined"
                   :icon="[
                     'fas',
-                    'long-arrow-alt-' + stoxtickerData.change_arrow,
+                    'long-arrow-alt-' + allBoardGraph[key].sx_icon,
                   ]"
-                />&nbsp;&nbsp;{{ stoxtickerData.perc_diff }}%
-              </button> -->
+                />&nbsp;&nbsp;{{ allBoardGraph[key].pert_diff }}%
+              </button>
 <!--              
               <span class="total_sales" style="display: none">{{
                 stoxtickerData.total_sales
@@ -971,11 +1005,15 @@ import { BASE_URL } from '../constants/keys'
 import CardSlabItem from '~/components/dashboard/CardSlabItem'
 import CardListItem from '~/components/dashboard/CardListItem'
 import $ from 'jquery'
+import vClickOutside from 'v-click-outside'
 
 export default {
   transition: 'fade',
   layout: 'guestOuter',
   auth: 'guest',
+  directives: {
+    clickOutside: vClickOutside.directive,
+  },
   head() {
     return {
       title: 'Stoxticker - Slabstox',
@@ -998,7 +1036,7 @@ export default {
     this.getData()
     this.slabstoxGraph()
     this.getSoldListing()
-    this.getAllBoards()
+    // this.getAllBoards()
     this.allBoardGraphFunc(2)
     this.logo = document.getElementById('sidebarLogo').src
 
@@ -1075,14 +1113,16 @@ export default {
       last_timestamp: 'N/A',
       currentUrl: location.href,
       soldListing: '',
-      allBoards: '',
+      // allBoards: '',
       allBoardGraph: [],
       boardChartOptions: [],
       boardSeries: [],
-      boardSalesQty:[],
+      boardSalesQty: [],
       searchChartOptions: [],
       searchSeries: [],
-      searchSalesQty:[],
+      searchSalesQty: [],
+      smartKeyword: [],
+      showSmartSearch: false,
       data: {
         total: 0,
         sale: 0,
@@ -1223,76 +1263,79 @@ export default {
               if (res.data.length == 4) {
                 $('.create-board-out').show()
               }
-if (res.data != null && res.data.length > 0) {
-              res.data.map((item, key) => {
-                if (typeof item != 'undefined') {
-                  this.boardSearch[key] = item
-                  this.searchSeries[key] = [{
-                    name: 'Sales',
-                    data: item.sales_graph.values,
-                  }];
-                  this.searchSalesQty.push(item.sales_graph.qty)
-                  this.searchChartOptions.push({
-                    chart: {
-                      toolbar: {
-                        show: false,
+              if (res.data != null && res.data.length > 0) {
+                res.data.map((item, key) => {
+                  if (typeof item != 'undefined') {
+                    this.boardSearch[key] = item
+                    this.searchSeries[key] = [
+                      {
+                        name: 'Sales',
+                        data: item.sales_graph.values,
                       },
-                      height: 350,
-                      type: 'area',
-                      background: 'transparent',
-                      zoom: {
+                    ]
+                    this.searchSalesQty.push(item.sales_graph.qty)
+                    this.searchChartOptions.push({
+                      chart: {
+                        toolbar: {
+                          show: false,
+                        },
+                        height: 350,
+                        type: 'area',
+                        background: 'transparent',
+                        zoom: {
+                          enabled: false,
+                        },
+                      },
+                      colors: ['#14f078'],
+                      dataLabels: {
                         enabled: false,
                       },
-                    },
-                    colors: ['#14f078'],
-                    dataLabels: {
-                      enabled: false,
-                    },
-                    stroke: {
-                      curve: 'smooth',
-                    },
-                    xaxis: {
-                      labels: {
-                        style: {
-                          colors: '#edecec',
-                          fontSize: '10px',
-                          fontFamily: 'NexaBold',
+                      stroke: {
+                        curve: 'smooth',
+                      },
+                      xaxis: {
+                        labels: {
+                          style: {
+                            colors: '#edecec',
+                            fontSize: '10px',
+                            fontFamily: 'NexaBold',
+                          },
+                        },
+                        type: 'category',
+                        categories: item.sales_graph.labels,
+                      },
+                      yaxis: {
+                        labels: {
+                          style: {
+                            colors: '#edecec',
+                            fontSize: '10px',
+                            fontFamily: 'NexaBold',
+                          },
+                          formatter: (value, ind) => {
+                            let lblStr = `$${value}`
+                            return lblStr
+                          },
                         },
                       },
-                      type: 'category',
-                      categories: item.sales_graph.labels,
-                    },
-                    yaxis: {
-                      labels: {
-                        style: {
-                          colors: '#edecec',
-                          fontSize: '10px',
-                          fontFamily: 'NexaBold',
-                        },
-                        formatter: (value, ind) => {
-                          let lblStr = `$${value}`
-                          return lblStr
-                        },
-                      },
-                    },
-                    tooltip: {
-                      enabled: true,
-                      y: {
-                        formatter: (value, ind) => {
-                          let lblStr = `$${value}`
-                          if (typeof ind == 'object')
-                            lblStr = `$${value} (${
-                              this.searchSalesQty[key][ind.dataPointIndex]
-                            })`
-                          else lblStr = `$${value} (${this.searchSalesQty[key][ind]})`
-                          return lblStr
+                      tooltip: {
+                        enabled: true,
+                        y: {
+                          formatter: (value, ind) => {
+                            let lblStr = `$${value}`
+                            if (typeof ind == 'object')
+                              lblStr = `$${value} (${
+                                this.searchSalesQty[key][ind.dataPointIndex]
+                              })`
+                            else
+                              lblStr = `$${value} (${this.searchSalesQty[key][ind]})`
+                            return lblStr
+                          },
                         },
                       },
-                    },
-                  })
-                }
-              })
-            }
+                    })
+                  }
+                })
+              }
 
               // this.last_timestamp = res.data.last_timestamp
               // this.initGraphLabelLength = res.card_data.labels.length
@@ -1306,6 +1349,17 @@ if (res.data != null && res.data.length > 0) {
         this.requestInProcess = false
         console.log(err)
       }
+    },
+    hideSmartSearch(event) {
+      this.showSmartSearch = false
+    },
+    selectKeyword(value) {
+      this.$store
+        .dispatch('advancesearch/update_search_card_id', value)
+        .then(() => {
+          this.$router.push('/search/?id=' + value)
+        })
+      this.showSmartSearch = false
     },
     getSmartKeyword() {
       var sportList = []
@@ -1334,6 +1388,22 @@ if (res.data != null && res.data.length > 0) {
             this.requestInProcess = false
             console.log(err)
           })
+
+        // this.$axios
+        //   .$post('search/get-smart-keyword', { keyword: this.keyword })
+        //   .then((res) => {
+        //     this.requestInProcess = false
+        //     if (res.status == 200) {
+        //       if (this.keyword == res.keyword) {
+        //         this.smartKeyword = res.data
+        //         this.showSmartSearch = true
+        //       }
+        //     }
+        //   })
+        //   .catch((err) => {
+        //     this.requestInProcess = false
+        //     console.log(err)
+        //   })
       } catch (err) {
         this.requestInProcess = false
         console.log(err)
@@ -1367,15 +1437,15 @@ if (res.data != null && res.data.length > 0) {
 
               $('.search-stox-box .search-bar input').val('')
               this.searchSlabs = res.data
+              this.$toast.success('Stoxticker board created sucessfully.')
+              this.allBoardGraphFunc(2)
             }
           })
           .catch((err) => {
             this.requestInProcess = false
-            console.log(err)
           })
       } catch (err) {
         this.requestInProcess = false
-        console.log(err)
       }
     },
     trimTitle(title) {
@@ -1399,19 +1469,19 @@ if (res.data != null && res.data.length > 0) {
         this.$router.push('/404')
       }
     },
-    getAllBoards() {
-      try {
-        this.$axios.$get('stoxticker/all-boards').then((res) => {
-          if (res.status == 200) {
-            this.allBoards = res.data
-          } else {
-            this.$router.push('/404')
-          }
-        })
-      } catch (error) {
-        this.$router.push('/404')
-      }
-    },
+    // getAllBoards() {
+    //   try {
+    //     this.$axios.$get('stoxticker/all-boards').then((res) => {
+    //       if (res.status == 200) {
+    //         this.allBoards = res.data
+    //       } else {
+    //         this.$router.push('/404')
+    //       }
+    //     })
+    //   } catch (error) {
+    //     this.$router.push('/404')
+    //   }
+    // },
     getSoldListing() {
       try {
         this.$axios.$get('stoxticker/sold-listings').then((res) => {
@@ -1481,7 +1551,7 @@ if (res.data != null && res.data.length > 0) {
             // if (this.initGraphLabelLength != res.data.labels.length) {
             // this.graphDataEmpty = false;
             this.stoxtickerData.total = res.data.total_sales
-            this.stoxtickerData.sale = res.data.sale
+            this.stoxtickerData.sale = res.data.total_sales
             this.stoxtickerData.perc_diff = res.data.perc_diff
             this.stoxtickerData.doller_diff = res.data.doller_diff
             this.stoxtickerData.change_arrow = res.data.change_arrow
@@ -1517,7 +1587,7 @@ if (res.data != null && res.data.length > 0) {
               },
             }
             setTimeout(() => {
-              this.generateImageOfGraph(this.$refs.dashChart.chart.dataURI())
+              this.generateImageOfGraph(this.$refs.sxDashChart.chart.dataURI())
               // console.log(this.generateImageOfGraph(this.$refs.dashChart.chart.dataURI()));
             }, 1000)
             // }else{
@@ -1546,10 +1616,12 @@ if (res.data != null && res.data.length > 0) {
               res.data.map((item, key) => {
                 if (typeof item != 'undefined') {
                   this.allBoardGraph[key] = item
-                  this.boardSeries[key] = [{
-                    name: 'Sales',
-                    data: item.sales_graph.values,
-                  }];
+                  this.boardSeries[key] = [
+                    {
+                      name: 'Sales',
+                      data: item.sales_graph.values,
+                    },
+                  ]
                   this.boardSalesQty.push(item.sales_graph.qty)
                   this.boardChartOptions.push({
                     chart: {
@@ -1603,7 +1675,8 @@ if (res.data != null && res.data.length > 0) {
                             lblStr = `$${value} (${
                               this.boardSalesQty[key][ind.dataPointIndex]
                             })`
-                          else lblStr = `$${value} (${this.boardSalesQty[key][ind]})`
+                          else
+                            lblStr = `$${value} (${this.boardSalesQty[key][ind]})`
                           return lblStr
                         },
                       },
@@ -1612,96 +1685,99 @@ if (res.data != null && res.data.length > 0) {
                 }
               })
             }
-            console.log(this.allBoardGraph);
+            console.log(this.allBoardGraph)
           }
         })
       } catch (error) {
         console.log(error)
       }
     },
-     allBoardGraphSingleFunc(days, board, boardKey) {
+    allBoardGraphSingleFunc(days, board, boardKey) {
       try {
         // this.graphDataEmpty = false;
-        this.$axios.$get(`stoxticker/single-graph-board/${days}/${board}`).then((res) => {
-          if (res.status == 200) {
-            // this.sxActiveDaysGraph = days
-            // if (this.initGraphLabelLength != res.data.labels.length) {
-            // this.graphDataEmpty = false;
-            // this.stoxtickerData.sale = res.data.sale
-            // this.stoxtickerData.perc_diff = res.data.perc_diff
-            // this.stoxtickerData.doller_diff = res.data.doller_diff
-            // this.stoxtickerData.change_arrow = res.data.change_arrow
-            // this.stoxtickerData.last_timestamp = res.data.last_timestamp
-            
-                  this.allBoardGraph[boardKey] = res.data
-                  this.boardSeries[boardKey] = [{
-                    name: 'Sales',
-                    data: res.data.sales_graph.values,
-                  }];
-                  this.boardSalesQty[boardKey] = res.data.sales_graph.qty
-                  this.boardChartOptions[boardKey] = {
-                    chart: {
-                      toolbar: {
-                        show: false,
-                      },
-                      height: 350,
-                      type: 'area',
-                      background: 'transparent',
-                      zoom: {
-                        enabled: false,
-                      },
+        this.$axios
+          .$get(`stoxticker/single-graph-board/${days}/${board}`)
+          .then((res) => {
+            if (res.status == 200) {
+              // this.sxActiveDaysGraph = days
+              // if (this.initGraphLabelLength != res.data.labels.length) {
+              // this.graphDataEmpty = false;
+              // this.stoxtickerData.sale = res.data.sale
+              // this.stoxtickerData.perc_diff = res.data.perc_diff
+              // this.stoxtickerData.doller_diff = res.data.doller_diff
+              // this.stoxtickerData.change_arrow = res.data.change_arrow
+              // this.stoxtickerData.last_timestamp = res.data.last_timestamp
+
+              this.allBoardGraph[boardKey] = res.data
+              this.boardSeries[boardKey] = [
+                {
+                  name: 'Sales',
+                  data: res.data.sales_graph.values,
+                },
+              ]
+              this.boardSalesQty[boardKey] = res.data.sales_graph.qty
+              this.boardChartOptions[boardKey] = {
+                chart: {
+                  toolbar: {
+                    show: false,
+                  },
+                  height: 350,
+                  type: 'area',
+                  background: 'transparent',
+                  zoom: {
+                    enabled: false,
+                  },
+                },
+                colors: ['#14f078'],
+                dataLabels: {
+                  enabled: false,
+                },
+                stroke: {
+                  curve: 'smooth',
+                },
+                xaxis: {
+                  labels: {
+                    style: {
+                      colors: '#edecec',
+                      fontSize: '10px',
+                      fontFamily: 'NexaBold',
                     },
-                    colors: ['#14f078'],
-                    dataLabels: {
-                      enabled: false,
+                  },
+                  type: 'category',
+                  categories: res.data.sales_graph.labels,
+                },
+                yaxis: {
+                  labels: {
+                    style: {
+                      colors: '#edecec',
+                      fontSize: '10px',
+                      fontFamily: 'NexaBold',
                     },
-                    stroke: {
-                      curve: 'smooth',
+                    formatter: (value, ind) => {
+                      let lblStr = `$${value}`
+                      return lblStr
                     },
-                    xaxis: {
-                      labels: {
-                        style: {
-                          colors: '#edecec',
-                          fontSize: '10px',
-                          fontFamily: 'NexaBold',
-                        },
-                      },
-                      type: 'category',
-                      categories: res.data.sales_graph.labels,
+                  },
+                },
+                tooltip: {
+                  enabled: true,
+                  y: {
+                    formatter: (value, ind) => {
+                      let lblStr = `$${value}`
+                      if (typeof ind == 'object')
+                        lblStr = `$${value} (${
+                          this.boardSalesQty[ind.dataPointIndex]
+                        })`
+                      else lblStr = `$${value} (${this.boardSalesQty[ind]})`
+                      return lblStr
                     },
-                    yaxis: {
-                      labels: {
-                        style: {
-                          colors: '#edecec',
-                          fontSize: '10px',
-                          fontFamily: 'NexaBold',
-                        },
-                        formatter: (value, ind) => {
-                          let lblStr = `$${value}`
-                          return lblStr
-                        },
-                      },
-                    },
-                    tooltip: {
-                      enabled: true,
-                      y: {
-                        formatter: (value, ind) => {
-                          let lblStr = `$${value}`
-                          if (typeof ind == 'object')
-                            lblStr = `$${value} (${
-                              this.boardSalesQty[ind.dataPointIndex]
-                            })`
-                          else lblStr = `$${value} (${this.boardSalesQty[ind]})`
-                          return lblStr
-                        },
-                      },
-                    },
-                  }
-                  console.log(boardKey);
-                console.log(this.allBoardGraph[boardKey]);
-            
-          }
-        })
+                  },
+                },
+              }
+              console.log(boardKey)
+              console.log(this.allBoardGraph[boardKey])
+            }
+          })
       } catch (error) {
         console.log(error)
       }
@@ -1798,7 +1874,36 @@ ul.my-card-listing {
 // .top-btn {
 //   margin-bottom: 20px;
 // }
-
+.thb-btn{
+      color: #000;
+      &:hover{
+            text-decoration: none;
+      }
+}
+    .display_keyword {
+      position: absolute;
+      background: #fff;
+      width: 100%;
+      z-index: 9;
+      ul {
+        list-style: none;
+        text-transform: none;
+        font-family: 'CocogoosePro-Italic', Helvetica, Arial, sans-serif;
+        font-size: 12px;
+        padding: 5px 0px;
+        margin: 0;
+        li {
+          cursor: pointer;
+          line-height: 2;
+          padding-left: 10px;
+          &:hover {
+            background: #cccccc;
+          }
+        }
+      }
+    }
+  
+  
 .custom-stox-search,
 .custom-stox {
   font-family: 'CocogoosePro-Regular', Helvetica, Arial, sans-serif;

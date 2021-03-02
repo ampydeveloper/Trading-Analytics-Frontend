@@ -113,7 +113,8 @@ export default {
     text-align: center;
     background: #272d33;
     // border-radius: 2px;
-    height: 245px;
+    // height: 245px;
+    height: 16vw;
     .icons-container {
       position: absolute;
       padding: 10px;
@@ -137,7 +138,9 @@ export default {
       top: 50%;
       transform: translate(-50%, -50%);
       padding: 5px;
-      max-height: 245px;
+      // max-height: 245px;
+      max-height: 16vw;
+    min-width: auto;
     }
   }
   .watchlist-card-listing .my-card-view-listing-on-ebay{

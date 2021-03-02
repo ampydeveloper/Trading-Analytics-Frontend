@@ -13,7 +13,7 @@
               <li class="green">{{ card.brand }}</li>
               <!-- <li class="orange">trender</li> -->
             </ul>
-            <div class="icons-container">
+            <div class="icons-container" v-if="user.full_name != null">
               <img
                 v-if="!isInWatchList(id)"
                 @click="addToWatchList()"
@@ -60,25 +60,25 @@
                   </button>
                   <button
                     :class="
-                      (card.sx_icon == 'up'
+                      (cardGraph.sx_icon == 'up'
                         ? 'theme-green-btn'
                         : 'theme-red-btn') + ' card-btn'
                     "
                   >
                     <font-awesome-icon
-                      :icon="['fas', 'long-arrow-alt-' + card.sx_icon]"
-                    />&nbsp;&nbsp;{{ card.sx }}
+                      :icon="['fas', 'long-arrow-alt-' + cardGraph.sx_icon]"
+                    />&nbsp;&nbsp;${{ cardGraph.dollar_diff }}
                   </button>
                   <button
                     :class="
-                      (card.sx_icon == 'up'
+                      (cardGraph.sx_icon == 'up'
                         ? 'theme-green-btn'
                         : 'theme-red-btn') + ' card-btn'
                     "
                   >
                     <font-awesome-icon
-                      :icon="['fas', 'long-arrow-alt-' + card.sx_icon]"
-                    />&nbsp;&nbsp;{{ card.sx }}
+                      :icon="['fas', 'long-arrow-alt-' + cardGraph.sx_icon]"
+                    />&nbsp;&nbsp;{{ cardGraph.pert_diff }}%
                   </button>
                   <span
                     class="card-link"
@@ -500,6 +500,7 @@ export default {
       slabstoxValue: 0,
       currentUrl: location.href,
       cardHistory: [],
+      cardGraph:[],
       series: [
         {
           name: 'Sales',
@@ -735,7 +736,7 @@ export default {
                     },
                   },
                 }
-
+this.cardGraph = res.data
                 this.highestSale = res.data.highestSale
                 this.lowestSale = res.data.lowestSale
                 this.lastSaleDate = res.data.lastSaleDate

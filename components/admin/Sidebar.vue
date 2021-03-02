@@ -68,6 +68,12 @@
             <div class="link-text">Search Terms</div>
           </nuxt-link>
         </li>
+          <li class="nav-item">
+          <nuxt-link class="nav-link" to="/admin/stoxticker">
+            <div class="icon my-listing-icon"></div>
+            <div class="link-text">Stoxticker</div>
+          </nuxt-link>
+        </li>
         <!--<li class="nav-item">
           <nuxt-link class="nav-link" to="/admin/settings">
             <div class="icon my-listing-icon"></div>

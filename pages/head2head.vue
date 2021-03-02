@@ -806,7 +806,7 @@ export default {
       color: $theme-btn-green;
       font-size: 12px;
       height: auto;
-      width: 30%;
+      // width: 30%;
       margin-top: 4px;
       letter-spacing: 2px;
       padding: 7px 20px 5px;

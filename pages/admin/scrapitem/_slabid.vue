@@ -8,9 +8,9 @@
               <button class="theme-btn card-btn">Add Ebay Listing</button>
                 <button
                       class="theme-green-btn card-btn pull-right"
-                      @click="addItem(card.id)"
+                      @click="addItem($nuxt.$route.params.slabid)"
                     >
-                      Add Listing via API
+                      Add Listing via ID
                     </button>
             </h5>
           </div>
@@ -160,6 +160,9 @@ export default {
   methods: {
     back() {
       this.$router.go(-1);
+    },
+    addItem(id) {
+      this.$router.push('/admin/additem/' + id)
     },
     getSpec(){
       this.$axios.get('get-ebay-spec-distinct-name')

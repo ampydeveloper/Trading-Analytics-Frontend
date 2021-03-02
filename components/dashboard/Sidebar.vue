@@ -21,18 +21,28 @@
             <div class="link-text">Live Listings</div>
           </nuxt-link>
         </li>
-         <li class="nav-item">
+        <li class="nav-item">
           <nuxt-link class="nav-link" to="/trenders">
             <div class="icon trenders-icon"></div>
             <div class="link-text">Trenders</div>
           </nuxt-link>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" v-if="user != null && user.full_name != null">
           <nuxt-link class="nav-link" to="/head2head">
             <div class="icon head-to-head-icon"></div>
             <div class="link-text">Head 2 Head</div>
           </nuxt-link>
-        </li> 
+        </li>
+        <li class="nav-item" v-if="user == null || user.full_name == null">
+          <span
+            class="nav-link login-popup-open"
+            to="/"
+            v-b-modal.loginTopPopup
+          >
+            <div class="icon head-to-head-icon"></div>
+            <div class="link-text">Head 2 Head</div>
+          </span>
+        </li>
         <!-- <li class="nav-item">
           <nuxt-link class="nav-link" to="/watch-list">
             <div class="icon watch-list-icon"></div>
@@ -68,22 +78,35 @@
             <div class="icon stoxticker-icon"></div>
             <div class="link-text">Stoxticker</div>
           </nuxt-link>
-        </li> 
-        
-         <!-- <li class="nav-item">
+        </li>
+
+        <!-- <li class="nav-item">
           <nuxt-link class="nav-link" to="/stoxticker-board-details">
             <div class="icon stoxticker-icon"></div>
             <div class="link-text">Stoxticker</div>
           </nuxt-link>
         </li> -->
-        
+
         <li class="nav-item">
-          <nuxt-link class="nav-link" to="/stox-requrest">
+          <nuxt-link
+            class="nav-link"
+            to="/stox-requrest"
+            v-if="user != null && user.full_name != null"
+          >
             <div class="icon stox-request-icon"></div>
             <div class="link-text">Stox Request</div>
           </nuxt-link>
         </li>
-       
+        <li class="nav-item" v-if="user == null || user.full_name == null">
+          <span
+            class="nav-link login-popup-open"
+            to="/"
+            v-b-modal.loginTopPopup
+          >
+            <div class="icon stox-request-icon"></div>
+            <div class="link-text">Stox Request</div>
+          </span>
+        </li>
       </ul>
       <!-- <div class="sibar-logo-middel">
         <img src="~/assets/img/dashboard-sidebar-middel-logo.png" alt="Slabstox" />
@@ -106,6 +129,12 @@
         />
       </p> -->
     </div>
+
+    <b-modal id="loginTopPopup" title="ADDITIONAL FEATURE" hide-footer>
+      <div class="shar-text" style="padding: 20px 20px">
+        To access additional feature <nuxt-link to="/register">signup</nuxt-link> or <a href="/">signin</a>.
+      </div>
+    </b-modal>
   </nav>
 </template>
 
@@ -114,6 +143,11 @@ export default {}
 </script>
 
 <style lang="scss" scoped>
+.shar-text{
+  a{
+        color: #edecec;
+  }
+}
 .sidebar {
   position: fixed;
   top: 0;
@@ -138,7 +172,6 @@ export default {}
       padding: 20px 10px;
     }
   }
-
   /**
    * Style for icons
    */

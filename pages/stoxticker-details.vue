@@ -4,9 +4,6 @@
       <div class="row">
         <div class="col-md-12 pl-1 mb-4 mt-2">
             <div class="top-btn">
-                <!-- <button class="card-btn custom-stox"> 
-<font-awesome-icon :icon="['fas', 'chevron-left']" /> Back to board search</button> -->
-
 <nuxt-link
                       class="card-btn custom-stox"
                       :to="`stoxticker`"
@@ -30,12 +27,42 @@
             <h5 class="card-title">
               <button class="theme-btn card-btn">
               
-                {{ stoxtickerDetails.board.name }}   $12,160
+                {{ stoxtickerDetails.board.name }} ${{stoxtickerDetails.cardData.total_card_value}}
               </button>
-              <button data-v-6fc4d46b="" class="theme-green-btn card-btn"><svg data-v-6fc4d46b="" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="long-arrow-alt-up" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" class="svg-inline--fa fa-long-arrow-alt-up fa-w-8"><path data-v-6fc4d46b="" fill="currentColor" d="M88 166.059V468c0 6.627 5.373 12 12 12h56c6.627 0 12-5.373 12-12V166.059h46.059c21.382 0 32.09-25.851 16.971-40.971l-86.059-86.059c-9.373-9.373-24.569-9.373-33.941 0l-86.059 86.059c-15.119 15.119-4.411 40.971 16.971 40.971H88z" class=""></path></svg>&nbsp;&nbsp;
-              <span data-v-6fc4d46b="" class="g-dollar-d-val"> $0</span></button>
-              <button data-v-6fc4d46b="" class="theme-btn card-btn"><svg data-v-6fc4d46b="" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="long-arrow-alt-up" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" class="svg-inline--fa fa-long-arrow-alt-up fa-w-8"><path data-v-6fc4d46b="" fill="currentColor" d="M88 166.059V468c0 6.627 5.373 12 12 12h56c6.627 0 12-5.373 12-12V166.059h46.059c21.382 0 32.09-25.851 16.971-40.971l-86.059-86.059c-9.373-9.373-24.569-9.373-33.941 0l-86.059 86.059c-15.119 15.119-4.411 40.971 16.971 40.971H88z" class=""></path></svg>&nbsp;&nbsp;100.00%
-            </button>
+               <button
+                :class="
+                  (stoxtickerDetails.cardData.sx_icon &&
+                  stoxtickerDetails.cardData.sx_icon == 'up'
+                    ? 'theme-green-btn'
+                    : 'theme-red-btn') + ' card-btn'
+                "
+              >
+                <font-awesome-icon
+                  v-if="stoxtickerDetails.cardData.sx_icon !== undefined"
+                  :icon="[
+                    'fas',
+                    'long-arrow-alt-' + stoxtickerDetails.cardData.sx_icon
+                  ]"
+                />&nbsp;&nbsp;${{stoxtickerDetails.cardData.sx_value}}
+              </button>
+                
+                <button
+                :class="
+                  (stoxtickerDetails.cardData.sx_icon &&
+                  stoxtickerDetails.cardData.sx_icon == 'up'
+                    ? 'theme-btn'
+                    : 'theme-red-btn') + ' card-btn'
+                "
+              >
+                <font-awesome-icon
+                  v-if="stoxtickerDetails.cardData.sx_icon !== undefined"
+                  :icon="[
+                    'fas',
+                    'long-arrow-alt-' + stoxtickerDetails.cardData.sx_icon
+                  ]"
+                />&nbsp;&nbsp;{{stoxtickerDetails.cardData.pert_diff}}%
+              </button>
+              
             <button
             :class="
                   (boardFollow
@@ -47,43 +74,7 @@
                     ? 'Unfollow'
                     : 'Follow') }}
               </button>
-            
-              <!-- <button
-                :class="
-                  (stoxtickerData.change_arrow &&
-                  stoxtickerData.change_arrow == 'up'
-                    ? 'theme-green-btn'
-                    : 'theme-red-btn') + ' card-btn'
-                "
-              >
-                <font-awesome-icon
-                  v-if="stoxtickerData.change_arrow !== undefined"
-                  :icon="[
-                    'fas',
-                    'long-arrow-alt-' + stoxtickerData.change_arrow
-                  ]"
-                />&nbsp;&nbsp;$5.18
-              </button>
-                
-                <button
-                :class="
-                  (stoxtickerData.change_arrow &&
-                  stoxtickerData.change_arrow == 'up'
-                    ? 'theme-btn'
-                    : 'theme-red-btn') + ' card-btn'
-                "
-              >
-                <font-awesome-icon
-                  v-if="stoxtickerData.change_arrow !== undefined"
-                  :icon="[
-                    'fas',
-                    'long-arrow-alt-' + stoxtickerData.change_arrow
-                  ]"
-                />&nbsp;&nbsp;3.89%
-              </button> -->
-                
-                
-             
+                   
               <span class="float-right share-lk-top">
                 <span class="share-icon">
                   Share
@@ -256,13 +247,18 @@ export default {
     return {
       title: 'Stoxticker - Slabstox',
       meta: [
-        { name: 'Stoxticker - Slabstox', content: 'Check Stoxticker: '+this.stoxtickerDetails.board.name },
-        { property: 'og:title', content: 'Check Stoxticker: '+this.stoxtickerDetails.board.name },
+        {
+          name: 'Stoxticker - Slabstox',
+          content: 'Check Stoxticker: ' + this.stoxtickerDetails.board.name,
+        },
+        {
+          property: 'og:title',
+          content: 'Check Stoxticker: ' + this.stoxtickerDetails.board.name,
+        },
         { property: 'og:image', content: this.graphImage },
         {
           property: 'og:description',
-          content:
-            'Check Stoxticker: '+this.stoxtickerDetails.board.name,
+          content: 'Check Stoxticker: ' + this.stoxtickerDetails.board.name,
         },
         { property: 'og:url', content: this.baseUrl },
         { property: 'og:site_name', content: 'Slabstox' },
@@ -297,8 +293,9 @@ export default {
       graphDataEmpty: false,
       boardFollow: false,
       stoxtickerDetails: {
-        board: 0,
-        cards: 0,
+        board: [],
+        cards: [],
+        cardData: [],
       },
       stoxtickerData: {
         total: 0,
@@ -307,7 +304,7 @@ export default {
         change_icon: 'up',
         last_updated: '',
       },
-      salesQty:[],
+      salesQty: [],
       series: [
         {
           name: 'Stoxticker',
@@ -370,62 +367,69 @@ export default {
       }
       return title
     },
-embedStatsCode() {
+    embedStatsCode() {
       this.$bvModal.show('embedStatsCode')
     },
     getStoxtickerData(days = 2) {
       try {
-        this.$axios.$get(`stoxticker/board-details/${this.$route.query.board}/${days}`).then((res) => {
-          if (res.status == 200) {
-            this.activeDaysGraph = days
-            this.stoxtickerDetails.board = res.board
-            this.stoxtickerDetails.cards = res.cards
-            this.stoxtickerDetails.last_timestamp = res.card_data.last_timestamp
-            this.boardFollow = (res.follow!=null?true:false)
+        this.$axios
+          .$get(`stoxticker/board-details/${this.$route.query.board}/${days}`)
+          .then((res) => {
+            if (res.status == 200) {
+              this.activeDaysGraph = days
+              this.stoxtickerDetails.board = res.board
+              this.stoxtickerDetails.cards = res.cards
+              this.stoxtickerDetails.cardData = res.card_data
+              this.stoxtickerDetails.last_timestamp =
+                res.card_data.sales_graph.last_timestamp
+              this.boardFollow = res.follow != null ? true : false
 
-            this.series = [{ name: 'Sales', data: res.card_data.values }]
-            this.salesQty = res.card_data.qty
-            this.chartOptions = {
-              xaxis: {
-                categories: res.card_data.labels,
-              },
-              yaxis: {
-                labels: {
-                  style: {
-                    colors: '#edecec',
-                    fontSize: '10px',
-                    fontFamily: 'NexaBold',
-                  },
-                  formatter: (value, ind) => {
-                    let lblStr = `$${value}`
-                    return lblStr
+              this.series = [
+                { name: 'Sales', data: res.card_data.sales_graph.values },
+              ]
+              this.salesQty = res.card_data.sales_graph.qty
+              this.chartOptions = {
+                xaxis: {
+                  categories: res.card_data.sales_graph.labels,
+                },
+                yaxis: {
+                  labels: {
+                    style: {
+                      colors: '#edecec',
+                      fontSize: '10px',
+                      fontFamily: 'NexaBold',
+                    },
+                    formatter: (value, ind) => {
+                      let lblStr = `$${value}`
+                      return lblStr
+                    },
                   },
                 },
-              },
-              colors: ['#14f078'],
-              tooltip: {
-                enabled: true,
-                y: {
-                  formatter: (value, ind) => {
-                    let lblStr = `$${value}`
-                    if (typeof ind == 'object')
-                      lblStr = `$${value} (${
-                        this.salesQty[ind.dataPointIndex]
-                      })`
-                    else lblStr = `$${value} (${this.salesQty[ind]})`
-                    return lblStr
+                colors: ['#14f078'],
+                tooltip: {
+                  enabled: true,
+                  y: {
+                    formatter: (value, ind) => {
+                      let lblStr = `$${value}`
+                      if (typeof ind == 'object')
+                        lblStr = `$${value} (${
+                          this.salesQty[ind.dataPointIndex]
+                        })`
+                      else lblStr = `$${value} (${this.salesQty[ind]})`
+                      return lblStr
+                    },
                   },
                 },
-              },
-            }
+              }
 
-            setTimeout(() => {
+              console.log(this.stoxtickerDetails)
+              setTimeout(() => {
                 this.generateImageOfGraph()
               }, 1000)
-          } else {
-            this.$router.push('/404')
-          }
-        })
+            } else {
+              this.$router.push('/404')
+            }
+          })
       } catch (error) {
         console.log(error)
       }
@@ -477,15 +481,15 @@ embedStatsCode() {
           })
       })
     },
-    followBoard(){
+    followBoard() {
       this.$axios
-          .$post('stoxticker/follow-board', { board: this.$route.query.board })
-          .then((res) => {
-            if (res.status == 200) {
-              this.boardFollow = res.board_create
-            }
-          })
-    }
+        .$post('stoxticker/follow-board', { board: this.$route.query.board })
+        .then((res) => {
+          if (res.status == 200) {
+            this.boardFollow = res.board_create
+          }
+        })
+    },
   },
 }
 </script>
