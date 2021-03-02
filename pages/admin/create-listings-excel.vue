@@ -153,7 +153,7 @@ this.$toast.error('Select Sport')
       formData.append('file', file)
       formData.append('for', this.uploadExcelType)
       formData.append('imageType', this.uploadImageType)
-      // formData.append('card_id', this.card_id)
+      formData.append('card_id', 1)
       if (!this.requestInProcess) {
         try {
           this.showLoader()

@@ -61,7 +61,7 @@ const User = {
                     }
                 },
                 guestMiddleware() {
-                    // console.log(this.$route.path);
+                    console.log(this.$route.path);
 
                     if (this.user) {
                         if (this.user.roles && this.user.roles[0].name != 'user') {
@@ -71,9 +71,12 @@ const User = {
                         }
                     } else {
                         if (this.$route.path == '/') {
-                            if (this.user != null) this.$router.push('/dashboard')
+                        this.$router.push('/dashboard')
                         } else if (this.$route.path != '/register') {
                             this.$router.push('/dashboard')
+                        }
+                        else if (this.$route.path != '/login') {
+                            this.$router.push('/')
                         }
                     }
                 },

@@ -477,6 +477,9 @@ export default {
       if(this.card_one.selectedCard != null && this.card_two.selectedCard != null){
         this.selectedCardOne = this.card_one.selectedCard
         this.selectedCardTwo = this.card_two.selectedCard
+        // this.getGraphData(this.activeDaysGraph);
+         $('.sec-h2h-out').show();
+                  $('.first-h2h-out').hide();
         this.showSelectedCards = true
       }else{
         this.showSelectedCards = false
@@ -591,7 +594,7 @@ export default {
         this.card_two.keyword = (item.title!=""?item.title:item.player+' '+item.year+' '+item.brand+' '+item.card+' '+item.variation)
         this.card_two.rank = item.rank
         this.autoselected.two.open = false
-        this.getGraphData(this.activeDaysGraph);
+        
       }
     },
     getGraphData(days){
@@ -600,8 +603,8 @@ export default {
         this.$axios.$get('get-card-graph/'+cardIds+'/'+days).then(res => {
           if (res.status == 200) {
         
-              $('.sec-h2h-out').show();
-                  $('.first-h2h-out').hide();
+              // $('.sec-h2h-out').show();
+              //     $('.first-h2h-out').hide();
             this.activeDaysGraph = days;
             // if(this.initGraphLabelLength != res.data.labels.length){
               this.series = [{name: '<span class="sales-t1">Sales</span>', data: res.data.values1}, {name: '<span class="sales-t2">Sales</span>', data: res.data.values2}];

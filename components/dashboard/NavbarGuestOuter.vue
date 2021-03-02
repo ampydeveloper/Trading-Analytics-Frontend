@@ -213,7 +213,9 @@
     </b-navbar-nav>
     <ul class="upper-links list-inline" v-if="user == null || user.full_name == null">
       <li>
-        <a href="/"><i>Sign In</i></a>
+      <nuxt-link to="/register">
+                <i>Sign In</i>
+              </nuxt-link>
       </li>
       <li>/</li>
       <li>
