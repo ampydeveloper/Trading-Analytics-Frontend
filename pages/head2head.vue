@@ -163,7 +163,7 @@
         <div class="card" v-if="selectedCardOne != null">
           <div class="card-body product-image-card">
             <h5 class="card-title product-title">
-              {{ selectedCardOne.title }}
+              {{ (selectedCardOne.title!=""?selectedCardOne.title:selectedCardOne.player+' '+selectedCardOne.year+' '+selectedCardOne.brand+' '+selectedCardOne.card+' '+selectedCardOne.variation) }}
             </h5>
             <ul class="labels">
                <li class="orange">{{selectedCardOne.brand}}</li>
@@ -186,20 +186,20 @@
                 <div class="row">
                   <div class="vs_tip">VS</div>
                   <div class="col-md-6 left">
-                    <h3>{{ selectedCardOne.title }}</h3>
+                    <h3>{{ (selectedCardOne.title!=""?selectedCardOne.title:selectedCardOne.player+' '+selectedCardOne.year+' '+selectedCardOne.brand+' '+selectedCardOne.card+' '+selectedCardOne.variation) }}</h3>
                   </div>
                   <div class="col-md-6 right">
-                    <h3>{{ selectedCardTwo.title }}</h3>
+                    <h3>{{ (selectedCardTwo.title!=""?selectedCardTwo.title:selectedCardTwo.player+' '+selectedCardTwo.year+' '+selectedCardTwo.brand+' '+selectedCardTwo.card+' '+selectedCardTwo.variation) }}</h3>
                   </div>
                 </div>
               </div>
               <div class="sx_value">
                 <div class="row">
                   <div class="col-md-6 left">
-                    <h3>*SX VALUE ${{ selectedCardOne.details.currentPrice }}</h3>
+                    <h3>*SX VALUE ${{ (selectedCardOne.details?selectedCardOne.details.currentPrice:0) }}</h3>
                   </div>
                   <div class="col-md-6 right">
-                    <h3>*SX VALUE ${{ selectedCardTwo.details.currentPrice }}</h3>
+                    <h3>*SX VALUE ${{ (selectedCardTwo.details?selectedCardTwo.details.currentPrice:0) }}</h3>
                   </div>
                 </div>
               </div>
@@ -207,11 +207,6 @@
                 <div class="col-md-12 col-sm-12 t-p-5">
                   <div class="card">
                     <div class="card-body dashboard-graph pt-0 pb-0">
-                      <!-- <img
-                        class="gift-cart-title-ebay-img"
-                        src="~/assets/img/headtohead.jpg"
-                        alt
-                      /> -->
                       <div class="dashboard-apex-top">
                         <VueApexCharts
                           type="area"
@@ -243,7 +238,7 @@
             <div class="stat_box">
               <h3>stats</h3>
               <ul>
-                <li>SlabStox Value: ${{ selectedCardOne.details.currentPrice }}</li>
+                <li>SlabStox Value: ${{ (selectedCardOne.details?selectedCardOne.details.currentPrice:0) }}</li>
                 <li>Overall Rank: {{ card_one.rank }}</li>
                 <li>Last Sale Price: ${{ (card_one.last_sale?card_one.last_sale.cost:0) }}</li>
                 <li>Last Sale Date:{{ (card_one.last_sale? this.$moment(card_one.last_sale.timestamp).format('M/D/Y'):'N/A') }}</li>
@@ -256,7 +251,7 @@
             <div class="stat_box">
               <h3>stats</h3>
               <ul>
-                <li>SlabStox Value: ${{ selectedCardTwo.details.currentPrice }}</li>
+                <li>SlabStox Value: ${{ (selectedCardTwo.details?selectedCardTwo.details.currentPrice:0) }}</li>
                 <li>Overall Rank: {{ card_two.rank }}</li>
                 <li>Last Sale Price: ${{ (card_two.last_sale?card_two.last_sale.cost:0) }}</li>
                 <li>Last Sale Date: {{ (card_two.last_sale? this.$moment(card_two.last_sale.timestamp).format('M/D'):'N/A') }}</li>
@@ -274,7 +269,7 @@
         <div class="card" v-if="selectedCardTwo != null">
           <div class="card-body product-image-card">
             <h5 class="card-title product-title">
-              {{ selectedCardTwo.title }}
+              {{ (selectedCardTwo.title!=""?selectedCardTwo.title:selectedCardTwo.player+' '+selectedCardTwo.year+' '+selectedCardTwo.brand+' '+selectedCardTwo.card+' '+selectedCardTwo.variation) }}
             </h5>
             <ul class="labels">
               <li class="orange">{{selectedCardTwo.brand}}</li>
@@ -314,7 +309,9 @@
           </div>
           <ul class="my-card-listing" v-if="popularCardsData.length > 0">
             <li class="my-card" v-for="itemdata of popularCardsData" :key="itemdata.id">
-              <h4 class="my-card-title" :title="itemdata.title">{{trimTitle(itemdata.title)}}</h4>
+              <h4 class="my-card-title" :title="itemdata.title">
+{{ (itemdata.title!=""?itemdata.title:itemdata.player+' '+itemdata.year+' '+itemdata.brand+' '+itemdata.card+' '+itemdata.variation) }}
+              </h4>
               <div class="image-container">
                 <img
                   class="card-image"
@@ -586,12 +583,12 @@ export default {
     selectItemForCard(item, card) {
       if (card == 'card_one') {
         this.card_one.selectedCard = item
-        this.card_one.keyword = item.title
+        this.card_one.keyword = (item.title!=""?item.title:item.player+' '+item.year+' '+item.brand+' '+item.card+' '+item.variation)
         this.card_one.rank = item.rank
         this.autoselected.one.open = false
       } else {
         this.card_two.selectedCard = item
-        this.card_two.keyword = item.title
+        this.card_two.keyword = (item.title!=""?item.title:item.player+' '+item.year+' '+item.brand+' '+item.card+' '+item.variation)
         this.card_two.rank = item.rank
         this.autoselected.two.open = false
         this.getGraphData(this.activeDaysGraph);
@@ -624,7 +621,12 @@ export default {
                         if (value == "undefined"){
                           return 0
                         }
-                        return `$${value}`
+                        let valCheck = value
+                    if (Number(value) === value && value % 1 !== 0) {
+                      let valCheck = Number(value).toFixed(2)
+                    }
+
+                    return `$${valCheck}`
                       },
                     },
                   },

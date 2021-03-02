@@ -1469,19 +1469,6 @@ export default {
         this.$router.push('/404')
       }
     },
-    // getAllBoards() {
-    //   try {
-    //     this.$axios.$get('stoxticker/all-boards').then((res) => {
-    //       if (res.status == 200) {
-    //         this.allBoards = res.data
-    //       } else {
-    //         this.$router.push('/404')
-    //       }
-    //     })
-    //   } catch (error) {
-    //     this.$router.push('/404')
-    //   }
-    // },
     getSoldListing() {
       try {
         this.$axios.$get('stoxticker/sold-listings').then((res) => {
@@ -1566,7 +1553,12 @@ export default {
               yaxis: {
                 labels: {
                   formatter: (value, ind) => {
-                    let lblStr = `$${value}`
+                    let valCheck = value
+                    if (Number(value) === value && value % 1 !== 0) {
+                      let valCheck = Number(value).toFixed(2)
+                    }
+
+                    let lblStr = `$${valCheck}`
                     return lblStr
                   },
                 },
@@ -1661,7 +1653,12 @@ export default {
                           fontFamily: 'NexaBold',
                         },
                         formatter: (value, ind) => {
-                          let lblStr = `$${value}`
+                          let valCheck = value
+                    if (Number(value) === value && value % 1 !== 0) {
+                      let valCheck = Number(value).toFixed(2)
+                    }
+
+                    let lblStr = `$${valCheck}`
                           return lblStr
                         },
                       },
@@ -1754,7 +1751,12 @@ export default {
                       fontFamily: 'NexaBold',
                     },
                     formatter: (value, ind) => {
-                      let lblStr = `$${value}`
+                      let valCheck = value
+                    if (Number(value) === value && value % 1 !== 0) {
+                      let valCheck = Number(value).toFixed(2)
+                    }
+
+                    let lblStr = `$${valCheck}`
                       return lblStr
                     },
                   },
@@ -1874,36 +1876,35 @@ ul.my-card-listing {
 // .top-btn {
 //   margin-bottom: 20px;
 // }
-.thb-btn{
-      color: #000;
-      &:hover{
-            text-decoration: none;
-      }
+.thb-btn {
+  color: #000;
+  &:hover {
+    text-decoration: none;
+  }
 }
-    .display_keyword {
-      position: absolute;
-      background: #fff;
-      width: 100%;
-      z-index: 9;
-      ul {
-        list-style: none;
-        text-transform: none;
-        font-family: 'CocogoosePro-Italic', Helvetica, Arial, sans-serif;
-        font-size: 12px;
-        padding: 5px 0px;
-        margin: 0;
-        li {
-          cursor: pointer;
-          line-height: 2;
-          padding-left: 10px;
-          &:hover {
-            background: #cccccc;
-          }
-        }
+.display_keyword {
+  position: absolute;
+  background: #fff;
+  width: 100%;
+  z-index: 9;
+  ul {
+    list-style: none;
+    text-transform: none;
+    font-family: 'CocogoosePro-Italic', Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    padding: 5px 0px;
+    margin: 0;
+    li {
+      cursor: pointer;
+      line-height: 2;
+      padding-left: 10px;
+      &:hover {
+        background: #cccccc;
       }
     }
-  
-  
+  }
+}
+
 .custom-stox-search,
 .custom-stox {
   font-family: 'CocogoosePro-Regular', Helvetica, Arial, sans-serif;

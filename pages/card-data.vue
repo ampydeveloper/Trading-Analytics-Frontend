@@ -716,7 +716,12 @@ export default {
                         fontFamily: 'NexaBold',
                       },
                       formatter: (value, ind) => {
-                        let lblStr = `$${value}`
+                        let valCheck = value
+                    if (Number(value) === value && value % 1 !== 0) {
+                      let valCheck = Number(value).toFixed(2)
+                    }
+
+                    let lblStr = `$${valCheck}`
                         return lblStr
                       },
                     },
