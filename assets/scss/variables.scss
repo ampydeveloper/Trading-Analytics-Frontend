@@ -4112,3 +4112,12 @@ html body #__nuxt .b-profileImage .dropdown-menu {
   margin-top: 15px;
   margin-bottom: 20px;
 }
+#loginTopPopup{
+  .modal-dialog{
+    transform: translate(-50%, -50%);
+    position: relative;
+    top: 50%;
+    left: 50%;
+    margin: 0;
+  }
+}

@@ -145,6 +145,7 @@ this.$toast.error('Select Sport')
         var files = this.$refs.imageZip.files
       }
       const file = files.item(0)
+      if(file){
       //   if (
       //     file.type ==
       //     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
@@ -178,6 +179,7 @@ this.$toast.error('Select Sport')
           console.log(err)
         }
       }
+    }
       //   } else {
       //     this.$toast.error('Invalid File')
       //   }

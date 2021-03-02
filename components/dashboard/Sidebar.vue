@@ -49,11 +49,21 @@
             <div class="link-text">Watch List</div>
           </nuxt-link>
         </li> -->
-        <li class="nav-item">
+        <li class="nav-item" v-if="user != null && user.full_name != null">
           <nuxt-link class="nav-link" to="/my-portfolio">
             <div class="icon my-listing-icon"></div>
             <div class="link-text">My Portfolio</div>
           </nuxt-link>
+        </li>
+        <li class="nav-item" v-if="user == null || user.full_name == null">
+          <span
+            class="nav-link login-popup-open"
+            to="/"
+            v-b-modal.loginTopPopup
+          >
+            <div class="icon my-listing-icon"></div>
+            <div class="link-text">My Portfolio</div>
+          </span>
         </li>
         <!--<li class="nav-item">
           <nuxt-link class="nav-link" to="/sell-slabs">
@@ -130,9 +140,9 @@
       </p> -->
     </div>
 
-    <b-modal id="loginTopPopup" title="ADDITIONAL FEATURE" hide-footer>
+    <b-modal id="loginTopPopup" title="ADDITIONAL SX PRO FEATURE" hide-footer>
       <div class="shar-text" style="padding: 20px 20px">
-        To access additional feature <nuxt-link to="/register">signup</nuxt-link> or <a href="/">signin</a>.
+        To Access Additional Features Please <nuxt-link to="/register">Sign Up</nuxt-link> or <a href="/">Sign In</a>.
       </div>
     </b-modal>
   </nav>
