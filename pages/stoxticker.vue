@@ -1,6 +1,6 @@
 <template>
   <div class="col-md-12 col-sm-12">
-    <div class="row analytics_page">
+    <div class="row analytics_page" v-if="user != null && user.full_name != null">
       <div class="col-md-12">
         <div class="top-btn">
           <button class="card-btn custom-stox">
@@ -590,50 +590,7 @@ slabstox.com
             </div>
           </div>
           <div class="social_share ss-h4">
-            <!-- <h5>SHARE ON SOCIAL</h5>
-            <ul>
-              <li>
-                <a href="javascript:;" @click="shareFb()"
-                  ><img src="~/assets/img/icons/facebook.svg" alt
-                /></a>
-              </li>
-              <li>
-                <a
-                  :href="
-                    'https://twitter.com/intent/tweet?url=' +
-                    encodeURI(baseUrl) +
-                    '&text=StoxTicker@' +
-                    (data.sale?data.sale.toFixed(2):'')
-                  "
-                  target="_blank"
-                  ><img src="~/assets/img/icons/twitter.svg" alt
-                /></a>
-              </li>
-              <li>
-                <a
-                  :href="
-                    'http://pinterest.com/pin/create/button/?url=' +
-                    encodeURI(baseUrl) +
-                    '&media=' +
-                    logo +
-                    '&description=' +
-                    encodeURI('Buy & Sell Sports Cards Online')
-                  "
-                  target="_blank"
-                  ><img src="~/assets/img/pinterest.png" alt
-                /></a>
-              </li>
-              <li>
-                <a
-                  :href="
-                    'http://www.linkedin.com/shareArticle?mini=true&url=' +
-                    encodeURI(baseUrl)
-                  "
-                  target="_blank"
-                  ><img src="~/assets/img/icons/linkedin-circled.svg" alt
-                /></a>
-              </li>
-            </ul> -->
+         
             <h4>
               <a class="embed-link" href="#" @click="embedSellsCode()"
                 >EMBEDD CODE </>
@@ -718,13 +675,21 @@ slabstox.com
             <div class="card">
               <div class="card-body dashboard-graph">
                 <h5 class="card-title_new">
-                 <nuxt-link
+                 <nuxt-link v-if="user != null && user.full_name != null"
                       class="theme-btn card-btn"
                       :to="`stoxticker-details?board=${itemdata.id}`"
                       style="margin-right: 4px;"
                       >{{ itemdata.name }}
                       ${{ boardSearch[key].total_card_value }}
                       </nuxt-link
+                    >
+
+                    <span
+                      class="theme-btn card-btn"
+                      style="margin-right: 4px;" v-if="user == null || user.full_name == null" v-b-modal.loginTopPopup
+                      >{{ itemdata.name }}
+                      ${{ boardSearch[key].total_card_value }}
+                      </span
                     >
 
                    <button
@@ -806,10 +771,18 @@ slabstox.com
               <nuxt-link
                       class="theme-btn card-btn thb-btn"
                       :to="`stoxticker-details?board=${allBoardGraph[key].id}`"
-                      style="margin-right: 4px;"
+                      style="margin-right: 4px;" v-if="user != null && user.full_name != null"
                       >{{ allBoardGraph[key].name }}
                       ${{ allBoardGraph[key].total_card_value }}
                       </nuxt-link
+                    >
+
+<span
+                      class="theme-btn card-btn thb-btn"
+                      style="margin-right: 4px;" v-if="user == null || user.full_name == null" v-b-modal.loginTopPopup
+                      >{{ allBoardGraph[key].name }}
+                      ${{ allBoardGraph[key].total_card_value }}
+                      </span
                     >
 
               <button

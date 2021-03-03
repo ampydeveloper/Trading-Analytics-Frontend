@@ -38,13 +38,20 @@
     </div>
     <nuxt-link
       :class="'my-card-view-listing ' + timeEndClass"
-      :to="'/product?id=' + itemdata.id + '&slag=' + itemdata.title"
+      :to="'/product?id=' + itemdata.id + '&slag=' + itemdata.title" v-if="user != null && user.full_name != null"
     >
-      <!-- View Listing -->
       {{ viewListingText }}
       <font-awesome-icon :icon="['fas', 'chevron-circle-right']" />
     </nuxt-link>
-    <div class="my-card-view-listing-on-ebay">
+
+ <span
+      :class="'my-card-view-listing '" v-if="user == null || user.full_name == null" v-b-modal.loginTopPopup
+    >
+      {{ viewListingText }}
+      <font-awesome-icon :icon="['fas', 'chevron-circle-right']" />
+    </span>
+
+    <div class="my-card-view-listing-on-ebay" v-if="user != null && user.full_name != null">
       <a
         class="my-card-view-listing-on-ebay-link"
         :href="itemdata.viewItemURL"
