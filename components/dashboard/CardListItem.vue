@@ -12,7 +12,7 @@
         <button class="buynow-btn beta-ver-hide" v-if="itemdata.showBuyNow" @click="buyNow(itemdata.data)">
           Buy Now
         </button> 
-        <a class="buynow-btn staging-ver-hide" v-if="itemdata.showBuyNow" :href="itemdata.viewItemURL" target="_blank">
+        <a class="buynow-btn staging-ver-hide" v-if="itemdata.showBuyNow" :href="viewItemURL" target="_blank">
           Buy Now
         </a>
         
@@ -54,7 +54,7 @@
     <div class="my-card-view-listing-on-ebay" v-if="user != null && user.full_name != null">
       <a
         class="my-card-view-listing-on-ebay-link"
-        :href="itemdata.viewItemURL"
+        :href="viewItemURL"
         target="_blank"
         >View Listing on Ebay</a
       >
@@ -84,11 +84,12 @@ export default {
             })(navigator.userAgent || navigator.vendor || window.opera)
             return check
           }
-
+ let itemUrl = 'https://www.ebay.com/itm/'+this.itemdata.itemId+'?mkevt=1&mkcid=1&mkrid=711-53200-19255-0&campid=5338756216&toolid=10001';
+           
           if (window.mobileAndTabletCheck()) {
-            this.viewItemURL = 'https://www.ebay.com/itm/' + this.itemdata.itemId
+            this.viewItemURL = itemUrl
           } else {
-            this.viewItemURL = this.itemdata.viewItemURL
+            this.viewItemURL = itemUrl
           }
 
   },

@@ -437,11 +437,12 @@ export default {
             })(navigator.userAgent || navigator.vendor || window.opera)
             return check
           }
-
+ let itemUrl = 'https://www.ebay.com/itm/'+res.data.itemId+'?mkevt=1&mkcid=1&mkrid=711-53200-19255-0&campid=5338756216&toolid=10001';
+           
           if (window.mobileAndTabletCheck()) {
-            this.viewItemURL = 'https://www.ebay.com/itm/' + res.data.itemId
+            this.viewItemURL = itemUrl
           } else {
-            this.viewItemURL = res.data.viewItemURL
+            this.viewItemURL = itemUrl
           }
           this.calculateValueDifference()
           this.getTimeLeft()
