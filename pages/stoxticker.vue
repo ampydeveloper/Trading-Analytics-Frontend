@@ -218,7 +218,7 @@
                           'https://twitter.com/intent/tweet?url=' +
                           encodeURI(currentUrl) +
                           '&text=StoxTicker@' +
-                         (stoxtickerData.sale?stoxtickerData.sale.toFixed(2):'') +
+                         (stoxtickerData.sale?stoxtickerData.sale:'') +
                          ' ' +encodeURI(this.sxGraphImage)
                         "
                         target="_blank"
@@ -380,7 +380,7 @@
                           'https://twitter.com/intent/tweet?url=' +
                           encodeURI(currentUrl) +
                           '&text=StoxTicker@' +
-                         (stoxtickerData.sale?stoxtickerData.sale.toFixed(2):'')
+                         (stoxtickerData.sale?stoxtickerData.sale:'')
                         "
                         target="_blank"
                         ><img src="~/assets/img/icons/twitter.svg" alt
@@ -424,7 +424,7 @@
                   <span class="tot-sla">TOTAL SLABS</span>
                 </div>
                 <div class="col-md-5 bs-stats">
-                  <h2>{{ (data.sale?data.sale.toFixed(2):'') }}</h2>
+                  <h2>{{ (data.sale?data.sale:'') }}</h2>
                   <span class="avg-sla">AVG. SLAB SALE</span>
                 </div>
                 <div class="col-md-3 bs-stats">
@@ -493,7 +493,7 @@ slabstox.com
                           'https://twitter.com/intent/tweet?url=' +
                           encodeURI(currentUrl) +
                           '&text=StoxTicker@' +
-                         (stoxtickerData.sale?stoxtickerData.sale.toFixed(2):'')
+                         (stoxtickerData.sale?stoxtickerData.sale:'')
                         "
                         target="_blank"
                         ><img src="~/assets/img/icons/twitter.svg" alt
@@ -1024,7 +1024,7 @@ export default {
         {
           property: 'og:description',
           content:
-            'StoxTicker@' + (this.data.sale ? this.data.sale.toFixed(2) : ''),
+            'StoxTicker@' + (this.data.sale ? this.data.sale : ''),
         },
         { property: 'og:url', content: this.currentUrl },
         { property: 'og:site_name', content: 'Slabstox' },
@@ -1485,7 +1485,7 @@ export default {
     shareFb() {
       FB.ui({
         method: 'feed',
-        name: 'StoxTicker@' + (this.data.sale ? this.data.sale.toFixed(2) : ''),
+        name: 'StoxTicker@' + (this.data.sale ? this.data.sale : ''),
         link: this.baseUrl,
         picture: this.sxGraphImage,
         description: 'Check our StoxTicker',

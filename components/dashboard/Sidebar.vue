@@ -140,7 +140,7 @@
       </p> -->
     </div>
 
-    <b-modal id="loginTopPopup" title="ADDITIONAL SX PRO FEATURE" hide-footer>
+    <b-modal id="loginTopPopup" title="ADDITIONAL SX PRO FEATURES" hide-footer>
       <div class="shar-text" style="padding: 20px 20px">
         To Access Additional Features Please <nuxt-link to="/register">Sign Up</nuxt-link> or <a href="/">Sign In</a>.
       </div>
@@ -155,7 +155,7 @@ export default {}
 <style lang="scss" scoped>
 .shar-text{
   a{
-        color: #edecec;
+        color: #11d675;
   }
 }
 .sidebar {

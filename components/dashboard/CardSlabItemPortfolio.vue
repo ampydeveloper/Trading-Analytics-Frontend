@@ -115,6 +115,9 @@ export default {
     // border-radius: 2px;
     // height: 245px;
     height: 16vw;
+     @media (max-width: 767px) {
+    height: 380px;
+       }
     .icons-container {
       position: absolute;
       padding: 10px;
@@ -141,6 +144,9 @@ export default {
       // max-height: 245px;
       max-height: 16vw;
     min-width: auto;
+     @media (max-width: 767px) {
+    max-height: 380px;
+       }
     }
   }
   .watchlist-card-listing .my-card-view-listing-on-ebay{

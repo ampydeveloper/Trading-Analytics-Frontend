@@ -100,6 +100,9 @@ export default {
 }
 .rfive-columns .my-card {
   width: 20% !important;
+    @media (max-width: 767px) {
+    width: 100% !important;
+       }
 }
 .my-card {
   display: inline-block;
@@ -147,6 +150,9 @@ export default {
     background: #272d33;
     // border-radius: 2px;
     // height: 245px;
+     @media (max-width: 767px) {
+    height: 380px !important;
+       }
     height: 16vw;
     .icons-container {
       position: absolute;
@@ -173,6 +179,9 @@ export default {
       padding: 5px;
       max-height: 16vw;
       // max-height: 245px;
+       @media (max-width: 767px) {
+    max-height: 380px !important;
+       }
     }
   }
   .my-card-view-listing {
@@ -180,18 +189,6 @@ export default {
     font-weight: 400;
     width: 100%;
     border-radius: 2px;
-    // background: -webkit-linear-gradient(
-    //   right,
-    //   $theme-dark-green 0%,
-    //   $theme-mild-green 33%,
-    //   $theme-light-green 100%
-    // );
-    // background: linear-gradient(
-    //   to left,
-    //   $theme-dark-green 0%,
-    //   $theme-mild-green 33%,
-    //   $theme-light-green 100%
-    // );
     background: #edecec;
     padding: 6px 5px 5px 5px;
     color: #000;

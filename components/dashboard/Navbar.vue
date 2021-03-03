@@ -17,12 +17,12 @@
         >
           <img class="icon" src="~/assets/img/icons/bell.png" />
         </b-nav-item>
-        <b-nav-item class="top-nav-icon" to="/cart">
+        <!-- <b-nav-item class="top-nav-icon" to="/cart">
           <img class="icon" src="~/assets/img/icons/cart.png" />
           <span v-show="cartItemsCount > 0" class="cart-item-count">{{
             cartItemsCount
           }}</span>
-        </b-nav-item>
+        </b-nav-item> -->
         <b-nav-item-dropdown right v-if="user != null && user.full_name != null">
           <template v-slot:button-content>
             <b-avatar variant="info" :src="user.picture" class></b-avatar>
@@ -65,32 +65,42 @@
             <div class="icon trenders-icon"></div>
           </nuxt-link>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" v-if="user != null && user.full_name != null">
           <nuxt-link class="nav-link" to="/head2head">
             <div class="icon head-to-head-icon"></div>
           </nuxt-link>
+        </li>
+        <li class="nav-item" v-if="user == null || user.full_name == null">
+          <span class="nav-link" v-b-modal.loginTopPopup>
+            <div class="icon head-to-head-icon"></div>
+          </span>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="javascript:;">
             <div class="icon toggle-icon" @click="toggleMobileNav()"></div>
           </a>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <nuxt-link class="nav-link" to="/watch-list">
             <div class="icon watch-list-icon"></div>
           </nuxt-link>
-        </li>
-        <li class="nav-item">
+        </li> -->
+        <li class="nav-item" v-if="user != null && user.full_name != null">
           <nuxt-link class="nav-link" to="/my-portfolio">
             <div class="icon my-listing-icon"></div>
           </nuxt-link>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" v-if="user == null || user.full_name == null">
+          <span class="nav-link" v-b-modal.loginTopPopup>
+            <div class="icon my-listing-icon"></div>
+          </span>
+        </li>
+        <!-- <li class="nav-item">
           <nuxt-link class="nav-link" to="/sell-slabs">
             <div class="icon sell-card-icon"></div>
           </nuxt-link>
-        </li>
-        <li class="nav-item">
+        </li> -->
+        <!-- <li class="nav-item">
           <nuxt-link class="nav-link" to="/my-listing">
             <div class="icon top-pick-icon"></div>
           </nuxt-link>
@@ -99,12 +109,22 @@
           <nuxt-link class="nav-link" to="/analytics">
             <div class="icon analytics-icon"></div>
           </nuxt-link>
-        </li>
-        <!--<li class="nav-item">
+        </li> -->
+        <li class="nav-item">
           <nuxt-link class="nav-link" to="/stoxticker">
             <div class="icon stoxticker-icon"></div>
           </nuxt-link>
-        </li>-->
+        </li>
+        <li class="nav-item" v-if="user != null && user.full_name != null">
+          <nuxt-link class="nav-link" to="/stox-requrest">
+            <div class="icon stox-request-icon"></div>
+          </nuxt-link>
+        </li>
+        <li class="nav-item" v-if="user == null || user.full_name == null">
+          <span class="nav-link" v-b-modal.loginTopPopup>
+            <div class="icon stox-request-icon"></div>
+          </span>
+        </li>
       </ul>
       <!-- <div class="sibar-logo-middel">
         <img src="~/assets/img/dashboard-sidebar-middel-logo.png" alt="Slabstox" />
@@ -593,7 +613,8 @@ export default {
           background-image: url('~@/assets/img/icons/sell-card-black.png');
         }
         .stox-request-icon {
-          background-image: url(~@/assets/img/icons/question_mark_icon.png);
+          // background-image: url(~@/assets/img/icons/question_mark_icon.png);
+          background-image: url(~@/assets/img/icons/stox-request2.png) !important;
         }
         .my-listing-icon {
           background-image: url('~@/assets/img/icons/my-listing-black.png');

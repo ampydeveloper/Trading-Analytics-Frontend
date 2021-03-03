@@ -788,6 +788,7 @@ ul.my-card-listing {
 ul.featured-listing {
   .my-card {
     width: 20% !important;
+   
   }
 }
 
@@ -850,29 +851,15 @@ ul.featured-listing {
     padding-top: 25px;
     padding-bottom: 25px;
     position: relative;
+     @media (max-width: 767px) {
+          width: 100% !important;
+    }
   }
   li.my-card.active {
     background: #39414a;
     margin-right: -2px;
   }
-  // li.my-card.active + li {
-  //   background: red;
-  //   .bor-left {
-  //     display: none;
-  //      background: blue;
-  //   }
-  // }
-  // li.my-card:first-child {
-  //   background: yellow;
-  //   .bor-left {
-  //     display: none;
-  //      background: blue;
-  //   }
-  // }
-  // li.my-card:first-child .bor-left {
-  //   display: none;
-  //   background: blue;
-  // }
+  
 }
 .featured-graph-title {
   font-family: 'CocogoosePro-SemiLightItalic', Helvetica, Arial, sans-serif;

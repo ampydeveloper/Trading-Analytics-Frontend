@@ -1092,11 +1092,6 @@ html body main .my-card-listing {
   max-width: 100%;
 }
 
-.analytics_page_row1 .dashboard-graph {
-  //   height: 252px;
-  //   overflow: hidden;
-}
-
 .analytics_page_row2 .view_portfolio .card-link {
   color: #fff;
   float: right;
@@ -1137,14 +1132,6 @@ html body main .my-card-listing {
 
 .stoxticker_page .card-title .card-link {
   color: #000;
-}
-
-.stoxticker_page .card-body {
-  /*padding-bottom: 12px;*/
-  /*  h3 {
-        margin-top: 17px;
-        margin-bottom: 45px;
-      }*/
 }
 
 .up_img {
@@ -1251,10 +1238,6 @@ html body #__nuxt .b-profileImage .dropdown-menu {
   height: calc(100% - 14px);
 }
 
-// .listing-lebron .dashboard-graph {
-//   max-height: 405px;
-//   overflow: hidden;
-// }
 .value_listing .theme-btn {
   font-size: 10px;
 }
@@ -1688,13 +1671,6 @@ html body #__nuxt .b-profileImage .dropdown-menu {
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
     text-align: center;
-
-    /*        h4 {
-                        font-size: 16px;
-                        color: #fff;
-                        margin-bottom: 3px;
-                        font-family: 'NexaBold', Helvetica, Arial, sans-serif;
-                    }*/
     h5 {
       font-size: 11px;
       letter-spacing: 2px;
@@ -1832,20 +1808,12 @@ html body #__nuxt .b-profileImage .dropdown-menu {
   height: auto;
 }
 
-// .analytics_page_row2 .my-card-listing .image-container {
-//     height: calc(100% - 145px);
-// }
-
 .toggle-icon {
   background-size: 32px !important;
 }
 
 .stox-request-icon {
   background-size: 16px !important;
-}
-
-.headwrapper .product-image-card {
-  /*min-height: 620px;*/
 }
 
 .headwrapper .product-image-card .image-conatiner img {
@@ -2406,15 +2374,6 @@ html body #__nuxt .b-profileImage .dropdown-menu {
   border: 0px;
 }
 
-// .analytics_page_row2 .my-card-listing .image-container img {
-//     margin-top: 30px;
-//     position: relative;
-//     left: 0px;
-//     right: 0px;
-//     transform: none;
-//     top: 0px;
-// }
-
 .analytics_page_row2 .view_portfolio {
   margin-bottom: 25px;
 }
@@ -2430,15 +2389,6 @@ html body #__nuxt .b-profileImage .dropdown-menu {
 .analytics_page .total_purchase .card-body h2 {
   margin-bottom: 27px;
 }
-
-
-// .analytics_page_row2 {
-//     .my-card .image-container .card-image {
-//         max-height: 153px;
-//         min-width: 100px;
-//     }
-// }
-
 
 /**responsive***/
 
@@ -2510,14 +2460,6 @@ html body #__nuxt .b-profileImage .dropdown-menu {
   html body main .my-card-listing {
     .my-card {
       width: 33.333%;
-
-      // .image-container {
-      //   height: 364px;
-
-      //   .card-image {
-      //     max-height: 364px;
-      //   }
-      // }
     }
   }
 
@@ -2837,10 +2779,6 @@ html body #__nuxt .b-profileImage .dropdown-menu {
 }
 
 @media (max-width: 767px) {
-
-  /*    .my-card .image-container .card-image {
-              height: 174px !important;
-          }*/
   .stoxticker_page h2,
   .stoxticker_page h2,
   .stoxticker_page h2 {
@@ -3441,22 +3379,6 @@ html body #__nuxt .b-profileImage .dropdown-menu {
   margin-bottom: -8px;
 }
 
-// .my-portfolio-page {
-//   .dashboard-graph {
-//     .dashboard-apex-top {
-//       height: 200px !important;
-//       overflow: hidden;
-//       &>div {
-//         min-height: 200px !important;
-//         overflow: hidden;
-//       }
-//       .apexcharts-canvas {
-//         height: 200px !important;
-//         overflow: hidden;
-//       }
-//     }
-//   }
-// }
 .card-title-search-field {
   background-color: $theme-card-background-color;
   color: $theme-btn-green;

@@ -253,6 +253,9 @@ text-align: left;
     // border-radius: 2px;
     // height: 238px;
      height: 16vw;
+      @media (max-width: 767px) {
+    height: 380px;
+       }
     .icons-container {
       position: absolute;
       padding: 10px;
@@ -304,6 +307,9 @@ text-align: left;
       // max-height: 238px;
       max-height: 16vw;
       min-width: auto;
+       @media (max-width: 767px) {
+    max-height: 380px;
+       }
     }
   }
   .my-card-view-listing {
