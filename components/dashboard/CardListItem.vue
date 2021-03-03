@@ -84,7 +84,7 @@ export default {
             })(navigator.userAgent || navigator.vendor || window.opera)
             return check
           }
- let itemUrl = 'https://www.ebay.com/itm/'+this.itemdata.itemId+'?mkevt=1&mkcid=1&mkrid=711-53200-19255-0&campid=5338756216&toolid=10001';
+ let itemUrl = 'https://www.ebay.com/itm/'+this.itemdata.itemId+'?mkevt=1&mkcid=1&mkrid=711-53200-19255-0&campid=5338548209&toolid=10001';
            
           if (window.mobileAndTabletCheck()) {
             this.viewItemURL = itemUrl

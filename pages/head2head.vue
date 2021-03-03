@@ -7,9 +7,8 @@
           <div class="nav-bar-form">
             <div class="nav-bar-form-input">
               <input
-                @keydown.down="resultDown('card_one')"
-                @keydown.up="resultUp('card_one')"
-                @keydown.enter="resultSelect('card_one')"
+                
+                @keyup="resultSelect('card_one')"
                 class="form-control"
                 v-model="card_one.keyword"
                 type="text"
@@ -32,7 +31,7 @@
             </div>
             <button
               type="button"
-              @click="searchNow('card_one')"
+              @click="compareSlab()"
               class="nav-bar-search-btn"
             >Search Stox</button>
           </div>
@@ -44,9 +43,8 @@
           <div class="nav-bar-form">
             <div class="nav-bar-form-input">
               <input
-                @keydown.down="resultDown('card_two')"
-                @keydown.up="resultUp('card_two')"
-                @keydown.enter="resultSelect('card_two')"
+             
+                @keyup="resultSelect('card_two')"
                 class="form-control"
                 v-model="card_two.keyword"
                 type="text"
@@ -69,7 +67,7 @@
             </div>
             <button
               type="button"
-              @click="searchNow('card_two')"
+              @click="compareSlab()"
               class="nav-bar-search-btn"
             >Search Stox</button>
           </div>
@@ -926,7 +924,8 @@ ul.my-card-listing {
   .autoselected {
     position: absolute;
     z-index: 99;
-    width: inherit;
+    // width: inherit;
+    width: 100%;
     ul {
       background: #ffffff;
       list-style: none;
