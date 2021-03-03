@@ -658,7 +658,7 @@ slabstox.com
             <button class="card-btn theme-btn">Create Board</button>
           </h5>
           <div class="search-bar">
-          <input type="text" :value="user.first_name + ' ' + (user.last_name != 'null') ? user.last_name : ''" placeholder="ENTER BOARD NAME" style="margin-bottom: 15px;">
+          <input type="text" :value="user.first_name + ' ' +  (user.last_name!=null?user.last_name:'')" placeholder="ENTER BOARD NAME" style="margin-bottom: 15px;">
 </div>
           <div class="create-board-out my-card text-center">
  <button class="my-card-view-listing create-board" @click="createBoard()">
@@ -763,11 +763,6 @@ slabstox.com
           >
           
             <h5 class="card-title">
-              <!-- <button class="theme-btn card-btn">
-                {{allBoardGraph[key].name}} 
-                ${{ allBoardGraph[key].total_card_value }}
-              </button> -->
-
               <nuxt-link
                       class="theme-btn card-btn thb-btn"
                       :to="`stoxticker-details?board=${allBoardGraph[key].id}`"
@@ -996,8 +991,7 @@ export default {
         { property: 'og:image', content: this.sxGraphImage },
         {
           property: 'og:description',
-          content:
-            'StoxTicker@' + (this.data.sale ? this.data.sale : ''),
+          content: 'StoxTicker@' + (this.data.sale ? this.data.sale : ''),
         },
         { property: 'og:url', content: this.currentUrl },
         { property: 'og:site_name', content: 'Slabstox' },
@@ -1407,11 +1401,13 @@ export default {
               $('.search-add-box').removeClass('active')
               $('.stoxticker_page-outer').show()
               $('.stoxticker_listing-outer').show()
+              $('.dashboard-graph-row').show()
 
               $('.search-stox-box .search-bar input').val('')
               this.searchSlabs = res.data
-              this.$toast.success('Stoxticker board created sucessfully.')
+              this.$toast.success('Stoxticker board created successfully.')
               this.allBoardGraphFunc(2)
+              // this.$router.push('/stoxticker')
             }
           })
           .catch((err) => {
@@ -1627,11 +1623,11 @@ export default {
                         },
                         formatter: (value, ind) => {
                           let valCheck = value
-                    if (Number(value) === value && value % 1 !== 0) {
-                      let valCheck = Number(value).toFixed(2)
-                    }
+                          if (Number(value) === value && value % 1 !== 0) {
+                            let valCheck = Number(value).toFixed(2)
+                          }
 
-                    let lblStr = `$${valCheck}`
+                          let lblStr = `$${valCheck}`
                           return lblStr
                         },
                       },
@@ -1725,11 +1721,11 @@ export default {
                     },
                     formatter: (value, ind) => {
                       let valCheck = value
-                    if (Number(value) === value && value % 1 !== 0) {
-                      let valCheck = Number(value).toFixed(2)
-                    }
+                      if (Number(value) === value && value % 1 !== 0) {
+                        let valCheck = Number(value).toFixed(2)
+                      }
 
-                    let lblStr = `$${valCheck}`
+                      let lblStr = `$${valCheck}`
                       return lblStr
                     },
                   },

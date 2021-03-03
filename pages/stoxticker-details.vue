@@ -63,7 +63,7 @@
                 />&nbsp;&nbsp;{{stoxtickerDetails.cardData.pert_diff}}%
               </button>
               
-            <button
+            <button v-if="user.id != stoxtickerDetails.board.user_id"
             :class="
                   (boardFollow
                     ? 'theme-green-btn'
@@ -73,6 +73,11 @@
               {{ (boardFollow
                     ? 'Unfollow'
                     : 'Follow') }}
+              </button>
+
+              <button v-if="user.id == stoxtickerDetails.board.user_id"
+            class="theme-red-btn card-btn" @click="deleteBoard()">
+             Delete
               </button>
                    
               <span class="float-right share-lk-top">
@@ -272,7 +277,8 @@ export default {
     } else {
       //error
     }
-
+// console.log(this.user);
+// console.log(this.stoxtickerDetails.board);
     // this.updateGraph()
   },
   components: {
@@ -422,7 +428,6 @@ export default {
                 },
               }
 
-              console.log(this.stoxtickerDetails)
               setTimeout(() => {
                 this.generateImageOfGraph()
               }, 1000)
@@ -487,6 +492,17 @@ export default {
         .then((res) => {
           if (res.status == 200) {
             this.boardFollow = res.board_create
+            this.$toast.success('Stoxticker board updated successfully.')
+          }
+        })
+    },
+    deleteBoard() {
+      this.$axios
+        .$post('stoxticker/delete-board', { board: this.$route.query.board })
+        .then((res) => {
+          if (res.status == 200) {
+            this.$toast.success('Stoxticker board deleted successfully.')
+            this.$router.push('/stoxticker')
           }
         })
     },
@@ -620,5 +636,8 @@ ul.featured-listing {
   .my-card-listing .my-card {
     width: 20% !important;
   }
+}
+html body main .my-card-listing .my-card[data-v-672220c2]:nth-child(6n+7){
+ clear: none;
 }
 </style>

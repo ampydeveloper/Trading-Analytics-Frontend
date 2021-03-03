@@ -517,7 +517,7 @@ export default {
           $('.featured-graph-title .fg-title').text()
         )
         $('.g-main-text .g-sx').text(
-          $('.featured-graph-title .btn-sxvalue').text()
+          $('.my-card.active .sxvalue .sxvalue-text').text()
         )
         $('.g-main-text .g-to-sales').text(
           'Total Sales ' + $('.total_sales').text()
