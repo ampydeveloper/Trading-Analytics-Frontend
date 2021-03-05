@@ -25,13 +25,7 @@
                 >
                   Import Slabs via CSV
                 </nuxt-link>
-                 <!-- <nuxt-link
-                  class="theme-green-btn card-btn pull-right"
-                  to="/admin/create-cards-excel2"
-                  style="margin-right: 5px"
-                >
-                  Import Slabs via CSV2
-                </nuxt-link> -->
+       
               </div>
             </div>
           </div>

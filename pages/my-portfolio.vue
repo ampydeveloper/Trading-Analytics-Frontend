@@ -84,7 +84,7 @@
               <b-spinner variant="success" label="Spinning"></b-spinner>
             </div>
             <ul class="my-card-listing watchlist-card-listing" v-if="wishlistitems.length > 0">
-               <CardSlabItemPortfolio
+               <CardSlabItemFeatured
                 v-for="item of wishlistitems"
                 :key="'portfolio' + item.id"
                 :itemdata="item"
@@ -333,7 +333,7 @@
 
 <script>
 import CardSlabItemPortfolio from '~/components/dashboard/CardSlabItemPortfolio'
-import CardListItemPortfolio from '~/components/dashboard/CardListItemPortfolio'
+import CardSlabItemFeatured from '~/components/dashboard/CardSlabItemFeatured'
 import 'vue-select/dist/vue-select.css'
 import vSelect from 'vue-select'
 export default {
@@ -353,7 +353,7 @@ export default {
   },
   components: {
     CardSlabItemPortfolio,
-    CardListItemPortfolio,
+    CardSlabItemFeatured,
     vSelect,
     VueApexCharts: () => import('vue-apexcharts'),
   },

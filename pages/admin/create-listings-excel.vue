@@ -45,13 +45,13 @@
                 type="file"
                 style="display: none"
                 ref="excel"
-                @change="uploadExcelNow()"
+                
               />
               <input
                 type="file"
                 style="display: none"
                 ref="imageZip"
-                @change="uploadExcelNow()"
+              
               />
               <div class="left_btn">
                 <button
@@ -62,15 +62,16 @@
                   Cancel
                 </button>
               </div>
-              <!-- <div class="right_btn">
+              <div class="right_btn">
                   <button
                     type="submit"
                     class="theme-green-btn card-btn btn-save"
                     :disabled="requestInProcess"
+                    @click="uploadExcelNow()"
                   >
                     Create
                   </button>
-                </div> -->
+                </div>
             </div>
             <!-- </form> -->
             <div class="text-center message">
@@ -138,19 +139,21 @@ this.$toast.error('Select Sport')
     },
     uploadExcelNow() {
       let formData = new FormData()
-      //   console.log(this.uploadImageType);
-      if (this.uploadImageType == false) {
+          if (this.uploadImageType == false) {
         var files = this.$refs.excel.files
+        const file = files.item(0)
+        formData.append('file', file)
       }
       if (this.uploadImageType != false) {
-        var files = this.$refs.imageZip.files
+        var files1 = this.$refs.imageZip.files
+        const file1 = files1.item(0)
+        formData.append('file1', file1)
       }
-      const file = files.item(0)
+
       //   if (
       //     file.type ==
       //     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
       //   ) {
-      formData.append('file', file)
       formData.append('for', this.uploadExcelType)
       formData.append('imageType', this.uploadImageType)
       formData.append('card_id', 1)
@@ -166,7 +169,7 @@ this.$toast.error('Select Sport')
               this.uploadExcelType = null
               if (res.status == 200) {
                 this.$toast.success(res.data.message)
-                this.getCards(this.currentPage)
+                this.$router.push('/admin/ebay-items-listings')
               }
             })
             .catch((err) => {

@@ -64,13 +64,19 @@
         </li>
           <li class="nav-item">
           <nuxt-link class="nav-link" to="/admin/search-terms">
-            <div class="icon my-listing-icon"></div>
+            <div class="icon head-to-head-icon"></div>
             <div class="link-text">Search Terms</div>
           </nuxt-link>
         </li>
           <li class="nav-item">
-          <nuxt-link class="nav-link" to="/admin/stoxticker">
+          <nuxt-link class="nav-link" to="/admin/csv-uploads">
             <div class="icon my-listing-icon"></div>
+            <div class="link-text">CSV Uploads</div>
+          </nuxt-link>
+        </li>
+          <li class="nav-item">
+          <nuxt-link class="nav-link" to="/admin/stoxticker">
+            <div class="icon stoxticker-icon"></div>
             <div class="link-text">Stoxticker</div>
           </nuxt-link>
         </li>
