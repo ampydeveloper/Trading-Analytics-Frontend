@@ -9,71 +9,51 @@
             </h5>
           </div>
           <div class="table_wrapper ap">
-            <!-- <form class="form-inline"> -->
-
             <div class="form_column">
               <label>Sport</label>
               <select v-model="sport" class="form-control">
-                <option  value="basketball">Basketball</option>
-                <option selected value="baseball">Baseball</option>
+                <option>Select Sport</option>
+                <option value="basketball">Basketball</option>
+                <option value="baseball">Baseball</option>
                 <option value="football">Football</option>
                 <option value="soccer">Soccer</option>
                 <option value="pokemon">Pokemon</option>
               </select>
             </div>
             <div class="form_column">
-              <label>Excel</label>
+              <label>CSV</label>
               <button
                 class="theme-green-btn card-btn pull-right"
                 @click="uploadExcel()"
               >
-                Upload CSV
-              </button>
-            </div>
-            <div class="form_column">
-              <label>Images</label>
-              <button
-                class="theme-green-btn card-btn pull-right"
-                @click="uploadImagesZip('images')"
-              >
-                Upload Images Zip
+                Choose CSV
               </button>
             </div>
 
             <div class="form_btns">
-              <input
-                type="file"
-                style="display: none"
-                ref="excel"
-                
-              />
-              <input
-                type="file"
-                style="display: none"
-                ref="imageZip"
-              
-              />
+              <input type="file" style="display: none" ref="excel" />
+
               <div class="left_btn">
                 <button
                   @click="back()"
                   class="theme-green-btn card-btn btn-cancel"
-                  style="    margin-bottom: 17px;"
+                  style="margin-bottom: 17px"
                 >
                   Cancel
                 </button>
               </div>
               <div class="right_btn">
-                  <button
-                    type="submit"
-                    class="theme-green-btn card-btn btn-save"
-                    :disabled="requestInProcess"
-                    @click="uploadExcelNow()"
-                  >
-                    Create
-                  </button>
-                </div>
+                <button
+                  type="submit"
+                  class="theme-green-btn card-btn btn-save"
+                  :disabled="requestInProcess"
+                  @click="uploadExcelNow()"
+                >
+                  Upload
+                </button>
+              </div>
             </div>
-            <!-- </form> -->
+
             <div class="text-center message">
               <p v-if="statusMessage">{{ statusMessage }}</p>
             </div>
@@ -94,18 +74,11 @@ export default {
     }
   },
   mounted() {
-    // this.card_id = this.$route.query.card_id
   },
   components: {},
   data() {
     return {
-      //   card: {
-      //     sport: '',
-      //     csvFile: '',
-      //     imageFile: '',
-      //   },
       sport: '',
-      // card_id: '',
       uploadExcelType: null,
       uploadImageType: null,
       requestInProcess: false,
@@ -117,75 +90,55 @@ export default {
       this.$router.go(-1)
     },
     uploadExcel() {
-        if(this.sport != ''){
-      // console.log(this.sport);
-      this.uploadExcelType = this.sport
-      this.uploadImageType = 0
-      this.$refs.excel.click()
-        }else{
-this.$toast.error('Select Sport')
-        }
-    },
-    uploadImagesZip(imageType) {
-        if(this.sport != ''){
-      // console.log(this.sport);
-      // console.log(imageType);
-      this.uploadExcelType = this.sport
-      this.uploadImageType = imageType
-      this.$refs.imageZip.click()
-        }else{
-this.$toast.error('Select Sport')
-        }
+      if (this.sport != '') {
+        this.uploadExcelType = this.sport
+        this.uploadImageType = 0
+        this.$refs.excel.click()
+      } else {
+        this.$toast.error('Select Sport')
+      }
     },
     uploadExcelNow() {
       let formData = new FormData()
-          if (this.uploadImageType == false) {
-        var files = this.$refs.excel.files
-        const file = files.item(0)
-        formData.append('file', file)
-      }
-      if (this.uploadImageType != false) {
-        var files1 = this.$refs.imageZip.files
-        const file1 = files1.item(0)
-        formData.append('file1', file1)
-      }
+      var files = this.$refs.excel.files
+      const file = files.item(0)
+      formData.append('file', file)
 
-      //   if (
-      //     file.type ==
-      //     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-      //   ) {
-      formData.append('for', this.uploadExcelType)
-      formData.append('imageType', this.uploadImageType)
-      formData.append('card_id', 1)
-      if (!this.requestInProcess) {
-        try {
-          this.showLoader()
-          this.requestInProcess = true
-          this.$axios
-            .post('upload-slab-excel', formData)
-            .then((res) => {
-              this.requestInProcess = false
-              this.hideLoader()
-              this.uploadExcelType = null
-              if (res.status == 200) {
-                this.$toast.success(res.data.message)
-                this.$router.push('/admin/ebay-items-listings')
-              }
-            })
-            .catch((err) => {
-              this.requestInProcess = false
-              this.hideLoader()
-            })
-        } catch (err) {
-          this.hideLoader()
-          this.uploadExcelType = null
-          this.requestInProcess = false
-          console.log(err)
+      // if (
+      //   files.type ==
+      //   'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+      // ) {
+        formData.append('for', this.uploadExcelType)
+        formData.append('card_id', 1)
+        if (!this.requestInProcess) {
+          try {
+            this.showLoader()
+            this.requestInProcess = true
+            this.$axios
+              .post('upload-slab-excel', formData)
+              .then((res) => {
+                this.requestInProcess = false
+                this.hideLoader()
+                this.uploadExcelType = null
+                if (res.status == 200) {
+                  this.$toast.success(res.data.message)
+                  this.$router.push('/admin/ebay-items-listings')
+                }
+              })
+              .catch((err) => {
+                this.requestInProcess = false
+                this.hideLoader()
+              })
+          } catch (err) {
+            this.hideLoader()
+            this.uploadExcelType = null
+            this.requestInProcess = false
+            console.log(err)
+          }
         }
-      }
-      //   } else {
-      //     this.$toast.error('Invalid File')
-      //   }
+      // } else {
+      //   this.$toast.error('Invalid File')
+      // }
     },
   },
 }

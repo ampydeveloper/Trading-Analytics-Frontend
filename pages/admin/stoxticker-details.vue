@@ -26,6 +26,7 @@
           >
             <h5 class="card-title">
               <button class="theme-btn card-btn">
+              
                 {{ stoxtickerDetails.board.name }} ${{stoxtickerDetails.cardData.total_card_value}}
               </button>
                <button
@@ -61,30 +62,13 @@
                   ]"
                 />&nbsp;&nbsp;{{stoxtickerDetails.cardData.pert_diff}}%
               </button>
-              
-            <button v-if="user.id != stoxtickerDetails.board.user_id"
-            :class="
-                  (boardFollow
-                    ? 'theme-green-btn'
-                    : 'theme-btn') + ' card-btn'
-                " @click="followBoard()">
-              
-              {{ (boardFollow
-                    ? 'Unfollow'
-                    : 'Follow') }}
-              </button>
-
-<span class="card-link" v-b-modal.openSeeProblemPopup>
-                Export Data
-                <font-awesome-icon :icon="['fas', 'chevron-right']" />
-              </span>
-
+            
               <button v-if="user.id == stoxtickerDetails.board.user_id"
             class="theme-red-btn card-btn" @click="deleteBoard()">
              Delete
               </button>
                    
-              <span class="float-right share-lk-top">
+              <!-- <span class="float-right share-lk-top">
                 <span class="share-icon">
                   Share
                   <img src="~/assets/img/share-icon-white.png" alt />
@@ -116,37 +100,7 @@
                   </ul>
                 </div>
              
-              </span>
-
-              <b-modal
-      id="openSeeProblemPopup"
-      title="EXPORT DATA"
-      hide-footer
-      v-model="dialogVisible"
-    >
-      <div class="shar-text">Share Text</div>
-      <div class="g-main-text">
-        <span class="g-title">{{stoxtickerDetails.board.name}} ${{stoxtickerDetails.cardData.total_card_value}}</span>
-        &nbsp;&nbsp;
-        <span class="g-sx">Sales Change ${{stoxtickerDetails.cardData.sx_value}} {{stoxtickerDetails.cardData.pert_diff}}%</span> &nbsp;&nbsp;
-        <span class="slab-image-link">{{graphImage}}</span>
-      </div>
-
-      <div class="shar-text">Share Graphics</div>
-      <div class="g-img-full" id="g-img-full">
-        <img :src="graphImage" alt="" class="slab_graph" />
-      </div>
-      <div class="clearfix g-download-out text-right">
-        <a
-          href="javascript:void(0);"
-          @click="downloadImage"
-          class="g-download-img-all"
-        >
-          Download Graphics
-        </a>
-      </div>
-    </b-modal>
-
+              </span> -->
             </h5>
             <div class="dashboard-apex-top" ref="dashboardApexChart">
               <VueApexCharts
@@ -226,18 +180,17 @@
               <p class="dashboard-graph-footer-update-at float-right">
                 Last Updated - 
                 {{ stoxtickerDetails.last_timestamp }}
-                 <!-- FEBRUARY 20 2021 - 11:58:47 AM -->
               </p>
             </div>
           </div>
         </div>
       </div>
-<div class="social_share ss-h4">
+<!-- <div class="social_share ss-h4">
         <h4>
               <a class="embed-link" href="javascript:;"  @click="embedStatsCode()">EMBEDD CODE </>
               </a>
             </h4>
-        </div>
+        </div> -->
     </div>
     <b-modal id="embedStatsCode" title="" size="xl" hide-footer>
           <h5>Copy code and paste to your website.</h5>
@@ -277,12 +230,11 @@
 import CardSlabItem from '~/components/dashboard/CardSlabItem'
 // import CardListItem from '~/components/dashboard/CardListItem'
 // import MyListing from '~/components/dashboard/MyListing'
-import { BASE_URL } from '../constants/keys'
-import $ from 'jquery'
+import { BASE_URL } from '../../constants/keys'
 
 export default {
   transition: 'fade',
-  layout: 'dashboard',
+  layout: 'admin',
   head() {
     return {
       title: 'Stoxticker - Slabstox',
@@ -306,40 +258,14 @@ export default {
       ],
     }
   },
-  watch: {
-    dialogVisible(visible) {
-      const self = this
-      if (visible) {
-        // $('.g-main-text .g-title').text(
-        //   $('.featured-graph-title .fg-title').text()
-        // )
-        // $('.g-main-text .g-sx').text(
-        //   $('.my-card.active .sxvalue .sxvalue-text').text()
-        // )
-        // $('.g-main-text .g-to-sales').text(
-        //   'Total Sales ' + $('.total_sales').text()
-        // )
-        // $('.g-main-text .g-sales-diff').text(
-        //   'Price Change ' + $('.g-dollar-d-val').text()
-        // )
-        // $('.g-img-full .slab_image').attr(
-        //   'src',
-        //   $('.my-card.active .image-container img').attr('src')
-        // )
-        // self.cardImage = $('.my-card.active .image-container img').attr('src')
-        // $('.g-main-text .g-image-link').text(self.graphImage)
-        // $('.g-main-text .slab-image-link').text(self.cardImage)
-      }
-    },
-  },
   mounted() {
     if (this.$route.query.board != null) {
       this.getStoxtickerData()
     } else {
       //error
     }
-    // console.log(this.user);
-    // console.log(this.stoxtickerDetails.board);
+// console.log(this.user);
+// console.log(this.stoxtickerDetails.board);
     // this.updateGraph()
   },
   components: {
@@ -354,7 +280,7 @@ export default {
       logo: null,
       baseUrl: BASE_URL,
       graphImage: '',
-      dialogVisible: false,
+
       activeDaysGraph: 2,
       initGraphLabelLength: 0,
       graphDataEmpty: false,
@@ -426,9 +352,6 @@ export default {
     }
   },
   methods: {
-    downloadImage() {
-      $('.apexcharts-toolbar .exportPNG').click()
-    },
     trimString(title) {
       if (title.length > 53) {
         title = title.substring(0, 50)
@@ -503,6 +426,29 @@ export default {
         console.log(error)
       }
     },
+    // updateGraph(days = 2) {
+    //   try {
+    //     this.graphDataEmpty = false
+    //     this.$axios.$get(`get-dashboard-graph/${days}`).then((res) => {
+    //       if (res.status == 200) {
+    //         this.activeDaysGraph = days
+    //         if (this.initGraphLabelLength != res.data.labels.length) {
+    //           this.graphDataEmpty = false
+    //           this.series = [{ name: 'Stoxticker', data: res.data.values }]
+    //           this.chartOptions = { xaxis: { categories: res.data.labels } }
+    //           this.initGraphLabelLength = res.data.labels.length
+    //           setTimeout(() => {
+    //             this.generateImageOfGraph()
+    //           }, 1000)
+    //         } else {
+    //           this.graphDataEmpty = true
+    //         }
+    //       }
+    //     })
+    //   } catch (error) {
+    //     console.log(error)
+    //   }
+    // },
     shareFb() {
       FB.ui({
         method: 'feed',
@@ -678,7 +624,7 @@ ul.featured-listing {
     width: 20% !important;
   }
 }
-html body main .my-card-listing .my-card[data-v-672220c2]:nth-child(6n + 7) {
-  clear: none;
+html body main .my-card-listing .my-card[data-v-672220c2]:nth-child(6n+7){
+ clear: none;
 }
 </style>

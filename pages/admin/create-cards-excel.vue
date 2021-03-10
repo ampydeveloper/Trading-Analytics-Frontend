@@ -9,25 +9,24 @@
             </h5>
           </div>
           <div class="table_wrapper ap">
-            <!-- <form class="form-inline"> -->
-
             <div class="form_column">
               <label>Sport</label>
               <select v-model="sport" class="form-control">
-                <option  value="basketball">Basketball</option>
-                <option selected value="baseball">Baseball</option>
+                <option value="">Select Sports</option>
+                <option value="basketball">Basketball</option>
+                <option value="baseball">Baseball</option>
                 <option value="football">Football</option>
                 <option value="soccer">Soccer</option>
                 <option value="pokemon">Pokemon</option>
               </select>
             </div>
             <div class="form_column">
-              <label>Excel</label>
+              <label>CSV</label>
               <button
                 class="theme-green-btn card-btn pull-right"
                 @click="uploadExcel()"
               >
-                Upload CSV
+                Choose CSV
               </button>
             </div>
             <div class="form_column">
@@ -36,44 +35,33 @@
                 class="theme-green-btn card-btn pull-right"
                 @click="uploadImagesZip('images')"
               >
-                Upload Images Zip
+                Choose Images as Zip
               </button>
             </div>
 
             <div class="form_btns">
-              <input
-                type="file"
-                style="display: none"
-                ref="excel"
-           
-              />
-              <input
-                type="file"
-                style="display: none"
-                ref="imageZip"
-               
-              />
+              <input type="file" style="display: none" ref="excel" />
+              <input type="file" style="display: none" ref="imageZip" />
               <div class="left_btn">
                 <button
                   @click="back()"
                   class="theme-green-btn card-btn btn-cancel"
-                  style="    margin-bottom: 17px;"
+                  style="margin-bottom: 17px"
                 >
                   Cancel
                 </button>
               </div>
               <div class="right_btn">
-                  <button
-                    type="submit"
-                    class="theme-green-btn card-btn btn-save"
-                    :disabled="requestInProcess"
-                    @click="uploadExcelNow()"
-                  >
-                    Create
-                  </button>
-                </div>
+                <button
+                  type="submit"
+                  class="theme-green-btn card-btn btn-save"
+                  :disabled="requestInProcess"
+                  @click="uploadExcelNow()"
+                >
+                  Upload
+                </button>
+              </div>
             </div>
-            <!-- </form> -->
             <div class="text-center message">
               <p v-if="statusMessage">{{ statusMessage }}</p>
             </div>
@@ -99,11 +87,6 @@ export default {
   components: {},
   data() {
     return {
-      //   card: {
-      //     sport: '',
-      //     csvFile: '',
-      //     imageFile: '',
-      //   },
       sport: '',
       uploadExcelType: null,
       uploadImageType: null,
@@ -116,29 +99,25 @@ export default {
       this.$router.go(-1)
     },
     uploadExcel() {
-        if(this.sport != ''){
-      // console.log(this.sport);
-      this.uploadExcelType = this.sport
-      this.uploadImageType = 0
-      this.$refs.excel.click()
-        }else{
-this.$toast.error('Select Sport')
-        }
+      if (this.sport != '') {
+        this.uploadExcelType = this.sport
+        this.uploadImageType = 0
+        this.$refs.excel.click()
+      } else {
+        this.$toast.error('Select Sport')
+      }
     },
     uploadImagesZip(imageType) {
-        if(this.sport != ''){
-      // console.log(this.sport);
-      // console.log(imageType);
-      this.uploadExcelType = this.sport
-      this.uploadImageType = imageType
-      this.$refs.imageZip.click()
-        }else{
-this.$toast.error('Select Sport')
-        }
+      if (this.sport != '') {
+        this.uploadExcelType = this.sport
+        this.uploadImageType = imageType
+        this.$refs.imageZip.click()
+      } else {
+        this.$toast.error('Select Sport')
+      }
     },
     uploadExcelNow() {
       let formData = new FormData()
-      //   console.log(this.uploadImageType);
       if (this.uploadImageType == false) {
         var files = this.$refs.excel.files
         const file = files.item(0)
@@ -149,14 +128,13 @@ this.$toast.error('Select Sport')
         const file1 = files1.item(0)
         formData.append('file1', file1)
       }
-      
-    //   if(file){
+
+      //   if(file){
       //   if (
       //     file.type ==
       //     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
       //   ) {
-      
-       
+
       formData.append('for', this.uploadExcelType)
       formData.append('imageType', this.uploadImageType)
       if (!this.requestInProcess) {
@@ -171,7 +149,7 @@ this.$toast.error('Select Sport')
               this.uploadExcelType = null
               if (res.status == 200) {
                 this.$toast.success(res.data.message)
-                 this.$router.push('/admin/cards')
+                this.$router.push('/admin/cards')
               }
             })
             .catch((err) => {
@@ -185,7 +163,7 @@ this.$toast.error('Select Sport')
           console.log(err)
         }
       }
-    // }
+      // }
       //   } else {
       //     this.$toast.error('Invalid File')
       //   }

@@ -35,6 +35,7 @@
                   <th>Price</th>
                   <th>Sold Price</th>
                   <th>Listing Id</th>
+                   <th>Card Id</th>
                   <th>Status</th>
                   <!-- <th>Actions</th> -->
                 </tr>
@@ -46,6 +47,7 @@
                   <td>${{ item.price }}</td>
                   <td>${{ item.sold_price }}</td>
                   <td>{{ item.itemId }}</td>
+                  <td>{{ item.card_id }}</td>
                   <td>{{ (item.status==1?'Active':'Inactive') }}</td>
                   <!-- <td>
                     <select @change="statusChange($event, item.id, key)" class="form-control text-capitalize">
@@ -58,19 +60,19 @@
               </tbody>
               <tbody v-if="items.length == 0 && requestInProcess">
                 <tr>
-                  <td colspan="6" class="text-center">loading...</td>
+                  <td colspan="7" class="text-center">loading...</td>
                 </tr>
               </tbody>
               <tbody v-if="items.length == 0 && requestInProcess == false">
                 <tr>
-                  <td colspan="6" class="text-center">
+                  <td colspan="7" class="text-center">
                     No listings found.
                   </td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
-                  <td colspan="6">
+                  <td colspan="7">
                     <button
                       class="theme-btn card-btn"
                       :disabled="page == 2"

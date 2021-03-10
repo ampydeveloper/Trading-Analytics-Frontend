@@ -90,6 +90,7 @@
                   <th>Price</th>
                   <th>Sold Price</th>
                   <th>Listing Id</th>
+                  <th>Card Id</th>
                   <th>Status</th>
                   <th>Actions</th>
                 </tr>
@@ -123,6 +124,7 @@
                     </button>
                   </td>
                   <td>{{ item.itemId }}</td>
+                    <td>{{ item.card_id }}</td>
                   <td>{{ item.status == 0 ? 'Active' : 'Inactive' }}</td>
                   <td>
                     <select
@@ -133,22 +135,27 @@
                       <option value="0">Active</option>
                       <option value="2">Disable</option>
                     </select>
+                    <nuxt-link
+                      class="card-btn btn btn-primary btn-table-spec"
+                      :to="`edit-listing?listing_id=${item.id}`"
+                      >Edit Listing</nuxt-link
+                    >
                   </td>
                 </tr>
               </tbody>
               <tbody v-if="items.length == 0 && requestInProcess">
                 <tr>
-                  <td colspan="8" class="text-center">loading...</td>
+                  <td colspan="9" class="text-center">loading...</td>
                 </tr>
               </tbody>
               <tbody v-if="items.length == 0 && requestInProcess == false">
                 <tr>
-                  <td colspan="8" class="text-center">No listings found.</td>
+                  <td colspan="9" class="text-center">No listings found.</td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr v-if="page-1 == 1">
-                  <td colspan="8">
+                  <td colspan="9">
                     <button class="theme-btn card-btn active-pagination" @click="getItems(1)">
                       1
                     </button>
@@ -161,7 +168,7 @@
                   </td>
                 </tr>
                 <tr v-if="page-1 == 2">
-                  <td colspan="8">
+                  <td colspan="9">
                     <button class="theme-btn card-btn" @click="getItems(1)">
                       1
                     </button>
@@ -177,7 +184,7 @@
                   </td>
                 </tr>
                 <tr v-if="page-1 == 3">
-                  <td colspan="8">
+                  <td colspan="9">
                     <button
                       class="theme-btn card-btn"
                      
@@ -200,7 +207,7 @@
                   </td>
                 </tr>
                 <tr v-if="(page-1) > 3">
-                  <td colspan="8">
+                  <td colspan="9">
                     <button
                       class="theme-btn card-btn"
                       

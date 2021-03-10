@@ -432,13 +432,13 @@
           </div>
         </div>
 
-        <div class="social_share ss-h4">
+        <!-- <div class="social_share ss-h4">
         <h4>
               <a class="embed-link" href="javascript:;"
                 @click="embedStoxtickerCode()" >EMBEDD CODE </>
               </a>
             </h4>
-        </div>
+        </div> -->
       </div>
       
     </div>

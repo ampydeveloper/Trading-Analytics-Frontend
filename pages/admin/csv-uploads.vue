@@ -10,9 +10,10 @@
           </div>
           <div class="table_wrapper ap">
             <table class="table table-striped">
+              
               <thead>
                 <tr>
-                  <th>Id</th>
+                  <th>Import date</th>
                   <th>CSV Uploads</th>
                   <th>Status</th>
                   <th>Actions</th>
@@ -20,7 +21,7 @@
               </thead>
               <tbody v-if="cards.length > 0">
                 <tr v-for="(card, key) of cards" :key="card.id">
-                  <td>{{ key + 1 }}</td>
+                  <td>{{ $moment(card.created_at).format('MMMM DD Y - hh:mm:ss') }}</td>
                   <td>{{ card.file_name }}</td>
                   <td>{{ card.status == 1 ? 'Done' : 'Processing' }}</td>
                   <td class="text-center">
@@ -89,6 +90,7 @@ export default {
       cards: [],
       page: 1,
       requestInProcess: false,
+      
     }
   },
   methods: {

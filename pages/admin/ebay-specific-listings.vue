@@ -6,7 +6,13 @@
           <div class="card-body">
             <h5 class="card-title">
               <button class="theme-btn card-btn">All Listings</button>
-              
+               <button
+                      class="theme-green-btn card-btn pull-right"
+                      style="margin-right: 5px"
+                      @click="scrapItem(card_id)"
+                    >
+                      Add Listing
+                    </button> 
             </h5>
           </div>
           <div class="card-body search-form">
@@ -61,6 +67,7 @@
                   <th>Price</th>
                   <th>Sold Price</th>
                   <th>Listing Id</th>
+                   <th>Card Id</th>
                   <th>Status</th>
                   <th>Action</th>
                 </tr>
@@ -88,6 +95,7 @@
                     </button>
                   </td>
                   <td>{{ item.itemId }}</td>
+                   <td>{{ item.card_id }}</td>
                   <td>{{ item.status == 0 ? 'Active' : 'Inactive' }}</td>
                   <td>
                     <select
@@ -108,12 +116,12 @@
               </tbody>
               <tbody v-if="items.length == 0 && requestInProcess">
                 <tr>
-                  <td colspan="8" class="text-center">loading...</td>
+                  <td colspan="9" class="text-center">loading...</td>
                 </tr>
               </tbody>
               <tbody v-if="items.length == 0 && requestInProcess == false">
                 <tr>
-                  <td colspan="8" class="text-center">No listings found.</td>
+                  <td colspan="9" class="text-center">No listings found.</td>
                 </tr>
               </tbody>
               <tfoot>
@@ -132,7 +140,7 @@
                   </td>
                 </tr> -->
                  <tr v-if="page-1 == 1">
-                  <td colspan="8">
+                  <td colspan="9">
                     <button class="theme-btn card-btn active-pagination" @click="getItems(1)">
                       1
                     </button>
@@ -145,7 +153,7 @@
                   </td>
                 </tr>
                 <tr v-if="page-1 == 2">
-                  <td colspan="8">
+                  <td colspan="9">
                     <button class="theme-btn card-btn" @click="getItems(1)">
                       1
                     </button>
@@ -161,7 +169,7 @@
                   </td>
                 </tr>
                 <tr v-if="page-1 == 3">
-                  <td colspan="8">
+                  <td colspan="9">
                     <button
                       class="theme-btn card-btn"
                      
@@ -184,7 +192,7 @@
                   </td>
                 </tr>
                 <tr v-if="(page-1) > 3">
-                  <td colspan="8">
+                  <td colspan="9">
                     <button
                       class="theme-btn card-btn"
                       
@@ -254,6 +262,9 @@ export default {
     }
   },
   methods: {
+     scrapItem(id) {
+      this.$router.push('/admin/scrapitem/' + id)
+    },
     getItems(page, card_id, filter = null) {
       if (!this.requestInProcess) {
         try {

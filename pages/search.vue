@@ -67,7 +67,8 @@ import { BSpinner } from 'bootstrap-vue'
 
 export default {
   transition: 'fade',
-  layout: 'dashboard',
+  layout: 'guestOuter',
+   auth: 'guest',
   head() {
     return {
       title: 'Search - Slabstox'
