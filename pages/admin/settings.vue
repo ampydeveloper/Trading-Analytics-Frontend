@@ -17,7 +17,7 @@
    <div>Soccer</div>
    <div>Football</div>
    <div>Basketball</div>
-   <div>Pokemon</div>
+   <div>Pokémon</div>
 </draggable>
 
           </div>

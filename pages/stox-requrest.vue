@@ -6,7 +6,7 @@
           <div class="requestSlab-body">
             <h5 class="requestSlab-title">
               <button class="theme-btn requestSlab-btn">
-                New Stox Request
+                New Slab Request
               </button>
             </h5>
           </div>

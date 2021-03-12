@@ -69,8 +69,6 @@ export default {
   transition: 'fade',
   layout: 'guestOuter',
   auth: 'guest',
-  // middleware: 'guest',
-    // auth: false,
   head() {
     return {
       title: 'Live Listings - Slabstox'

@@ -581,8 +581,9 @@ ul.featured-listing {
 }
 
 .card-link {
-  line-height: 2;
-  margin-top: 2px;
+      margin-left: 15px;
+    vertical-align: middle;
+    display: inline-block;
 }
 .card-text-link {
   display: block;
@@ -680,5 +681,38 @@ ul.featured-listing {
 }
 html body main .my-card-listing .my-card[data-v-672220c2]:nth-child(6n + 7) {
   clear: none;
+}
+.g-main-text {
+  background: #272d33;
+  margin: 0 20px;
+  padding: 15px 15px;
+  border-radius: 2px;
+  text-transform: initial;
+}
+.shar-text {
+  margin-left: 20px;
+  padding: 10px 0 4px 0;
+}
+.g-img-full {
+  margin: -10px 20px 0 20px;
+  .slab_image {
+    width: calc(20% - 5px);
+    margin-right: 5px;
+    float: left;
+    margin-top: 10px;
+  }
+  .slab_graph {
+    width: 80%;
+  }
+}
+.g-download-img-all {
+  font-family: 'CocogoosePro-Italic', Helvetica, Arial, sans-serif;
+  color: #1ce783;
+  text-transform: uppercase;
+  font-size: 9px;
+  letter-spacing: 1px;
+}
+.g-download-out {
+  margin: 20px 20px 0 20px;
 }
 </style>

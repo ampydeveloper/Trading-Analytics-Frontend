@@ -4,7 +4,7 @@
       <div class="card card-single-row-outer">
         <div class="card-body">
           <h5 class="card-title custom-smart-search-player-name">
-            <button class="card-btn theme-btn">{{ card }}</button>
+            <button class="card-btn theme-btn">{{ (card != 'pokemon'?card:'Pokémon') }}</button>
             <div class="internal-search-container">
               <input
                 v-model="keyword"
