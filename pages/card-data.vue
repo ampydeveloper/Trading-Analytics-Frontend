@@ -850,23 +850,23 @@ export default {
     },
     shareFb() {
       FB.ui({
-        method: 'feed',
-        name: encodeURI(
-          this.card.title +
-            ' SX Value $' +
-            this.slabstoxValue +
-            ' Card Cost Change $' +
-            this.cardGraph.dollar_diff +
-            ' ' +
-            this.cardGraph.pert_diff +
-            '% Slab Image ' +
-            this.card.cardImage +
-            ' Slab Sales Graph ' +
-            this.graphImage
-        ),
-        link: encodeURI(this.baseUrl), //this.baseUrl
-        picture: this.graphImage,
-        description:
+        method: 'share',
+        // name: encodeURI(
+        //   this.card.title +
+        //     ' SX Value $' +
+        //     this.slabstoxValue +
+        //     ' Card Cost Change $' +
+        //     this.cardGraph.dollar_diff +
+        //     ' ' +
+        //     this.cardGraph.pert_diff +
+        //     '% Slab Image ' +
+        //     this.card.cardImage +
+        //     ' Slab Sales Graph ' +
+        //     this.graphImage
+        // ),
+        href: encodeURI(this.baseUrl), //this.baseUrl
+        // picture: this.graphImage,
+        quote:
           this.card.title +
           ' SX Value $' +
           this.slabstoxValue +
