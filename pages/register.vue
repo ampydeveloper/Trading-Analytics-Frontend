@@ -148,7 +148,7 @@
 export default {
   transition: 'fade',
   layout: 'guest',
-  head() {
+  metaInfo() {
     return {
       title: 'Register - Slabstox',
       meta: [

@@ -388,7 +388,7 @@ export default {
   transition: 'fade',
   layout: 'guestOuter',
   auth: 'guest',
-  head() {
+  metaInfo() {
     return {
       title: 'Dashboard - Slabstox',
       meta: [

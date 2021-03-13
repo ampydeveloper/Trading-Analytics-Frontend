@@ -20,10 +20,11 @@ vue_fb.install = function install(Vue, options) {
 }
 
 import Vue from 'vue'
+
 import { FACEBOOK_APP_ID_DEV, FACEBOOK_APP_ID_PROD } from '../constants/keys'
 Vue.use(vue_fb, {
     appId: (process.env.NODE_ENV == 'production') ? FACEBOOK_APP_ID_PROD : FACEBOOK_APP_ID_DEV,
     autoLogAppEvents: true,
     xfbml: true,
-    version: 'v8.0'
+    version: 'v8.0',
 })

@@ -134,7 +134,7 @@ import SocialLoginButtons from '~/components/guest/SocialLoginButtons'
 export default {
   transition: 'fade',
   layout: 'guest',
-  head() {
+  metaInfo() {
     return {
       title: 'Login - Slabstox',
       meta: [

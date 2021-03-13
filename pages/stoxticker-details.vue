@@ -283,7 +283,7 @@ import $ from 'jquery'
 export default {
   transition: 'fade',
   layout: 'dashboard',
-  head() {
+  metaInfo() {
     return {
       title: 'Stoxticker - Slabstox',
       meta: [

@@ -235,7 +235,7 @@ import { BASE_URL } from '../../constants/keys'
 export default {
   transition: 'fade',
   layout: 'admin',
-  head() {
+  metaInfo() {
     return {
       title: 'Stoxticker - Slabstox',
       meta: [

@@ -145,7 +145,7 @@ export default {
   transition: 'fade',
   layout: 'default',
   auth: 'guest',
-  head() {
+  metaInfo() {
     return {
       title: 'Stoxticker - Slabstox',
       meta: [

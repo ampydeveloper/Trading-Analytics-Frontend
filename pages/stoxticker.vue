@@ -1045,7 +1045,7 @@ export default {
   directives: {
     clickOutside: vClickOutside.directive,
   },
-  head() {
+  metaInfo() {
     return {
       title: 'Stoxticker - Slabstox',
       meta: [

@@ -106,7 +106,7 @@ export default {
   layout: 'default',
   auth: 'guest',
  
-  head() {
+  metaInfo() {
     return {
       title: 'Stoxticker - Slabstox',
       meta: [
