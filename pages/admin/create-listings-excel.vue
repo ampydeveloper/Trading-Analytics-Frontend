@@ -17,7 +17,7 @@
                 <option value="baseball">Baseball</option>
                 <option value="football">Football</option>
                 <option value="soccer">Soccer</option>
-                <option value="pokemon">Pokemon</option>
+                <option value="pokemon">Pokémon</option>
               </select>
             </div>
             <div class="form_column">

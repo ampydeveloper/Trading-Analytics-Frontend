@@ -107,10 +107,20 @@
                                 encodeURI(currentUrl) +
                                 '&text=' +
                                 encodeURI(
-                                  card.player + ' ' + card.year + '@' + card.sx
+                                  card.title +
+                                    ' SX Value $' +
+                                    slabstoxValue +
+                                    ' Card Cost Change $' +
+                                    cardGraph.dollar_diff +
+                                    ' ' +
+                                    cardGraph.pert_diff +
+                                    '% Slab Image ' +
+                                    card.cardImage +
+                                    ' Slab Sales Graph ' +
+                                    graphImage
                                 ) +
                                 ' ' +
-                                encodeURI(this.graphImage)
+                                encodeURI(card.cardImage)
                               "
                               target="_blank"
                               ><img src="~/assets/img/icons/twitter.svg" alt
@@ -122,10 +132,20 @@
                                 'http://pinterest.com/pin/create/button/?url=' +
                                 encodeURI(currentUrl) +
                                 '&media=' +
-                                this.graphImage +
+                                card.cardImage +
                                 '&description=' +
                                 encodeURI(
-                                  card.player + ' ' + card.year + '@' + card.sx
+                                  card.title +
+                                    ' SX Value $' +
+                                    slabstoxValue +
+                                    ' Card Cost Change $' +
+                                    cardGraph.dollar_diff +
+                                    ' ' +
+                                    cardGraph.pert_diff +
+                                    '% Slab Image ' +
+                                    card.cardImage +
+                                    ' Slab Sales Graph ' +
+                                    graphImage
                                 )
                               "
                               target="_blank"
@@ -391,7 +411,9 @@
           </thead>
           <tbody v-if="cardHistory.length > 0">
             <tr v-for="card of cardHistory" :key="card.id">
-              <td>{{ $moment(card.timestamp).format('MMMM DD Y hh:mm:ss A') }}</td>
+              <td>
+                {{ $moment(card.timestamp).format('MMMM DD Y hh:mm:ss A') }}
+              </td>
               <td>{{ card.source }}</td>
               <td>{{ card.type }}</td>
               <td>{{ card.quantity }}</td>
@@ -424,17 +446,59 @@ export default {
       meta: [
         {
           name: this.card.title + ' - Slabstox',
-          content: this.card.title + ' ' + '@' + this.card.sx,
+          content:
+            this.card.title +
+            ' SX Value $' +
+            this.slabstoxValue +
+            ' Card Cost Change $' +
+            this.cardGraph.dollar_diff +
+            ' ' +
+            this.cardGraph.pert_diff +
+            '% Slab Image ' +
+            this.card.cardImage +
+            ' Slab Sales Graph ' +
+            this.graphImage,
         },
         { property: 'og:title', content: this.card.title + ' - Slabstox' },
-        { property: 'og:image', content: this.graphImage },
+        { property: 'og:image', content: this.card.cardImage },
         {
           property: 'og:description',
-          content: this.card.title + ' ' + '@' + this.card.sx,
+          content:
+            this.card.title +
+            ' SX Value $' +
+            this.slabstoxValue +
+            ' Card Cost Change $' +
+            this.cardGraph.dollar_diff +
+            ' ' +
+            this.cardGraph.pert_diff +
+            '% Slab Image ' +
+            this.card.cardImage +
+            ' Slab Sales Graph ' +
+            this.graphImage,
         },
         { property: 'og:url', content: this.currentUrl },
         { property: 'og:site_name', content: 'Slabstox' },
         { property: 'og:type', content: 'website' },
+
+        { property: 'twitter:card', content: this.graphImage },
+        { property: 'twitter:url', content: this.currentUrl },
+        { property: 'twitter:title', content: this.card.title + ' - Slabstox' },
+        { property: 'twitter:image', content: this.card.cardImage },
+        {
+          property: 'twitter:description',
+          content:
+            this.card.title +
+            ' SX Value $' +
+            this.slabstoxValue +
+            ' Card Cost Change $' +
+            this.cardGraph.dollar_diff +
+            ' ' +
+            this.cardGraph.pert_diff +
+            '% Slab Image ' +
+            this.card.cardImage +
+            ' Slab Sales Graph ' +
+            this.graphImage,
+        },
       ],
     }
   },
@@ -500,7 +564,7 @@ export default {
       slabstoxValue: 0,
       currentUrl: location.href,
       cardHistory: [],
-      cardGraph:[],
+      cardGraph: [],
       series: [
         {
           name: 'Sales',
@@ -717,11 +781,11 @@ export default {
                       },
                       formatter: (value, ind) => {
                         let valCheck = value
-                    if (Number(value) === value && value % 1 !== 0) {
-                      let valCheck = Number(value).toFixed(2)
-                    }
+                        if (Number(value) === value && value % 1 !== 0) {
+                          let valCheck = Number(value).toFixed(2)
+                        }
 
-                    let lblStr = `$${valCheck}`
+                        let lblStr = `$${valCheck}`
                         return lblStr
                       },
                     },
@@ -741,7 +805,7 @@ export default {
                     },
                   },
                 }
-this.cardGraph = res.data
+                this.cardGraph = res.data
                 this.highestSale = res.data.highestSale
                 this.lowestSale = res.data.lowestSale
                 this.lastSaleDate = res.data.lastSaleDate
@@ -786,13 +850,34 @@ this.cardGraph = res.data
     },
     shareFb() {
       FB.ui({
-        method: 'feed',
-        name: encodeURI(
-          this.card.player + '-' + this.card.year + '@' + this.card.sx
-        ),
-        link: encodeURI(this.graphImage), //this.baseUrl
-        picture: this.graphImage,
-        description: this.card.title,
+        method: 'share',
+        // name: encodeURI(
+        //   this.card.title +
+        //     ' SX Value $' +
+        //     this.slabstoxValue +
+        //     ' Card Cost Change $' +
+        //     this.cardGraph.dollar_diff +
+        //     ' ' +
+        //     this.cardGraph.pert_diff +
+        //     '% Slab Image ' +
+        //     this.card.cardImage +
+        //     ' Slab Sales Graph ' +
+        //     this.graphImage
+        // ),
+        href: encodeURI(this.baseUrl), //this.baseUrl
+        // picture: this.graphImage,
+        quote:
+          this.card.title +
+          ' SX Value $' +
+          this.slabstoxValue +
+          ' Card Cost Change $' +
+          this.cardGraph.dollar_diff +
+          ' ' +
+          this.cardGraph.pert_diff +
+          '% Slab Image ' +
+          this.card.cardImage +
+          ' Slab Sales Graph ' +
+          this.graphImage,
       })
     },
     generateImageOfGraph() {

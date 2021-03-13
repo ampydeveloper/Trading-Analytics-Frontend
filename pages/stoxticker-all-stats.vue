@@ -1,7 +1,7 @@
 <template>
   <div class="col-md-12 col-sm-12">
-    <div class="row dashboard-graph-row">
-      <div class="col-md-12 col-sm-12">
+    <div class="row dashboard-graph-row all-public-boards-list-out">
+      <div class="col-md-12 col-sm-12" v-for="(itemdata, key) in allBoardGraph">
         <div class="card">
           <div
             class="card-body dashboard-graph sx-stats-all"
@@ -9,57 +9,69 @@
             ref="shareImage"
           >
             <h5 class="card-title">
-              <button class="theme-btn card-btn">
-                Slabstox ${{ stoxtickerData.total }}
-              </button>
+              <nuxt-link
+                class="theme-btn card-btn thb-btn"
+                :to="`stoxticker-details?board=${allBoardGraph[key].id}`"
+                style="margin-right: 4px"
+                v-if="user != null && user.full_name != null"
+                >{{ allBoardGraph[key].name }} ${{
+                  allBoardGraph[key].total_card_value
+                }}
+              </nuxt-link>
+
+              <span
+                class="theme-btn card-btn thb-btn"
+                style="margin-right: 4px"
+                v-if="user == null || user.full_name == null"
+                v-b-modal.loginTopPopup
+                >{{ allBoardGraph[key].name }} ${{
+                  allBoardGraph[key].total_card_value
+                }}
+              </span>
 
               <button
                 :class="
-                  (stoxtickerData.change_arrow &&
-                  stoxtickerData.change_arrow == 'up'
+                  (allBoardGraph[key].sx_icon &&
+                  allBoardGraph[key].sx_icon == 'up'
                     ? 'theme-green-btn'
                     : 'theme-red-btn') + ' card-btn'
                 "
               >
                 <font-awesome-icon
-                  v-if="stoxtickerData.change_arrow !== undefined"
+                  v-if="allBoardGraph[key].sx_icon !== undefined"
                   :icon="[
                     'fas',
-                    'long-arrow-alt-' + stoxtickerData.change_arrow,
+                    'long-arrow-alt-' + allBoardGraph[key].sx_icon,
                   ]"
                 />&nbsp;&nbsp;
                 <span class="g-dollar-d-val">
-                  ${{ stoxtickerData.doller_diff }}</span
+                  ${{ allBoardGraph[key].sx_value }}</span
                 >
               </button>
               <button
                 :class="
-                  (stoxtickerData.change_arrow &&
-                  stoxtickerData.change_arrow == 'up'
+                  (allBoardGraph[key].sx_icon &&
+                  allBoardGraph[key].sx_icon == 'up'
                     ? 'theme-btn'
                     : 'theme-red-btn') + ' card-btn'
                 "
               >
                 <font-awesome-icon
-                  v-if="stoxtickerData.change_arrow !== undefined"
+                  v-if="allBoardGraph[key].sx_icon !== undefined"
                   :icon="[
                     'fas',
-                    'long-arrow-alt-' + stoxtickerData.change_arrow,
+                    'long-arrow-alt-' + allBoardGraph[key].sx_icon,
                   ]"
-                />&nbsp;&nbsp;{{ stoxtickerData.perc_diff }}%
+                />&nbsp;&nbsp;{{ allBoardGraph[key].pert_diff }}%
               </button>
-
-              <span class="total_sales" style="display: none">{{
-                stoxtickerData.total_sales
-              }}</span>
             </h5>
             <div class="dashboard-apex-top" ref="dashboardApexChart">
               <VueApexCharts
                 ref="dashChart"
                 type="area"
                 height="350"
-                :options="sxChartOptions"
-                :series="sxSeries"
+                :options="boardChartOptions[key]"
+                :series="boardSeries[key]"
               ></VueApexCharts>
             </div>
             <div class="dashboard-graph-footer">
@@ -69,7 +81,9 @@
                     'dashboard-graph-footer-month-filter-item ' +
                     (sxActiveDaysGraph == 2 ? 'active' : '')
                   "
-                  @click="slabstoxGraph(2)"
+                  @click="
+                    allBoardGraphSingleFunc(2, allBoardGraph[key].id, key)
+                  "
                 >
                   1D
                 </li>
@@ -78,7 +92,9 @@
                     'dashboard-graph-footer-month-filter-item ' +
                     (sxActiveDaysGraph == 7 ? 'active' : '')
                   "
-                  @click="slabstoxGraph(7)"
+                  @click="
+                    allBoardGraphSingleFunc(7, allBoardGraph[key].id, key)
+                  "
                 >
                   1W
                 </li>
@@ -87,7 +103,9 @@
                     'dashboard-graph-footer-month-filter-item ' +
                     (sxActiveDaysGraph == 30 ? 'active' : '')
                   "
-                  @click="slabstoxGraph(30)"
+                  @click="
+                    allBoardGraphSingleFunc(30, allBoardGraph[key].id, key)
+                  "
                 >
                   1M
                 </li>
@@ -96,7 +114,9 @@
                     'dashboard-graph-footer-month-filter-item ' +
                     (sxActiveDaysGraph == 90 ? 'active' : '')
                   "
-                  @click="slabstoxGraph(90)"
+                  @click="
+                    allBoardGraphSingleFunc(90, allBoardGraph[key].id, key)
+                  "
                 >
                   3M
                 </li>
@@ -105,7 +125,9 @@
                     'dashboard-graph-footer-month-filter-item ' +
                     (sxActiveDaysGraph == 180 ? 'active' : '')
                   "
-                  @click="slabstoxGraph(180)"
+                  @click="
+                    allBoardGraphSingleFunc(180, allBoardGraph[key].id, key)
+                  "
                 >
                   6M
                 </li>
@@ -114,7 +136,9 @@
                     'dashboard-graph-footer-month-filter-item ' +
                     (sxActiveDaysGraph == 365 ? 'active' : '')
                   "
-                  @click="slabstoxGraph(365)"
+                  @click="
+                    allBoardGraphSingleFunc(365, allBoardGraph[key].id, key)
+                  "
                 >
                   1Y
                 </li>
@@ -123,14 +147,20 @@
                     'dashboard-graph-footer-month-filter-item ' +
                     (sxActiveDaysGraph == 1825 ? 'active' : '')
                   "
-                  @click="slabstoxGraph(1825)"
+                  @click="
+                    allBoardGraphSingleFunc(1825, allBoardGraph[key].id, key)
+                  "
                 >
                   5Y
                 </li>
               </ul>
               <p class="dashboard-graph-footer-update-at float-right">
                 Last Updated -
-                {{ stoxtickerData.last_timestamp }}
+                {{
+                  allBoardGraph[key].sales_graph.last_timestamp
+                    ? allBoardGraph[key].sales_graph.last_timestamp
+                    : ''
+                }}
               </p>
             </div>
           </div>
@@ -142,14 +172,13 @@
 
 <script>
 import { BASE_URL } from '../constants/keys'
-import CardSlabItem from '~/components/dashboard/CardSlabItem'
-import CardListItem from '~/components/dashboard/CardListItem'
 import $ from 'jquery'
 
 export default {
   transition: 'fade',
   layout: 'guestOuter',
   auth: 'guest',
+
   head() {
     return {
       title: 'Stoxticker - Slabstox',
@@ -159,23 +188,22 @@ export default {
         { property: 'og:image', content: this.sxGraphImage },
         {
           property: 'og:description',
-          content:
-            'StoxTicker@' + (this.data.sale ? this.data.sale.toFixed(2) : ''),
+          content: 'StoxTicker@' + (this.data.sale ? this.data.sale : ''),
         },
-        { property: 'og:url', content: this.baseUrl },
+        { property: 'og:url', content: this.currentUrl },
         { property: 'og:site_name', content: 'Slabstox' },
         { property: 'og:type', content: 'website' },
       ],
     }
   },
   mounted() {
-    // this.getData()
-    this.slabstoxGraph()
-    this.logo = document.getElementById('sidebarLogo').src
+  
+   
+    this.allBoardGraphFunc(2)
+ 
   },
   components: {
-    CardListItem,
-    CardSlabItem,
+ 
     VueApexCharts: () => import('vue-apexcharts'),
   },
   data() {
@@ -196,12 +224,73 @@ export default {
       doller_diff: 0,
       total_sales: 0,
       last_timestamp: 'N/A',
+      currentUrl: location.href,
+      soldListing: '',
+      // allBoards: '',
+      allBoardGraph: [],
+      boardChartOptions: [],
+      boardSeries: [],
+      boardSalesQty: [],
+      searchChartOptions: [],
+      searchSeries: [],
+      searchSalesQty: [],
+      smartKeyword: [],
+      showSmartSearch: false,
       data: {
         total: 0,
         sale: 0,
         change: 0,
         change_icon: 'up',
         last_updated: '',
+      },
+      series: [
+        {
+          name: 'Sales',
+          data: [0],
+        },
+      ],
+      chartOptions: {
+        chart: {
+          toolbar: {
+            show: false,
+          },
+          height: 350,
+          type: 'area',
+          background: 'transparent',
+          zoom: {
+            enabled: false,
+          },
+        },
+        colors: ['#14f078'],
+        dataLabels: {
+          enabled: false,
+        },
+        stroke: {
+          curve: 'smooth',
+        },
+        yaxis: {
+          labels: {
+            style: {
+              colors: '#edecec',
+              fontSize: '10px',
+              fontFamily: 'NexaBold',
+            },
+            formatter: (value, ind) => {
+              return `$${value}`
+            },
+          },
+        },
+        xaxis: {
+          labels: {
+            style: {
+              colors: '#edecec',
+              fontSize: '10px',
+              fontFamily: 'NexaBold',
+            },
+          },
+          type: 'category',
+          categories: [],
+        },
       },
       sxSeries: [
         {
@@ -256,6 +345,9 @@ export default {
     }
   },
   methods: {
+ 
+   
+  
     trimTitle(title) {
       if (title.length > 53) {
         title = title.substring(0, 53)
@@ -264,17 +356,22 @@ export default {
       }
       return title
     },
-
+   
     shareFb() {
       FB.ui({
         method: 'feed',
-        name: 'StoxTicker@' + (this.data.sale ? this.data.sale.toFixed(2) : ''),
+        name: 'StoxTicker@' + (this.data.sale ? this.data.sale : ''),
         link: this.baseUrl,
         picture: this.sxGraphImage,
         description: 'Check our StoxTicker',
       })
     },
-
+    embedStatsCode() {
+      this.$bvModal.show('embedStatsCode')
+    },
+    embedSellsCode() {
+      this.$bvModal.show('embedSellsCode')
+    },
     embedStoxtickerCode() {
       this.$bvModal.show('embedStoxtickerCode')
     },
@@ -307,59 +404,196 @@ export default {
           })
       })
     },
-    slabstoxGraph(days = 2) {
+   
+    allBoardGraphFunc(days = 2) {
       try {
         // this.graphDataEmpty = false;
-        this.$axios.$get(`get-sx-dashboard-graph/${days}`).then((res) => {
+        this.$axios.$get(`stoxticker/all-boards/${days}`).then((res) => {
           if (res.status == 200) {
             this.sxActiveDaysGraph = days
             // if (this.initGraphLabelLength != res.data.labels.length) {
             // this.graphDataEmpty = false;
-            this.stoxtickerData.total = res.data.total_sales
-            this.stoxtickerData.sale = res.data.sale
-            this.stoxtickerData.perc_diff = res.data.perc_diff
-            this.stoxtickerData.doller_diff = res.data.doller_diff
-            this.stoxtickerData.change_arrow = res.data.change_arrow
-            this.stoxtickerData.last_timestamp = res.data.last_timestamp
+            // this.stoxtickerData.sale = res.data.sale
+            // this.stoxtickerData.perc_diff = res.data.perc_diff
+            // this.stoxtickerData.doller_diff = res.data.doller_diff
+            // this.stoxtickerData.change_arrow = res.data.change_arrow
+            // this.stoxtickerData.last_timestamp = res.data.last_timestamp
+            if (res.data != null && res.data.length > 0) {
+              res.data.map((item, key) => {
+                if (typeof item != 'undefined') {
+                  this.allBoardGraph[key] = item
+                  this.boardSeries[key] = [
+                    {
+                      name: 'Sales',
+                      data: item.sales_graph.values,
+                    },
+                  ]
+                  this.boardSalesQty.push(item.sales_graph.qty)
+                  this.boardChartOptions.push({
+                    chart: {
+                      toolbar: {
+                        show: false,
+                      },
+                      height: 350,
+                      type: 'area',
+                      background: 'transparent',
+                      zoom: {
+                        enabled: false,
+                      },
+                    },
+                    colors: ['#14f078'],
+                    dataLabels: {
+                      enabled: false,
+                    },
+                    stroke: {
+                      curve: 'smooth',
+                    },
+                    xaxis: {
+                      labels: {
+                        style: {
+                          colors: '#edecec',
+                          fontSize: '10px',
+                          fontFamily: 'NexaBold',
+                        },
+                      },
+                      type: 'category',
+                      categories: item.sales_graph.labels,
+                    },
+                    yaxis: {
+                      labels: {
+                        style: {
+                          colors: '#edecec',
+                          fontSize: '10px',
+                          fontFamily: 'NexaBold',
+                        },
+                        formatter: (value, ind) => {
+                          let valCheck = value
+                          if (Number(value) === value && value % 1 !== 0) {
+                            let valCheck = Number(value).toFixed(2)
+                          }
 
-            this.sxSeries = [{ name: 'Sales', data: res.data.values }]
-            this.sxSalesQty = res.data.qty
-            this.sxChartOptions = {
-              xaxis: {
-                categories: res.data.labels,
-              },
-              yaxis: {
-                labels: {
-                  formatter: (value, ind) => {
-                    let lblStr = `$${value}`
-                    return lblStr
-                  },
-                },
-              },
-              tooltip: {
-                enabled: true,
-                y: {
-                  formatter: (value, ind) => {
-                    let lblStr = `$${value}`
-                    if (typeof ind == 'object')
-                      lblStr = `$${value} (${
-                        this.sxSalesQty[ind.dataPointIndex]
-                      })`
-                    else lblStr = `$${value} (${this.sxSalesQty[ind]})`
-                    return lblStr
-                  },
-                },
-              },
+                          let lblStr = `$${valCheck}`
+                          return lblStr
+                        },
+                      },
+                    },
+                    tooltip: {
+                      enabled: true,
+                      y: {
+                        formatter: (value, ind) => {
+                          let lblStr = `$${value}`
+                          if (typeof ind == 'object')
+                            lblStr = `$${value} (${
+                              this.boardSalesQty[key][ind.dataPointIndex]
+                            })`
+                          else
+                            lblStr = `$${value} (${this.boardSalesQty[key][ind]})`
+                          return lblStr
+                        },
+                      },
+                    },
+                  })
+                }
+              })
             }
-            setTimeout(() => {
-              this.generateImageOfGraph(this.$refs.dashChart.chart.dataURI())
-              // console.log(this.generateImageOfGraph(this.$refs.dashChart.chart.dataURI()));
-            }, 1000)
-            // }else{
-            //   this.graphDataEmpty = true;
-            // }
+            console.log(this.allBoardGraph)
           }
         })
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    allBoardGraphSingleFunc(days, board, boardKey) {
+      try {
+        // this.graphDataEmpty = false;
+        this.$axios
+          .$get(`stoxticker/single-graph-board/${days}/${board}`)
+          .then((res) => {
+            if (res.status == 200) {
+              // this.sxActiveDaysGraph = days
+              // if (this.initGraphLabelLength != res.data.labels.length) {
+              // this.graphDataEmpty = false;
+              // this.stoxtickerData.sale = res.data.sale
+              // this.stoxtickerData.perc_diff = res.data.perc_diff
+              // this.stoxtickerData.doller_diff = res.data.doller_diff
+              // this.stoxtickerData.change_arrow = res.data.change_arrow
+              // this.stoxtickerData.last_timestamp = res.data.last_timestamp
+
+              this.allBoardGraph[boardKey] = res.data
+              this.boardSeries[boardKey] = [
+                {
+                  name: 'Sales',
+                  data: res.data.sales_graph.values,
+                },
+              ]
+              this.boardSalesQty[boardKey] = res.data.sales_graph.qty
+              this.boardChartOptions[boardKey] = {
+                chart: {
+                  toolbar: {
+                    show: false,
+                  },
+                  height: 350,
+                  type: 'area',
+                  background: 'transparent',
+                  zoom: {
+                    enabled: false,
+                  },
+                },
+                colors: ['#14f078'],
+                dataLabels: {
+                  enabled: false,
+                },
+                stroke: {
+                  curve: 'smooth',
+                },
+                xaxis: {
+                  labels: {
+                    style: {
+                      colors: '#edecec',
+                      fontSize: '10px',
+                      fontFamily: 'NexaBold',
+                    },
+                  },
+                  type: 'category',
+                  categories: res.data.sales_graph.labels,
+                },
+                yaxis: {
+                  labels: {
+                    style: {
+                      colors: '#edecec',
+                      fontSize: '10px',
+                      fontFamily: 'NexaBold',
+                    },
+                    formatter: (value, ind) => {
+                      let valCheck = value
+                      if (Number(value) === value && value % 1 !== 0) {
+                        let valCheck = Number(value).toFixed(2)
+                      }
+
+                      let lblStr = `$${valCheck}`
+                      return lblStr
+                    },
+                  },
+                },
+                tooltip: {
+                  enabled: true,
+                  y: {
+                    formatter: (value, ind) => {
+                      let lblStr = `$${value}`
+                      if (typeof ind == 'object')
+                        lblStr = `$${value} (${
+                          this.boardSalesQty[ind.dataPointIndex]
+                        })`
+                      else lblStr = `$${value} (${this.boardSalesQty[ind]})`
+                      return lblStr
+                    },
+                  },
+                },
+              }
+              console.log(boardKey)
+              console.log(this.allBoardGraph[boardKey])
+            }
+          })
       } catch (error) {
         console.log(error)
       }
@@ -456,6 +690,34 @@ ul.my-card-listing {
 // .top-btn {
 //   margin-bottom: 20px;
 // }
+.thb-btn {
+  color: #000;
+  &:hover {
+    text-decoration: none;
+  }
+}
+.display_keyword {
+  position: absolute;
+  background: #fff;
+  width: 100%;
+  z-index: 9;
+  ul {
+    list-style: none;
+    text-transform: none;
+    font-family: 'CocogoosePro-Italic', Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    padding: 5px 0px;
+    margin: 0;
+    li {
+      cursor: pointer;
+      line-height: 2;
+      padding-left: 10px;
+      &:hover {
+        background: #cccccc;
+      }
+    }
+  }
+}
 
 .custom-stox-search,
 .custom-stox {

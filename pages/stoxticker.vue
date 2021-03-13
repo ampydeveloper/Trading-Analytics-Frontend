@@ -67,7 +67,7 @@
                       <li><a href="#" class="theme-btn card-btn">Hockey</a></li>
                       <li><a href="#" class="theme-btn card-btn">Soccer</a></li>
                       <li>
-                        <a href="#" class="theme-btn card-btn">Pokemon</a>
+                        <a href="#" class="theme-btn card-btn">Pokémon</a>
                       </li>
                     </ul>
                   </div>
@@ -575,7 +575,7 @@ slabstox.com
                   </marquee>
                 </li>
                 <li>
-                  <h3 class="h3-title">POKEMON</h3>
+                  <h3 class="h3-title">POKÉMON</h3> 
                   <marquee direction="left">
                    <template v-for="list in soldListing.pokemon">
                     <h4>{{list.title}}&nbsp;&nbsp;</h4>
@@ -731,6 +731,69 @@ slabstox.com
                     >
                       1D
                     </li>
+                    <!-- <li
+                  :class="
+                    'dashboard-graph-footer-month-filter-item ' +
+                    (activeDaysGraph == 2 ? 'active' : '')
+                  "
+                  @click="updateGraph(2)"
+                >
+                  1D
+                </li>
+                <li
+                  :class="
+                    'dashboard-graph-footer-month-filter-item ' +
+                    (activeDaysGraph == 7 ? 'active' : '')
+                  "
+                  @click="updateGraph(7)"
+                >
+                  1W
+                </li>
+                <li
+                  :class="
+                    'dashboard-graph-footer-month-filter-item ' +
+                    (activeDaysGraph == 30 ? 'active' : '')
+                  "
+                  @click="updateGraph(30)"
+                >
+                  1M
+                </li>
+                <li
+                  :class="
+                    'dashboard-graph-footer-month-filter-item ' +
+                    (activeDaysGraph == 90 ? 'active' : '')
+                  "
+                  @click="updateGraph(90)"
+                >
+                  3M
+                </li>
+                <li
+                  :class="
+                    'dashboard-graph-footer-month-filter-item ' +
+                    (activeDaysGraph == 180 ? 'active' : '')
+                  "
+                  @click="updateGraph(180)"
+                >
+                  6M
+                </li>
+                <li
+                  :class="
+                    'dashboard-graph-footer-month-filter-item ' +
+                    (activeDaysGraph == 365 ? 'active' : '')
+                  "
+                  @click="updateGraph(365)"
+                >
+                  1Y
+                </li>
+                <li
+                  :class="
+                    'dashboard-graph-footer-month-filter-item ' +
+                    (activeDaysGraph == 1825 ? 'active' : '')
+                  "
+                  @click="updateGraph(1825)"
+                >
+                  5Y
+                </li> -->
                   </ul>
                   <p class="dashboard-graph-footer-update-at float-right">
                     Last Updated - 

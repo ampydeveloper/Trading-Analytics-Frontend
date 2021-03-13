@@ -104,7 +104,7 @@
             v-if="user != null && user.full_name != null"
           >
             <div class="icon stox-request-icon"></div>
-            <div class="link-text">Stox Request</div>
+            <div class="link-text">Slab Request</div>
           </nuxt-link>
         </li>
         <li class="nav-item" v-if="user == null || user.full_name == null">
@@ -114,7 +114,7 @@
             v-b-modal.loginTopPopup
           >
             <div class="icon stox-request-icon"></div>
-            <div class="link-text">Stox Request</div>
+            <div class="link-text">Slab Request</div>
           </span>
         </li>
       </ul>

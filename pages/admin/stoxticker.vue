@@ -67,7 +67,7 @@
                       <li><a href="#" class="theme-btn card-btn">Hockey</a></li>
                       <li><a href="#" class="theme-btn card-btn">Soccer</a></li>
                       <li>
-                        <a href="#" class="theme-btn card-btn">Pokemon</a>
+                        <a href="#" class="theme-btn card-btn">Pokémon</a>
                       </li>
                     </ul>
                   </div>
