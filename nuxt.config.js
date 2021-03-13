@@ -42,10 +42,10 @@ export default {
       { rel: 'stylesheet', type: 'text/css', href: '/NexaLight/NexaLight.css' },
       { rel: 'stylesheet', type: 'text/css', href: '//stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' },
     ],
-    script: [
-      { type: 'text/javascript', src: 'https://epnt.ebay.com/static/epn-smart-tools.js'}, 
-      { type: 'text/javascript', src: '/affiliate-code.js'}, 
-    ],
+    // script: [
+    //   { type: 'text/javascript', src: 'https://epnt.ebay.com/static/epn-smart-tools.js'}, 
+    //   { type: 'text/javascript', src: '/affiliate-code.js'}, 
+    // ],
   },
   /*
   ** Customize the progress-bar color

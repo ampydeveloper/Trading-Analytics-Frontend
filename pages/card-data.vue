@@ -106,21 +106,9 @@
                                 'https://twitter.com/intent/tweet?url=' +
                                 encodeURI(currentUrl) +
                                 '&text=' +
-                                encodeURI(
-                                  card.title +
-                                    ' SX Value $' +
-                                    slabstoxValue +
-                                    ' Card Cost Change $' +
-                                    cardGraph.dollar_diff +
-                                    ' ' +
-                                    cardGraph.pert_diff +
-                                    '% Slab Image ' +
-                                    card.cardImage +
-                                    ' Slab Sales Graph ' +
-                                    graphImage
-                                ) +
+                                encodeURI(metaDesc) +
                                 ' ' +
-                                encodeURI(card.cardImage)
+                                encodeURI(metaTitle)
                               "
                               target="_blank"
                               ><img src="~/assets/img/icons/twitter.svg" alt
@@ -132,21 +120,9 @@
                                 'http://pinterest.com/pin/create/button/?url=' +
                                 encodeURI(currentUrl) +
                                 '&media=' +
-                                card.cardImage +
+                                metaImage +
                                 '&description=' +
-                                encodeURI(
-                                  card.title +
-                                    ' SX Value $' +
-                                    slabstoxValue +
-                                    ' Card Cost Change $' +
-                                    cardGraph.dollar_diff +
-                                    ' ' +
-                                    cardGraph.pert_diff +
-                                    '% Slab Image ' +
-                                    card.cardImage +
-                                    ' Slab Sales Graph ' +
-                                    graphImage
-                                )
+                                encodeURI(metaDesc)
                               "
                               target="_blank"
                               ><img src="~/assets/img/pinterest.png" alt
@@ -440,64 +416,34 @@ export default {
   transition: 'fade',
   layout: 'guestOuter',
   auth: 'guest',
-  head() {
+  metaInfo() {
     return {
-      title: this.card.title + ' - Slabstox',
+      title: `${this.metaTitle}`,
       meta: [
         {
-          name: this.card.title + ' - Slabstox',
-          content:
-            this.card.title +
-            ' SX Value $' +
-            this.slabstoxValue +
-            ' Card Cost Change $' +
-            this.cardGraph.dollar_diff +
-            ' ' +
-            this.cardGraph.pert_diff +
-            '% Slab Image ' +
-            this.card.cardImage +
-            ' Slab Sales Graph ' +
-            this.graphImage,
+          name: this.metaTitle,
+          content: this.metaDesc,
         },
-        { property: 'og:title', content: this.card.title + ' - Slabstox' },
-        { property: 'og:image', content: this.card.cardImage },
+        { property: 'og:title', content: this.metaTitle },
+        { property: 'og:image', content: this.metaImage },
         {
           property: 'og:description',
-          content:
-            this.card.title +
-            ' SX Value $' +
-            this.slabstoxValue +
-            ' Card Cost Change $' +
-            this.cardGraph.dollar_diff +
-            ' ' +
-            this.cardGraph.pert_diff +
-            '% Slab Image ' +
-            this.card.cardImage +
-            ' Slab Sales Graph ' +
-            this.graphImage,
+          content: this.metaDesc,
         },
         { property: 'og:url', content: this.currentUrl },
         { property: 'og:site_name', content: 'Slabstox' },
         { property: 'og:type', content: 'website' },
 
+        { property: 'article:published_time', content: this.$moment(this.lastSaleDate).format('MMMM DD Y - hh:mm:ss A') },
+        { property: 'article:author', content: 'Slabstox' },
+
         { property: 'twitter:card', content: this.graphImage },
         { property: 'twitter:url', content: this.currentUrl },
-        { property: 'twitter:title', content: this.card.title + ' - Slabstox' },
-        { property: 'twitter:image', content: this.card.cardImage },
+        { property: 'twitter:title', content: this.metaTitle },
+        { property: 'twitter:image', content: this.metaImage },
         {
           property: 'twitter:description',
-          content:
-            this.card.title +
-            ' SX Value $' +
-            this.slabstoxValue +
-            ' Card Cost Change $' +
-            this.cardGraph.dollar_diff +
-            ' ' +
-            this.cardGraph.pert_diff +
-            '% Slab Image ' +
-            this.card.cardImage +
-            ' Slab Sales Graph ' +
-            this.graphImage,
+          content: this.metaDesc,
         },
       ],
     }
@@ -511,7 +457,6 @@ export default {
     this.getData()
     this.updateGraph()
     this.getSalesGraph()
-    // console.log(location.href)
   },
   watch: {
     dialogVisible(visible) {
@@ -543,12 +488,12 @@ export default {
     return {
       baseUrl: BASE_URL,
       id: null,
+      metaTitle: '',
+      metaDesc: '',
+      metaImage: '',
       card: [
         {
           title: '',
-          // details: [{
-          //   currentPrice: 0,
-          // }],
         },
       ],
       activeDaysGraph: 2,
@@ -743,8 +688,8 @@ export default {
         this.$axios.$get('get-card-data/' + this.id).then((res) => {
           if (res.status == 200) {
             this.card = res.data
-            // this.series = [{name: 'Card Values', data: res.data.price_graph_values}];
-            // this.chartOptions = { xaxis:{ categories: res.data.price_graph_labels }};
+            this.metaTitle = this.card.title + ' - Slabstox'
+            this.metaImage = this.card.cardImage
           } else {
             this.$router.push('/404')
           }
@@ -850,34 +795,11 @@ export default {
     },
     shareFb() {
       FB.ui({
-        method: 'share',
-        // name: encodeURI(
-        //   this.card.title +
-        //     ' SX Value $' +
-        //     this.slabstoxValue +
-        //     ' Card Cost Change $' +
-        //     this.cardGraph.dollar_diff +
-        //     ' ' +
-        //     this.cardGraph.pert_diff +
-        //     '% Slab Image ' +
-        //     this.card.cardImage +
-        //     ' Slab Sales Graph ' +
-        //     this.graphImage
-        // ),
-        href: encodeURI(this.baseUrl), //this.baseUrl
-        // picture: this.graphImage,
-        quote:
-          this.card.title +
-          ' SX Value $' +
-          this.slabstoxValue +
-          ' Card Cost Change $' +
-          this.cardGraph.dollar_diff +
-          ' ' +
-          this.cardGraph.pert_diff +
-          '% Slab Image ' +
-          this.card.cardImage +
-          ' Slab Sales Graph ' +
-          this.graphImage,
+        method: 'feed',
+        name: encodeURI(this.metaTitle),
+        link: encodeURI(this.baseUrl), //this.baseUrl
+        picture: this.metaImage,
+        description: encodeURI(this.metaDesc),
       })
     },
     generateImageOfGraph() {
@@ -892,6 +814,19 @@ export default {
           .then((res) => {
             if (res.status == 200) {
               this.graphImage = res.url
+
+              this.metaDesc =
+                this.card.title +
+                ' SX Value $' +
+                this.slabstoxValue +
+                ' Card Cost Change $' +
+                this.cardGraph.dollar_diff +
+                ' ' +
+                this.cardGraph.pert_diff +
+                '% Slab Image ' +
+                this.card.cardImage +
+                ' Slab Sales Graph ' +
+                this.graphImage
             }
           })
       })
