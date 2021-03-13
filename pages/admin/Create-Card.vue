@@ -173,6 +173,19 @@
                   class="form-control"
                 ></textarea>
               </div>
+              <div class="form_column">
+                <label>Image&nbsp;
+                  <img :src='imgSrc' alt='Card-image' v-if='imgSrc.length > 0' width="50"/>
+                </label>
+                <input
+                  type="file"
+                  placeholder="Image"
+                  class="form-control"
+                  accept="image/jpg"
+                  @change="assignFileObj"
+                  required
+                />
+              </div>
               <div class="form_btns">
                 <div class="left_btn">
                   <button
@@ -236,13 +249,26 @@ export default {
         qualifiers6: '',
         qualifiers7: '',
         qualifiers8: '',
+        image: '',
         readyforcron: 0,
       },
+      imgSrc: '',
       requestInProcess: false,
       statusMessage: null,
     }
   },
   methods: {
+    assignFileObj(event){
+      const self = this
+      if(event.target.files.length){
+        var reader = new FileReader();
+        reader.onload = function (efr) {
+            self.imgSrc = efr.target.result
+        }
+        reader.readAsDataURL(event.target.files[0]); 
+        this.card.image = event.target.files[0]
+      }
+    },
     back() {
       this.$router.go(-1)
     },
@@ -281,8 +307,12 @@ if (!this.requestInProcess) {
         try {
           this.showLoader()
           this.requestInProcess = true
+          let data = new FormData();
+          Object.keys(this.card).forEach(k => {
+            data.append(k,this.card[k])
+          });
           this.$axios
-            .post('card-create', this.card)
+            .post('card-create', data)
             .then((res) => {
               if (res.status == 200) {
                 this.$toast.success(res.data.message)
