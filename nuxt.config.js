@@ -11,24 +11,24 @@ export default {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'Buy & Sell Sports Cards Online' },
-      { name: 'application-name', content: 'SlabStox - Online Sports Card Platform' },
-      { name: 'description', content: 'Buy & Sell Sports Cards Online', id: 'desc' }, // id to replace intead of create element
-      // ...
-      // Twitter
-      { name: 'twitter:title', content: 'SlabStox - Online Sports Card Platform' },
-      // with shorthand
-      { name: 'twitter:description', content: 'Buy & Sell Sports Cards Online'},
-      // ...
-      // Google+ / Schema.org
-      { itemprop: 'name', content: 'SlabStox - Online Sports Card Platform' },
-      { itemprop: 'description', content: 'Buy & Sell Sports Cards Online' },
-      // ...
-      // Facebook / Open Graph
-      { hid:'og:title', name: 'og:title', content: 'SlabStox - Online Sports Card Platform' },
-      { hid:'og:description', name: 'og:description', content: 'Buy & Sell Sports Cards Online' },
-      { hid:'og:type', name: 'og:type', content: 'website' },
-      { hid:'og:image', name: 'og:image', content: 'https://www.slabstox.com/wp-content/uploads/2020/06/logo-3.png' },
+      // { hid: 'description', name: 'description', content: 'Buy & Sell Sports Cards Online' },
+      // { name: 'application-name', content: 'SlabStox - Online Sports Card Platform' },
+      // { name: 'description', content: 'Buy & Sell Sports Cards Online', id: 'desc' }, // id to replace intead of create element
+      // // ...
+      // // Twitter
+      // { name: 'twitter:title', content: 'SlabStox - Online Sports Card Platform' },
+      // // with shorthand
+      // { name: 'twitter:description', content: 'Buy & Sell Sports Cards Online'},
+      // // ...
+      // // Google+ / Schema.org
+      // { itemprop: 'name', content: 'SlabStox - Online Sports Card Platform' },
+      // { itemprop: 'description', content: 'Buy & Sell Sports Cards Online' },
+      // // ...
+      // // Facebook / Open Graph
+      // { hid:'og:title', name: 'og:title', content: 'SlabStox - Online Sports Card Platform' },
+      // { hid:'og:description', name: 'og:description', content: 'Buy & Sell Sports Cards Online' },
+      // { hid:'og:type', name: 'og:type', content: 'website' },
+      // { hid:'og:image', name: 'og:image', content: 'https://www.slabstox.com/wp-content/uploads/2020/06/logo-3.png' },
 
     ],
     link: [
