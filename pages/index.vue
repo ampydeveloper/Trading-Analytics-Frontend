@@ -157,11 +157,11 @@ import $ from 'jquery'
 export default {
   transition: 'fade',
   layout: 'guest',
-  metaInfo() {
+  head() {
     return {
       title: 'Login - Slabstox',
       meta: [
-        { name: 'Login - Slabstox', content: 'Buy & Sell Slabs' },
+        {hid: 'login', name: 'Login - Slabstox', content: 'Buy & Sell Slabs' },
         { property: 'og:title', content: 'Buy & Sell Slabs' },
         { property: 'og:image', content: $('.header-logo').attr('src') },
         {

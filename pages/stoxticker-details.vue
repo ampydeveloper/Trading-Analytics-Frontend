@@ -283,12 +283,12 @@ import $ from 'jquery'
 export default {
   transition: 'fade',
   layout: 'dashboard',
-  metaInfo() {
+  head() {
     return {
       title: 'Stoxticker - Slabstox',
       meta: [
         {
-          name: 'Stoxticker - Slabstox',
+         hid: 'stoxticker-details', name: 'Stoxticker - Slabstox',
           content: 'Check Stoxticker: ' + this.stoxtickerDetails.board.name,
         },
         {

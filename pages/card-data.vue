@@ -416,11 +416,12 @@ export default {
   transition: 'fade',
   layout: 'guestOuter',
   auth: 'guest',
-  metaInfo() {
+  head() {
     return {
       title: `${this.metaTitle}`,
       meta: [
         {
+          hid: 'card-data',
           name: this.metaTitle,
           content: this.metaDesc,
         },

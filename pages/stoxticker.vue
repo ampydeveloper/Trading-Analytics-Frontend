@@ -1045,11 +1045,11 @@ export default {
   directives: {
     clickOutside: vClickOutside.directive,
   },
-  metaInfo() {
+  head() {
     return {
       title: 'Stoxticker - Slabstox',
       meta: [
-        { name: 'Stoxticker - Slabstox', content: 'Check our StoxTicker' },
+        {  hid: 'stoxticker',name: 'Stoxticker - Slabstox', content: 'Check our StoxTicker' },
         { property: 'og:title', content: 'Check our StoxTicker' },
         { property: 'og:image', content: this.sxGraphImage },
         {

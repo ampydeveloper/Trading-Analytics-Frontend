@@ -179,11 +179,11 @@ export default {
   layout: 'guestOuter',
   auth: 'guest',
 
-  metaInfo() {
+  head() {
     return {
       title: 'Stoxticker - Slabstox',
       meta: [
-        { name: 'Stoxticker - Slabstox', content: 'Check our StoxTicker' },
+        {  hid: 'stoxticker-all-stats', name: 'Stoxticker - Slabstox', content: 'Check our StoxTicker' },
         { property: 'og:title', content: 'Check our StoxTicker' },
         { property: 'og:image', content: this.sxGraphImage },
         {

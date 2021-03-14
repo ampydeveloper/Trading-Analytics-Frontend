@@ -235,12 +235,12 @@ import { BASE_URL } from '../../constants/keys'
 export default {
   transition: 'fade',
   layout: 'admin',
-  metaInfo() {
+  head() {
     return {
       title: 'Stoxticker - Slabstox',
       meta: [
         {
-          name: 'Stoxticker - Slabstox',
+           hid: 'stoxticker-details',name: 'Stoxticker - Slabstox',
           content: 'Check Stoxticker: ' + this.stoxtickerDetails.board.name,
         },
         {

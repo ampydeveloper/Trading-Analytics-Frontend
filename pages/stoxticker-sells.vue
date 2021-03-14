@@ -145,12 +145,12 @@ export default {
   transition: 'fade',
   layout: 'default',
   auth: 'guest',
-  metaInfo() {
+  head() {
     return {
       title: 'Stoxticker - Slabstox',
       meta: [
         {
-          name: 'Stoxticker - Slabstox',
+          hid: 'stoxticker-sells', name: 'Stoxticker - Slabstox',
           content: 'Slabstox - Check our StoxTicker',
         },
         { property: 'og:title', content: 'Slabstox - Check our StoxTicker' },

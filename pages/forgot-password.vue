@@ -63,15 +63,15 @@
 export default {
   transition: 'fade',
   layout: 'guest',
-  metaInfo() {
+  head() {
     return {
       title: 'Forgot Password - Slabstox',
       meta: [
         // hid is used as unique identifier. Do not use `vmid` for it as it will not work
         {
-          hid: 'description',
-          name: 'description',
-          content: 'SLabstox description'
+          hid: 'forgot-password',
+          name: 'Forgot Password - Slabstox',
+          content: 'Forgot Password - Slabstox'
         }
       ]
     }
