@@ -240,8 +240,8 @@
                 <li>Overall Rank: {{ card_one.rank }}</li>
                 <li>Last Sale Price: ${{ (card_one.last_sale?card_one.last_sale.cost:0) }}</li>
                 <li>Last Sale Date:{{ (card_one.last_sale? this.$moment(card_one.last_sale.timestamp).format('M/D/Y'):'N/A') }}</li>
-                <li>High Sale: ${{ (card_one.high_sale?card_one.high_sale.cost:0) }}</li>
-                <li>Low Sale: ${{ (card_one.low_sale?card_one.low_sale.cost:0) }}</li>
+                <li>High Sale: ${{ (card_one.high_sale?card_one.high_sale.cost:0) }} ({{ (card_one.high_sale? this.$moment(card_one.high_sale.timestamp).format('M/D/Y'):'N/A') }})</li>
+                <li>Low Sale: ${{ (card_one.low_sale?card_one.low_sale.cost:0) }} ({{ (card_one.low_sale? this.$moment(card_one.low_sale.timestamp).format('M/D/Y'):'N/A') }})</li>
               </ul>
             </div>
           </div>
@@ -253,8 +253,8 @@
                 <li>Overall Rank: {{ card_two.rank }}</li>
                 <li>Last Sale Price: ${{ (card_two.last_sale?card_two.last_sale.cost:0) }}</li>
                 <li>Last Sale Date: {{ (card_two.last_sale? this.$moment(card_two.last_sale.timestamp).format('M/D'):'N/A') }}</li>
-                <li>High Sale: ${{ (card_two.high_sale?card_two.high_sale.cost:0) }}</li>
-                <li>Low Sale: ${{ (card_two.low_sale?card_two.low_sale.cost:0) }}</li>
+                <li>High Sale: ${{ (card_two.high_sale?card_two.high_sale.cost:0) }} ({{ (card_two.high_sale? this.$moment(card_two.high_sale.timestamp).format('M/D/Y'):'N/A') }})</li>
+                <li>Low Sale: ${{ (card_two.low_sale?card_two.low_sale.cost:0) }} ({{ (card_two.low_sale? this.$moment(card_two.low_sale.timestamp).format('M/D/Y'):'N/A') }})</li>
               </ul>
             </div>
           </div>

@@ -2,11 +2,11 @@ import Vue from 'vue';
 
 import { mapGetters } from 'vuex';
 
-import VueMeta from 'vue-meta'
+// import VueMeta from 'vue-meta'
 // Vue.use(VueMeta)
-Vue.use(VueMeta, {
-    metaInfo: {},
-})
+// Vue.use(VueMeta, {
+//     metaInfo: {},
+// })
 
 const User = {
     install(Vue, option) {
@@ -18,6 +18,8 @@ const User = {
                     showloader: true,
                 }
             },
+            // metaInfo() {},
+            // metaInfo: {},
             computed: {
                 ...mapGetters({
                     user: 'loggedInUser',
