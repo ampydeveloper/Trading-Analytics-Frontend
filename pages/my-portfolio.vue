@@ -55,7 +55,7 @@
             <ul class="my-card-listing" v-if="items.length > 0">
               <CardSlabItemPortfolio
                 v-for="item of items"
-                :key="'portfolio' + item.id"
+                :key="'portfolio' + item.id + item.purchase_price + item.portfolio_id"
                 :itemdata="item"
                 :addPortfolioVar="addPortfolioVar"
                 @onEditPortfolioOwned="updateToMyPortfolioPrice"

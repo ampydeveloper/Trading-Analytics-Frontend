@@ -89,6 +89,19 @@
                   placeholder="Enter Grade"
                 />
               </div>
+              <div class="form_column">
+                <label>Image&nbsp;
+                  <img :src='imgSrc' alt='Card-image' v-if='imgSrc.length > 0' width="50"/>
+                </label>
+                <input
+                  type="file"
+                  placeholder="Image"
+                  class="form-control"
+                  accept="image/jpg"
+                  @change="assignFileObj"
+                  required
+                />
+              </div>
               <div class="form_btns">
                 <div class="right_btn">
                   <button
@@ -129,19 +142,36 @@ export default {
         requestSlab: '',
         rc: 'yes',
         variation: '',
-        grade: ''
+        grade: '',
+        image: ''
       },
+      imgSrc: '',
       requestInProcess: false,
       statusMessage: null
     }
   },
   methods: {
+    assignFileObj(event){
+      const self = this
+      if(event.target.files.length){
+        var reader = new FileReader();
+        reader.onload = function (efr) {
+            self.imgSrc = efr.target.result
+        }
+        reader.readAsDataURL(event.target.files[0]); 
+        this.requestSlab.image = event.target.files[0]
+      }
+    },
     create() {
       if (!this.requestInProcess) {
         try {
           this.requestInProcess = true
+          let data = new FormData();
+          Object.keys(this.requestSlab).forEach((ky) => {
+            data.append(ky, this.requestSlab[ky])
+          })
           this.$axios
-            .$post('card/add-request-slab', this.requestSlab)
+            .$post('card/add-request-slab', data)
             .then(res => {
               this.requestInProcess = false
               this.requestSlab = {
@@ -161,7 +191,7 @@ export default {
             })
         } catch (error) {
           this.requestInProcess = false
-          console.log(err)
+          console.log(error)
         }
       }
     }

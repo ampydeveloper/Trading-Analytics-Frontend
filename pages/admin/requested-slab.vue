@@ -22,6 +22,7 @@
                   <th>rc</th>
                   <th>variation</th>
                   <th>grade</th>
+                  <th>image</th>
                 </tr>
               </thead>
               <tbody v-if="cards.length > 0">
@@ -36,6 +37,7 @@
                   <td>{{ card.rc }}</td>
                   <td>{{ card.variation }}</td>
                   <td>{{ card.grade }}</td>
+                  <td><img :src='card.cardImage' title="Click to view" class="cardImg" @click="openImg(card.cardImage)" v-if='card.image != null' alt='Slab-image' width=50 /><span v-else>NA</span></td>
                 </tr>
               </tbody>
               <tbody v-if="cards.length == 0 && requestInProcess">
@@ -87,6 +89,9 @@ export default {
     }
   },
   methods: {
+    openImg(img){
+      window.open(img, '_blank')
+    },
     getRequestedSlab(page) {
       if (!this.requestInProcess) {
         try {
@@ -129,5 +134,8 @@ ul.my-card-listing {
 .card-link {
   line-height: 2;
   margin-top: 2px;
+}
+.cardImg{
+  cursor: zoom-in;
 }
 </style>

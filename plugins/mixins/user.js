@@ -48,7 +48,7 @@ const User = {
                     } else {
                         if (this.user) {
                             console.log(this.user);
-                            if (this.user.roles[0].name != 'administrator') {
+                            if (this.user.roles[0].name != 'administrator' && (this.user.roles[0].name).toLowerCase() != 'moderator') {
                                 this.$router.push('/dashboard')
                             } else {
                                 this.$router.push('/admin')

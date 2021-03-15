@@ -534,10 +534,10 @@ slabstox.com
                     <!-- <h4>LEBRON JAMES 2003 TOPPS CHROME $ 45.75</h4>
                     <h5>LEBRON JAMES 2003...</h5> -->
                     <template v-for="list in soldListing.basketball">
-                    <h4>{{list.title}}&nbsp;&nbsp;</h4>
+                    <h4>{{list.card.title}}&nbsp;&nbsp;</h4>
                       </template>
                       <template v-if="soldListing.basketball==0">
-                    <h4>No recent sold listings.</h4>
+                      <h4>No recent sold listings.</h4>
                       </template>
                   </marquee>
                 </li>
@@ -545,7 +545,7 @@ slabstox.com
                   <h3 class="h3-title">FOOTBALL</h3>
                   <marquee direction="left">
                    <template v-if="soldListing.football>0" v-for="list in soldListing.football">
-                    <h4>{{list.title}}&nbsp;&nbsp;</h4>
+                    <h4>{{list.card.title}}&nbsp;&nbsp;</h4>
                       </template>
                   <template v-if="soldListing.football==0">
                     <h4>No recent sold listings.</h4>
@@ -556,7 +556,7 @@ slabstox.com
                   <h3 class="h3-title">BASEBALL</h3>
                   <marquee direction="left">
                     <template v-for="list in soldListing.baseball">
-                    <h4>{{list.title}}&nbsp;&nbsp;</h4>
+                    <h4>{{list.card.title}}&nbsp;&nbsp;</h4>
                       </template>
                       <template v-if="soldListing.baseball==0">
                     <h4>No recent sold listings.</h4>
@@ -567,7 +567,7 @@ slabstox.com
                   <h3 class="h3-title">SOCCER</h3>
                   <marquee direction="left">
                    <template v-for="list in soldListing.soccer">
-                    <h4>{{list.title}}&nbsp;&nbsp;</h4>
+                    <h4>{{list.card.title}}&nbsp;&nbsp;</h4>
                       </template>
                       <template v-if="soldListing.soccer==0">
                     <h4>No recent sold listings.</h4>
@@ -578,7 +578,7 @@ slabstox.com
                   <h3 class="h3-title">POKÉMON</h3> 
                   <marquee direction="left">
                    <template v-for="list in soldListing.pokemon">
-                    <h4>{{list.title}}&nbsp;&nbsp;</h4>
+                    <h4>{{list.card.title}}&nbsp;&nbsp;</h4>
                       </template>
                       <template v-if="soldListing.pokemon==0">
                     <h4>No recent sold listings.</h4>

@@ -38,13 +38,13 @@
             <div class="link-text">All Listings</div>
           </nuxt-link>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" v-if='!moderator'>
           <nuxt-link class="nav-link" to="/admin/additem/null?random=1">
             <div class="icon live-auctions-icon"></div>
             <div class="link-text">Random Bin</div>
           </nuxt-link>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" v-if='!moderator'>
           <nuxt-link class="nav-link" to="/admin/sold-listings">
             <div class="icon  trenders-icon"></div>
             <div class="link-text">Sold Listings</div>
@@ -56,25 +56,25 @@
             <div class="link-text">Slab Requests</div>
           </nuxt-link>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" v-if='!moderator'>
           <nuxt-link class="nav-link" to="/admin/see-problem">
             <div class="icon my-listing-icon"></div>
             <div class="link-text">Flag a Listing</div>
           </nuxt-link>
         </li>
-          <li class="nav-item">
+          <li class="nav-item" v-if='!moderator'>
           <nuxt-link class="nav-link" to="/admin/search-terms">
             <div class="icon head-to-head-icon"></div>
             <div class="link-text">Search Terms</div>
           </nuxt-link>
         </li>
-          <li class="nav-item">
+          <li class="nav-item" v-if='!moderator'>
           <nuxt-link class="nav-link" to="/admin/csv-uploads">
             <div class="icon my-listing-icon"></div>
             <div class="link-text">CSV Uploads</div>
           </nuxt-link>
         </li>
-          <li class="nav-item">
+          <li class="nav-item" v-if='!moderator'>
           <nuxt-link class="nav-link" to="/admin/stoxticker">
             <div class="icon stoxticker-icon"></div>
             <div class="link-text">Stoxticker</div>
@@ -99,7 +99,16 @@
 </template>
 
 <script>
-export default {}
+export default {
+  data(){
+    return {
+      moderator: false
+    }
+  },
+  mounted(){
+    if((this.user.roles[0].name).toLowerCase() == 'moderator') this.moderator = true
+  }
+}
 </script>
 
 <style lang="scss" scoped>

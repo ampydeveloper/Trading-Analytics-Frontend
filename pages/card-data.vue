@@ -39,6 +39,13 @@
               <font-awesome-icon :icon="['fas', 'chevron-right']"
             /></a>
             <button
+              class="theme-green-btn card-btn add-my-port1"
+              v-if="user.full_name != null"
+              v-b-modal.submitAListingPopup
+            >
+              Submit a Listing
+            </button>
+            <button
               class="theme-green-btn card-btn add-my-port"
               v-if="user.full_name != null"
               @click="addToMyPortfolio()"
@@ -363,6 +370,31 @@
             </a>
           </div>
         </b-modal>
+        <b-modal
+          id="submitAListingPopup"
+          title="Submit a Listing"
+          hide-footer
+        >
+          <div class="shar-text">Enter eBay Link</div>
+          <div class="form_column">
+            <input
+              v-model="reqAListLink"
+              type="text"
+              class="form-control"
+              placeholder="Enter eBay link"
+              required
+            />
+          </div>
+          <div class="clearfix g-download-out text-right">
+            <a
+              href="javascript:void(0);"
+              @click="submitAListing"
+              class="g-download-img-all"
+            >
+              Submit
+            </a>
+          </div>
+        </b-modal>
       </div>
     </div>
 
@@ -489,6 +521,7 @@ export default {
   data() {
     return {
       baseUrl: BASE_URL,
+      reqAListLink: '',
       id: null,
       metaTitle: '',
       metaDesc: '',
@@ -685,6 +718,30 @@ export default {
         console.log(err)
       }
     },
+    submitAListing(){
+      try {
+        if(this.reqAListLink.trim().length == 0){
+          this.$toast.error('Please enter a valid link')
+          return false
+        }
+        this.$axios
+          .$post('card/add-request-listing', {
+            "card_id": this.id,
+            "link": this.reqAListLink
+          })
+          .then((res) => {
+            this.$bvModal.hide('submitAListingPopup')
+            this.$toast.success('Listing request submitted successfully.')
+          })
+          .catch((err) => {
+            console.log(err)
+            this.$toast.error('Invalid link - Please copy exact url from your browser address bar!')
+          })
+      } catch (err) {
+        console.log(err)
+        this.$toast.error('Invalid link - Please copy exact url from your browser address bar!')
+      }
+    },
     getData() {
       try {
         this.$axios.$get('get-card-data/' + this.id).then((res) => {
@@ -861,6 +918,22 @@ export default {
     }
   }
 }
+.form_column input{
+  width: 1000%;
+  background: #39414a;
+  border: 0px;
+  color: #ffffff;
+  font-size: 11px;
+  letter-spacing: 2px;
+  line-height: 20px;
+  font-family: 'NexaBold', Helvetica, Arial, sans-serif;
+  margin: 0px 20px;
+  border-bottom: 1px solid #fff !important;
+  border-radius: 0;
+  &:focus {
+    box-shadow: none;
+  }
+}
 .dashboard-nav-bar {
   text-transform: uppercase;
   font-family: 'CocogoosePro-Italic', Helvetica, Arial, sans-serif;
@@ -978,7 +1051,26 @@ export default {
   display: block;
   text-align: center;
   position: absolute;
-  bottom: 10px;
+  bottom: 0px;
+  width: 92%;
+}
+.add-my-port1 {
+  font-family: 'CocogoosePro-Regular', Helvetica, Arial, sans-serif !important;
+  font-weight: 400;
+  border-radius: 2px;
+  background: linear-gradient(
+    to left,
+    rgba(10, 178, 95, 0.76) 0%,
+    rgba(27, 231, 131, 0.76) 33%,
+    rgba(5, 251, 98, 0.76) 100%
+  );
+  padding: 6px 5px 5px 5px !important;
+  color: #000;
+  font-size: 12px;
+  display: block;
+  text-align: center;
+  position: absolute;
+  bottom: 35px;
   width: 92%;
 }
 .add-my-port2 {
@@ -997,7 +1089,7 @@ export default {
   display: block;
   text-align: center;
   position: absolute;
-  bottom: 50px;
+  bottom: 70px;
   width: 92%;
   &:hover {
     text-decoration: none;
@@ -1046,6 +1138,7 @@ ul.my-card-listing {
     margin: 15px;
     padding: 0;
     .add-my-port,
+    .add-my-port1,
     .add-my-port2 {
       width: 100%;
     }

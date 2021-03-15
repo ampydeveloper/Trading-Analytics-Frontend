@@ -22,6 +22,10 @@
         :src="itemdata.cardImage"
         :alt="itemdata.id"
       />
+      <select class="form-control grading" v-model="grade" @change="updateGrading(itemdata)">
+        <option value="null" selected>Select Grade</option>
+        <option v-for='gr in ["review", "pending", "graded"]' :key='"grading-"+gr' :value="gr" v-text="gr" class="text-capitalize"></option>
+      </select>
     </div>
     <nuxt-link
       class="my-card-view-listing"
@@ -44,7 +48,14 @@
 <script>
 export default {
   props: ['itemdata'],
-  mounted() {},
+  data(){
+    return{
+      grade: ''
+    }
+  },
+  mounted() {
+    this.grade = this.itemdata.grade
+  },
   methods: {
     selectSlabCard(id) {
       this.$emit('clicked', id)
@@ -60,7 +71,25 @@ export default {
     editPortfolioData(itemArr) {
         this.$emit('onEditPortfolioOwned', itemArr)
     },
-  },
+    updateGrading(){
+      try{
+        this.$axios
+            .post('portfolio/gradeCard', {
+              card_id: this.itemdata.id,
+              purchase_price: this.itemdata.purchase_price,
+              grade: this.grade
+            })
+            .then(res => {
+              this.$toast.success('Card graded successfully.')
+              this.hideLoader()
+            }).catch(err => {
+              console.log(err)
+            })
+        } catch (err) {        
+          console.log(err)
+        }
+    }
+  }
 }
 </script>
 
@@ -211,5 +240,15 @@ display:none;
   .my-card-view-listing-on-ebay{
     display:none;
   }
+}
+.grading{
+  text-transform: capitalize;
+  z-index: 1;
+  position: absolute;
+  top: 8px;
+  right: 13px;
+  width: 100px;
+  font-size: 12px;
+  padding: 1px;
 }
 </style>
