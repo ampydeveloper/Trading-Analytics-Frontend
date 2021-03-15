@@ -156,7 +156,7 @@ export default {
     return {
       title: 'Stoxticker - Slabstox',
       meta: [
-        { name: 'Stoxticker - Slabstox', content: 'Check Stoxticker: '+this.stoxtickerDetails.board.name },
+        {  hid: 'stoxticker-board-details',name: 'Stoxticker - Slabstox', content: 'Check Stoxticker: '+this.stoxtickerDetails.board.name },
         { property: 'og:title', content: 'Check Stoxticker: '+this.stoxtickerDetails.board.name },
         { property: 'og:image', content: this.graphImage },
         {

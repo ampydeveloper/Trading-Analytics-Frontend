@@ -110,7 +110,7 @@ export default {
     return {
       title: 'Stoxticker - Slabstox',
       meta: [
-        { name: 'Stoxticker - Slabstox', content: 'Slabstox - Check our StoxTicker' },
+        {  hid: 'stoxticker-stats',name: 'Stoxticker - Slabstox', content: 'Slabstox - Check our StoxTicker' },
         { property: 'og:title', content: 'Slabstox - Check our StoxTicker' },
         { property: 'og:image', content: this.sxGraphImage },
         {

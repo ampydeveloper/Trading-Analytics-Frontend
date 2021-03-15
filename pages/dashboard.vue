@@ -392,7 +392,7 @@ export default {
     return {
       title: 'Dashboard - Slabstox',
       meta: [
-        { name: 'Dashboard - Slabstox', content: 'Check Slabstox Featured Slabs' },
+        {  hid: 'dashboard', name: 'Dashboard - Slabstox', content: 'Check Slabstox Featured Slabs' },
         { property: 'og:title', content: 'Check Slabstox Featured Slabs' },
         { property: 'og:image', content: this.logo },
         {

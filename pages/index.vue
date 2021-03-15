@@ -161,7 +161,7 @@ export default {
     return {
       title: 'Login - Slabstox',
       meta: [
-        { name: 'Login - Slabstox', content: 'Buy & Sell Slabs' },
+        {hid: 'login', name: 'Login - Slabstox', content: 'Buy & Sell Slabs' },
         { property: 'og:title', content: 'Buy & Sell Slabs' },
         { property: 'og:image', content: $('.header-logo').attr('src') },
         {
