@@ -413,6 +413,7 @@ export default {
     this.getWatchlist()
     this.getStoxtickerData()
     this.logo = document.getElementById('sidebarLogo').src
+    this.$store.dispatch('advancesearch/fetchAttributes')
     // this.print()
   },
   components: {
