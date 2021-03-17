@@ -56,6 +56,12 @@
             <div class="link-text">Slab Requests</div>
           </nuxt-link>
         </li>
+        <li class="nav-item">
+          <nuxt-link class="nav-link" to="/admin/requested-listing">
+            <div class="icon stox-request-icon"></div>
+            <div class="link-text">Listing Requests</div>
+          </nuxt-link>
+        </li>
         <li class="nav-item" v-if='!moderator'>
           <nuxt-link class="nav-link" to="/admin/see-problem">
             <div class="icon my-listing-icon"></div>
@@ -78,6 +84,13 @@
           <nuxt-link class="nav-link" to="/admin/stoxticker">
             <div class="icon stoxticker-icon"></div>
             <div class="link-text">Stoxticker</div>
+          </nuxt-link>
+        </li>
+        <li class="nav-item" v-if='!moderator'>
+          <nuxt-link class="nav-link" to="/admin/users">
+            <!-- <div class="icon my-listing-icon"></div> -->
+            <font-awesome-icon class="mt-1" :icon="['fas', 'users']" style="font-size: 20px;" />
+            <div class="link-text">Users Management</div>
           </nuxt-link>
         </li>
         <!--<li class="nav-item">
