@@ -12,7 +12,7 @@
             <table class="table table-striped">
               <thead>
                 <tr>
-                  <th>Id</th>
+                  <!-- <th>Id</th> -->
                   <th>User</th>
                   <th>Sport</th>
                   <th>player</th>
@@ -27,7 +27,7 @@
               </thead>
               <tbody v-if="cards.length > 0">
                 <tr v-for="card of cards" :key="card.id">
-                  <td>{{ card.id }}</td>
+                  <!-- <td>{{ key }}</td> -->
                   <td>{{ card.user.full_name }}</td>
                   <td>{{ card.sport }}</td>
                   <td>{{ card.player }}</td>
@@ -37,7 +37,7 @@
                   <td>{{ card.rc }}</td>
                   <td>{{ card.variation }}</td>
                   <td>{{ card.grade }}</td>
-                  <td><img :src='card.cardImage' title="Click to view" class="cardImg" @click="openImg(card.cardImage)" v-if='card.image != null' alt='Slab-image' width=50 /><span v-else>NA</span></td>
+                  <td><img :src='card.cardImage' title="Click to view" class="cardImg" @click="openImg(card.cardImage)" v-if='card.image != null' alt='Slab-image' width=200 /><span v-else>N/A</span></td>
                 </tr>
               </tbody>
               <tbody v-if="cards.length == 0 && requestInProcess">

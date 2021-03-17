@@ -534,7 +534,12 @@ slabstox.com
                     <!-- <h4>LEBRON JAMES 2003 TOPPS CHROME $ 45.75</h4>
                     <h5>LEBRON JAMES 2003...</h5> -->
                     <template v-for="list in soldListing.basketball">
-                    <h4>{{list.card.title}}&nbsp;&nbsp;</h4>
+                    <h4>
+                       <nuxt-link
+      class="sx-stox-card-link"
+      :to="'/card-data/?id=' + list.card.id"
+    >{{list.card.title}}
+     </nuxt-link> &nbsp;&nbsp;</h4>
                       </template>
                       <template v-if="soldListing.basketball==0">
                       <h4>No recent sold listings.</h4>

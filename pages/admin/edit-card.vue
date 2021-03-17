@@ -125,9 +125,10 @@
                 ></textarea>
               </div>
               <div class="form_column">
-                <label>Image&nbsp;
-                  <img :src='imgSrc' alt='Card-image' v-if='imgSrc.length > 0' width="50" @click="viewImg"/>
+                <label>Image                  
                 </label>
+ <div class="input-file">
+                <img :src='imgSrc' alt='Card-image' v-if='imgSrc.length > 0' width="200" @click="viewImg"/>
                 <input
                   type="file"
                   placeholder="Image"
@@ -136,6 +137,7 @@
                   @change="assignFileObj"
                   required
                 />
+                </div>
               </div>
               <div class="form_btns">
                 <div class="left_btn">
@@ -282,6 +284,7 @@ export default {
                 //     // readyforcron: 0,
                 //   };
               }
+              this.$router.push('/admin/cards')
               this.requestInProcess = false
               this.hideLoader()
             }).catch(err => {
@@ -313,5 +316,13 @@ ul.my-card-listing {
 }
 .message{
   color: green;
+}
+.input-file{
+  width:80%;
+  .form-control{
+         background: none !important;
+    padding-left: 0 !important;
+    width: 100%;
+  }
 }
 </style>

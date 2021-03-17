@@ -242,13 +242,18 @@ display:none;
   }
 }
 .grading{
-  text-transform: capitalize;
-  z-index: 1;
-  position: absolute;
-  top: 8px;
-  right: 13px;
-  width: 100px;
-  font-size: 12px;
-  padding: 1px;
+ text-transform: capitalize;
+    z-index: 1;
+    position: absolute;
+    top: 8px;
+    right: 6px;
+    width: 100px;
+    font-size: 12px;
+    padding: 1px;
+    height: 22px;
+    border-radius: 2px;
+    border: 0;
+    background: #1ce783;
+    color: #000;
 }
 </style>

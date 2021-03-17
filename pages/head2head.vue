@@ -1,13 +1,11 @@
 <template>
   <div class="col-md-12 col-sm-12 headtohead_serach-out">
-
-    <div class="row headtohead_serach sec-h2h-out" style="display:none;">
+    <div class="row headtohead_serach sec-h2h-out" style="display: none">
       <div class="col-md-6 col-sm-6">
         <div class="dashboard-nav-bar clearfix">
           <div class="nav-bar-form">
             <div class="nav-bar-form-input">
               <input
-                
                 @keyup="resultSelect('card_one')"
                 class="form-control"
                 v-model="card_one.keyword"
@@ -18,14 +16,19 @@
                 class="advance-search-label"
                 @click="openAdvanceSearch('card_one')"
               >Advanced&nbsp;&nbsp;search</span> -->
-              <div class="autoselected" v-if="autoselected.one.open && card_one.items.length > 0">
+              <div
+                class="autoselected"
+                v-if="autoselected.one.open && card_one.items.length > 0"
+              >
                 <ul>
                   <li
                     v-for="(item, key) in card_one.items"
-                    :key="'card-one-item-'+item.id"
-                    :class="{'selected': resultIsActive(key, 'card_one')}"
+                    :key="'card-one-item-' + item.id"
+                    :class="{ selected: resultIsActive(key, 'card_one') }"
                     @click="selectItemForCard(item, 'card_one')"
-                  >{{item.title}}</li>
+                  >
+                    {{ item.title }}
+                  </li>
                 </ul>
               </div>
             </div>
@@ -33,17 +36,18 @@
               type="button"
               @click="compareSlab()"
               class="nav-bar-search-btn"
-            >Search Stox</button>
+            >
+              Search Stox
+            </button>
           </div>
         </div>
       </div>
 
-      <div class="col-md-6 col-sm-6 " v-if="card_one.selectedCard != null">
+      <div class="col-md-6 col-sm-6" v-if="card_one.selectedCard != null">
         <div class="dashboard-nav-bar clearfix">
           <div class="nav-bar-form">
             <div class="nav-bar-form-input">
               <input
-             
                 @keyup="resultSelect('card_two')"
                 class="form-control"
                 v-model="card_two.keyword"
@@ -54,14 +58,19 @@
                 class="advance-search-label"
                 @click="openAdvanceSearch('card_two')"
               >Advanced&nbsp;&nbsp;search</span> -->
-              <div class="autoselected" v-if="autoselected.two.open && card_two.items.length > 0">
+              <div
+                class="autoselected"
+                v-if="autoselected.two.open && card_two.items.length > 0"
+              >
                 <ul>
                   <li
                     v-for="(item, key) in card_two.items"
-                    :key="'card-two-item-'+item.id"
-                    :class="{'selected': resultIsActive(key, 'card_two')}"
+                    :key="'card-two-item-' + item.id"
+                    :class="{ selected: resultIsActive(key, 'card_two') }"
                     @click="selectItemForCard(item, 'card_two')"
-                  >{{item.title}}</li>
+                  >
+                    {{ item.title }}
+                  </li>
                 </ul>
               </div>
             </div>
@@ -69,12 +78,13 @@
               type="button"
               @click="compareSlab()"
               class="nav-bar-search-btn"
-            >Search Stox</button>
+            >
+              Search Stox
+            </button>
           </div>
         </div>
       </div>
     </div>
-
 
     <div class="row headtohead_serach first-h2h-out">
       <div class="t-p-5 first-slab-out">
@@ -153,7 +163,10 @@
         </div>
       </div>
       <div class="t-p-5 butt-slab-out">
-        <button @click="compareSlab()" class="my-card-view-listing2">Compare slabs <font-awesome-icon :icon="['fas', 'chevron-circle-right']" /> </button>
+        <button @click="compareSlab()" class="my-card-view-listing2">
+          Compare slabs
+          <font-awesome-icon :icon="['fas', 'chevron-circle-right']" />
+        </button>
       </div>
     </div>
     <div class="row headwrapper" v-if="showSelectedCards">
@@ -161,10 +174,22 @@
         <div class="card" v-if="selectedCardOne != null">
           <div class="card-body product-image-card">
             <h5 class="card-title product-title">
-              {{ (selectedCardOne.title!=""?selectedCardOne.title:selectedCardOne.player+' '+selectedCardOne.year+' '+selectedCardOne.brand+' '+selectedCardOne.card+' '+selectedCardOne.variation) }}
+              {{
+                selectedCardOne.title != ''
+                  ? selectedCardOne.title
+                  : selectedCardOne.player +
+                    ' ' +
+                    selectedCardOne.year +
+                    ' ' +
+                    selectedCardOne.brand +
+                    ' ' +
+                    selectedCardOne.card +
+                    ' ' +
+                    selectedCardOne.variation
+              }}
             </h5>
             <ul class="labels">
-               <li class="orange">{{selectedCardOne.brand}}</li>
+              <li class="orange">{{ selectedCardOne.brand }}</li>
             </ul>
             <div class="image-conatiner">
               <img
@@ -184,20 +209,60 @@
                 <div class="row">
                   <div class="vs_tip">VS</div>
                   <div class="col-md-6 left">
-                    <h3>{{ (selectedCardOne.title!=""?selectedCardOne.title:selectedCardOne.player+' '+selectedCardOne.year+' '+selectedCardOne.brand+' '+selectedCardOne.card+' '+selectedCardOne.variation) }}</h3>
+                    <h3>
+                      {{
+                        selectedCardOne.title != ''
+                          ? selectedCardOne.title
+                          : selectedCardOne.player +
+                            ' ' +
+                            selectedCardOne.year +
+                            ' ' +
+                            selectedCardOne.brand +
+                            ' ' +
+                            selectedCardOne.card +
+                            ' ' +
+                            selectedCardOne.variation
+                      }}
+                    </h3>
                   </div>
                   <div class="col-md-6 right">
-                    <h3>{{ (selectedCardTwo.title!=""?selectedCardTwo.title:selectedCardTwo.player+' '+selectedCardTwo.year+' '+selectedCardTwo.brand+' '+selectedCardTwo.card+' '+selectedCardTwo.variation) }}</h3>
+                    <h3>
+                      {{
+                        selectedCardTwo.title != ''
+                          ? selectedCardTwo.title
+                          : selectedCardTwo.player +
+                            ' ' +
+                            selectedCardTwo.year +
+                            ' ' +
+                            selectedCardTwo.brand +
+                            ' ' +
+                            selectedCardTwo.card +
+                            ' ' +
+                            selectedCardTwo.variation
+                      }}
+                    </h3>
                   </div>
                 </div>
               </div>
               <div class="sx_value">
                 <div class="row">
                   <div class="col-md-6 left">
-                    <h3>*SX VALUE ${{ (selectedCardOne.details?selectedCardOne.details.currentPrice:0) }}</h3>
+                    <h3>
+                      *SX VALUE ${{
+                        selectedCardOne.details
+                          ? selectedCardOne.details.currentPrice
+                          : 0
+                      }}
+                    </h3>
                   </div>
                   <div class="col-md-6 right">
-                    <h3>*SX VALUE ${{ (selectedCardTwo.details?selectedCardTwo.details.currentPrice:0) }}</h3>
+                    <h3>
+                      *SX VALUE ${{
+                        selectedCardTwo.details
+                          ? selectedCardTwo.details.currentPrice
+                          : 0
+                      }}
+                    </h3>
                   </div>
                 </div>
               </div>
@@ -215,13 +280,69 @@
                       </div>
                       <div class="dashboard-graph-footer clearfix">
                         <ul class="dashboard-graph-footer-month-filter">
-                          <li :class="'dashboard-graph-footer-month-filter-item '+ (activeDaysGraph==2 ? 'active' : '')" @click='getGraphData(2)'>1D</li>
-                          <li :class="'dashboard-graph-footer-month-filter-item '+ (activeDaysGraph==7 ? 'active' : '')" @click='getGraphData(7)'>1W</li>
-                          <li :class="'dashboard-graph-footer-month-filter-item '+ (activeDaysGraph==30 ? 'active' : '')" @click='getGraphData(30)'>1M</li>
-                          <li :class="'dashboard-graph-footer-month-filter-item '+ (activeDaysGraph==90 ? 'active' : '')" @click='getGraphData(90)'>3M</li>
-                          <li :class="'dashboard-graph-footer-month-filter-item '+ (activeDaysGraph==180 ? 'active' : '')" @click='getGraphData(180)'>6M</li>
-                          <li :class="'dashboard-graph-footer-month-filter-item '+ (activeDaysGraph==365 ? 'active' : '')" @click='getGraphData(365)'>1Y</li>
-                          <li :class="'dashboard-graph-footer-month-filter-item '+ (activeDaysGraph==1825 ? 'active' : '')" @click='getGraphData(1825)'>5Y</li>
+                          <li
+                            :class="
+                              'dashboard-graph-footer-month-filter-item ' +
+                              (activeDaysGraph == 2 ? 'active' : '')
+                            "
+                            @click="getGraphData(2)"
+                          >
+                            1D
+                          </li>
+                          <li
+                            :class="
+                              'dashboard-graph-footer-month-filter-item ' +
+                              (activeDaysGraph == 7 ? 'active' : '')
+                            "
+                            @click="getGraphData(7)"
+                          >
+                            1W
+                          </li>
+                          <li
+                            :class="
+                              'dashboard-graph-footer-month-filter-item ' +
+                              (activeDaysGraph == 30 ? 'active' : '')
+                            "
+                            @click="getGraphData(30)"
+                          >
+                            1M
+                          </li>
+                          <li
+                            :class="
+                              'dashboard-graph-footer-month-filter-item ' +
+                              (activeDaysGraph == 90 ? 'active' : '')
+                            "
+                            @click="getGraphData(90)"
+                          >
+                            3M
+                          </li>
+                          <li
+                            :class="
+                              'dashboard-graph-footer-month-filter-item ' +
+                              (activeDaysGraph == 180 ? 'active' : '')
+                            "
+                            @click="getGraphData(180)"
+                          >
+                            6M
+                          </li>
+                          <li
+                            :class="
+                              'dashboard-graph-footer-month-filter-item ' +
+                              (activeDaysGraph == 365 ? 'active' : '')
+                            "
+                            @click="getGraphData(365)"
+                          >
+                            1Y
+                          </li>
+                          <li
+                            :class="
+                              'dashboard-graph-footer-month-filter-item ' +
+                              (activeDaysGraph == 1825 ? 'active' : '')
+                            "
+                            @click="getGraphData(1825)"
+                          >
+                            5Y
+                          </li>
                         </ul>
                       </div>
                     </div>
@@ -236,12 +357,52 @@
             <div class="stat_box">
               <h3>stats</h3>
               <ul>
-                <li>SlabStox Value: ${{ (selectedCardOne.details?selectedCardOne.details.currentPrice:0) }}</li>
+                <li>
+                  SlabStox Value: ${{
+                    selectedCardOne.details
+                      ? selectedCardOne.details.currentPrice
+                      : 0
+                  }}
+                </li>
                 <li>Overall Rank: {{ card_one.rank }}</li>
-                <li>Last Sale Price: ${{ (card_one.last_sale?card_one.last_sale.cost:0) }}</li>
-                <li>Last Sale Date:{{ (card_one.last_sale? this.$moment(card_one.last_sale.timestamp).format('M/D/Y'):'N/A') }}</li>
-                <li>High Sale: ${{ (card_one.high_sale?card_one.high_sale.cost:0) }} ({{ (card_one.high_sale? this.$moment(card_one.high_sale.timestamp).format('M/D/Y'):'N/A') }})</li>
-                <li>Low Sale: ${{ (card_one.low_sale?card_one.low_sale.cost:0) }} ({{ (card_one.low_sale? this.$moment(card_one.low_sale.timestamp).format('M/D/Y'):'N/A') }})</li>
+                <li>
+                  Last Sale Price: ${{
+                    card_one.last_sale ? card_one.last_sale.cost : 0
+                  }}
+                </li>
+                <li>
+                  Last Sale Date:{{
+                    card_one.last_sale
+                      ? this.$moment(card_one.last_sale.timestamp).format(
+                          'M/D/Y'
+                        )
+                      : 'N/A'
+                  }}
+                </li>
+                <li>
+                  High Sale: ${{
+                    card_one.high_sale ? card_one.high_sale.cost : 0
+                  }}
+                  ({{
+                    card_one.high_sale
+                      ? this.$moment(card_one.high_sale.timestamp).format(
+                          'M/D/Y'
+                        )
+                      : 'N/A'
+                  }})
+                </li>
+                <li>
+                  Low Sale: ${{
+                    card_one.low_sale ? card_one.low_sale.cost : 0
+                  }}
+                  ({{
+                    card_one.low_sale
+                      ? this.$moment(card_one.low_sale.timestamp).format(
+                          'M/D/Y'
+                        )
+                      : 'N/A'
+                  }})
+                </li>
               </ul>
             </div>
           </div>
@@ -249,12 +410,51 @@
             <div class="stat_box">
               <h3>stats</h3>
               <ul>
-                <li>SlabStox Value: ${{ (selectedCardTwo.details?selectedCardTwo.details.currentPrice:0) }}</li>
+                <li>
+                  SlabStox Value: ${{
+                    selectedCardTwo.details
+                      ? selectedCardTwo.details.currentPrice
+                      : 0
+                  }}
+                </li>
                 <li>Overall Rank: {{ card_two.rank }}</li>
-                <li>Last Sale Price: ${{ (card_two.last_sale?card_two.last_sale.cost:0) }}</li>
-                <li>Last Sale Date: {{ (card_two.last_sale? this.$moment(card_two.last_sale.timestamp).format('M/D'):'N/A') }}</li>
-                <li>High Sale: ${{ (card_two.high_sale?card_two.high_sale.cost:0) }} ({{ (card_two.high_sale? this.$moment(card_two.high_sale.timestamp).format('M/D/Y'):'N/A') }})</li>
-                <li>Low Sale: ${{ (card_two.low_sale?card_two.low_sale.cost:0) }} ({{ (card_two.low_sale? this.$moment(card_two.low_sale.timestamp).format('M/D/Y'):'N/A') }})</li>
+                <li>
+                  Last Sale Price: ${{
+                    card_two.last_sale ? card_two.last_sale.cost : 0
+                  }}
+                </li>
+                <li>
+                  Last Sale Date:
+                  {{
+                    card_two.last_sale
+                      ? this.$moment(card_two.last_sale.timestamp).format('M/D')
+                      : 'N/A'
+                  }}
+                </li>
+                <li>
+                  High Sale: ${{
+                    card_two.high_sale ? card_two.high_sale.cost : 0
+                  }}
+                  ({{
+                    card_two.high_sale
+                      ? this.$moment(card_two.high_sale.timestamp).format(
+                          'M/D/Y'
+                        )
+                      : 'N/A'
+                  }})
+                </li>
+                <li>
+                  Low Sale: ${{
+                    card_two.low_sale ? card_two.low_sale.cost : 0
+                  }}
+                  ({{
+                    card_two.low_sale
+                      ? this.$moment(card_two.low_sale.timestamp).format(
+                          'M/D/Y'
+                        )
+                      : 'N/A'
+                  }})
+                </li>
               </ul>
             </div>
           </div>
@@ -267,10 +467,22 @@
         <div class="card" v-if="selectedCardTwo != null">
           <div class="card-body product-image-card">
             <h5 class="card-title product-title">
-              {{ (selectedCardTwo.title!=""?selectedCardTwo.title:selectedCardTwo.player+' '+selectedCardTwo.year+' '+selectedCardTwo.brand+' '+selectedCardTwo.card+' '+selectedCardTwo.variation) }}
+              {{
+                selectedCardTwo.title != ''
+                  ? selectedCardTwo.title
+                  : selectedCardTwo.player +
+                    ' ' +
+                    selectedCardTwo.year +
+                    ' ' +
+                    selectedCardTwo.brand +
+                    ' ' +
+                    selectedCardTwo.card +
+                    ' ' +
+                    selectedCardTwo.variation
+              }}
             </h5>
             <ul class="labels">
-              <li class="orange">{{selectedCardTwo.brand}}</li>
+              <li class="orange">{{ selectedCardTwo.brand }}</li>
             </ul>
             <div class="image-conatiner">
               <img
@@ -283,53 +495,76 @@
       </div>
     </div>
 
-    <div class="row card-50-div" v-if="selectedCardOne != null && selectedCardTwo != null">
-      <div class="col-6">
-        <AvailableListing
-          :cardId="selectedCardOne.id"
-        />
+    <div
+      class="row card-50-div"
+      v-if="selectedCardOne != null && selectedCardTwo != null"
+    >
+      <div class="col-sm-12 col-md-6 card-50-first">
+        <AvailableListing :cardId="selectedCardOne.id" />
       </div>
-      <div class="col-6">
-        <AvailableListing
-          :cardId="selectedCardTwo.id"
-        />
+      <div class="col-sm-12 col-md-6">
+        <AvailableListing :cardId="selectedCardTwo.id" />
       </div>
     </div>
-    <div class="row popularpick" v-if="selectedCardOne == null && selectedCardTwo == null">
+    <div
+      class="row popularpick"
+      v-if="selectedCardOne == null && selectedCardTwo == null"
+    >
       <div class="col-12 t-p-5">
-      <div class="card no_bg">
-        <div class="card-body">
-          <h5 class="card-title">
-            <button class="card-btn theme-btn">Popular picks</button>
-          </h5>
-          <div class="dataloader" v-if="requestInProcess">
-            <b-spinner variant="success" label="Spinning"></b-spinner>
-          </div>
-          <ul class="my-card-listing" v-if="popularCardsData.length > 0">
-            <li class="my-card" v-for="itemdata of popularCardsData" :key="itemdata.id">
-              <h4 class="my-card-title" :title="itemdata.title">
-{{ (itemdata.title!=""?itemdata.title:itemdata.player+' '+itemdata.year+' '+itemdata.brand+' '+itemdata.card+' '+itemdata.variation) }}
-              </h4>
-              <div class="image-container">
-                <img
-                  class="card-image"
-                  :title="itemdata.title"
-                  :src="itemdata.cardImage"
-                  :alt="itemdata.id"
-                />
-              </div>
-              <button @click="addToHeadToHead(itemdata)" class="my-card-view-listing">Add to Head<code>2</code>Head</button>
-           </li>
-          </ul>
-          <div
-            class="empty-result"
-            v-if="popularCardsData.length == 0 && !requestInProcess"
-          >
-            <p>There are no cards here. Check again soon.</p>
+        <div class="card no_bg">
+          <div class="card-body">
+            <h5 class="card-title">
+              <button class="card-btn theme-btn">Popular picks</button>
+            </h5>
+            <div class="dataloader" v-if="requestInProcess">
+              <b-spinner variant="success" label="Spinning"></b-spinner>
+            </div>
+            <ul class="my-card-listing" v-if="popularCardsData.length > 0">
+              <li
+                class="my-card"
+                v-for="itemdata of popularCardsData"
+                :key="itemdata.id"
+              >
+                <h4 class="my-card-title" :title="itemdata.title">
+                  {{
+                    itemdata.title != ''
+                      ? itemdata.title
+                      : itemdata.player +
+                        ' ' +
+                        itemdata.year +
+                        ' ' +
+                        itemdata.brand +
+                        ' ' +
+                        itemdata.card +
+                        ' ' +
+                        itemdata.variation
+                  }}
+                </h4>
+                <div class="image-container">
+                  <img
+                    class="card-image"
+                    :title="itemdata.title"
+                    :src="itemdata.cardImage"
+                    :alt="itemdata.id"
+                  />
+                </div>
+                <button
+                  @click="addToHeadToHead(itemdata)"
+                  class="my-card-view-listing"
+                >
+                  Add to Head<code>2</code>Head
+                </button>
+              </li>
+            </ul>
+            <div
+              class="empty-result"
+              v-if="popularCardsData.length == 0 && !requestInProcess"
+            >
+              <p>There are no cards here. Check again soon.</p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
     </div>
   </div>
 </template>
@@ -344,7 +579,7 @@ export default {
   layout: 'dashboard',
   head() {
     return {
-      title: 'Head 2 Head - Slabstox'
+      title: 'Head 2 Head - Slabstox',
     }
   },
   mounted() {
@@ -352,12 +587,12 @@ export default {
   },
   components: {
     AvailableListing,
-    VueApexCharts: () => import('vue-apexcharts')
+    VueApexCharts: () => import('vue-apexcharts'),
   },
   computed: {
     ...mapGetters({
-      attributes: 'advancesearch/attributes'
-    })
+      attributes: 'advancesearch/attributes',
+    }),
   },
   data() {
     return {
@@ -389,70 +624,70 @@ export default {
       series: [
         {
           name: 'Sales',
-          data: []
+          data: [],
         },
         {
           name: 'Sales',
-          data: []
-        }
+          data: [],
+        },
       ],
       chartOptions: {
         chart: {
           toolbar: {
-            show: true
+            show: true,
           },
           height: 350,
           type: 'area',
           background: ['#e57c13', '#14f078'],
           zoom: {
-            enabled: false
-          }
+            enabled: false,
+          },
         },
         colors: ['#e57c13', '#14f078'],
         dataLabels: {
-          enabled: false
+          enabled: false,
         },
         stroke: {
-          curve: 'smooth'
+          curve: 'smooth',
         },
         yaxis: {
           labels: {
             style: {
               colors: '#edecec',
               fontSize: '10px',
-              fontFamily: 'NexaBold'
-            }
-          }
+              fontFamily: 'NexaBold',
+            },
+          },
         },
         xaxis: {
           labels: {
             style: {
               colors: '#edecec',
               fontSize: '10px',
-              fontFamily: 'NexaBold'
-            }
+              fontFamily: 'NexaBold',
+            },
           },
           type: 'category',
-          categories: []
+          categories: [],
         },
         tooltip: {
           x: {
-            format: 'dd/MM/yy'
-          }
-        }
+            format: 'dd/MM/yy',
+          },
+        },
       },
       selectedAdvanceSearchModel: null,
       requestInProcess: false,
       autoselected: {
         one: {
           current: 0,
-          open: false
+          open: false,
         },
         two: {
           current: 0,
-          open: false
-        }
-      }
+          open: false,
+        },
+      },
     }
   },
   methods: {
@@ -465,21 +700,27 @@ export default {
       return title
     },
     addToHeadToHead(itemdata) {
-      if(this.card_one.selectedCard == null) {
+      if (this.card_one.selectedCard == null) {
         this.selectItemForCard(itemdata, 'card_one')
-      }else if (this.card_one.selectedCard != null && this.card_two.selectedCard == null) {
+      } else if (
+        this.card_one.selectedCard != null &&
+        this.card_two.selectedCard == null
+      ) {
         this.selectItemForCard(itemdata, 'card_two')
       }
     },
     compareSlab() {
-      if(this.card_one.selectedCard != null && this.card_two.selectedCard != null){
+      if (
+        this.card_one.selectedCard != null &&
+        this.card_two.selectedCard != null
+      ) {
         this.selectedCardOne = this.card_one.selectedCard
         this.selectedCardTwo = this.card_two.selectedCard
-        this.getGraphData(this.activeDaysGraph);
-         $('.sec-h2h-out').show();
-                  $('.first-h2h-out').hide();
+        this.getGraphData(this.activeDaysGraph)
+        $('.sec-h2h-out').show()
+        $('.first-h2h-out').hide()
         this.showSelectedCards = true
-      }else{
+      } else {
         this.showSelectedCards = false
       }
     },
@@ -512,16 +753,16 @@ export default {
             this.selectedAdvanceSearchModel == 'card_one'
               ? this.card_one.keyword
               : this.card_two.keyword
-          if(this.keyword.length >= 3) {
+          if (this.keyword.length >= 3) {
             this.$axios
               .$post('search/get-smart-keyword-with-data', {
                 search: this.keyword,
-                take: 10
+                take: 10,
               })
-              .then(res => {
+              .then((res) => {
                 // this.requestInProcess = false
                 if (res.status == 200) {
-                  if(this.keyword == res.keyword){
+                  if (this.keyword == res.keyword) {
                     if (res.data != null && res.data.length > 0) {
                       if (this.selectedAdvanceSearchModel == 'card_one') {
                         this.card_one.items = res.data
@@ -541,7 +782,8 @@ export default {
                     }
                   }
                 }
-              }).catch(err => {
+              })
+              .catch((err) => {
                 throw err
               })
           }
@@ -584,95 +826,124 @@ export default {
     selectItemForCard(item, card) {
       if (card == 'card_one') {
         this.card_one.selectedCard = item
-        this.card_one.keyword = (item.title!=""?item.title:item.player+' '+item.year+' '+item.brand+' '+item.card+' '+item.variation)
+        this.card_one.keyword =
+          item.title != ''
+            ? item.title
+            : item.player +
+              ' ' +
+              item.year +
+              ' ' +
+              item.brand +
+              ' ' +
+              item.card +
+              ' ' +
+              item.variation
         this.card_one.rank = item.rank
         this.autoselected.one.open = false
       } else {
         this.card_two.selectedCard = item
-        this.card_two.keyword = (item.title!=""?item.title:item.player+' '+item.year+' '+item.brand+' '+item.card+' '+item.variation)
+        this.card_two.keyword =
+          item.title != ''
+            ? item.title
+            : item.player +
+              ' ' +
+              item.year +
+              ' ' +
+              item.brand +
+              ' ' +
+              item.card +
+              ' ' +
+              item.variation
         this.card_two.rank = item.rank
         this.autoselected.two.open = false
-        
       }
     },
-    getGraphData(days){
+    getGraphData(days) {
       try {
-        let cardIds = this.card_one.selectedCard.id+'|'+this.card_two.selectedCard.id;
-        this.$axios.$get('get-card-graph/'+cardIds+'/'+days).then(res => {
-          if (res.status == 200) {
-        
+        let cardIds =
+          this.card_one.selectedCard.id + '|' + this.card_two.selectedCard.id
+        this.$axios
+          .$get('get-card-graph/' + cardIds + '/' + days)
+          .then((res) => {
+            if (res.status == 200) {
               // $('.sec-h2h-out').show();
               //     $('.first-h2h-out').hide();
-            this.activeDaysGraph = days;
-            // if(this.initGraphLabelLength != res.data.labels.length){
-              this.series = [{name: '<span class="sales-t1">Sales</span>', data: res.data.values1}, {name: '<span class="sales-t2">Sales</span>', data: res.data.values2}];
-              this.salesQty = [{data: res.data.qty1},{data: res.data.qty2}]
+              this.activeDaysGraph = days
+              // if(this.initGraphLabelLength != res.data.labels.length){
+              this.series = [
+                {
+                  name: '<span class="sales-t1">Sales</span>',
+                  data: res.data.values1,
+                },
+                {
+                  name: '<span class="sales-t2">Sales</span>',
+                  data: res.data.values2,
+                },
+              ]
+              this.salesQty = [{ data: res.data.qty1 }, { data: res.data.qty2 }]
               this.chartOptions = {
-                  xaxis: {
-                    categories: res.data.lable1,
-                  },
-                  yaxis: {
-                    labels: {
-                      style: {
-                        colors: '#edecec',
-                        fontSize: '10px',
-                        fontFamily: 'NexaBold',
-                      },
-                      formatter: (value, ind) => {
-                        if (value == "undefined"){
-                          return 0
-                        }
-                        let valCheck = value
-                    if (Number(value) === value && value % 1 !== 0) {
-                      let valCheck = Number(value).toFixed(2)
-                    }
+                xaxis: {
+                  categories: res.data.lable1,
+                },
+                yaxis: {
+                  labels: {
+                    style: {
+                      colors: '#edecec',
+                      fontSize: '10px',
+                      fontFamily: 'NexaBold',
+                    },
+                    formatter: (value, ind) => {
+                      if (value == 'undefined') {
+                        return 0
+                      }
+                      let valCheck = value
+                      if (Number(value) === value && value % 1 !== 0) {
+                        let valCheck = Number(value).toFixed(2)
+                      }
 
-                    return `$${valCheck}`
-                      },
+                      return `$${valCheck}`
                     },
                   },
-                  tooltip: {
-                    enabled: true,
-                    y: {
-                      formatter: (value, ind) => {
-                        if (value == "undefined"){
-                           return 0
-                        }
-                        let lblStr = `$${value}`
-                        if (typeof ind == 'object')
-                        var salesQtyVal = this.salesQty[ind.seriesIndex];
-                        
-                        let quantity = salesQtyVal.data[ind.dataPointIndex];
-                        // console.log(quantity);
-                        // if (quantity == "undefined"){
-                        //    quantity = 0
-                        // }
-                          lblStr = `$${value} (${
-                            quantity
-                          })`
-                        return lblStr
-                      },
+                },
+                tooltip: {
+                  enabled: true,
+                  y: {
+                    formatter: (value, ind) => {
+                      if (value == 'undefined') {
+                        return 0
+                      }
+                      let lblStr = `$${value}`
+                      if (typeof ind == 'object')
+                        var salesQtyVal = this.salesQty[ind.seriesIndex]
+
+                      let quantity = salesQtyVal.data[ind.dataPointIndex]
+                      // console.log(quantity);
+                      // if (quantity == "undefined"){
+                      //    quantity = 0
+                      // }
+                      lblStr = `$${value} (${quantity})`
+                      return lblStr
                     },
                   },
-                }
-              this.initGraphLabel1Length = res.data.lable1.length;
-            // }
-            this.card_one.rank = res.data.rank1
-            this.card_two.rank = res.data.rank2
-             this.card_one.low_sale = res.data.low_sale1
+                },
+              }
+              this.initGraphLabel1Length = res.data.lable1.length
+              // }
+              this.card_one.rank = res.data.rank1
+              this.card_two.rank = res.data.rank2
+              this.card_one.low_sale = res.data.low_sale1
               this.card_two.low_sale = res.data.low_sale2
-               this.card_one.high_sale = res.data.high_sale1
+              this.card_one.high_sale = res.data.high_sale1
               this.card_two.high_sale = res.data.high_sale2
               this.card_one.last_sale = res.data.last_sale1
               this.card_two.last_sale = res.data.last_sale2
-          } else {
-            this.$router.push('/404')
-          }
-        })
+            } else {
+              this.$router.push('/404')
+            }
+          })
       } catch (error) {
         console.log(error)
       }
-      
     },
     resultSelect(card) {
       // if (this.autoselected.one.open || this.autoselected.two.open) {
@@ -697,14 +968,15 @@ export default {
           this.requestInProcess = true
           this.$axios
             .$post('search/popular-pick-cards', {
-              take: 12
+              take: 12,
             })
-            .then(res => {
+            .then((res) => {
               this.requestInProcess = false
               if (res.status == 200) {
                 this.popularCardsData = res.data
               }
-            }).catch(err => {
+            })
+            .catch((err) => {
               throw err
             })
         } catch (err) {
@@ -712,9 +984,9 @@ export default {
           this.popularCardsData = []
           console.log(err)
         }
-      } 
-    }
-  }
+      }
+    },
+  },
 }
 </script>
 
@@ -786,7 +1058,8 @@ export default {
         color: #fff;
         text-transform: uppercase;
         font-weight: 400;
-        font-size: 13px;
+        // font-size: 13px;
+        font-size: 1.1vw;
         letter-spacing: 2px;
         margin-bottom: 10px;
         // margin-top: 10px;
@@ -853,19 +1126,28 @@ export default {
     }
   }
 }
-.slab-title-step{
+.slab-title-step {
   margin: 0;
-    font-size: 12px;
+  font-size: 12px;
 }
 .vs-between-out {
-    width: 45px;
-    height: 45px;
-    background: #fff;
-    border-radius: 50%;
-    display: inline-block;
-    line-height: 46px;
-    margin-top: 30px;
-  }
+  // width: 45px;
+  // height: 45px;
+  background: #fff;
+  border-radius: 50%;
+  // display: inline-block;
+  // line-height: 46px;
+  // margin-top: 30px;
+
+  width: 3vw;
+  height: 3vw;
+  font-size: 1.2vw;
+  line-height: 3.2vw;
+  position: absolute;
+  top: 50%;
+  display: block;
+  transform: translate(0, -50%);
+}
 .t-p-5 {
   padding: 5px;
 }
@@ -879,22 +1161,28 @@ export default {
     min-height: 570px;
   }
 }
-.first-slab-out, .comp-slab-out{
-      float: left;
-    width: 40%
+
+.first-slab-out,
+.comp-slab-out {
+  float: left;
+  width: 40%;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 }
-.vs-slab-out{
- float: left;
-     width: 5%;
+.vs-slab-out {
+  float: left;
+  width: 5%;
+  position: relative;
 }
- .butt-slab-out{
-   float: left;
-     width: 15%;
- }
+.butt-slab-out {
+  float: left;
+  width: 15%;
+}
 .my-card {
   float: left;
 }
-.headtohead_serach-out{
+.headtohead_serach-out {
   padding: 0 30px;
 }
 ul.my-card-listing {
@@ -908,8 +1196,8 @@ ul.my-card-listing {
   margin-top: 2px;
 }
 .headtohead_serach {
-      border: 1px solid #39414a;
-    padding: 15px 15px 20px 15px;
+  border: 1px solid #39414a;
+  padding: 15px 15px 20px 15px;
   .col-md-6 {
     padding-left: 5px;
     padding-right: 5px;
@@ -946,7 +1234,7 @@ ul.my-card-listing {
   }
 }
 .headwrapper {
-  .product-image-card{
+  .product-image-card {
     position: relative;
     margin: 15px;
     padding: 0;
@@ -1138,155 +1426,259 @@ ul.my-card-listing {
   border: 0px;
 }
 .my-card-view-listing2 {
-    font-family: 'CocogoosePro-Regular', Helvetica, Arial, sans-serif;
-    font-weight: 400;
-    width: 100%;
-    border-radius: 2px;
-    background: linear-gradient(to left, rgba(10, 178, 95, 0.76) 0%, rgba(27, 231, 131, 0.76) 33%, rgba(5, 251, 98, 0.76) 100%);
-    padding: 20px 5px 17px 5px;
-    color: #000;
-    font-size: 11px;
-    display: block;
-    text-align: center;
-    border: 0;
-    text-transform: uppercase;
-        margin-top: 26px;
-    margin-left: 10px;
-    svg{
-      width: 10px;
+  font-family: 'CocogoosePro-Regular', Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  width: 100%;
+  border-radius: 2px;
+  background: linear-gradient(
+    to left,
+    rgba(10, 178, 95, 0.76) 0%,
+    rgba(27, 231, 131, 0.76) 33%,
+    rgba(5, 251, 98, 0.76) 100%
+  );
+  padding: 20px 5px 17px 5px;
+  color: #000;
+  font-size: 11px;
+  display: block;
+  text-align: center;
+  border: 0;
+  text-transform: uppercase;
+  margin-top: 26px;
+  margin-left: 10px;
+  svg {
+    width: 10px;
     height: 10px;
-    }
+  }
 }
 .popularpick {
   margin-top: 20px;
   .my-card {
-  display: inline-block;
-  width: 200px;
-  padding: 0px 8px;
-  margin-bottom: 30px;
-  text-transform: uppercase;
-  &:hover{
-    .my-card-title{
- color: #1ce783;
-    }
-  }
-  .my-card-title {
-    font-family: 'CocogoosePro-SemiLightItalic', Helvetica, Arial, sans-serif;
-    color: $theme-off-white;
-    text-decoration: underline;
-    font-size: 11px;
-    letter-spacing: 1px;
-    height: 43px;
-  }
-  .sxvalue.theme-btn {
-    width: 100%;
-    margin-bottom: 5px;
-    letter-spacing: 1.4px;
-    padding: 7px 10px 5px 10px;
-    background: #272d33;
-    color: #fff;
-        text-align: left;
-  }
-  .sxvalue {
-    span.high {
-      color: $theme-btn-green;
-    }
-    span.low {
-      color: red;
-    }
-  }
-  .my-card-current-bid-btn {
-    width: 100%;
-    padding-top: 7px;
-    padding-bottom: 5px;
-    margin-bottom: 5px;
-  }
-  .image-container {
-    position: relative;
-    padding: 5px;
-    margin-bottom: 7px;
-    text-align: center;
-    background: #272d33;
-    // border-radius: 2px;
-    height: 230px;
-    .card-image{
-      max-height: 230px !important;
-          border: 5px solid #fff !important;
-    padding: 0 !important;
-    }
-    .icons-container {
-      position: absolute;
-      padding: 10px;
-      right: 0;
-      top: 9px;
-      .icons {
-        width: 32px;
-        height: 32px;
-        float: right;
-        margin-top: -10px;
-        cursor: pointer;
+    display: inline-block;
+    width: 200px;
+    padding: 0px 8px;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    &:hover {
+      .my-card-title {
+        color: #1ce783;
       }
     }
-    .card-image {
-      margin-top: 0px;
-      width: auto;
-      max-width: 100%;
-      position: absolute;
-      height: auto;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      padding: 5px;
-      max-height: 245px;
-    }
-  }
-  .my-card-view-listing {
-    font-family: 'CocogoosePro-Regular', Helvetica, Arial, sans-serif;
-    font-weight: 400;
-    width: 100%;
-    border-radius: 2px;
-         background: #39414a;
-    text-transform: uppercase;
-    padding: 6px 5px 5px 5px;
-        color: #fff;
-    font-size: 10px;
-    display: block;
-    text-align: center;
-    border:0;
-    code{
-          color: #fff;
-    font-size: 11px;
-    font-weight: 400;
-    }
-    &:hover {
-      text-decoration: none;
-    }
-  }
-  .my-card-view-listing-on-ebay {
-    width: 100%;
-    text-align: center;
-    a.my-card-view-listing-on-ebay-link {
+    .my-card-title {
+      font-family: 'CocogoosePro-SemiLightItalic', Helvetica, Arial, sans-serif;
       color: $theme-off-white;
-      font-size: 8px;
+      text-decoration: underline;
+      font-size: 11px;
       letter-spacing: 1px;
+      height: 43px;
+    }
+    .sxvalue.theme-btn {
+      width: 100%;
+      margin-bottom: 5px;
+      letter-spacing: 1.4px;
+      padding: 7px 10px 5px 10px;
+      background: #272d33;
+      color: #fff;
+      text-align: left;
+    }
+    .sxvalue {
+      span.high {
+        color: $theme-btn-green;
+      }
+      span.low {
+        color: red;
+      }
+    }
+    .my-card-current-bid-btn {
+      width: 100%;
+      padding-top: 7px;
+      padding-bottom: 5px;
+      margin-bottom: 5px;
+    }
+    .image-container {
+      position: relative;
+      padding: 5px;
+      margin-bottom: 7px;
+      text-align: center;
+      background: #272d33;
+      // border-radius: 2px;
+      height: 230px;
+      .card-image {
+        max-height: 230px !important;
+        border: 5px solid #fff !important;
+        padding: 0 !important;
+      }
+      .icons-container {
+        position: absolute;
+        padding: 10px;
+        right: 0;
+        top: 9px;
+        .icons {
+          width: 32px;
+          height: 32px;
+          float: right;
+          margin-top: -10px;
+          cursor: pointer;
+        }
+      }
+      .card-image {
+        margin-top: 0px;
+        width: auto;
+        max-width: 100%;
+        position: absolute;
+        height: auto;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        padding: 5px;
+        max-height: 245px;
+      }
+    }
+    .my-card-view-listing {
+      font-family: 'CocogoosePro-Regular', Helvetica, Arial, sans-serif;
+      font-weight: 400;
+      width: 100%;
+      border-radius: 2px;
+      background: #39414a;
+      text-transform: uppercase;
+      padding: 6px 5px 5px 5px;
+      color: #fff;
+      font-size: 10px;
+      display: block;
+      text-align: center;
+      border: 0;
+      code {
+        color: #fff;
+        font-size: 11px;
+        font-weight: 400;
+      }
+      &:hover {
+        text-decoration: none;
+      }
+    }
+    .my-card-view-listing-on-ebay {
+      width: 100%;
+      text-align: center;
+      a.my-card-view-listing-on-ebay-link {
+        color: $theme-off-white;
+        font-size: 8px;
+        letter-spacing: 1px;
 
-      line-height: 2;
-      padding-top: 2px;
-      font-style: italic;
+        line-height: 2;
+        padding-top: 2px;
+        font-style: italic;
+      }
     }
   }
 }
-}
-.sec-h2h-out.headtohead_serach{
+.sec-h2h-out.headtohead_serach {
   border: 0;
+  padding: 0;
+  .nav-bar-form .nav-bar-form-input {
+    width: calc(100% - 151px);
+    float: left;
+  }
+  .nav-bar-form .nav-bar-search-btn {
+    padding: 7px 10px 5px;
+    float: left;
+  }
+}
+@media (max-width: 768px) {
+  html body #__nuxt .dashboard-nav-bar {
+    padding-left: 0;
+  }
+  .dashboard-nav-bar .nav-bar-form .nav-bar-form-input .slab-title {
+    font-size: 11px;
+  }
+  .vs-slab-out {
+    position: relative;
+    width: 100%;
+  }
+  .vs-between-out {
+    width: 30px;
+    height: 30px;
+    font-size: 12px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    line-height: 31px;
+  }
+  .butt-slab-out {
+    width: 100%;
+    .my-card-view-listing2 {
+      margin: 0;
+      padding: 15px 5px 11px 5px;
+      font-size: 12px;
+    }
+  }
+  .headtohead_serach {
     padding: 0;
-   .nav-bar-form .nav-bar-form-input{
-width: calc(100% - 151px);
-    float: left;
+    border: 0;
+    margin-top: 20px;
+  }
+  .popularpick {
+    margin-top: 0;
+  }
+  .headtohead_serach .autoselected ul {
+    width: 100%;
+    text-align: left;
+    margin: 0;
+  }
+  .sec-h2h-out.headtohead_serach {
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-top: 10px;
+  }
+  .headwrapper .column_two .vs_wrap {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+  #__nuxt .headwrapper .column_three {
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 10px;
+  }
+  #__nuxt .headwrapper .column_two .stat,
+  #__nuxt .headwrapper .column_two .stat {
+    flex: none;
+    max-width: 100%;
+    width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-bottom: 15px;
+  }
+  // .card-50-div {
+  .card-50-first {
+    margin-bottom: 10px;
+    .custom-dropdown {
+      margin-right: 0;
     }
-     .nav-bar-form .nav-bar-search-btn{
-padding: 7px 10px 5px;
-    float: left;
+  }
+  .card-title-search-field {
+    margin-left: 0;
+  }
+  // }
+  .headwrapper .vs_wrap .team_vs .vs_tip {
+    width: 35px;
+    height: 35px;
+    font-size: 17px;
+    line-height: 39px;
+    margin-top: -17px;
+    left: -15px;
+  }
+  .headwrapper .vs_wrap .team_vs {
+    .left {
+      width: 50%;
+      float: left;
+      h3 {
+        padding: 0;
+      }
     }
+    .right {
+      width: 50%;
+      float: left;
+      h3 {
+        padding: 0;
+      }
+    }
+  }
 }
 </style>

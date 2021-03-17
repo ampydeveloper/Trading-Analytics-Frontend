@@ -90,17 +90,19 @@
                 />
               </div>
               <div class="form_column">
-                <label>Image&nbsp;
-                  <img :src='imgSrc' alt='Card-image' v-if='imgSrc.length > 0' width="50"/>
+                <label>Image                  
                 </label>
+                <div class="input-file">
+                <img :src='imgSrc' alt='Card-image' v-if='imgSrc.length > 0' width="200px"/>
                 <input
                   type="file"
                   placeholder="Image"
-                  class="form-control"
+                  class="form-control form-input-bor"
                   accept="image/jpg"
                   @change="assignFileObj"
                   required
                 />
+                </div>
               </div>
               <div class="form_btns">
                 <div class="right_btn">
@@ -182,9 +184,15 @@ export default {
                 requestSlab: '',
                 rc: 'yes',
                 variation: '',
-                grade: ''
+                grade: '',
+                image: ''
               }
+              this.imgSrc = '';
               this.statusMessage = res.data.message
+              
+              setTimeout(() => {
+                 this.$router.push('/dashboard')
+                }, 500)
             })
             .catch(err => {
               this.requestInProcess = false
@@ -258,5 +266,12 @@ ul.my-requestSlab-listing {
   .requestSlab-btn {
     margin-bottom: 15px;
   }
+}
+.form-control.form-input-bor{
+   border: 0 !important;
+   padding-left: 0 !important;
+}
+.input-file{
+      width: 70%;
 }
 </style>

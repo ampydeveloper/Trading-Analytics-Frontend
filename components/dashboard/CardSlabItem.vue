@@ -22,6 +22,7 @@
     </button>
     <div class="image-container">
       <span v-if="itemdata.is_sx == 1" class="sx-pro-text">SX PRO</span>
+      <span v-if="itemdata.grade != null" class="grade-image-text">{{itemdata.grade}}</span>
       <img
         class="card-image"
         @click="selectSlabCard(itemdata.id)"
@@ -224,7 +225,27 @@ export default {
     text-transform: uppercase;
     float: left;
     margin-top: -10px;
-    font-family: 'CocogoosePro-Regular', Helvetica, Arial, sans-serif;
+    // font-family: 'CocogoosePro-Regular', Helvetica, Arial, sans-serif;
+    font-family: "NexaBold", Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    border-radius: 2px;
+    padding: 3px 5px 0px 5px;
+    color: #000;
+    font-size: 10px;
+    background: #1ce783;
+}
+.grade-image-text{
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  letter-spacing: 1.4px;
+  z-index: 9;
+  border: 1px solid #1ce783;
+    text-transform: uppercase;
+    float: left;
+    margin-top: -10px;
+    // font-family: 'CocogoosePro-Regular', Helvetica, Arial, sans-serif;
+    font-family: "NexaBold", Helvetica, Arial, sans-serif;
     font-weight: 400;
     border-radius: 2px;
     padding: 3px 5px 0px 5px;

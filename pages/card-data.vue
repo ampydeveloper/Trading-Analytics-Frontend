@@ -731,6 +731,7 @@ export default {
           })
           .then((res) => {
             this.$bvModal.hide('submitAListingPopup')
+            this.reqAListLink = '';
             this.$toast.success('Listing request submitted successfully.')
           })
           .catch((err) => {

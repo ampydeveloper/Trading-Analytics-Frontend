@@ -118,16 +118,16 @@ export default {
     },
     uploadExcelNow() {
       let formData = new FormData()
-      // if (this.uploadImageType == false) {
+      if (this.uploadImageType == 0) {
         var files = this.$refs.excel.files
         const file = files.item(0)
         formData.append('file', file)
-      // }
-      // if (this.uploadImageType != false) {
+      }
+      if (this.uploadImageType == 'images') {
         var files1 = this.$refs.imageZip.files
         const file1 = files1.item(0)
         formData.append('file1', file1)
-      // }
+      }
 
       //   if(file){
       //   if (
