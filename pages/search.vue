@@ -214,7 +214,8 @@ export default {
               search: this.keyword,
               filter: this.filter,
               page: this.page,
-              filterBy: this.filterByKeword,
+              // filterBy: this.filterByKeword,
+              filterBy: '',
               searchCard: this.searchCard
             })
             .then(res => {
