@@ -65,7 +65,7 @@
               </tbody>
               <tbody v-if="users.length == 0 && requestInProcess == false">
                 <tr>
-                  <td colspan="9" class="text-center">No users available.</td>
+                  <td colspan="13" class="text-center">No users available.</td>
                 </tr>
               </tbody>
               <tfoot>
@@ -117,6 +117,12 @@
         <section v-else-if='["delete", "active"].includes(activeType)' class="p-4">
             <h5 class="text-capitalize">Do you really want to change <b>{{activeUser.full_name}}</b> {{popUpTitle}}?</h5>
         </section>
+        <section v-else-if='activeType=="password"' class="p-4">
+            <div class="form_column">
+                <label for='password'>New Password</label>
+                <input v-model="activeUser.password" class="form-control" name="password" required="required" />
+            </div>
+        </section>
 
         <div class="clearfix g-download-out text-right">
         <a href="javascript:void(0);" @click="save" class="card-btn btn btn-success btn-table-spec mr-2">Proceed</a>
@@ -155,20 +161,24 @@ export default {
         this.$bvModal.hide('updatePopup')
     },
     getUsers(page) {
+      console.log(page, 'in', this.requestInProcess)
       if (!this.requestInProcess) {
         try {
           this.showLoader()
           this.requestInProcess = true
+          // window.setTimeout(function(){
+            // this.users = []
+          // }, 2000)
           this.$axios
             .post('users/get-list-for-admin', {
               page: page
             })
             .then(res => {
+              this.requestInProcess = false
               if (res.status == 200) {
                 this.users = res.data.data
                 this.page = res.data.next
               }
-              this.requestInProcess = false
                this.hideLoader()
             }).catch(err => {
               this.requestInProcess = false
@@ -191,42 +201,57 @@ export default {
         this.showLoader()
         this.requestInProcess = true
         if(this.activeType == 'edit'){
-            this.$axios
-                .post('/users/save-user-by-admin', this.activeUser)
-                .then(res => {
-                    if (res.status == 200){
-                        this.getUsers()
-                        this.$bvModal.hide('updatePopup')
-                        this.$toast.success('User saved successfully!')
-                    }else if(res.status == 201){
-                        Object.keys(res.data).forEach((k) => {
-                            this.$toast.error(`${k} - ${res.data[k]}`)
-                        })
-                    }
-                    else this.$toast.error('User cannot be saved, please try-again!')
-                    this.requestInProcess = false
-                    this.hideLoader()
-                }).catch(err => {
-                    console.log(err)
-                    this.requestInProcess = false
-                    this.hideLoader()
-                })
+          this.$axios
+              .post('/users/save-user-by-admin', this.activeUser)
+              .then(res => {
+                  this.requestInProcess = false
+                  if (res.status == 200){
+                      this.getUsers(this.page)
+                      this.$bvModal.hide('updatePopup')
+                      this.$toast.success('User saved successfully!')
+                  }else if(res.status == 201){
+                      Object.keys(res.data).forEach((k) => {
+                          this.$toast.error(`${k} - ${res.data[k]}`)
+                      })
+                  }
+                  else this.$toast.error('User cannot be saved, please try-again!')
+                  this.hideLoader()
+              }).catch(err => {
+                  console.log(err)
+                  this.requestInProcess = false
+                  this.hideLoader()
+              })
         }else  if(['active', 'delete'].includes(this.activeType)){
-            this.$axios
-                .post(`/users/update-user-by-admin/${this.activeUser.id}/${this.activeType}`)
-                .then(res => {
-                    if (res.status == 200){
-                        this.getUsers()
-                        this.$bvModal.hide('updatePopup')
-                        this.$toast.success(`User ${this.popUpTitle} successfull!`)
-                    }else this.$toast.error('User status cannot be updated, please try-again!')
-                    this.requestInProcess = false
-                    this.hideLoader()
-                }).catch(err => {
-                    console.log(err)
-                    this.requestInProcess = false
-                    this.hideLoader()
-                })
+          this.$axios
+              .post(`/users/update-user-by-admin/${this.activeUser.id}/${this.activeType}`)
+              .then(res => {
+                  this.requestInProcess = false
+                  if (res.status == 200){
+                      this.getUsers(this.page)
+                      this.$bvModal.hide('updatePopup')
+                      this.$toast.success(`User ${this.popUpTitle} successfull!`)
+                  }else this.$toast.error('User status cannot be updated, please try-again!')
+                  this.hideLoader()
+              }).catch(err => {
+                  console.log(err)
+                  this.requestInProcess = false
+                  this.hideLoader()
+              })
+        }else if(this.activeType == 'password'){
+          this.$axios
+              .post(`/users/change-user-password-by-admin/${this.activeUser.id}`, {'password': this.activeUser.password})
+              .then(res => {
+                  this.requestInProcess = false
+                  if (res.status == 200){
+                      this.$bvModal.hide('updatePopup')
+                      this.$toast.success(`User's password changed successfully!`)
+                  }else this.$toast.error('User\'s password cannot be updated, please try-again!')
+                  this.hideLoader()
+              }).catch(err => {
+                  console.log(err)
+                  this.requestInProcess = false
+                  this.hideLoader()
+              })
         }
     }
   }
