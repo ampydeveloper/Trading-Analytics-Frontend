@@ -30,11 +30,6 @@ const User = {
             mounted() {
                 this.appLoaded = true;
                 this.showloader = false;
-                if(/Facebot|facebookexternalhit|Twitterbot|LinkedInBot/i.test(navigator.userAgent)) {
-                  location.href = 'http://api.slabstox.leagueofclicks.com/card-data';
-                  } else{
-                      console.log('not NOT');
-                  }
                 if (this.user) {
                     this.user_fullname = this.user.first_name
                 }
