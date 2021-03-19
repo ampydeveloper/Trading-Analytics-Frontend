@@ -56,18 +56,18 @@
                   <div class="cat-btn">
                     <ul>
                       <li>
-                        <a href="#" class="theme-btn card-btn">BASKETBALL</a>
+                        <a href="#" class="theme-btn card-btn" data-sport="basketball">BASKETBALL</a>
                       </li>
                       <li class="">
-                        <a href="#" class="theme-btn card-btn">Baseball</a>
+                        <a href="#" class="theme-btn card-btn" data-sport="baseball">Baseball</a>
                       </li>
                       <li>
-                        <a href="#" class="theme-btn card-btn">Football</a>
+                        <a href="#" class="theme-btn card-btn" data-sport="football">Football</a>
                       </li>
-                      <li><a href="#" class="theme-btn card-btn">Hockey</a></li>
-                      <li><a href="#" class="theme-btn card-btn">Soccer</a></li>
+                      <li><a href="#" class="theme-btn card-btn" data-sport="hockey">Hockey</a></li>
+                      <li><a href="#" class="theme-btn card-btn" data-sport="soccer">Soccer</a></li>
                       <li>
-                        <a href="#" class="theme-btn card-btn">Pokémon</a>
+                        <a href="#" class="theme-btn card-btn" data-sport="pokemon">Pokémon</a>
                       </li>
                     </ul>
                   </div>
@@ -1054,7 +1054,11 @@ export default {
     return {
       title: 'Stoxticker - Slabstox',
       meta: [
-        {  hid: 'stoxticker',name: 'Stoxticker - Slabstox', content: 'Check our StoxTicker' },
+        {
+          hid: 'stoxticker',
+          name: 'Stoxticker - Slabstox',
+          content: 'Check our StoxTicker',
+        },
         { property: 'og:title', content: 'Check our StoxTicker' },
         { property: 'og:image', content: this.sxGraphImage },
         {
@@ -1271,7 +1275,7 @@ export default {
       var sportList = []
       $('.cat-btn li.active').each(function () {
         var $this = $(this)
-        sportList.push($this.find('a').text())
+        sportList.push($this.find('a').attr('data-sport'))
       })
       $('.stoxticker_page-outer').hide()
       $('.stoxticker_listing-outer').hide()

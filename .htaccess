@@ -1,0 +1,19 @@
+<IfModule mod_rewrite.c>
+
+ RewriteEngine On
+ RewriteBase /
+
+# allow social media crawlers to work by redirecting them to a server-rendered static version on the page
+RewriteCond %{HTTP_USER_AGENT} googlebot|bingbot|yandex|baiduspider|facebookexternalhit|twitterbot|rogerbot>
+RewriteRule card-data(.*)$ http://api.slabstox.leagueofclicks.com/card-data [R=301,L]
+RewriteRule stoxticker http://api.slabstox.leagueofclicks.com/stoxticker [R=301,L]
+RewriteRule stoxticker-details(.*)$ http://api.slabstox.leagueofclicks.com/stoxticker-details [R=301,L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ /index.html [NC,QSA]
+
+# Handle Authorization Header
+RewriteCond %{HTTP:Authorization} .
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+</IfModule>

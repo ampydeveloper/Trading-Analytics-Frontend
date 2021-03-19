@@ -70,7 +70,7 @@
                         :date-format-options="{
                           year: 'numeric',
                           month: 'numeric',
-                          day: '2-digit'
+                          day: '2-digit',
                         }"
                         locale="en"
                         :readonly="!editProfileInputShow"
@@ -352,7 +352,7 @@
         </div>
       </div> -->
       <!-- <div class="col-md-6 col-sm-6 payment-option-side-cards"> -->
-        <!-- <div class="card">
+      <!-- <div class="card">
           <div class="card-body">
             <h5 class="card-title">
               <button class="theme-btn card-btn">Payment Info</button>
@@ -446,7 +446,10 @@
               />
             </h5>
             <div class="box_info">
-              <p>The SlabStox Pro + Facebook integration allows you to share your slabs, listings, and portfolio directly to your Facebook feed.</p>
+              <p>
+                The SlabStox Pro + Facebook integration allows you to share your
+                slabs, listings, and portfolio directly to your Facebook feed.
+              </p>
               <!-- <p>The SlabStox Pro + Facebook integration allows you to connect your account to your Facebook account.</p> -->
             </div>
             <button
@@ -478,7 +481,10 @@
               />
             </h5>
             <div class="box_info">
-              <p>The SlabStox Pro + Google integration allows you to share your slabs, listings, and portfolio directly to your Google feed.</p>
+              <p>
+                The SlabStox Pro + Google integration allows you to share your
+                slabs, listings, and portfolio directly to your Google feed.
+              </p>
               <!-- <p>
                 The SlabStox Pro + Google integration allows you to connect your
                 account to your Google account.
@@ -507,18 +513,24 @@
       title="Disconnect You Account"
       hide-footer
     >
-      <div class="row">
+      <div class="center-form profile_page edit-profile-input">
         <label for="">Set new Password</label>
-        <input type="password" v-model="disconnect.password" />
+        <input
+          type="password"
+          class="profile_input"
+          v-model="disconnect.password"
+          placeholder="Choose New Password"
+        />
         <button
+          class="theme-green-btn card-btn"
           @click="disconnectNow()"
           :disabled="
             disconnect.password == null ||
-              disconnect.password == '' ||
-              requestInProcess
+            disconnect.password == '' ||
+            requestInProcess
           "
         >
-          Submit
+          Save
         </button>
       </div>
     </b-modal>
@@ -542,24 +554,27 @@ import {
   GOOGLE_CLIENT_ID_DEV,
   GOOGLE_CLIENT_ID_PROD,
   FACEBOOK_APP_ID_DEV,
-  FACEBOOK_APP_ID_PROD
+  FACEBOOK_APP_ID_PROD,
 } from '../constants/keys'
 export default {
   transition: 'fade',
   layout: 'dashboard',
   head() {
     return {
-      title: 'Profile - Slabstox'
+      title: 'Profile - Slabstox',
     }
   },
   components: { ProfileCropper },
   mounted() {
     this.profile = {
-      name: this.user.first_name + ' ' + (this.user.last_name != 'null') ? this.user.last_name : '',
+      name:
+        this.user.first_name + ' ' + (this.user.last_name != 'null')
+          ? this.user.last_name
+          : '',
       mobile: this.user.mobile,
       email: this.user.email,
       dob: this.user.dob,
-      address: this.user.address
+      address: this.user.address,
     }
 
     if (this.user.slab_notification != null) {
@@ -585,46 +600,46 @@ export default {
         mobile: null,
         email: null,
         dob: null,
-        address: null
+        address: null,
       },
       requestInProcess: false,
       slabNotification: {
         endingSoonLiveAuction: {
           email: false,
-          browser: false
+          browser: false,
         },
         swatchListUpdate: {
           email: false,
-          browser: false
+          browser: false,
         },
         portfolioUpdate: {
           email: false,
-          browser: false
-        }
+          browser: false,
+        },
       },
       myListingNotification: {
         listingPurchase: {
           email: false,
-          browser: false
+          browser: false,
         },
         listingEndingSoon: {
           email: false,
-          browser: false
-        }
+          browser: false,
+        },
       },
       facebook: null,
       google: null,
       disconnect: {
         provider: null,
         id: null,
-        password: null
-      }
+        password: null,
+      },
     }
   },
   methods: {
     getSocialAccountsDetails() {
       try {
-        this.$axios.$get('user/get-social-accounts').then(res => {
+        this.$axios.$get('user/get-social-accounts').then((res) => {
           if (res.status == 200) {
             this.facebook = res.facebook
             this.google = res.google
@@ -658,7 +673,7 @@ export default {
           this.requestInProcess = true
           this.$axios
             .$post('user/profile-data/update', this.profile)
-            .then(res => {
+            .then((res) => {
               this.requestInProcess = false
               this.hideLoader()
               this.profileKeyup = false
@@ -682,9 +697,9 @@ export default {
           this.$axios
             .$post('user/notification/update', {
               slabNotification: this.slabNotification,
-              myListingNotification: this.myListingNotification
+              myListingNotification: this.myListingNotification,
             })
-            .then(res => {
+            .then((res) => {
               this.requestInProcess = false
               this.notificationKeyup = false
               this.hideLoader()
@@ -713,12 +728,12 @@ export default {
               // Production
               client_id: GOOGLE_CLIENT_ID_PROD,
               cookiepolicy: 'single_host_origin',
-              scope: 'profile email'
+              scope: 'profile email',
             })
             selfthis.profile_prepareLoginButton()
           })
         }
-        ;(function(d, s, id) {
+        ;(function (d, s, id) {
           var js,
             fjs = d.getElementsByTagName(s)[0]
           if (d.getElementById(id)) {
@@ -737,7 +752,7 @@ export default {
       window['gAuth2'].attachClickHandler(
         document.getElementById('profile-google-btn'),
         {},
-        googleUser => {
+        (googleUser) => {
           let profile = googleUser.getBasicProfile()
 
           //YOUR CODE HERE
@@ -746,18 +761,18 @@ export default {
             last_name: profile.getFamilyName(),
             email: profile.getEmail(),
             id: profile.getId(),
-            avatar: profile.getImageUrl()
+            avatar: profile.getImageUrl(),
           }
           selfthis.linkSocialAccounts(data, 'google')
         },
-        error => {
+        (error) => {
           console.log(error)
           // alert(JSON.stringify(error, undefined, 2));
         }
       )
     },
     profile_facebookSDK() {
-      window['fbAsyncInit'] = function() {
+      window['fbAsyncInit'] = function () {
         FB.init({
           // Developemnt
           // appId: FACEBOOK_APP_ID_DEV,
@@ -765,12 +780,12 @@ export default {
           appId: FACEBOOK_APP_ID_PROD,
           cookie: true,
           xfbml: true,
-          version: 'v8.0'
+          version: 'v8.0',
         })
 
         FB.AppEvents.logPageView()
       }
-      ;(function(d, s, id) {
+      ;(function (d, s, id) {
         var js,
           fjs = d.getElementsByTagName(s)[0]
         if (d.getElementById(id)) {
@@ -785,10 +800,10 @@ export default {
     profile_facebook() {
       const selfthis = this
       FB.login(
-        function(response) {
+        function (response) {
           if (response.status === 'connected') {
             // Logged into your webpage and Facebook.
-            FB.api('/me?fields=id,first_name,last_name,email', function(res) {
+            FB.api('/me?fields=id,first_name,last_name,email', function (res) {
               const data = { ...res }
               data.avatar =
                 'https://graph.facebook.com/' + data.id + '/picture?type=small'
@@ -806,11 +821,11 @@ export default {
       this.showLoader()
       this.$axios
         .post('user/add-social-accounts/' + provider, user)
-        .then(res => {
+        .then((res) => {
           this.hideLoader()
           this.getSocialAccountsDetails()
         })
-        .catch(e => {
+        .catch((e) => {
           this.hideLoader()
         })
     },
@@ -818,7 +833,7 @@ export default {
       this.disconnect = {
         provider: provider,
         id: provider == 'facebook' ? this.facebook.id : this.google.id,
-        password: null
+        password: null,
       }
       this.$bvModal.show('disconnectSocialAccount')
     },
@@ -829,7 +844,7 @@ export default {
           this.requestInProcess = true
           this.$axios
             .$post('user/remove-social-accounts', this.disconnect)
-            .then(res => {
+            .then((res) => {
               this.requestInProcess = false
               this.hideLoader()
               if (res.status == 200) {
@@ -843,8 +858,8 @@ export default {
           console.log(err)
         }
       }
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -1066,6 +1081,17 @@ export default {
     font-family: 'NexaBold', Helvetica, Arial, sans-serif;
     margin: 0px;
     padding: 0 !important;
+  }
+}
+#disconnectSocialAccount {
+  .center-form {
+    padding: 0 20px;
+    .card-btn {
+      padding: 8px 12px 5px;
+      font-family: Nexabold, Helvetica, Arial, sans-serif;
+      color: #212529;
+      margin-top: 15px;
+    }
   }
 }
 </style>

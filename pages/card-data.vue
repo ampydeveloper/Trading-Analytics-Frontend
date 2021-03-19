@@ -74,7 +74,7 @@
                   >
                     <font-awesome-icon
                       :icon="['fas', 'long-arrow-alt-' + cardGraph.sx_icon]"
-                    />&nbsp;&nbsp;${{ cardGraph.dollar_diff }}
+                    />&nbsp;&nbsp;${{ (cardGraph.dollar_diff?cardGraph.dollar_diff:0) }}
                   </button>
                   <button
                     :class="
@@ -85,7 +85,7 @@
                   >
                     <font-awesome-icon
                       :icon="['fas', 'long-arrow-alt-' + cardGraph.sx_icon]"
-                    />&nbsp;&nbsp;{{ cardGraph.pert_diff }}%
+                    />&nbsp;&nbsp;{{ (cardGraph.pert_diff?cardGraph.pert_diff:0) }}%
                   </button>
                   <span
                     class="card-link"

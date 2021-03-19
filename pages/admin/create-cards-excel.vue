@@ -90,6 +90,7 @@ export default {
       sport: '',
       uploadExcelType: null,
       uploadImageType: null,
+      uploadZipType: false,
       requestInProcess: false,
       statusMessage: null,
     }
@@ -110,7 +111,7 @@ export default {
     uploadImagesZip(imageType) {
       if (this.sport != '') {
         this.uploadExcelType = this.sport
-        this.uploadImageType = imageType
+        this.uploadZipType = imageType
         this.$refs.imageZip.click()
       } else {
         this.$toast.error('Select Sport')
@@ -123,7 +124,7 @@ export default {
         const file = files.item(0)
         formData.append('file', file)
       }
-      if (this.uploadImageType == 'images') {
+      if (this.uploadZipType == 'images') {
         var files1 = this.$refs.imageZip.files
         const file1 = files1.item(0)
         formData.append('file1', file1)

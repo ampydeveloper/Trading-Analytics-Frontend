@@ -22,8 +22,8 @@
                   <th>Confirmed</th>
                   <th>Active</th>
                   <th>Deleted</th>
-                  <th>Overall Rank</th>
-                  <th>Slab Value</th>
+                  <!-- <th>Overall Rank</th>
+                  <th>Slab Value</th> -->
                   <th>Action</th>
                 </tr>
               </thead>
@@ -48,8 +48,8 @@
                       <font-awesome-icon v-if='user.deleted_at != null' :icon="['fas', 'check']" />
                       <font-awesome-icon v-else :icon="['fas', 'times']" />
                   </td>
-                  <td>{{ user.overall_rank }}</td>
-                  <td>{{ user.slab_value }}</td>
+                  <!-- <td>{{ user.overall_rank }}</td>
+                  <td>{{ user.slab_value }}</td> -->
                   <td>
                       <button class="card-btn btn btn-primary btn-table-spec" @click="action(user, 'password', 'Change Password')" style="margin-top: 4px"> Change Password</button>
                       <button class="card-btn btn btn-primary btn-table-spec" @click="action(user, 'edit', 'Edit User')" style="margin-top: 4px"> Edit</button><br/>
