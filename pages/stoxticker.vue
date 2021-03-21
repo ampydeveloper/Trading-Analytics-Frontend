@@ -675,7 +675,7 @@ slabstox.com
     </div>
 
     <div class="row board-search-list-outer" style="display:none;">
-      <div class="col-sm-6 board-search-list"  v-for="(itemdata, key) in boardSearch" >
+      <div class="col-sm-6 board-search-list"  v-for="(itemdata, key) in boardSearch" :key='`boardSearch-${key}`'>
 
             <div class="card">
               <div class="card-body dashboard-graph">
@@ -719,8 +719,8 @@ slabstox.com
                       :icon="['fas', 'long-arrow-alt-' + boardSearch[key].sx_icon]"
                     />&nbsp;&nbsp;{{ boardSearch[key].pert_diff }}%
                   </button>
-</h5>
-<div class="dashboard-apex-top">
+                </h5>
+                <div class="dashboard-apex-top">
                   <VueApexCharts
                     ref="cardDataChart"
                     type="area"
@@ -812,8 +812,8 @@ slabstox.com
          
       </div>
 
-      <div class="create-board-out my-card text-center" style="display:none">
- <button class="my-card-view-listing create-board" @click="searchBoard()">
+          <div class="create-board-out my-card text-center" style="display:none">
+                <button class="my-card-view-listing create-board" @click="searchBoard()">
                   Load More Boards
                   <font-awesome-icon :icon="['fas', 'chevron-circle-right']" />
                 </button>
@@ -822,31 +822,28 @@ slabstox.com
    
 
    <div class="row dashboard-graph-row all-public-boards-list-out">
-      <div class="col-md-12 col-sm-12" v-for="(itemdata, key) in allBoardGraph">
+      <div class="col-md-12 col-sm-12" v-for="(itemdata, key) in allBoardGraph" :key='`allBoardGraph-${key}`'>
         <div class="card">
           <div
             class="card-body dashboard-graph sx-stats-all"
             id="dashboard-graph-outer"
-            ref="shareImage"
           >
           
             <h5 class="card-title">
               <nuxt-link
-                      class="theme-btn card-btn thb-btn"
-                      :to="`stoxticker-details?board=${allBoardGraph[key].id}`"
-                      style="margin-right: 4px;" v-if="user != null && user.full_name != null"
-                      >{{ allBoardGraph[key].name }}
-                      ${{ allBoardGraph[key].total_card_value }}
-                      </nuxt-link
-                    >
+                class="theme-btn card-btn thb-btn"
+                :to="`stoxticker-details?board=${allBoardGraph[key].id}`"
+                style="margin-right: 4px;" v-if="user != null && user.full_name != null"
+                >{{ allBoardGraph[key].name }}
+                ${{ allBoardGraph[key].total_card_value }}
+              </nuxt-link>
 
-<span
-                      class="theme-btn card-btn thb-btn"
-                      style="margin-right: 4px;" v-if="user == null || user.full_name == null" v-b-modal.loginTopPopup
-                      >{{ allBoardGraph[key].name }}
-                      ${{ allBoardGraph[key].total_card_value }}
-                      </span
-                    >
+              <span
+                class="theme-btn card-btn thb-btn"
+                style="margin-right: 4px;" v-if="user == null || user.full_name == null" v-b-modal.loginTopPopup
+                >{{ allBoardGraph[key].name }}
+                ${{ allBoardGraph[key].total_card_value }}
+              </span>
 
               <button
                 :class="
@@ -881,134 +878,56 @@ slabstox.com
                   ]"
                 />&nbsp;&nbsp;{{ allBoardGraph[key].pert_diff }}%
               </button>
-<!--              
-              <span class="total_sales" style="display: none">{{
-                stoxtickerData.total_sales
-              }}</span> -->
-             <!-- <span class="float-right share-lk-top">
-                <span class="share-icon">
-                  Share
-                  <img src="~/assets/img/share-icon-white.png" alt />
-                </span>
-                <div class="share-all-outer">
-                  <ul>
-                    <li>
-                      <a href="javascript:;" @click="shareFb()"
-                        ><img src="~/assets/img/icons/facebook.svg" alt
-                      /></a>
-                    </li>
-                    <li>
-                      <a
-                        :href="
-                          'https://twitter.com/intent/tweet?url=' +
-                          encodeURI(currentUrl) +
-                          '&text=StoxTicker@' +
-                         (stoxtickerData.sale?stoxtickerData.sale.toFixed(2):'') +
-                         ' ' +encodeURI(this.sxGraphImage)
-                        "
-                        target="_blank"
-                        ><img src="~/assets/img/icons/twitter.svg" alt
-                      /></a>
-                    </li>
-                    <li>
-                      <a
-                        :href="
-                          'http://pinterest.com/pin/create/button/?url=' +
-                          encodeURI(currentUrl) +
-                          '&media=' +
-                          encodeURI(this.sxGraphImage) +
-                          '&description=' +
-                          encodeURI('Check Our Stoxticker')
-                        "
-                        target="_blank"
-                        ><img src="~/assets/img/pinterest.png" alt
-                      /></a>
-                    </li>
-                    <li>
-                      <a
-                        :href="
-                          'https://www.linkedin.com/sharing/share-offsite/?url=' +
-                          encodeURI(currentUrl)
-                        "
-                        target="_blank"
-                        ><img src="~/assets/img/icons/linkedin-circled.svg" alt
-                      /></a>
-                    </li>
-                  </ul>
-                </div>
-             
-              </span>  -->
             </h5>
-            <div class="dashboard-apex-top" ref="dashboardApexChart">
+            <div class="dashboard-apex-top">
               <VueApexCharts
-                ref="dashChart"
                 type="area"
                 height="350"
+                :key="`vac-${key}-dashChart`"
                 :options="boardChartOptions[key]"
                 :series="boardSeries[key]"
               ></VueApexCharts>
             </div>
-            <div class="dashboard-graph-footer">
-              <ul class="dashboard-graph-footer-month-filter">
+            <div class="dashboard-graph-footer" id='`boardGraphs-${key}`'>
+              <ul class="dashboard-graph-footer-month-filter" :id='`dc-${key}-ul`' :key='`dc-${key}-ul`'>
                 <li
-                  :class="
-                    'dashboard-graph-footer-month-filter-item ' +
-                    (sxActiveDaysGraph == 2 ? 'active' : '')
-                  "
+                  :class="[{'active': boardDaysGraph[key] == 2}, 'dashboard-graph-footer-month-filter-item']"
                   @click="allBoardGraphSingleFunc(2,allBoardGraph[key].id,key)"
                 >
                   1D
                 </li>
                 <li
-                  :class="
-                    'dashboard-graph-footer-month-filter-item ' +
-                    (sxActiveDaysGraph == 7 ? 'active' : '')
-                  "
+                  :class="[{'active': boardDaysGraph[key] == 7}, 'dashboard-graph-footer-month-filter-item']"
                   @click="allBoardGraphSingleFunc(7,allBoardGraph[key].id,key)"
                 >
                   1W
                 </li>
                 <li
-                  :class="
-                    'dashboard-graph-footer-month-filter-item ' +
-                    (sxActiveDaysGraph == 30 ? 'active' : '')
-                  "
+                  :class="[{'active': boardDaysGraph[key] == 30}, 'dashboard-graph-footer-month-filter-item']"
                   @click="allBoardGraphSingleFunc(30,allBoardGraph[key].id,key)"
                 >
                   1M
                 </li>
                 <li
-                  :class="
-                    'dashboard-graph-footer-month-filter-item ' +
-                    (sxActiveDaysGraph == 90 ? 'active' : '')
-                  "
+                  :class="[{'active': boardDaysGraph[key] == 90}, 'dashboard-graph-footer-month-filter-item']"
                   @click="allBoardGraphSingleFunc(90,allBoardGraph[key].id,key)"
                 >
                   3M
                 </li>
                 <li
-                  :class="
-                    'dashboard-graph-footer-month-filter-item ' +
-                    (sxActiveDaysGraph == 180 ? 'active' : '')
-                  "
+                  :class="[{'active': boardDaysGraph[key] == 180}, 'dashboard-graph-footer-month-filter-item']"
                   @click="allBoardGraphSingleFunc(180,allBoardGraph[key].id,key)"
                 >
                   6M
                 </li>
                 <li
-                  :class="
-                    'dashboard-graph-footer-month-filter-item ' +
-                    (sxActiveDaysGraph == 365 ? 'active' : '')
-                  "
+                  :class="[{'active': boardDaysGraph[key] == 365}, 'dashboard-graph-footer-month-filter-item']"
                   @click="allBoardGraphSingleFunc(365,allBoardGraph[key].id,key)"
                 >
                   1Y
                 </li>
                 <li
-                  :class="
-                    'dashboard-graph-footer-month-filter-item ' +
-                    (sxActiveDaysGraph == 1825 ? 'active' : '')
-                  "
+                  :class="[{'active': boardDaysGraph[key] == 1825}, 'dashboard-graph-footer-month-filter-item']"
                   @click="allBoardGraphSingleFunc(1825,allBoardGraph[key].id,key)"
                 >
                   5Y
@@ -1023,11 +942,11 @@ slabstox.com
         </div>
 
         <div class="social_share ss-h4">
-        <h4>
-              <a class="embed-link" href="javascript:;"
-                @click="embedStoxtickerCode()" >EMBEDD CODE </>
-              </a>
-            </h4>
+          <h4>
+            <a class="embed-link" href="javascript:void(0);"
+              @click="embedStoxtickerCode()" >EMBEDD CODE </>
+            </a>
+          </h4>
         </div>
       </div>
       
@@ -1154,6 +1073,7 @@ export default {
       soldListing: '',
       // allBoards: '',
       allBoardGraph: [],
+      boardDaysGraph: [],
       boardChartOptions: [],
       boardSeries: [],
       boardSalesQty: [],
@@ -1655,6 +1575,7 @@ export default {
                       data: item.sales_graph.values,
                     },
                   ]
+                  this.boardDaysGraph.push(2)
                   this.boardSalesQty.push(item.sales_graph.qty)
                   this.boardChartOptions.push({
                     chart: {
@@ -1732,12 +1653,15 @@ export default {
     },
     allBoardGraphSingleFunc(days, board, boardKey) {
       try {
+        
         // this.graphDataEmpty = false;
         this.$axios
           .$get(`stoxticker/single-graph-board/${days}/${board}`)
           .then((res) => {
             if (res.status == 200) {
-              // this.sxActiveDaysGraph = days
+
+              this.boardDaysGraph.splice(boardKey, 1, days)
+
               // if (this.initGraphLabelLength != res.data.labels.length) {
               // this.graphDataEmpty = false;
               // this.stoxtickerData.sale = res.data.sale
@@ -1746,15 +1670,12 @@ export default {
               // this.stoxtickerData.change_arrow = res.data.change_arrow
               // this.stoxtickerData.last_timestamp = res.data.last_timestamp
 
-              this.allBoardGraph[boardKey] = res.data
-              this.boardSeries[boardKey] = [
-                {
-                  name: 'Sales',
-                  data: res.data.sales_graph.values,
-                },
-              ]
-              this.boardSalesQty[boardKey] = res.data.sales_graph.qty
-              this.boardChartOptions[boardKey] = {
+              this.allBoardGraph.splice(boardKey, 1, res.data)
+
+              this.boardSeries.splice(boardKey, 1, [{name: 'Sales', data: res.data.sales_graph.values, }])
+
+              this.boardSalesQty.splice(boardKey, 1, res.data.sales_graph.qty)
+              this.boardChartOptions.splice(boardKey, 1, {
                 chart: {
                   toolbar: {
                     show: false,
@@ -1807,18 +1728,13 @@ export default {
                   y: {
                     formatter: (value, ind) => {
                       let lblStr = `$${value}`
-                      if (typeof ind == 'object')
-                        lblStr = `$${value} (${
-                          this.boardSalesQty[ind.dataPointIndex]
-                        })`
+                      if (typeof ind == 'object') lblStr = `$${value} (${this.boardSalesQty[ind.dataPointIndex]})`
                       else lblStr = `$${value} (${this.boardSalesQty[ind]})`
                       return lblStr
                     },
                   },
                 },
-              }
-              console.log(boardKey)
-              console.log(this.allBoardGraph[boardKey])
+              })
             }
           })
       } catch (error) {

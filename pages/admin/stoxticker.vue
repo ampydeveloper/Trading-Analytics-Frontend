@@ -669,7 +669,7 @@ export default {
       var sportList = []
       $('.cat-btn li.active').each(function () {
         var $this = $(this)
-        sportList.push($this.find('a').text())
+        sportList.push($this.find('a').text().toLowerCase())
       })
       $('.stoxticker_page-outer').hide()
       $('.stoxticker_listing-outer').hide()
@@ -1132,6 +1132,7 @@ export default {
           .$get(`stoxticker/single-graph-board/${days}/${board}`)
           .then((res) => {
             if (res.status == 200) {
+              console.log(res)
               // this.sxActiveDaysGraph = days
               // if (this.initGraphLabelLength != res.data.labels.length) {
               // this.graphDataEmpty = false;
