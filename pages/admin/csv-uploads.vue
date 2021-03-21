@@ -45,7 +45,7 @@
                   <td colspan="4" class="text-center">No CSV uploads found.</td>
                 </tr>
               </tbody>
-              <tfoot>
+              <!-- <tfoot>
                 <tr>
                   <td colspan="4">
                     <button
@@ -63,7 +63,7 @@
                     </button>
                   </td>
                 </tr>
-              </tfoot>
+              </tfoot> -->
             </table>
           </div>
         </div>

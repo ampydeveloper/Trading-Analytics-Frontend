@@ -12,27 +12,37 @@
             <table class="table table-striped">
               <thead>
                 <tr>
-                  <th>Id</th>
+                  <th>Card Id</th>
                   <th>Search Terms</th>
+                  <th>User</th>
+                   <th>Timestamp</th>
                 </tr>
               </thead>
               <tbody v-if="cards.length > 0">
                 <tr v-for="card of cards" :key="card.id">
-                  <td>{{ card.id }}</td>
-                  <td>{{ card.title }}</td>
+                  <td>{{ card.card_details.id }}</td>
+                  <td>
+                    <nuxt-link
+                      style="color: #fff;"
+                      :to="`ebay-specific-listings?card=${card.id}`"
+                      >{{ card.card_details.title }}</nuxt-link
+                    >
+                  </td>
+                  <td>{{ card.user_details.full_name }}</td>
+                    <td>{{ $moment(card.created_at).format('MMMM DD Y - hh:mm:ss') }}</td>
                 </tr>
               </tbody>
               <tbody v-if="cards.length == 0 && requestInProcess">
                 <tr>
-                  <td colspan="2" class="text-center">loading...</td>
+                  <td colspan="4" class="text-center">loading...</td>
                 </tr>
               </tbody>
               <tbody v-if="cards.length == 0 && requestInProcess == false">
                 <tr>
-                  <td colspan="2" class="text-center">No requested slab available.</td>
+                  <td colspan="4" class="text-center">No search terms found.</td>
                 </tr>
               </tbody>
-              <tfoot>
+              <!-- <tfoot>
                 <tr>
                   <td colspan="2">
                     <button class="theme-btn card-btn" :disabled="page == 2" @click="getRequestedSlab(page - 1)">
@@ -41,7 +51,7 @@
                     <button class="theme-btn card-btn" @click="getRequestedSlab(page)">Next</button>
                   </td>
                 </tr>
-              </tfoot>
+              </tfoot> -->
             </table>
           </div>
         </div>

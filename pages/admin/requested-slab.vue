@@ -51,12 +51,96 @@
                 </tr>
               </tbody>
               <tfoot>
-                <tr>
+                <!-- <tr>
                   <td colspan="6">
                     <button class="theme-btn card-btn" :disabled="page == 2" @click="getRequestedSlab(page - 1)">
                       Previous
                     </button>
                     <button class="theme-btn card-btn" @click="getRequestedSlab(page)">Next</button>
+                  </td>
+                </tr> -->
+                <tr v-if="page-1 == 1">
+                  <td colspan="9">
+                    <button class="theme-btn card-btn active-pagination" @click="getRequestedSlab(1)">
+                      1
+                    </button>
+                    <button class="theme-btn card-btn" @click="getRequestedSlab(2)">
+                      2
+                    </button>
+                    <button class="theme-btn card-btn" @click="getRequestedSlab(3)">
+                      Next
+                    </button>
+                  </td>
+                </tr>
+                <tr v-if="page-1 == 2">
+                  <td colspan="9">
+                    <button class="theme-btn card-btn" @click="getRequestedSlab(1)">
+                      1
+                    </button>
+                    <button class="theme-btn card-btn active-pagination" @click="getRequestedSlab(2)">
+                      2
+                    </button>
+                    <button class="theme-btn card-btn" @click="getRequestedSlab(3)">
+                      3
+                    </button>
+                    <button class="theme-btn card-btn" @click="getRequestedSlab(4)">
+                      Next
+                    </button>
+                  </td>
+                </tr>
+                <tr v-if="page-1 == 3">
+                  <td colspan="9">
+                    <button
+                      class="theme-btn card-btn"
+                     
+                      @click="getRequestedSlab(1)"
+                    >
+                      Previous
+                    </button>
+                    <button class="theme-btn card-btn" @click="getRequestedSlab(2)">
+                      2
+                    </button>
+                    <button class="theme-btn card-btn active-pagination" @click="getRequestedSlab(3)">
+                      3
+                    </button>
+                    <button class="theme-btn card-btn" @click="getRequestedSlab(4)">
+                      4
+                    </button>
+                    <button class="theme-btn card-btn" @click="getRequestedSlab(5)">
+                      Next
+                    </button>
+                  </td>
+                </tr>
+                <tr v-if="(page-1) > 3">
+                  <td colspan="9">
+                    <button
+                      class="theme-btn card-btn"
+                      
+                      @click="getRequestedSlab(page - 2)"
+                    >
+                      Previous
+                    </button>
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getRequestedSlab(page - 1)"
+                    >
+                      {{ page - 1 }}
+                    </button>
+                    <button class="theme-btn card-btn active-pagination" @click="getRequestedSlab(page)">
+                      {{ page }}
+                    </button>
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getRequestedSlab(page + 1)"
+                    >
+                      {{ page + 1 }}
+                    </button>
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getRequestedSlab(page + 2)"
+                    >
+                      Next
+                    </button>
                   </td>
                 </tr>
               </tfoot>

@@ -33,21 +33,105 @@
               </tbody>
               <tbody v-if="cards.length == 0 && requestInProcess">
                 <tr>
-                  <td colspan="9" class="text-center">loading...</td>
+                  <td colspan="5" class="text-center">loading...</td>
                 </tr>
               </tbody>
               <tbody v-if="cards.length == 0 && requestInProcess == false">
                 <tr>
-                  <td colspan="9" class="text-center">No listing requests available.</td>
+                  <td colspan="5" class="text-center">No listing requests available.</td>
                 </tr>
               </tbody>
               <tfoot>
-                <tr>
+                <!-- <tr>
                   <td colspan="6">
                     <button class="theme-btn card-btn" :disabled="page == 2" @click="getRequestedListing(page - 1)">
                       Previous
                     </button>
                     <button class="theme-btn card-btn" @click="getRequestedListing(page)">Next</button>
+                  </td>
+                </tr> -->
+                <tr v-if="page-1 == 1">
+                  <td colspan="5">
+                    <button class="theme-btn card-btn active-pagination" @click="getRequestedListing(1)">
+                      1
+                    </button>
+                    <button class="theme-btn card-btn" @click="getRequestedListing(2)">
+                      2
+                    </button>
+                    <button class="theme-btn card-btn" @click="getRequestedListing(3)">
+                      Next
+                    </button>
+                  </td>
+                </tr>
+                <tr v-if="page-1 == 2">
+                  <td colspan="5">
+                    <button class="theme-btn card-btn" @click="getRequestedListing(1)">
+                      1
+                    </button>
+                    <button class="theme-btn card-btn active-pagination" @click="getRequestedListing(2)">
+                      2
+                    </button>
+                    <button class="theme-btn card-btn" @click="getRequestedListing(3)">
+                      3
+                    </button>
+                    <button class="theme-btn card-btn" @click="getRequestedListing(4)">
+                      Next
+                    </button>
+                  </td>
+                </tr>
+                <tr v-if="page-1 == 3">
+                  <td colspan="5">
+                    <button
+                      class="theme-btn card-btn"
+                     
+                      @click="getRequestedListing(1)"
+                    >
+                      Previous
+                    </button>
+                    <button class="theme-btn card-btn" @click="getRequestedListing(2)">
+                      2
+                    </button>
+                    <button class="theme-btn card-btn active-pagination" @click="getRequestedListing(3)">
+                      3
+                    </button>
+                    <button class="theme-btn card-btn" @click="getRequestedListing(4)">
+                      4
+                    </button>
+                    <button class="theme-btn card-btn" @click="getRequestedListing(5)">
+                      Next
+                    </button>
+                  </td>
+                </tr>
+                <tr v-if="(page-1) > 3">
+                  <td colspan="5">
+                    <button
+                      class="theme-btn card-btn"
+                      
+                      @click="getRequestedListing(page - 2)"
+                    >
+                      Previous
+                    </button>
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getRequestedListing(page - 1)"
+                    >
+                      {{ page - 1 }}
+                    </button>
+                    <button class="theme-btn card-btn active-pagination" @click="getRequestedListing(page)">
+                      {{ page }}
+                    </button>
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getRequestedListing(page + 1)"
+                    >
+                      {{ page + 1 }}
+                    </button>
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getRequestedListing(page + 2)"
+                    >
+                      Next
+                    </button>
                   </td>
                 </tr>
               </tfoot>
