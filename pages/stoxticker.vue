@@ -348,7 +348,7 @@
     <b-modal id="embedStoxtickerCode" title="" size="xl" hide-footer>
           <h5>Copy code and paste to your website.</h5>
           <p class="code-text">
-            <textarea cols="3" rows="10"><iframe src="https://pro.slabstox.com/stoxticker-all-stats" width="1400" height="260" style="border:none;" frameborder="0"></iframe>
+            <textarea cols="3" rows="10"><iframe :src="currentUrl+'/stoxticker-all-stats'" width="1400" height="260" style="border:none;" frameborder="0"></iframe>
           </textarea
             >
           </p>
@@ -464,7 +464,7 @@ slabstox.com
         <b-modal id="embedStatsCode" title="" size="xl" hide-footer>
           <h5>Copy code and paste to your website.</h5>
           <p class="code-text">
-            <textarea cols="3" rows="10"><iframe src="https://pro.slabstox.com/stoxticker-stats" width="1400" height="260" style="border:none;" frameborder="0"></iframe>
+            <textarea cols="3" rows="10"><iframe :src="currentUrl+'/stoxticker-stats'" width="1400" height="260" style="border:none;" frameborder="0"></iframe>
           </textarea
             >
           </p>
@@ -606,7 +606,7 @@ slabstox.com
         <b-modal id="embedSellsCode" title="" size="xl" hide-footer>
           <h5>Copy code and paste to your website.</h5>
           <p class="code-text">
-            <textarea cols="3" rows="10"><iframe src="https://pro.slabstox.com/stoxticker-sells" width="1400" height="260" style="border:none;" frameborder="0"></iframe>
+            <textarea cols="3" rows="10"><iframe :src="currentUrl+'/stoxticker-sells'" width="1400" height="260" style="border:none;" frameborder="0"></iframe>
           </textarea
             >
           </p>

@@ -172,11 +172,10 @@
 
 <script>
 import { BASE_URL } from '../constants/keys'
-import $ from 'jquery'
 
 export default {
   transition: 'fade',
-  layout: 'guestOuter',
+  layout: 'default',
   auth: 'guest',
 
   head() {
@@ -184,15 +183,6 @@ export default {
       title: 'Stoxticker - Slabstox',
       meta: [
         {  hid: 'stoxticker-all-stats', name: 'Stoxticker - Slabstox', content: 'Check our StoxTicker' },
-        { property: 'og:title', content: 'Check our StoxTicker' },
-        { property: 'og:image', content: this.sxGraphImage },
-        {
-          property: 'og:description',
-          content: 'StoxTicker@' + (this.data.sale ? this.data.sale : ''),
-        },
-        { property: 'og:url', content: this.currentUrl },
-        { property: 'og:site_name', content: 'Slabstox' },
-        { property: 'og:type', content: 'website' },
       ],
     }
   },
@@ -357,15 +347,6 @@ export default {
       return title
     },
    
-    shareFb() {
-      FB.ui({
-        method: 'feed',
-        name: 'StoxTicker@' + (this.data.sale ? this.data.sale : ''),
-        link: this.baseUrl,
-        picture: this.sxGraphImage,
-        description: 'Check our StoxTicker',
-      })
-    },
     embedStatsCode() {
       this.$bvModal.show('embedStatsCode')
     },
@@ -1087,42 +1068,6 @@ html body main .card.search-slabs-out .my-card-listing .my-card {
     .dashboard-graph-footer-update-at {
       margin-top: 21px;
     }
-  }
-}
-.share-lk-top {
-  cursor: pointer;
-  span {
-    margin-right: 5px;
-    img {
-      width: 20px;
-      margin-top: -5px;
-      margin-left: 10px;
-    }
-  }
-}
-.share-lk-top span {
-  font-family: 'Nexabold', Helvetica, Arial, sans-serif;
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: #edecec;
-  margin: 0;
-  line-height: 25px;
-  display: inline-block;
-}
-.share-all-outer {
-  left: 32px;
-  top: 25px;
-}
-.sb-data-values-out {
-  .share-icon {
-    margin-left: 0 !important;
-    margin-top: -5px !important;
-    font-size: 11px !important;
-    font-style: normal !important;
-  }
-  .si-white {
-    color: #fff;
   }
 }
 </style>

@@ -7,59 +7,6 @@
             <div class="card-body" style="    padding-bottom: 0;">
               <h5 class="card-title">
                 <button class="theme-btn card-btn">STOXTICKER</button>
-
-                <span class="float-right share-lk-top sb-data-values-out">
-                  <span class="share-icon">
-                    Share
-                    <img src="~/assets/img/share-icon.png" alt />
-                  </span>
-                  <div class="share-all-outer" style="top: 19px">
-                    <ul>
-                      <li>
-                        <a href="javascript:;" @click="shareFb()"
-                          ><img src="~/assets/img/icons/facebook.svg" alt
-                        /></a>
-                      </li>
-                      <li>
-                        <a
-                          :href="
-                            'https://twitter.com/intent/tweet?url=' +
-                            encodeURI(currentUrl) +
-                            '&text=StoxTicker@' + (this.data.sale ? this.data.sale : '')+ ' Total Slabs: '+intToString(data.total)
-                          "
-                          target="_blank"
-                          ><img src="~/assets/img/icons/twitter.svg" alt
-                        /></a>
-                      </li>
-                      <li>
-                        <a
-                          :href="
-                            'http://pinterest.com/pin/create/button/?url=' +
-                            encodeURI(currentUrl) +
-                            '&media=' +
-                            encodeURI(this.graphImage) +
-                            '&description=' +
-                            encodeURI('StoxTicker@' + (this.data.sale ? this.data.sale : '')+ ' Total Slabs: '+intToString(data.total))
-                          "
-                          target="_blank"
-                          ><img src="~/assets/img/pinterest.png" alt
-                        /></a>
-                      </li>
-                      <li>
-                        <a
-                          :href="
-                            'https://www.linkedin.com/sharing/share-offsite/?url=' +
-                            encodeURI(currentUrl)
-                          "
-                          target="_blank"
-                          ><img
-                            src="~/assets/img/icons/linkedin-circled.svg"
-                            alt
-                        /></a>
-                      </li>
-                    </ul>
-                  </div>
-                </span>
               </h5>
               <div class="row">
                 <div class="col-md-2 bs-stats">
@@ -111,15 +58,6 @@ export default {
       title: 'Stoxticker - Slabstox',
       meta: [
         {  hid: 'stoxticker-stats',name: 'Stoxticker - Slabstox', content: 'Slabstox - Check our StoxTicker' },
-        { property: 'og:title', content: 'Slabstox - Check our StoxTicker' },
-        { property: 'og:image', content: this.sxGraphImage },
-        {
-          property: 'og:description',
-          content: 'StoxTicker@' + (this.data.sale ? this.data.sale : '')+ ' Total Slabs: '+this.intToString(this.data.total),
-        },
-        { property: 'og:url', content: this.currentUrl },
-        { property: 'og:site_name', content: 'Slabstox' },
-        { property: 'og:type', content: 'website' },
       ],
     }
   },
@@ -173,17 +111,7 @@ export default {
         this.$router.push('/404')
       }
     },
-  
-    shareFb() {
-      FB.ui({
-        method: 'feed',
-        name: 'StoxTicker@' + (this.data.sale ? this.data.sale : '')+ ' Total Slabs: '+intToString(data.total),
-        link: this.baseUrl,
-        picture: this.sxGraphImage,
-        description: 'Slabstox - Check our Stoxticker',
-      })
-    },
- 
+   
     intToString(value) {
       var suffixes = ['', 'k', 'm', 'b', 't']
       var suffixNum = Math.floor(('' + value).length / 3)
@@ -491,42 +419,6 @@ html body main .card.search-slabs-out .my-card-listing .my-card {
     .dashboard-graph-footer-update-at {
       margin-top: 21px;
     }
-  }
-}
-.share-lk-top {
-  cursor: pointer;
-  span {
-    margin-right: 5px;
-    img {
-      width: 20px;
-      margin-top: -5px;
-      margin-left: 10px;
-    }
-  }
-}
-.share-lk-top span {
-  font-family: 'Nexabold', Helvetica, Arial, sans-serif;
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: #edecec;
-  margin: 0;
-  line-height: 25px;
-  display: inline-block;
-}
-.share-all-outer {
-  left: 32px;
-  top: 25px;
-}
-.sb-data-values-out {
-  .share-icon {
-    margin-left: 0 !important;
-    margin-top: -5px !important;
-    font-size: 11px !important;
-    font-style: normal !important;
-  }
-  .si-white {
-    color: #fff;
   }
 }
 </style>

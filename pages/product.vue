@@ -8,15 +8,19 @@
             <div class="labels">
               <label
                 class="topps"
-                v-if="data.card != null && data.card.brand == 'Topps Series 2'"
-                >Topps</label
+                v-if="data.card != null && data.card.brand != ''"
+                >{{data.card.brand}}</label
               >
               <label
                 class="chrome"
-                v-if="data.card != null && data.card.brand == 'Prizm'"
-                >Prizm</label
+                v-if="data.card != null && data.card.variation != ''"
+                >{{data.card.variation}}</label
               >
-              <label class="top-pick" v-if="false">top pick</label>
+              <label
+                class="top-pick"
+                v-if="data.card != null && data.card.rc == 'yes'"
+                >Rookie</label
+              >
               <label class="trender" v-if="false">Trender</label>
             </div>
             <!-- <div class="icons-container">
@@ -172,16 +176,12 @@
                 </h5>
                 <div class="slab-specs-container">
                   <ul class="slab-specs-ul">
-                    <template v-for="(value, key) of data.details">
-                      <li class="slab-specs-li" :key="key" v-if="value != ''">
+                    <template v-for="(value, key) of data.specifications">
+                      <li class="slab-specs-li" v-if="key < 14">
                         <p>
-                          {{ key }}:
+                          {{ value.name }}
                           {{
-                            key == 'rookie' && value == 1
-                              ? 'Yes'
-                              : key == 'rookie'
-                              ? 'No'
-                              : value
+                            value.value
                           }}
                         </p>
                       </li>
@@ -287,16 +287,12 @@
     <RealtedProductList :cardId="data.card_id" :itemId="data.id" />
     <b-modal id="specsDetails" title="Slab Specs" hide-footer>
       <ul>
-        <template v-for="(value, key) of data.details">
-          <li :key="key" v-if="value != ''">
+        <template v-for="(value, key) of data.specifications">
+          <li>
             <p>
-              {{ key }}:
+              {{ value.name }}
               {{
-                key == 'rookie' && value == 1
-                  ? 'Yes'
-                  : key == 'rookie'
-                  ? 'No'
-                  : value
+                value.value
               }}
             </p>
           </li>

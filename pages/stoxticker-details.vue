@@ -79,10 +79,7 @@
                 <font-awesome-icon :icon="['fas', 'chevron-right']" />
               </span>
 
-              <button v-if="user.id == stoxtickerDetails.board.user_id"
-            class="theme-red-btn card-btn" @click="deleteBoard()">
-             Delete
-              </button>
+              
                    
               <span class="float-right share-lk-top">
                 <span class="share-icon">
@@ -117,6 +114,10 @@
                 </div>
              
               </span>
+<button v-if="user.id == stoxtickerDetails.board.user_id"
+            class="theme-red-btn card-btn float-right" @click="deleteBoard()">
+             Delete
+              </button>
 
               <b-modal
       id="openSeeProblemPopup"
@@ -226,7 +227,6 @@
               <p class="dashboard-graph-footer-update-at float-right">
                 Last Updated - 
                 {{ stoxtickerDetails.last_timestamp }}
-                 <!-- FEBRUARY 20 2021 - 11:58:47 AM -->
               </p>
             </div>
           </div>
@@ -242,7 +242,7 @@
     <b-modal id="embedStatsCode" title="" size="xl" hide-footer>
           <h5>Copy code and paste to your website.</h5>
           <p class="code-text">
-            <textarea cols="3" rows="10"><iframe src="https://pro.slabstox.com/stoxticker-board-details" width="1400" height="260" style="border:none;" frameborder="0"></iframe>
+            <textarea cols="3" rows="10"><iframe :src="currentUrl+'/stoxticker-board-details'" width="1400" height="260" style="border:none;" frameborder="0"></iframe>
           </textarea
             >
           </p>
@@ -275,8 +275,6 @@
 
 <script>
 import CardSlabItem from '~/components/dashboard/CardSlabItem'
-// import CardListItem from '~/components/dashboard/CardListItem'
-// import MyListing from '~/components/dashboard/MyListing'
 import { BASE_URL } from '../constants/keys'
 import $ from 'jquery'
 
@@ -359,6 +357,7 @@ export default {
       initGraphLabelLength: 0,
       graphDataEmpty: false,
       boardFollow: false,
+      currentUrl: location.href,
       stoxtickerDetails: {
         board: [],
         cards: [],
@@ -613,7 +612,7 @@ ul.featured-listing {
 .share-lk-top {
   cursor: pointer;
   span {
-    margin-right: 5px;
+    margin-right: 8px !important;
     img {
       width: 20px;
       margin-top: -5px;

@@ -8,9 +8,9 @@
               {{ card.title }}
             </h5>
             <ul class="labels">
-              <!-- <li class="yellow">topps</li>
-              <li class="grey">chrome</li> -->
+              <li v-if="card.rc == 'yes'" class="grey">Rookie</li> 
               <li class="green">{{ card.brand }}</li>
+              <li v-if="card.grade != null" class="yellow">{{card.grade}}</li>
               <!-- <li class="orange">trender</li> -->
             </ul>
             <div class="icons-container" v-if="user.full_name != null">
@@ -29,15 +29,23 @@
             </div>
             <div class="image-conatiner">
               <img :src="card.cardImage" alt="data.title" />
+              
             </div>
 
             <a
               class="theme-green-btn card-btn add-my-port2"
               target="_blank"
+              v-if="user.full_name != null"
               href="https://www.ebay.com/sl/sell"
               >Sell This Card
               <font-awesome-icon :icon="['fas', 'chevron-right']"
             /></a>
+             <span
+      :class="'theme-green-btn card-btn add-my-port2'" v-if="user == null || user.full_name == null" v-b-modal.loginTopPopup
+    >
+      Sell This Card
+      <font-awesome-icon :icon="['fas', 'chevron-right']" />
+    </span>
             <button
               class="theme-green-btn card-btn add-my-port1"
               v-if="user.full_name != null"
@@ -45,6 +53,12 @@
             >
               Submit a Listing
             </button>
+             <span
+      :class="'theme-green-btn card-btn add-my-port1'" v-if="user == null || user.full_name == null" v-b-modal.loginTopPopup
+    >
+       Submit a Listing
+      <font-awesome-icon :icon="['fas', 'chevron-right']" />
+    </span>
             <button
               class="theme-green-btn card-btn add-my-port"
               v-if="user.full_name != null"
@@ -52,6 +66,12 @@
             >
               Add to My Portfolio
             </button>
+             <span
+      :class="'theme-green-btn card-btn add-my-port'" v-if="user == null || user.full_name == null" v-b-modal.loginTopPopup
+    >
+      Add to My Portfolio
+      <font-awesome-icon :icon="['fas', 'chevron-right']" />
+    </span>
           </div>
         </div>
       </div>
@@ -324,9 +344,17 @@
                   }}
                 </li>
                 <li>
-                  High Sale: {{ highestSale ? '$' + highestSale : 'N/A' }}
+                  High Sale: {{ highestSale ? '$' + highestSale.cost : 'N/A' }} {{
+                    lastSaleDate
+                      ? '('+this.$moment(highestSale.timestamp).format('M/D/Y')+')'
+                      : ''
+                  }}
                 </li>
-                <li>Low Sale: {{ lowestSale ? '$' + lowestSale : 'N/A' }}</li>
+                <li>Low Sale: {{ lowestSale ? '$' + lowestSale.cost : 'N/A' }} {{
+                    lastSaleDate
+                      ? '('+this.$moment(lowestSale.timestamp).format('M/D/Y')+')'
+                      : ''
+                  }}</li>
               </ul>
               <!-- <span>READ MORE ABOUT OUR STATS</span> -->
             </div>
@@ -770,7 +798,8 @@ export default {
           .then((res) => {
             if (res.status == 200) {
               this.activeDaysGraph = days
-              if (this.initGraphLabelLength != res.data.values.length) {
+              // if (this.initGraphLabelLength != res.data.values.length) {
+                // console.log(res.data);
                 this.series = [{ name: 'Sales', data: res.data.values }]
                 this.salesQty = res.data.qty
                 this.chartOptions = {
@@ -817,7 +846,7 @@ export default {
                 this.lastSalePrice = res.data.lastSalePrice
                 this.initGraphLabelLength = res.data.labels.length
                 this.slabstoxValue = res.data.slabstoxValue
-              }
+              // }
               setTimeout(() => {
                 this.generateImageOfGraph()
               }, 100)
@@ -1414,4 +1443,22 @@ ul.my-card-listing {
     }
   }
 }
+// .grade-image-text{
+//   position: absolute;
+//   bottom: 26.5vw;
+//   left: 8px;
+//   letter-spacing: 1.4px;
+//   z-index: 9;
+//   border: 1px solid #1ce783;
+//     text-transform: uppercase;
+//     float: left;
+//     margin-top: -10px;
+//     font-family: "NexaBold", Helvetica, Arial, sans-serif;
+//     font-weight: 400;
+//     border-radius: 2px;
+//     padding: 3px 5px 0px 5px;
+//     color: #000;
+//     font-size: 10px;
+//     background: #1ce783;
+// }
 </style>

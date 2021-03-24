@@ -22,10 +22,11 @@
         :src="itemdata.cardImage"
         :alt="itemdata.id"
       />
-      <select class="form-control grading" v-model="grade" @change="updateGrading(itemdata)">
+      <span v-if="itemdata.grade != null" class="grade-image-text">{{itemdata.grade}}</span>
+      <!-- <select class="form-control grading" v-model="grade" @change="updateGrading(itemdata)">
         <option value="null" selected>Select Grade</option>
         <option v-for='gr in ["review", "pending", "graded"]' :key='"grading-"+gr' :value="gr" v-text="gr" class="text-capitalize"></option>
-      </select>
+      </select> -->
     </div>
     <nuxt-link
       class="my-card-view-listing"
@@ -241,19 +242,37 @@ display:none;
     display:none;
   }
 }
-.grading{
- text-transform: capitalize;
-    z-index: 1;
-    position: absolute;
-    top: 8px;
-    right: 6px;
-    width: 100px;
-    font-size: 12px;
-    padding: 1px;
-    height: 22px;
+// .grading{
+//  text-transform: capitalize;
+//     z-index: 1;
+//     position: absolute;
+//     top: 8px;
+//     right: 6px;
+//     width: 100px;
+//     font-size: 12px;
+//     padding: 1px;
+//     height: 22px;
+//     border-radius: 2px;
+//     border: 0;
+//     background: #1ce783;
+//     color: #000;
+// }
+.grade-image-text{
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  letter-spacing: 1.4px;
+  z-index: 9;
+  border: 1px solid #1ce783;
+    text-transform: uppercase;
+    float: left;
+    margin-top: -10px;
+    font-family: "NexaBold", Helvetica, Arial, sans-serif;
+    font-weight: 400;
     border-radius: 2px;
-    border: 0;
-    background: #1ce783;
+    padding: 3px 5px 0px 5px;
     color: #000;
+    font-size: 10px;
+    background: #1ce783;
 }
 </style>

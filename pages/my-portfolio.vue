@@ -262,6 +262,7 @@
                 :src="item.cardImage"
                 :alt="item.id"
               />
+               <span v-if="item.grade != null" class="grade-image-text">{{item.grade}}</span>
             </div>
             <button
               class="my-card-view-listing"
@@ -314,6 +315,29 @@
             </div>
           </div>
         </div>
+
+        <div class="col-md-6" v-if="addPortfolioVar.isedit == 'yes'">
+          <div class="form-group row">
+            <label
+              for="staticPurchaseQuantity"
+              class="col-md-2 col-sm-2 col-form-label"
+              >Grading</label
+            >
+            <div class="col-md-9 col-sm-9">
+              <!-- <input
+                v-model="addPortfolioVar.quantity"
+                type="text"
+                class="form-control-plaintext"
+              /> -->
+              <select class="form-control grading" v-model="grade" @change="updateGrading(addPortfolioVar.id)">
+        <option value="null" selected>Select Grade Status</option>
+        <option v-for='gr in ["review", "pending", "graded"]' :key='"grading-"+gr' :value="gr" v-text="gr" class="text-capitalize"></option>
+      </select>
+            </div>
+          </div>
+        </div>
+
+
       </div>
       <div class="row">
         <div class="col-sm-12 text-center">
@@ -382,6 +406,7 @@ export default {
         id: 0,
         quantity: 0,
         price: 0,
+        grade: 0,
       },
       portfolioFilter: {
         sport: [],
@@ -593,12 +618,31 @@ export default {
         }
       }
     },
+    updateGrading(){
+      try{
+        this.$axios
+            .post('portfolio/gradeCard', {
+              card_id: this.itemdata.id,
+              purchase_price: this.itemdata.purchase_price,
+              grade: this.grade
+            })
+            .then(res => {
+              // this.$toast.success('Card graded successfully.')
+              this.hideLoader()
+            }).catch(err => {
+              console.log(err)
+            })
+        } catch (err) {        
+          console.log(err)
+        }
+    },
     updateToMyPortfolioPrice(tarr) {
       this.portfolioPopUpTitle = 'Update ' + tarr.title
       this.addPortfolioVar.isedit = 'yes'
       this.addPortfolioVar.id = tarr.portfolio_id
       this.addPortfolioVar.quantity = tarr.quantity
       this.addPortfolioVar.price = tarr.purchase_price
+      this.addPortfolioVar.grade = tarr.grade
       this.$bvModal.show('addToPortfolioPurchasePrice')
     },
     addToMyPortfolioPrice(id) {
@@ -607,6 +651,7 @@ export default {
       this.addPortfolioVar.id = id
       this.addPortfolioVar.quantity = 0
       this.addPortfolioVar.price = 0
+       this.addPortfolioVar.grade = 0
       this.$bvModal.hide('addToPortfolio')
       this.$bvModal.show('addToPortfolioPurchasePrice')
     },
@@ -623,6 +668,7 @@ export default {
               this.requestInProcess = false
               if (res.status == 200) {
                 this.getCards()
+                this.getValue();
                 this.$bvModal.hide('addToPortfolio')
                 this.$bvModal.hide('addToPortfolioPurchasePrice')
                 this.addPortfolioVar.id = 0
@@ -650,6 +696,7 @@ export default {
               this.requestInProcess = false
               if (res.status == 200) {
                 this.getCards()
+                this.getValue();
                 this.$bvModal.hide('addToPortfolio')
                 this.$bvModal.hide('addToPortfolioPurchasePrice')
                 this.addPortfolioVar.id = 0
@@ -662,27 +709,6 @@ export default {
           this.requestInProcess = false
           console.log(err)
         }
-      }
-    },
-    updateGraph(days = 2) {
-      try {
-        this.$axios
-          .$get(`portfolio/get-portfolio-graph/${days}`)
-          .then((res) => {
-            if (res.status == 200) {
-              this.activeDaysGraph = days
-              if (this.initGraphLabelLength != res.data.values.length) {
-                this.graphDataEmpty = false
-                this.series = [{ name: 'Portfolio', data: res.data.values }]
-                this.chartOptions = { xaxis: { categories: res.data.labels } }
-                this.initGraphLabelLength = res.data.labels.length
-              } else {
-                this.graphDataEmpty = false
-              }
-            }
-          })
-      } catch (error) {
-        console.log(error)
       }
     },
   },
@@ -1010,6 +1036,30 @@ export default {
     border-bottom-left-radius: 0;
   }
 }
-
-
+.form-control.grading{
+  background-color: #f4f4f4;
+    height: 30px;
+    border-radius: 2px;
+    padding: 0px 10px;
+    font-family: 'NexaBold', Helvetica, Arial, sans-serif;
+        border: 0;
+}
+.grade-image-text{
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  letter-spacing: 1.4px;
+  z-index: 9;
+  border: 1px solid #1ce783;
+    text-transform: uppercase;
+    float: left;
+    margin-top: -10px;
+    font-family: "NexaBold", Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    border-radius: 2px;
+    padding: 3px 5px 0px 5px;
+    color: #000;
+    font-size: 10px;
+    background: #1ce783;
+}
 </style>
