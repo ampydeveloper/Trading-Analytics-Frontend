@@ -23,12 +23,19 @@
                   <th>variation</th>
                   <th>grade</th>
                   <th>image</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody v-if="cards.length > 0">
                 <tr v-for="card of cards" :key="card.id">
                   <!-- <td>{{ key }}</td> -->
-                  <td>{{ card.user.full_name }}</td>
+                  <td>
+                    <nuxt-link
+                   style="color:#28a745;"
+                      :to="`users?id=${card.user.id}`"
+                      >{{ card.user.full_name }}</nuxt-link
+                    >
+                  </td>
                   <td>{{ card.sport }}</td>
                   <td>{{ card.player }}</td>
                   <td>{{ card.year }}</td>
@@ -37,7 +44,32 @@
                   <td>{{ card.rc }}</td>
                   <td>{{ card.variation }}</td>
                   <td>{{ card.grade }}</td>
-                  <td><img :src='card.cardImage' title="Click to view" class="cardImg" @click="openImg(card.cardImage)" v-if='card.image != null' alt='Slab-image' width=200 /><span v-else>N/A</span></td>
+                  <td>
+                    <img
+                      :src="card.cardImage"
+                      title="Click to view"
+                      class="cardImg"
+                      @click="openImg(card.cardImage)"
+                      v-if="card.image != null"
+                      alt="Slab-image"
+                      width="200"
+                    /><span v-else>N/A</span>
+                  </td>
+                  <td>
+                    <nuxt-link
+                      class="card-btn btn btn-success btn-table-spec"
+                      :to="`create-card?card_id=${card.id}`"
+                    >
+                      Approve
+                    </nuxt-link>
+                    <button
+                      class="card-btn btn btn-danger btn-table-spec"
+                      @click="action(card.id)"
+                      style="margin-top: 4px"
+                    >
+                      Reject
+                    </button>
+                  </td>
                 </tr>
               </tbody>
               <tbody v-if="cards.length == 0 && requestInProcess">
@@ -47,7 +79,9 @@
               </tbody>
               <tbody v-if="cards.length == 0 && requestInProcess == false">
                 <tr>
-                  <td colspan="9" class="text-center">No requested slab available.</td>
+                  <td colspan="9" class="text-center">
+                    No requested slab available.
+                  </td>
                 </tr>
               </tbody>
               <tfoot>
@@ -59,63 +93,94 @@
                     <button class="theme-btn card-btn" @click="getRequestedSlab(page)">Next</button>
                   </td>
                 </tr> -->
-                <tr v-if="page-1 == 1">
+                <tr v-if="page - 1 == 1">
                   <td colspan="9">
-                    <button class="theme-btn card-btn active-pagination" @click="getRequestedSlab(1)">
+                    <button
+                      class="theme-btn card-btn active-pagination"
+                      @click="getRequestedSlab(1)"
+                    >
                       1
                     </button>
-                    <button class="theme-btn card-btn" @click="getRequestedSlab(2)">
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getRequestedSlab(2)"
+                    >
                       2
                     </button>
-                    <button class="theme-btn card-btn" @click="getRequestedSlab(3)">
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getRequestedSlab(3)"
+                    >
                       Next
                     </button>
                   </td>
                 </tr>
-                <tr v-if="page-1 == 2">
-                  <td colspan="9">
-                    <button class="theme-btn card-btn" @click="getRequestedSlab(1)">
-                      1
-                    </button>
-                    <button class="theme-btn card-btn active-pagination" @click="getRequestedSlab(2)">
-                      2
-                    </button>
-                    <button class="theme-btn card-btn" @click="getRequestedSlab(3)">
-                      3
-                    </button>
-                    <button class="theme-btn card-btn" @click="getRequestedSlab(4)">
-                      Next
-                    </button>
-                  </td>
-                </tr>
-                <tr v-if="page-1 == 3">
+                <tr v-if="page - 1 == 2">
                   <td colspan="9">
                     <button
                       class="theme-btn card-btn"
-                     
+                      @click="getRequestedSlab(1)"
+                    >
+                      1
+                    </button>
+                    <button
+                      class="theme-btn card-btn active-pagination"
+                      @click="getRequestedSlab(2)"
+                    >
+                      2
+                    </button>
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getRequestedSlab(3)"
+                    >
+                      3
+                    </button>
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getRequestedSlab(4)"
+                    >
+                      Next
+                    </button>
+                  </td>
+                </tr>
+                <tr v-if="page - 1 == 3">
+                  <td colspan="9">
+                    <button
+                      class="theme-btn card-btn"
                       @click="getRequestedSlab(1)"
                     >
                       Previous
                     </button>
-                    <button class="theme-btn card-btn" @click="getRequestedSlab(2)">
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getRequestedSlab(2)"
+                    >
                       2
                     </button>
-                    <button class="theme-btn card-btn active-pagination" @click="getRequestedSlab(3)">
+                    <button
+                      class="theme-btn card-btn active-pagination"
+                      @click="getRequestedSlab(3)"
+                    >
                       3
                     </button>
-                    <button class="theme-btn card-btn" @click="getRequestedSlab(4)">
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getRequestedSlab(4)"
+                    >
                       4
                     </button>
-                    <button class="theme-btn card-btn" @click="getRequestedSlab(5)">
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getRequestedSlab(5)"
+                    >
                       Next
                     </button>
                   </td>
                 </tr>
-                <tr v-if="(page-1) > 3">
+                <tr v-if="page - 1 > 3">
                   <td colspan="9">
                     <button
                       class="theme-btn card-btn"
-                      
                       @click="getRequestedSlab(page - 2)"
                     >
                       Previous
@@ -126,7 +191,10 @@
                     >
                       {{ page - 1 }}
                     </button>
-                    <button class="theme-btn card-btn active-pagination" @click="getRequestedSlab(page)">
+                    <button
+                      class="theme-btn card-btn active-pagination"
+                      @click="getRequestedSlab(page)"
+                    >
                       {{ page }}
                     </button>
                     <button
@@ -158,22 +226,22 @@ export default {
   layout: 'admin',
   head() {
     return {
-      title: 'Admin Dashboard - Slabstox'
+      title: 'Admin Dashboard - Slabstox',
     }
   },
   mounted() {
-   this.getRequestedSlab(this.page)
+    this.getRequestedSlab(this.page)
   },
   components: {},
   data() {
     return {
       cards: [],
       page: 1,
-      requestInProcess: false
+      requestInProcess: false,
     }
   },
   methods: {
-    openImg(img){
+    openImg(img) {
       window.open(img, '_blank')
     },
     getRequestedSlab(page) {
@@ -183,16 +251,17 @@ export default {
           this.requestInProcess = true
           this.$axios
             .post('card/get-request-slab-list-for-admin', {
-              page: page
+              page: page,
             })
-            .then(res => {
+            .then((res) => {
               if (res.status == 200) {
                 this.cards = res.data.data
                 this.page = res.data.next
               }
               this.requestInProcess = false
-               this.hideLoader()
-            }).catch(err => {
+              this.hideLoader()
+            })
+            .catch((err) => {
               this.requestInProcess = false
               this.hideLoader()
             })
@@ -203,7 +272,27 @@ export default {
         }
       }
     },
-  }
+    action(id) {
+      this.showLoader()
+      this.requestInProcess = true
+      this.$axios
+        .post('/card/requested-slab-action-reject', {
+          id: id
+        })
+        .then((res) => {
+          if (res.status == 200) {
+            this.$toast.success(res.data.message)
+            this.requestInProcess = false
+            this.hideLoader()
+            this.getRequestedSlab()
+          }
+        })
+        .catch((err) => {
+          this.requestInProcess = false
+          this.hideLoader()
+        })
+    },
+  },
 }
 </script>
 
@@ -219,7 +308,7 @@ ul.my-card-listing {
   line-height: 2;
   margin-top: 2px;
 }
-.cardImg{
+.cardImg {
   cursor: zoom-in;
 }
 </style>

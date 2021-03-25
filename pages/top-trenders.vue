@@ -34,10 +34,10 @@
             <div class="custom-dropdown float-right">
                 <button class="dropbtn">Filter By</button>
                 <div class="dropdown-content">
-                  <a href="javascript:;" @click="filterBy('price')"
+                  <a href="javascript:;" @click="filterOrderBy('price'+orderByPrice)"
                     >$ Price</a
                   >
-                  <a href="javascript:;" @click="filterBy('percent')"
+                  <a href="javascript:;" @click="filterOrderBy('percent'+orderByPercent)"
                     >% Percent</a
                   >
                 </div>
@@ -70,7 +70,8 @@ export default {
       clickOutside: vClickOutside.directive
   },
   transition: 'fade',
-  layout: 'dashboard',
+  layout: 'guestOuter',
+  auth: 'guest',
   head() {
     return {
       title: 'Search - Slabstox'
@@ -102,10 +103,19 @@ export default {
       filterByKeword: null,
       filterVal: 'NA',
       showSmartSearch: false,
-      smartKeyword: []
+      smartKeyword: [],
+       orderByPrice: 'up',
+      orderByPercent: 'up',
+        orderBy: null
     }
   },
   methods: {
+    filterOrderBy(orderType) {
+        if(orderType == 'priceup') { this.orderByPrice = 'down'; }else { this.orderByPrice = 'up'; }
+        if(orderType == 'percentup') { this.orderByPercent = 'down'; }else { this.orderByPercent = 'up'; }
+        this.orderBy = orderType
+        this.search()
+    },
     searchCards(status = false) {
       if (!this.requestInProcess) {
         try {
@@ -155,7 +165,8 @@ export default {
           .$post('search/slab-listing', {
             take: 6,
             sport: this.sport,
-            search: this.keyword
+            search: this.keyword,
+            orderby: this.orderBy 
           })
           .then(res => {
             this.requestInProcess = false

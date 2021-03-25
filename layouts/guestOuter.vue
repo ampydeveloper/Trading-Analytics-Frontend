@@ -80,7 +80,7 @@ main{
 .vertical-center {
   margin: 0;
   position: absolute;
-  top: 15%;
+  /* top: 15%; */
   left: 50%;
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);

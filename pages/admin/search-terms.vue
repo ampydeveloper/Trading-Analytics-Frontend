@@ -28,7 +28,13 @@
                       >{{ card.card_details.title }}</nuxt-link
                     >
                   </td>
-                  <td>{{ card.user_details.full_name }}</td>
+                  <td>
+                    <nuxt-link
+                      style="color:#28a745;"
+                      :to="`users?id=${card.user_details.id}`"
+                      >{{ card.user_details.full_name }}</nuxt-link
+                    >
+                  </td>
                     <td>{{ $moment(card.created_at).format('MMMM DD Y - hh:mm:ss') }}</td>
                 </tr>
               </tbody>

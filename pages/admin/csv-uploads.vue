@@ -26,7 +26,7 @@
                   <td>{{ card.status == 1 ? 'Done' : 'Processing' }}</td>
                   <td class="text-center">
                     <button
-                      class="card-btn btn btn-primary btn-table-spec"
+                      class="card-btn btn btn-danger btn-table-spec"
                       style="margin-top: 4px"
                       @click="deleteItem(card.id)"
                     >
