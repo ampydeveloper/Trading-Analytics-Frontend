@@ -495,7 +495,8 @@ export default {
         },
         { hid: 'card-og-url',property: 'og:url', content: this.currentUrl },
         { hid: 'card-og-site_name',property: 'og:site_name', content: 'Slabstox' },
-        { hid: 'card-og-type',property: 'og:type', content: 'website' },
+        { hid: 'card-og-type',property: 'og:type', content: 'article' },
+        { hid: 'card-og-app_id',property: 'fb:app_id', content: '2791823984386463' },
 
         { hid: 'card-article-published_time',property: 'article:published_time', content: (this.lastSaleDate!='N/A'?this.$moment(this.lastSaleDate).format('MMMM DD Y - hh:mm:ss A'):this.$moment().format('MMMM DD Y - hh:mm:ss A')) },
         { hid: 'card-article-author',property: 'article:author', content: 'Slabstox' },

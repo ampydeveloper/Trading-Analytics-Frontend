@@ -348,7 +348,7 @@
     <b-modal id="embedStoxtickerCode" title="" size="xl" hide-footer>
           <h5>Copy code and paste to your website.</h5>
           <p class="code-text">
-            <textarea cols="3" rows="10"><iframe :src="currentUrl+'/stoxticker-all-stats'" width="1400" height="260" style="border:none;" frameborder="0"></iframe>
+            <textarea cols="3" rows="10"><iframe src="http://pro.slabstox.com/stox-all-stats" width="1400" height="260" style="border:none;" frameborder="0"></iframe>
           </textarea
             >
           </p>
@@ -464,7 +464,7 @@ slabstox.com
         <b-modal id="embedStatsCode" title="" size="xl" hide-footer>
           <h5>Copy code and paste to your website.</h5>
           <p class="code-text">
-            <textarea cols="3" rows="10"><iframe :src="currentUrl+'/stoxticker-stats'" width="1400" height="260" style="border:none;" frameborder="0"></iframe>
+            <textarea cols="3" rows="10"><iframe src="http://pro.slabstox.com/stox-stats" width="1400" height="260" style="border:none;" frameborder="0"></iframe>
           </textarea
             >
           </p>
@@ -606,7 +606,7 @@ slabstox.com
         <b-modal id="embedSellsCode" title="" size="xl" hide-footer>
           <h5>Copy code and paste to your website.</h5>
           <p class="code-text">
-            <textarea cols="3" rows="10"><iframe :src="currentUrl+'/stoxticker-sells'" width="1400" height="260" style="border:none;" frameborder="0"></iframe>
+            <textarea cols="3" rows="10"><iframe src="http://pro.slabstox.com/stox-sells" width="1400" height="260" style="border:none;" frameborder="0"></iframe>
           </textarea
             >
           </p>
@@ -682,7 +682,7 @@ slabstox.com
                 <h5 class="card-title_new">
                  <nuxt-link v-if="user != null && user.full_name != null"
                       class="theme-btn card-btn"
-                      :to="`stoxticker-details?board=${itemdata.id}`"
+                      :to="`stox-details?board=${itemdata.id}`"
                       style="margin-right: 4px;"
                       >{{ itemdata.name }}
                       ${{ boardSearch[key].total_card_value }}
@@ -806,7 +806,7 @@ slabstox.com
             <h5 class="card-title">
               <nuxt-link
                 class="theme-btn card-btn thb-btn"
-                :to="`stoxticker-details?board=${allBoardGraph[key].id}`"
+                :to="`stox-details?board=${allBoardGraph[key].id}`"
                 style="margin-right: 4px;" v-if="user != null && user.full_name != null"
                 >{{ allBoardGraph[key].name }}
                 ${{ allBoardGraph[key].total_card_value }}
