@@ -152,7 +152,6 @@ export default {
     return {
       title: 'Register - Slabstox',
       meta: [
-        // hid is used as unique identifier. Do not use `vmid` for it as it will not work
         {
           hid: 'register',
           name: 'Register - Slabstox',
@@ -202,9 +201,18 @@ export default {
           // await this.$auth.loginWith('local', {
           //   data: { email: this.form.email, password: this.form.password }
           // })
+          const res = await this.$axios.post('auth/login', this.form)
+          if (res.status == 200) {
+            // this.processAuthLogin(res.data)
+            const a = await this.$auth.loginWith('local', {
+              data: { token: res.data.auth }
+            })
+            document.getElementById('__nuxt').style.display = "none";
+            window.location.href = '/dashboard'
+          }
           this.hideLoader()
           this.$nuxt.$loading.finish()
-          this.$router.push('/')
+          // this.$router.push('/')
         } catch (e) {
           this.$nuxt.$loading.finish()
           this.hideLoader()
@@ -224,7 +232,7 @@ export default {
       }
 
       if (this.form.password != this.form.confirmpassword) {
-        this.errors.confirmpassword = 'Password not match'
+        this.errors.confirmpassword = 'Password not match.'
         return false
       }
       return true
@@ -240,9 +248,9 @@ export default {
         if (res.data.errors.hasOwnProperty('password')) {
           this.errors.password = res.data.errors.password[0]
         }
-        this.errorMessage = 'Registration failed';
+        this.errorMessage = 'Registration failed.';
       }else if(res.status == 500) {
-        this.errorMessage = 'Unable to process you request';
+        this.errorMessage = 'Unable to process you request.';
       }
     },
     resetErrors() {

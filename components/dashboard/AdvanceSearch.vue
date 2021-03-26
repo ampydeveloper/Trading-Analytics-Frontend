@@ -11,7 +11,7 @@
                   <label
                     for="staticEmail"
                     class="col-md-2 col-sm-2 col-form-label"
-                    >Sports</label
+                    >Sport</label
                   >
                   <div class="col-md-9 col-sm-9">
                     <v-select v-model="filters.sports" placeholder="Search" :options="attributes.sport"></v-select>

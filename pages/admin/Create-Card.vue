@@ -184,8 +184,7 @@
                   placeholder="Image"
                   class="form-control"
                   accept="image/jpg"
-                  @change="assignFileObj"
-                  required
+                  @change="assignFileObj"                  
                 />
                 </div>
               </div>
@@ -220,7 +219,6 @@
 </template>
 
 <script>
-import $ from 'jquery'
 export default {
   transition: 'fade',
   layout: 'admin',
@@ -229,7 +227,32 @@ export default {
       title: 'Admin Dashboard - Slabstox',
     }
   },
-  mounted() {},
+  mounted() {
+    if (this.$route.query.hasOwnProperty('card_id')) {
+      var card_id = this.$route.query.card_id;
+      this.$axios
+            .$get('card/get-single-requested-slab/'+card_id)
+            .then(res => {
+              this.requestInProcess = false
+              this.card = {
+                player: res.data.player,
+                sport: res.data.sport,
+                year: res.data.year,
+                brand: res.data.brand,
+                card: res.data.card,
+                rc: (res.data.rc=='yes'?1:0),
+                variation: res.data.variation,
+                grade: res.data.grade,
+                image: res.data.cardImage,
+                request_slab : card_id
+              }
+              this.imgSrc= res.data.cardImage
+            })
+            .catch(err => {
+              this.requestInProcess = false
+            })
+    } 
+  },
   components: {},
   data() {
     return {
@@ -254,6 +277,7 @@ export default {
         qualifiers8: '',
         image: '',
         readyforcron: 0,
+        request_slab:''
       },
       imgSrc: '',
       requestInProcess: false,

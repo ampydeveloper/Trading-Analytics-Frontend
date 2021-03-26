@@ -6,7 +6,40 @@
           <div class="card-body">
             <h5 class="card-title">
               <button class="theme-btn card-btn">Users Management</button>
+            
+                <button
+                      class="theme-green-btn card-btn pull-right"
+                      @click="action(user, 'create', 'Create User')"
+                    >
+                      Create User
+                    </button>
             </h5>
+          </div>
+          <div class="card-body search-form">
+            <div class="row">
+              <div class="col-4">
+                <div class="input-group mb-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    v-model="searchTerm"
+                    placeholder="Search Users"
+                    aria-label="Search term..."
+                    aria-describedby="button-addon2"
+                  />
+                  <div class="input-group-append">
+                    <button
+                      class="btn btn-outline-secondary"
+                      @click="usersSearch()"
+                      type="button"
+                      id="button-addon2"
+                    >
+                      Search
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="table_wrapper ap">
             <table class="table table-striped">
@@ -24,7 +57,7 @@
                   <th>Deleted</th>
                   <!-- <th>Overall Rank</th>
                   <th>Slab Value</th> -->
-                  <th>Action</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody v-if="users.length > 0">
@@ -32,7 +65,7 @@
                   <td>{{ user.id }}</td>
                   <td>{{ user.full_name }}</td>
                   <td>{{ user.email }}</td>
-                  <td>{{ user.roles[0].name }}</td>
+                  <td>{{ (user.roles[0]?user.roles[0].name:'') }}</td>
                   <td>{{ user.mobile }}</td>
                   <td>{{ user.dob }}</td>
                   <td>{{ user.address }}</td>
@@ -76,15 +109,15 @@
                     ><br />
                     <button
                       class="card-btn btn btn-primary btn-table-spec"
-                      v-if="user.roles[0].name != 'administrator'"
+                      v-if="user.roles[0]!= null && user.roles[0].name != 'administrator'"
                       @click="action(user, 'active', 'Change Active Status')"
                       style="margin-top: 4px"
                     >
                       Mark as {{ user.active ? 'In-Active' : 'Active' }}
                     </button>
                     <button
-                      class="card-btn btn btn-primary btn-table-spec"
-                      v-if="user.roles[0].name != 'administrator'"
+                      class="card-btn btn btn-danger btn-table-spec"
+                      v-if="user.roles[0]!= null && user.roles[0].name != 'administrator'"
                       @click="action(user, 'delete', 'Change Deletion Status')"
                       style="margin-top: 4px"
                     >
@@ -271,14 +304,103 @@
               required="required"
             />
           </div>
+          <div class="form_column">
+            <label for="address">Change Role</label>
+            <select v-model="activeUser.user_roles" class="form-control">
+              <option value="1">Super Admin</option>
+              <option value="3">Moderator</option>
+              <option value="4">Data Entry</option>
+              <option value="2">User</option>
+            </select>
+          </div>
+        </section>
+        <section v-if="activeType == 'create'" class="p-4 search-form">
+          <div class="form_column">
+            <label for="first_name">First Name</label>
+            <input
+              type="text"
+              class="form-control"
+              v-model="activeUser.first_name"
+              name="first_name"
+              required="required"
+            />
+          </div>
+          <div class="form_column">
+            <label for="last_name">Last Name</label>
+            <input
+              type="text"
+              class="form-control"
+              v-model="activeUser.last_name"
+              name="last_name"
+              required="required"
+            />
+          </div>
+          <div class="form_column">
+            <label for="last_name">Password</label>
+            <input
+              type="text"
+              class="form-control"
+              v-model="activeUser.password"
+              name="password"
+              required="required"
+            />
+          </div>
+          <div class="form_column">
+            <label for="email">Email</label>
+            <input
+              type="email"
+              class="form-control"
+              v-model="activeUser.email"
+              name="email"
+              required="required"
+            />
+          </div>
+          <div class="form_column">
+            <label for="mobile">Mobile</label>
+            <input
+              type="number"
+              class="form-control"
+              v-model="activeUser.mobile"
+              name="mobile"
+              required="required"
+            />
+          </div>
+          <div class="form_column">
+            <label for="dob">Date of Birth(DOB)</label>
+            <input
+              type="date"
+              class="form-control"
+              v-model="activeUser.dob"
+              name="dob"
+              required="required"
+            />
+          </div>
+          <div class="form_column">
+            <label for="address">Address</label>
+            <input
+              v-model="activeUser.address"
+              class="form-control"
+              name="address"
+              required="required"
+            />
+          </div>
+          <div class="form_column">
+            <label for="address">Change Role</label>
+            <select v-model="activeUser.user_roles" class="form-control">
+              <option value="1">Super Admin</option>
+              <option value="3">Moderator</option>
+              <option value="4">Data Entry</option>
+              <option value="2">User</option>
+            </select>
+          </div>
         </section>
         <section
           v-else-if="['delete', 'active'].includes(activeType)"
           class="p-4 search-form"
         >
           <h6 class="text-capitalize">
-            Do you really want to 
-             {{popUpTitle}} of "{{ activeUser.full_name }}"?
+            Do you really want to
+            {{ popUpTitle }} of "{{ activeUser.full_name }}"?
           </h6>
         </section>
         <section v-else-if="activeType == 'password'" class="p-4 search-form">
@@ -325,15 +447,21 @@ export default {
   },
   mounted() {
     this.getUsers(this.page)
+    if (this.$route.query.hasOwnProperty('id')) {
+      this.searchTerm = this.$route.query.id
+      setTimeout(() => this.usersSearch(), 500)
+    }
   },
   data() {
     return {
       popUpTitle: '',
       users: [],
+      user_id:'',
       page: 1,
       requestInProcess: false,
       activeType: '',
       activeUser: {},
+      searchTerm: '',
     }
   },
   methods: {
@@ -341,18 +469,40 @@ export default {
       this.$bvModal.hide('updatePopup')
     },
     getUsers(page) {
-      console.log(page, 'in', this.requestInProcess)
       if (!this.requestInProcess) {
         try {
           this.showLoader()
           this.requestInProcess = true
-          // window.setTimeout(function(){
-          // this.users = []
-          // }, 2000)
           this.$axios
             .post('users/get-list-for-admin', {
               page: page,
             })
+            .then((res) => {
+              this.requestInProcess = false
+              if (res.status == 200) {
+                this.users = res.data.data
+                this.page = res.data.next
+              }
+              this.hideLoader()
+            })
+            .catch((err) => {
+              this.requestInProcess = false
+              this.hideLoader()
+            })
+        } catch (err) {
+          this.hideLoader()
+          this.requestInProcess = false
+        }
+      }
+    },
+    usersSearch() {
+      if (!this.requestInProcess) {
+        try {
+          this.showLoader()
+          this.requestInProcess = true
+          let payload = { search: this.searchTerm }
+          this.$axios
+            .post('users/get-list-for-admin', payload)
             .then((res) => {
               this.requestInProcess = false
               if (res.status == 200) {
@@ -374,7 +524,9 @@ export default {
     },
     action(user, type, popUpTitle = null) {
       this.activeType = type
-      this.activeUser = { ...user }
+      if(type != 'create'){
+this.activeUser = { ...user }
+      }
       this.popUpTitle = popUpTitle
       this.$bvModal.show('updatePopup')
     },
@@ -442,6 +594,22 @@ export default {
           })
           .catch((err) => {
             console.log(err)
+            this.requestInProcess = false
+            this.hideLoader()
+          })
+      } else if (this.activeType == 'create') {
+        this.$axios
+          .post('/users/create-user', this.activeUser)
+          .then((res) => {
+            this.requestInProcess = false
+            if (res.status == 200) {
+              this.getUsers(this.page)
+              this.$bvModal.hide('updatePopup')
+              this.$toast.success('User saved successfully!')
+            }
+            this.hideLoader()
+          })
+          .catch((err) => {
             this.requestInProcess = false
             this.hideLoader()
           })

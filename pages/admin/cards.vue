@@ -419,7 +419,6 @@ export default {
       this.$router.push('/admin/scrapitem/' + id)
     },
     getCards(page, filter = null) {
-      console.log('reddd');
       if (!this.requestInProcess) {
         try {
           this.showLoader()

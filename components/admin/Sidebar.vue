@@ -39,7 +39,7 @@
           </nuxt-link>
         </li>
         <li class="nav-item" v-if='!moderator'>
-          <nuxt-link class="nav-link" to="/admin/additem/null?random=1">
+          <nuxt-link class="nav-link" to="/admin/scrapitem/null?random=1">
             <div class="icon live-auctions-icon"></div>
             <div class="link-text">Random Bin</div>
           </nuxt-link>

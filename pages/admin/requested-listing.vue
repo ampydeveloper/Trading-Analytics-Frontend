@@ -23,8 +23,14 @@
                 <tr v-for="card of cards" :key="card.id">
                   <td>{{ card.id }}</td>
                   <td>{{ card.card.title }}</td>
-                  <td class="text-lowercase"><a target="_blank" :href="card.link">{{ card.link }}</a></td>
-                  <td>{{ card.user.full_name }}</td>
+                  <td class="text-lowercase"><a target="_blank" style="color:#28a745;" :href="card.link">{{ card.link }}</a></td>
+                  <td>
+                     <nuxt-link
+                      style="color:#28a745;"
+                      :to="`users?id=${card.user.id}`"
+                      >{{ card.user.full_name }}</nuxt-link
+                    >
+                  </td>
                   <td>
                       <button class="card-btn btn btn-success btn-table-spec" @click="action(1, card.id)" style="margin-top: 4px"> Approve</button>
                       <button class="card-btn btn btn-danger btn-table-spec" @click="action(-1, card.id)" style="margin-top: 4px"> Reject</button>

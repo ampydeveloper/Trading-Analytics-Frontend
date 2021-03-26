@@ -876,12 +876,12 @@ export default {
     color: #1ce783;
   }
 }
-.payment-option-side-cards {
-  padding-left: 0px;
-  .card {
-    margin-bottom: 25px;
-  }
-}
+// .payment-option-side-cards {
+//   padding-left: 0px;
+//   .card {
+//     margin-bottom: 25px;
+//   }
+// }
 .dropdown-menu.show {
   background: #39414a;
   font-style: normal;
