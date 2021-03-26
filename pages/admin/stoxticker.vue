@@ -1540,6 +1540,7 @@ ul.my-card-listing {
     max-width: 100%;
     text-align: center;
     flex: 100%;
+        padding-left: 12px;
   }
 }
 

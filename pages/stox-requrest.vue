@@ -1,7 +1,7 @@
 <template>
   <div class="col-md-12 col-sm-12">
     <div class="row">
-      <div class="col-7 t-p-5">
+      <div class="col-sm-12 col-md-7">
         <div class="requestSlab create_requestSlab">
           <div class="requestSlab-body">
             <h5 class="requestSlab-title">
