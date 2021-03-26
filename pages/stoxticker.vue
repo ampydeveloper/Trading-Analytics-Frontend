@@ -732,73 +732,47 @@ slabstox.com
                 <div class="dashboard-graph-footer">
                   <ul class="dashboard-graph-footer-month-filter">
                     <li
-                      :class="'dashboard-graph-footer-month-filter-item active'"
+                      :class="[{'active': boardActiveDay == 2}, 'dashboard-graph-footer-month-filter-item']"
+                      @click="searchBoard(2)"
                     >
                       1D
                     </li>
-                    <!-- <li
-                  :class="
-                    'dashboard-graph-footer-month-filter-item ' +
-                    (activeDaysGraph == 2 ? 'active' : '')
-                  "
-                  @click="updateGraph(2)"
-                >
-                  1D
-                </li>
-                <li
-                  :class="
-                    'dashboard-graph-footer-month-filter-item ' +
-                    (activeDaysGraph == 7 ? 'active' : '')
-                  "
-                  @click="updateGraph(7)"
-                >
-                  1W
-                </li>
-                <li
-                  :class="
-                    'dashboard-graph-footer-month-filter-item ' +
-                    (activeDaysGraph == 30 ? 'active' : '')
-                  "
-                  @click="updateGraph(30)"
-                >
-                  1M
-                </li>
-                <li
-                  :class="
-                    'dashboard-graph-footer-month-filter-item ' +
-                    (activeDaysGraph == 90 ? 'active' : '')
-                  "
-                  @click="updateGraph(90)"
-                >
-                  3M
-                </li>
-                <li
-                  :class="
-                    'dashboard-graph-footer-month-filter-item ' +
-                    (activeDaysGraph == 180 ? 'active' : '')
-                  "
-                  @click="updateGraph(180)"
-                >
-                  6M
-                </li>
-                <li
-                  :class="
-                    'dashboard-graph-footer-month-filter-item ' +
-                    (activeDaysGraph == 365 ? 'active' : '')
-                  "
-                  @click="updateGraph(365)"
-                >
-                  1Y
-                </li>
-                <li
-                  :class="
-                    'dashboard-graph-footer-month-filter-item ' +
-                    (activeDaysGraph == 1825 ? 'active' : '')
-                  "
-                  @click="updateGraph(1825)"
-                >
-                  5Y
-                </li> -->
+                    <li
+                      :class="[{'active': boardActiveDay == 7}, 'dashboard-graph-footer-month-filter-item']"
+                      @click="searchBoard(7)"
+                    >
+                      1W
+                    </li>
+                    <li
+                      :class="[{'active': boardActiveDay == 30}, 'dashboard-graph-footer-month-filter-item']"
+                      @click="searchBoard(30)"
+                    >
+                      1M
+                    </li>
+                    <li
+                      :class="[{'active': boardActiveDay == 90}, 'dashboard-graph-footer-month-filter-item']"
+                      @click="searchBoard(90)"
+                    >
+                      3M
+                    </li>
+                    <li
+                      :class="[{'active': boardActiveDay == 180}, 'dashboard-graph-footer-month-filter-item']"
+                      @click="searchBoard(180)"
+                    >
+                      6M
+                    </li>
+                    <li
+                      :class="[{'active': boardActiveDay == 365}, 'dashboard-graph-footer-month-filter-item']"
+                      @click="searchBoard(365)"
+                    >
+                      1Y
+                    </li>
+                    <li
+                      :class="[{'active': boardActiveDay == 1825}, 'dashboard-graph-footer-month-filter-item']"
+                      @click="searchBoard(1825)"
+                    >
+                      5Y
+                    </li>
                   </ul>
                   <p class="dashboard-graph-footer-update-at float-right">
                     Last Updated - 
@@ -1060,6 +1034,7 @@ export default {
       requestInProcess: false,
       searchSlabs: [],
       boardSearch: [],
+      boardActiveDay: 2,
       boardPage: 1,
       stoxtickerData: [],
       sxActiveDaysGraph: '',
@@ -1191,7 +1166,7 @@ export default {
     }
   },
   methods: {
-    searchBoard() {
+    searchBoard(days=2) {
       var sportList = []
       $('.cat-btn li.active').each(function () {
         var $this = $(this)
@@ -1206,6 +1181,7 @@ export default {
             keyword: this.searchKeyword,
             sport: sportList,
             page: this.boardPage,
+            days: days
           })
           .then((res) => {
             this.requestInProcess = false
@@ -1225,6 +1201,7 @@ export default {
               if (res.data != null && res.data.length > 0) {
                 res.data.map((item, key) => {
                   if (typeof item != 'undefined') {
+                    this.boardActiveDay = days
                     this.boardSearch[key] = item
                     this.searchSeries[key] = [
                       {

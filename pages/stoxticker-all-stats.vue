@@ -77,79 +77,44 @@
             <div class="dashboard-graph-footer">
               <ul class="dashboard-graph-footer-month-filter">
                 <li
-                  :class="
-                    'dashboard-graph-footer-month-filter-item ' +
-                    (sxActiveDaysGraph == 2 ? 'active' : '')
-                  "
-                  @click="
-                    allBoardGraphSingleFunc(2, allBoardGraph[key].id, key)
-                  "
+                  :class="[{'active': boardDaysGraph[key] == 2}, 'dashboard-graph-footer-month-filter-item']"
+                  @click="allBoardGraphSingleFunc(2,allBoardGraph[key].id,key)"
                 >
                   1D
                 </li>
                 <li
-                  :class="
-                    'dashboard-graph-footer-month-filter-item ' +
-                    (sxActiveDaysGraph == 7 ? 'active' : '')
-                  "
-                  @click="
-                    allBoardGraphSingleFunc(7, allBoardGraph[key].id, key)
-                  "
+                  :class="[{'active': boardDaysGraph[key] == 7}, 'dashboard-graph-footer-month-filter-item']"
+                  @click="allBoardGraphSingleFunc(7,allBoardGraph[key].id,key)"
                 >
                   1W
                 </li>
                 <li
-                  :class="
-                    'dashboard-graph-footer-month-filter-item ' +
-                    (sxActiveDaysGraph == 30 ? 'active' : '')
-                  "
-                  @click="
-                    allBoardGraphSingleFunc(30, allBoardGraph[key].id, key)
-                  "
+                  :class="[{'active': boardDaysGraph[key] == 30}, 'dashboard-graph-footer-month-filter-item']"
+                  @click="allBoardGraphSingleFunc(30,allBoardGraph[key].id,key)"
                 >
                   1M
                 </li>
                 <li
-                  :class="
-                    'dashboard-graph-footer-month-filter-item ' +
-                    (sxActiveDaysGraph == 90 ? 'active' : '')
-                  "
-                  @click="
-                    allBoardGraphSingleFunc(90, allBoardGraph[key].id, key)
-                  "
+                  :class="[{'active': boardDaysGraph[key] == 90}, 'dashboard-graph-footer-month-filter-item']"
+                  @click="allBoardGraphSingleFunc(90,allBoardGraph[key].id,key)"
                 >
                   3M
                 </li>
                 <li
-                  :class="
-                    'dashboard-graph-footer-month-filter-item ' +
-                    (sxActiveDaysGraph == 180 ? 'active' : '')
-                  "
-                  @click="
-                    allBoardGraphSingleFunc(180, allBoardGraph[key].id, key)
-                  "
+                  :class="[{'active': boardDaysGraph[key] == 180}, 'dashboard-graph-footer-month-filter-item']"
+                  @click="allBoardGraphSingleFunc(180,allBoardGraph[key].id,key)"
                 >
                   6M
                 </li>
                 <li
-                  :class="
-                    'dashboard-graph-footer-month-filter-item ' +
-                    (sxActiveDaysGraph == 365 ? 'active' : '')
-                  "
-                  @click="
-                    allBoardGraphSingleFunc(365, allBoardGraph[key].id, key)
-                  "
+                  :class="[{'active': boardDaysGraph[key] == 365}, 'dashboard-graph-footer-month-filter-item']"
+                  @click="allBoardGraphSingleFunc(365,allBoardGraph[key].id,key)"
                 >
                   1Y
                 </li>
                 <li
-                  :class="
-                    'dashboard-graph-footer-month-filter-item ' +
-                    (sxActiveDaysGraph == 1825 ? 'active' : '')
-                  "
-                  @click="
-                    allBoardGraphSingleFunc(1825, allBoardGraph[key].id, key)
-                  "
+                  :class="[{'active': boardDaysGraph[key] == 1825}, 'dashboard-graph-footer-month-filter-item']"
+                  @click="allBoardGraphSingleFunc(1825,allBoardGraph[key].id,key)"
                 >
                   5Y
                 </li>
@@ -212,6 +177,7 @@ export default {
       sxGraphImage: '',
       perc_diff: 0,
       doller_diff: 0,
+      boardDaysGraph: [],
       total_sales: 0,
       last_timestamp: 'N/A',
       currentUrl: location.href,
@@ -409,6 +375,7 @@ export default {
                       data: item.sales_graph.values,
                     },
                   ]
+                  this.boardDaysGraph.push(2)
                   this.boardSalesQty.push(item.sales_graph.qty)
                   this.boardChartOptions.push({
                     chart: {
@@ -491,6 +458,7 @@ export default {
           .$get(`stoxticker/single-graph-board/${days}/${board}`)
           .then((res) => {
             if (res.status == 200) {
+              this.boardDaysGraph.splice(boardKey, 1, days)
               // this.sxActiveDaysGraph = days
               // if (this.initGraphLabelLength != res.data.labels.length) {
               // this.graphDataEmpty = false;
@@ -499,16 +467,13 @@ export default {
               // this.stoxtickerData.doller_diff = res.data.doller_diff
               // this.stoxtickerData.change_arrow = res.data.change_arrow
               // this.stoxtickerData.last_timestamp = res.data.last_timestamp
+              this.allBoardGraph.splice(boardKey, 1, res.data)
 
-              this.allBoardGraph[boardKey] = res.data
-              this.boardSeries[boardKey] = [
-                {
-                  name: 'Sales',
-                  data: res.data.sales_graph.values,
-                },
-              ]
-              this.boardSalesQty[boardKey] = res.data.sales_graph.qty
-              this.boardChartOptions[boardKey] = {
+              this.boardSeries.splice(boardKey, 1, [{name: 'Sales', data: res.data.sales_graph.values, }])
+
+              this.boardSalesQty.splice(boardKey, 1, res.data.sales_graph.qty)
+
+              this.boardChartOptions.splice(boardKey, 1, {
                 chart: {
                   toolbar: {
                     show: false,
@@ -570,9 +535,7 @@ export default {
                     },
                   },
                 },
-              }
-              console.log(boardKey)
-              console.log(this.allBoardGraph[boardKey])
+              })
             }
           })
       } catch (error) {

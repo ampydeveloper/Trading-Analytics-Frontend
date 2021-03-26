@@ -92,9 +92,10 @@
                         : 'theme-red-btn') + ' card-btn'
                     "
                   >
-                    <font-awesome-icon
+                    <!-- <font-awesome-icon
                       :icon="['fas', 'long-arrow-alt-' + cardGraph.sx_icon]"
-                    />&nbsp;&nbsp;${{ (cardGraph.dollar_diff?cardGraph.dollar_diff:0) }}
+                    /> -->
+                    &nbsp;&nbsp;${{ (cardGraph.dollar_diff?cardGraph.dollar_diff:0) }}
                   </button>
                   <button
                     :class="
@@ -103,9 +104,10 @@
                         : 'theme-red-btn') + ' card-btn'
                     "
                   >
-                    <font-awesome-icon
+                    <!-- <font-awesome-icon
                       :icon="['fas', 'long-arrow-alt-' + cardGraph.sx_icon]"
-                    />&nbsp;&nbsp;{{ (cardGraph.pert_diff?cardGraph.pert_diff:0) }}%
+                    /> -->
+                    &nbsp;&nbsp;{{ (cardGraph.pert_diff?cardGraph.pert_diff:0) }}%
                   </button>
                   <span
                     class="card-link"

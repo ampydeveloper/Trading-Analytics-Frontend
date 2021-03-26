@@ -329,10 +329,10 @@
                 type="text"
                 class="form-control-plaintext"
               /> -->
-              <select class="form-control grading" v-model="grade" @change="updateGrading(addPortfolioVar.id)">
-        <option value="null" selected>Select Grade Status</option>
-        <option v-for='gr in ["review", "pending", "graded"]' :key='"grading-"+gr' :value="gr" v-text="gr" class="text-capitalize"></option>
-      </select>
+              <select class="form-control grading" v-model="addPortfolioVar.grade" @change="updateGrading(addPortfolioVar)">
+                <option value="null" selected>Select Grade Status</option>
+                <option v-for='gr in ["review", "pending", "graded"]' :key='"grading-"+gr' :value="gr" v-text="gr" class="text-capitalize"></option>
+              </select>
             </div>
           </div>
         </div>
@@ -618,15 +618,15 @@ export default {
         }
       }
     },
-    updateGrading(){
+    updateGrading(addPortfolioVar){
       try{
         this.$axios
             .post('portfolio/gradeCard', {
-              card_id: this.itemdata.id,
-              purchase_price: this.itemdata.purchase_price,
-              grade: this.grade
+              my_portfolio_id: addPortfolioVar.id,
+              grade: addPortfolioVar.grade
             })
             .then(res => {
+              this.getCards()
               // this.$toast.success('Card graded successfully.')
               this.hideLoader()
             }).catch(err => {
