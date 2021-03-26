@@ -89,7 +89,7 @@
                 <div class="share-all-outer">
                   <ul>
                     <li>
-                      <a href="javascript:;" @click="shareFb()"
+                      <a :href="'https://www.facebook.com/sharer/sharer.php?u='+encodeURI(baseUrl)"  target="_blank"
                         ><img src="~/assets/img/icons/facebook.svg" alt
                       /></a>
                     </li>

@@ -208,7 +208,7 @@
                 <div class="share-all-outer">
                   <ul>
                     <li>
-                      <a href="javascript:;" @click="shareFb()"
+                      <a :href="'https://www.facebook.com/sharer/sharer.php?u='+encodeURI(currentUrl)"  target="_blank"
                         ><img src="~/assets/img/icons/facebook.svg" alt
                       /></a>
                     </li>
@@ -370,7 +370,7 @@
                 <div class="share-all-outer" style="top: 19px;">
                   <ul>
                     <li>
-                      <a href="javascript:;" @click="shareFb()"
+                      <a :href="'https://www.facebook.com/sharer/sharer.php?u='+encodeURI(currentUrl)"  target="_blank"
                         ><img src="~/assets/img/icons/facebook.svg" alt
                       /></a>
                     </li>
@@ -483,7 +483,7 @@ slabstox.com
                 <div class="share-all-outer" style="top: 19px;">
                   <ul>
                     <li style="margin: 0;">
-                      <a href="javascript:;" @click="shareFb()"
+                      <a :href="'https://www.facebook.com/sharer/sharer.php?u='+encodeURI(currentUrl)"  target="_blank"
                         ><img src="~/assets/img/icons/facebook.svg" alt
                       /></a>
                     </li>
