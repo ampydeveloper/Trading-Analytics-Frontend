@@ -54,10 +54,6 @@
                     <input v-model="item.image" type="text" class="form-control" required />
                 </div>
                 <div class="form_column">
-                    <label>Auction Start Date</label>
-                    <input v-model="item.auction_start" type="text" class="form-control" />
-                </div>
-                <div class="form_column">
                     <label>Auction End Date</label>
                     <input v-model="item.auction_end" type="text" class="form-control" />
                 </div>
@@ -233,8 +229,9 @@ export default {
                   this.item.time_left = data.timeLeft
                   this.item.image = data.image
                   this.item.location = data.location
-                  this.item.auction_start = ''
-                  this.item.auction_end = ''                  
+                  this.item.auction_start = data.timeLeft 
+                  this.item.auction_end = data.timeLeft      
+                  this.item.listing_type = data.auction             
                   this.item.shipToLocations = data.shipToLocations
                   this.item.ReturnPolicy = data.returns
                   this.item.web_link = this.item.itemId
