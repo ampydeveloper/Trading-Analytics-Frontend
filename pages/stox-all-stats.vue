@@ -1,32 +1,29 @@
 <template>
   <div class="col-md-12 col-sm-12">
-    <div class="row dashboard-graph-row all-public-boards-list-out">
-      <div class="col-md-12 col-sm-12" v-for="(itemdata, key) in allBoardGraph">
+       
+
+   <div class="row dashboard-graph-row all-public-boards-list-out">
+      <div class="col-md-12 col-sm-12" v-for="(itemdata, key) in allBoardGraph" :key='`allBoardGraph-${key}`'>
         <div class="card">
           <div
             class="card-body dashboard-graph sx-stats-all"
             id="dashboard-graph-outer"
-            ref="shareImage"
           >
+          
             <h5 class="card-title">
               <nuxt-link
                 class="theme-btn card-btn thb-btn"
-                :to="`stoxticker-details?board=${allBoardGraph[key].id}`"
-                style="margin-right: 4px"
-                v-if="user != null && user.full_name != null"
-                >{{ allBoardGraph[key].name }} ${{
-                  allBoardGraph[key].total_card_value
-                }}
+                :to="`stox-details?board=${allBoardGraph[key].id}`"
+                style="margin-right: 4px;" v-if="user != null && user.full_name != null"
+                >{{ allBoardGraph[key].name }}
+                ${{ allBoardGraph[key].total_card_value }}
               </nuxt-link>
 
               <span
                 class="theme-btn card-btn thb-btn"
-                style="margin-right: 4px"
-                v-if="user == null || user.full_name == null"
-                v-b-modal.loginTopPopup
-                >{{ allBoardGraph[key].name }} ${{
-                  allBoardGraph[key].total_card_value
-                }}
+                style="margin-right: 4px;" v-if="user == null || user.full_name == null" v-b-modal.loginTopPopup
+                >{{ allBoardGraph[key].name }}
+                ${{ allBoardGraph[key].total_card_value }}
               </span>
 
               <button
@@ -44,9 +41,7 @@
                     'long-arrow-alt-' + allBoardGraph[key].sx_icon,
                   ]"
                 />&nbsp;&nbsp;
-                <span class="g-dollar-d-val">
-                  ${{ allBoardGraph[key].sx_value }}</span
-                >
+                <span class="g-dollar-d-val"> ${{ allBoardGraph[key].sx_value }}</span>
               </button>
               <button
                 :class="
@@ -65,17 +60,17 @@
                 />&nbsp;&nbsp;{{ allBoardGraph[key].pert_diff }}%
               </button>
             </h5>
-            <div class="dashboard-apex-top" ref="dashboardApexChart">
+            <div class="dashboard-apex-top">
               <VueApexCharts
-                ref="dashChart"
                 type="area"
                 height="350"
+                :key="`vac-${key}-dashChart`"
                 :options="boardChartOptions[key]"
                 :series="boardSeries[key]"
               ></VueApexCharts>
             </div>
-            <div class="dashboard-graph-footer">
-              <ul class="dashboard-graph-footer-month-filter">
+            <div class="dashboard-graph-footer" id='`boardGraphs-${key}`'>
+              <ul class="dashboard-graph-footer-month-filter" :id='`dc-${key}-ul`' :key='`dc-${key}-ul`'>
                 <li
                   :class="[{'active': boardDaysGraph[key] == 2}, 'dashboard-graph-footer-month-filter-item']"
                   @click="allBoardGraphSingleFunc(2,allBoardGraph[key].id,key)"
@@ -120,45 +115,73 @@
                 </li>
               </ul>
               <p class="dashboard-graph-footer-update-at float-right">
-                Last Updated -
-                {{
-                  allBoardGraph[key].sales_graph.last_timestamp
-                    ? allBoardGraph[key].sales_graph.last_timestamp
-                    : ''
-                }}
+                Last Updated - 
+                {{ (allBoardGraph[key].sales_graph.last_timestamp?allBoardGraph[key].sales_graph.last_timestamp:'') }}
               </p>
             </div>
           </div>
         </div>
+
+        <div class="social_share ss-h4">
+          <h4>
+            <a class="embed-link" href="javascript:void(0);"
+              @click="embedStoxtickerCode()" >EMBEDD CODE </>
+            </a>
+          </h4>
+        </div>
       </div>
+      
     </div>
+
   </div>
 </template>
 
 <script>
 import { BASE_URL } from '../constants/keys'
+import CardSlabItem from '~/components/dashboard/CardSlabItem'
+import CardListItem from '~/components/dashboard/CardListItem'
+import $ from 'jquery'
+import vClickOutside from 'v-click-outside'
 
 export default {
   transition: 'fade',
   layout: 'default',
   auth: 'guest',
-
+  directives: {
+    clickOutside: vClickOutside.directive,
+  },
   head() {
     return {
       title: 'Stoxticker - Slabstox',
       meta: [
-        {  hid: 'stoxticker-all-stats', name: 'Stoxticker - Slabstox', content: 'Check our StoxTicker' },
+        {
+          hid: 'stoxticker',
+          name: 'Stoxticker - Slabstox',
+          content: 'Check our StoxTicker',
+        },
+        { property: 'og:title', content: 'Check our StoxTicker' },
+        { property: 'og:image', content: this.sxGraphImage },
+        {
+          property: 'og:description',
+          content: 'StoxTicker@' + (this.data.sale ? this.data.sale : ''),
+        },
+        { property: 'og:url', content: this.currentUrl },
+        { property: 'og:site_name', content: 'Slabstox' },
+        { property: 'og:type', content: 'website' },
       ],
     }
   },
   mounted() {
-  
-   
+    // this.getData()
+    // this.slabstoxGraph()
+    // this.getSoldListing()
+    // this.getAllBoards()
     this.allBoardGraphFunc(2)
- 
+   
   },
   components: {
- 
+    CardListItem,
+    CardSlabItem,
     VueApexCharts: () => import('vue-apexcharts'),
   },
   data() {
@@ -170,6 +193,7 @@ export default {
       requestInProcess: false,
       searchSlabs: [],
       boardSearch: [],
+      boardActiveDay: 2,
       boardPage: 1,
       stoxtickerData: [],
       sxActiveDaysGraph: '',
@@ -177,13 +201,13 @@ export default {
       sxGraphImage: '',
       perc_diff: 0,
       doller_diff: 0,
-      boardDaysGraph: [],
       total_sales: 0,
       last_timestamp: 'N/A',
       currentUrl: location.href,
       soldListing: '',
       // allBoards: '',
       allBoardGraph: [],
+      boardDaysGraph: [],
       boardChartOptions: [],
       boardSeries: [],
       boardSalesQty: [],
@@ -301,9 +325,226 @@ export default {
     }
   },
   methods: {
- 
-   
-  
+    searchBoard(days=2) {
+      var sportList = []
+      $('.cat-btn li.active').each(function () {
+        var $this = $(this)
+        sportList.push($this.find('a').attr('data-sport'))
+      })
+      $('.stoxticker_page-outer').hide()
+      $('.stoxticker_listing-outer').hide()
+      try {
+        this.requestInProcess = true
+        this.$axios
+          .$post('stoxticker/search-board', {
+            keyword: this.searchKeyword,
+            sport: sportList,
+            page: this.boardPage,
+            days: days
+          })
+          .then((res) => {
+            this.requestInProcess = false
+            if (res.status == 200) {
+              // $('.search-name-out').show()
+              $('.board-search-list-outer').show()
+              this.boardSearch = res.data
+              this.boardPage = res.page
+
+              // this.activeDaysGraph = 2
+              //  var percDiff = res.data.perc_diff
+              // var dollerDiff = String(res.data.doller_diff)
+
+              if (res.data.length == 4) {
+                $('.create-board-out').show()
+              }
+              if (res.data != null && res.data.length > 0) {
+                res.data.map((item, key) => {
+                  if (typeof item != 'undefined') {
+                    this.boardActiveDay = days
+                    this.boardSearch[key] = item
+                    this.searchSeries[key] = [
+                      {
+                        name: 'Sales',
+                        data: item.sales_graph.values,
+                      },
+                    ]
+                    this.searchSalesQty.push(item.sales_graph.qty)
+                    this.searchChartOptions.push({
+                      chart: {
+                        toolbar: {
+                          show: false,
+                        },
+                        height: 350,
+                        type: 'area',
+                        background: 'transparent',
+                        zoom: {
+                          enabled: false,
+                        },
+                      },
+                      colors: ['#14f078'],
+                      dataLabels: {
+                        enabled: false,
+                      },
+                      stroke: {
+                        curve: 'smooth',
+                      },
+                      xaxis: {
+                        labels: {
+                          style: {
+                            colors: '#edecec',
+                            fontSize: '10px',
+                            fontFamily: 'NexaBold',
+                          },
+                        },
+                        type: 'category',
+                        categories: item.sales_graph.labels,
+                      },
+                      yaxis: {
+                        labels: {
+                          style: {
+                            colors: '#edecec',
+                            fontSize: '10px',
+                            fontFamily: 'NexaBold',
+                          },
+                          formatter: (value, ind) => {
+                            let lblStr = `$${value}`
+                            return lblStr
+                          },
+                        },
+                      },
+                      tooltip: {
+                        enabled: true,
+                        y: {
+                          formatter: (value, ind) => {
+                            let lblStr = `$${value}`
+                            if (typeof ind == 'object')
+                              lblStr = `$${value} (${
+                                this.searchSalesQty[key][ind.dataPointIndex]
+                              })`
+                            else
+                              lblStr = `$${value} (${this.searchSalesQty[key][ind]})`
+                            return lblStr
+                          },
+                        },
+                      },
+                    })
+                  }
+                })
+              }
+
+              // this.last_timestamp = res.data.last_timestamp
+              // this.initGraphLabelLength = res.card_data.labels.length
+            }
+          })
+          .catch((err) => {
+            this.requestInProcess = false
+            console.log(err)
+          })
+      } catch (err) {
+        this.requestInProcess = false
+        console.log(err)
+      }
+    },
+    hideSmartSearch(event) {
+      this.showSmartSearch = false
+    },
+    selectKeyword(value) {
+      this.$store
+        .dispatch('advancesearch/update_search_card_id', value)
+        .then(() => {
+          this.$router.push('/search/?id=' + value)
+        })
+      this.showSmartSearch = false
+    },
+    getSmartKeyword() {
+      var sportList = []
+      $('.cat-btn li.active').each(function () {
+        var $this = $(this)
+        sportList.push($this.find('a').text())
+      })
+      $('.stoxticker_page-outer').hide()
+      $('.stoxticker_listing-outer').hide()
+      try {
+        this.requestInProcess = true
+        this.$axios
+          .$post('stoxticker/slab-search', {
+            keyword: this.keyword,
+            sport: sportList,
+          })
+          .then((res) => {
+            this.requestInProcess = false
+            if (res.status == 200) {
+              $('.search-slabs-out').show()
+              $('.search-name-out').show()
+              this.searchSlabs = res.data
+            }
+          })
+          .catch((err) => {
+            this.requestInProcess = false
+            console.log(err)
+          })
+
+        // this.$axios
+        //   .$post('search/get-smart-keyword', { keyword: this.keyword })
+        //   .then((res) => {
+        //     this.requestInProcess = false
+        //     if (res.status == 200) {
+        //       if (this.keyword == res.keyword) {
+        //         this.smartKeyword = res.data
+        //         this.showSmartSearch = true
+        //       }
+        //     }
+        //   })
+        //   .catch((err) => {
+        //     this.requestInProcess = false
+        //     console.log(err)
+        //   })
+      } catch (err) {
+        this.requestInProcess = false
+        console.log(err)
+      }
+    },
+    createBoard() {
+      var cardList = []
+      $('.search-slabs-out li.active').each(function () {
+        var $this = $(this)
+        cardList.push($this.attr('data-card_id'))
+      })
+      try {
+        this.requestInProcess = true
+        this.$axios
+          .$post('stoxticker/create-board', {
+            name: $('.search-name-out input').val(),
+            cards: cardList,
+          })
+          .then((res) => {
+            this.requestInProcess = false
+            if (res.status == 200) {
+              $('.search-name-out input').val('')
+              $('.search-slabs-out').hide()
+              $('.search-name-out').hide()
+              $('.custom-stox').removeClass('active')
+              $('.search-stox').removeClass('active')
+              $('.search-stox-box').removeClass('active')
+              $('.search-add-box').removeClass('active')
+              $('.stoxticker_page-outer').show()
+              $('.stoxticker_listing-outer').show()
+              $('.dashboard-graph-row').show()
+
+              $('.search-stox-box .search-bar input').val('')
+              this.searchSlabs = res.data
+              this.$toast.success('Stoxticker board created successfully.')
+              this.allBoardGraphFunc(2)
+              // this.$router.push('/stoxticker')
+            }
+          })
+          .catch((err) => {
+            this.requestInProcess = false
+          })
+      } catch (err) {
+        this.requestInProcess = false
+      }
+    },
     trimTitle(title) {
       if (title.length > 53) {
         title = title.substring(0, 53)
@@ -312,7 +553,41 @@ export default {
       }
       return title
     },
-   
+    getData() {
+      try {
+        this.$axios.$get('get-stoxticker-data').then((res) => {
+          if (res.status == 200) {
+            this.data = res.data
+          } else {
+            this.$router.push('/404')
+          }
+        })
+      } catch (error) {
+        this.$router.push('/404')
+      }
+    },
+    getSoldListing() {
+      try {
+        this.$axios.$get('stoxticker/sold-listings').then((res) => {
+          if (res.status == 200) {
+            this.soldListing = res.data
+          } else {
+            this.$router.push('/404')
+          }
+        })
+      } catch (error) {
+        this.$router.push('/404')
+      }
+    },
+    shareFb() {
+      FB.ui({
+        method: 'feed',
+        name: 'StoxTicker@' + (this.data.sale ? this.data.sale : ''),
+        link: this.baseUrl,
+        picture: this.sxGraphImage,
+        description: 'Check our StoxTicker',
+      })
+    },
     embedStatsCode() {
       this.$bvModal.show('embedStatsCode')
     },
@@ -351,7 +626,68 @@ export default {
           })
       })
     },
-   
+    slabstoxGraph(days = 2) {
+      try {
+        // this.graphDataEmpty = false;
+        this.$axios.$get(`get-sx-dashboard-graph/${days}`).then((res) => {
+          if (res.status == 200) {
+            this.sxActiveDaysGraph = days
+            // if (this.initGraphLabelLength != res.data.labels.length) {
+            // this.graphDataEmpty = false;
+            this.stoxtickerData.total = res.data.total_sales
+            this.stoxtickerData.sale = res.data.total_sales
+            this.stoxtickerData.perc_diff = res.data.perc_diff
+            this.stoxtickerData.doller_diff = res.data.doller_diff
+            this.stoxtickerData.change_arrow = res.data.change_arrow
+            this.stoxtickerData.last_timestamp = res.data.last_timestamp
+
+            this.sxSeries = [{ name: 'Sales', data: res.data.values }]
+            this.sxSalesQty = res.data.qty
+            this.sxChartOptions = {
+              xaxis: {
+                categories: res.data.labels,
+              },
+              yaxis: {
+                labels: {
+                  formatter: (value, ind) => {
+                    let valCheck = value
+                    if (Number(value) === value && value % 1 !== 0) {
+                      let valCheck = Number(value).toFixed(2)
+                    }
+
+                    let lblStr = `$${valCheck}`
+                    return lblStr
+                  },
+                },
+              },
+              tooltip: {
+                enabled: true,
+                y: {
+                  formatter: (value, ind) => {
+                    let lblStr = `$${value}`
+                    if (typeof ind == 'object')
+                      lblStr = `$${value} (${
+                        this.sxSalesQty[ind.dataPointIndex]
+                      })`
+                    else lblStr = `$${value} (${this.sxSalesQty[ind]})`
+                    return lblStr
+                  },
+                },
+              },
+            }
+            setTimeout(() => {
+              this.generateImageOfGraph(this.$refs.sxDashChart.chart.dataURI())
+              // console.log(this.generateImageOfGraph(this.$refs.dashChart.chart.dataURI()));
+            }, 1000)
+            // }else{
+            //   this.graphDataEmpty = true;
+            // }
+          }
+        })
+      } catch (error) {
+        console.log(error)
+      }
+    },
     allBoardGraphFunc(days = 2) {
       try {
         // this.graphDataEmpty = false;
@@ -453,13 +789,15 @@ export default {
     },
     allBoardGraphSingleFunc(days, board, boardKey) {
       try {
+        
         // this.graphDataEmpty = false;
         this.$axios
           .$get(`stoxticker/single-graph-board/${days}/${board}`)
           .then((res) => {
             if (res.status == 200) {
+
               this.boardDaysGraph.splice(boardKey, 1, days)
-              // this.sxActiveDaysGraph = days
+
               // if (this.initGraphLabelLength != res.data.labels.length) {
               // this.graphDataEmpty = false;
               // this.stoxtickerData.sale = res.data.sale
@@ -467,12 +805,12 @@ export default {
               // this.stoxtickerData.doller_diff = res.data.doller_diff
               // this.stoxtickerData.change_arrow = res.data.change_arrow
               // this.stoxtickerData.last_timestamp = res.data.last_timestamp
+
               this.allBoardGraph.splice(boardKey, 1, res.data)
 
               this.boardSeries.splice(boardKey, 1, [{name: 'Sales', data: res.data.sales_graph.values, }])
 
               this.boardSalesQty.splice(boardKey, 1, res.data.sales_graph.qty)
-
               this.boardChartOptions.splice(boardKey, 1, {
                 chart: {
                   toolbar: {
@@ -526,10 +864,7 @@ export default {
                   y: {
                     formatter: (value, ind) => {
                       let lblStr = `$${value}`
-                      if (typeof ind == 'object')
-                        lblStr = `$${value} (${
-                          this.boardSalesQty[ind.dataPointIndex]
-                        })`
+                      if (typeof ind == 'object') lblStr = `$${value} (${this.boardSalesQty[ind.dataPointIndex]})`
                       else lblStr = `$${value} (${this.boardSalesQty[ind]})`
                       return lblStr
                     },
@@ -1031,6 +1366,42 @@ html body main .card.search-slabs-out .my-card-listing .my-card {
     .dashboard-graph-footer-update-at {
       margin-top: 21px;
     }
+  }
+}
+.share-lk-top {
+  cursor: pointer;
+  span {
+    margin-right: 5px;
+    img {
+      width: 20px;
+      margin-top: -5px;
+      margin-left: 10px;
+    }
+  }
+}
+.share-lk-top span {
+  font-family: 'Nexabold', Helvetica, Arial, sans-serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #edecec;
+  margin: 0;
+  line-height: 25px;
+  display: inline-block;
+}
+.share-all-outer {
+  left: 32px;
+  top: 25px;
+}
+.sb-data-values-out {
+  .share-icon {
+    margin-left: 0 !important;
+    margin-top: -5px !important;
+    font-size: 11px !important;
+    font-style: normal !important;
+  }
+  .si-white {
+    color: #fff;
   }
 }
 </style>
