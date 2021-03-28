@@ -23,7 +23,10 @@
             cartItemsCount
           }}</span>
         </b-nav-item> -->
-        <b-nav-item-dropdown right v-if="user != null && user.full_name != null">
+        <b-nav-item-dropdown
+          right
+          v-if="user != null && user.full_name != null"
+        >
           <template v-slot:button-content>
             <b-avatar variant="info" :src="user.picture" class></b-avatar>
             <em>{{ user.full_name }}</em>
@@ -39,8 +42,6 @@
             />Logout</b-dropdown-item
           >
         </b-nav-item-dropdown>
-
-       
       </b-navbar-nav>
     </div>
 
@@ -232,7 +233,6 @@
           <img class="icon" src="~/assets/img/icons/logout_icon.png" />Logout
         </b-dropdown-item>
       </b-nav-item-dropdown>
-      
     </b-navbar-nav>
   </nav>
 </template>
@@ -294,10 +294,22 @@ export default {
       this.mobileNavShow = !this.mobileNavShow
     },
     getSmartKeyword() {
+      console.log('redd33')
       try {
+        if (this.keyword == '') {
+          this.hideSmartSearch()
+        }
+        const cancelTokenSource = this.$axios.CancelToken.source()
         this.requestInProcess = true
         this.$axios
-          .$post('search/get-smart-keyword', { keyword: this.keyword })
+          .$post('search/get-smart-keyword', {
+            keyword: this.keyword,
+            cancelToken: cancelTokenSource.token,
+          })
+          .before((xhr) => {
+            cancelTokenSource.cancel()
+            console.log('redd')
+          })
           .then((res) => {
             this.requestInProcess = false
             if (res.status == 200) {
@@ -326,6 +338,7 @@ export default {
     },
   },
   mounted() {
+    console.log('YUH')
     if (this.user == null) {
       this.logout()
     }

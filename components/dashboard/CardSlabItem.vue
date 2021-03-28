@@ -7,7 +7,7 @@
   >
     <div class="bor-left"></div>
     <h4 class="my-card-title" :title="itemdata.title">
-      {{ trimTitle(itemdata.title) }}
+      {{ itemdata.title != '' ? trimTitle(itemdata.title) : '' }}
     </h4>
     <button class="theme-btn sxvalue">
       <span class="sxvalue-text"> SX Value: {{ itemdata.price }}</span>
@@ -22,7 +22,9 @@
     </button>
     <div class="image-container">
       <span v-if="itemdata.is_sx == 1" class="sx-pro-text">SX PRO</span>
-      <span v-if="itemdata.grade != null" class="grade-image-text">{{itemdata.grade}}</span>
+      <span v-if="itemdata.grade != null" class="grade-image-text">{{
+        itemdata.grade
+      }}</span>
       <img
         class="card-image"
         @click="selectSlabCard(itemdata.id)"
@@ -40,10 +42,7 @@
     </nuxt-link>
 
     <div class="text-center">
-      <nuxt-link
-        class="my-card-view-link"
-        :to="'/search/?id=' + itemdata.id"
-      >
+      <nuxt-link class="my-card-view-link" :to="'/search/?id=' + itemdata.id">
         View Live Listings
         <font-awesome-icon :icon="['fas', 'chevron-right']" />
       </nuxt-link>
@@ -78,11 +77,11 @@ export default {
       this.$emit('clicked', id)
     },
     trimTitle(title) {
-      if (title.length > 53) {
-        title = title.substring(0, 53)
-        title += '...'
-        return title
-      }
+      // if (title.length > 53) {
+      //   title = title.substring(0, 53)
+      //   title += '...'
+      //   return title
+      // }
       return title
     },
     makeActive() {
@@ -101,9 +100,9 @@ export default {
 }
 .rfive-columns .my-card {
   width: 20% !important;
-    @media (max-width: 767px) {
+  @media (max-width: 767px) {
     width: 100% !important;
-       }
+  }
 }
 .my-card {
   display: inline-block;
@@ -151,9 +150,9 @@ export default {
     background: #272d33;
     // border-radius: 2px;
     // height: 245px;
-     @media (max-width: 767px) {
-    height: 380px !important;
-       }
+    @media (max-width: 767px) {
+      height: 380px !important;
+    }
     height: 16vw;
     .icons-container {
       position: absolute;
@@ -180,9 +179,9 @@ export default {
       padding: 5px;
       max-height: 16vw;
       // max-height: 245px;
-       @media (max-width: 767px) {
-    max-height: 380px !important;
-       }
+      @media (max-width: 767px) {
+        max-height: 380px !important;
+      }
     }
   }
   .my-card-view-listing {
@@ -222,39 +221,39 @@ export default {
   letter-spacing: 1.4px;
   z-index: 9;
   border: 1px solid #1ce783;
-    text-transform: uppercase;
-    float: left;
-    margin-top: -10px;
-    // font-family: 'CocogoosePro-Regular', Helvetica, Arial, sans-serif;
-    font-family: "NexaBold", Helvetica, Arial, sans-serif;
-    font-weight: 400;
-    border-radius: 2px;
-    padding: 3px 5px 0px 5px;
-    color: #000;
-    font-size: 10px;
-    background: #1ce783;
+  text-transform: uppercase;
+  float: left;
+  margin-top: -10px;
+  // font-family: 'CocogoosePro-Regular', Helvetica, Arial, sans-serif;
+  font-family: 'NexaBold', Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  border-radius: 2px;
+  padding: 3px 5px 0px 5px;
+  color: #000;
+  font-size: 10px;
+  background: #1ce783;
 }
-.grade-image-text{
+.grade-image-text {
   position: absolute;
   bottom: 8px;
   left: 8px;
   letter-spacing: 1.4px;
   z-index: 9;
   border: 1px solid #1ce783;
-    text-transform: uppercase;
-    float: left;
-    margin-top: -10px;
-    // font-family: 'CocogoosePro-Regular', Helvetica, Arial, sans-serif;
-    font-family: "NexaBold", Helvetica, Arial, sans-serif;
-    font-weight: 400;
-    border-radius: 2px;
-    padding: 3px 5px 0px 5px;
-    color: #000;
-    font-size: 10px;
-    background: #1ce783;
+  text-transform: uppercase;
+  float: left;
+  margin-top: -10px;
+  // font-family: 'CocogoosePro-Regular', Helvetica, Arial, sans-serif;
+  font-family: 'NexaBold', Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  border-radius: 2px;
+  padding: 3px 5px 0px 5px;
+  color: #000;
+  font-size: 10px;
+  background: #1ce783;
 }
-.my-card-view-link{
-  display:none;
+.my-card-view-link {
+  display: none;
 }
 .featured-listing .my-card {
   .bor-left {
@@ -274,7 +273,7 @@ export default {
     line-height: 2;
     letter-spacing: 1px;
     margin-top: 12px;
-    display: inline-block
+    display: inline-block;
   }
 }
 </style>

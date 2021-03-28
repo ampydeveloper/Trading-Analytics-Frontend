@@ -1931,7 +1931,7 @@ ul.my-card-listing {
       border: 0px;
       border-radius: 2px;
       outline: none;
-      font-family: 'CocogoosePro-Regular', Helvetica, Arial, sans-serif;
+      // font-family: 'CocogoosePro-Regular', Helvetica, Arial, sans-serif;
       font-weight: 400;
       font-size: 11px;
       letter-spacing: 2px;

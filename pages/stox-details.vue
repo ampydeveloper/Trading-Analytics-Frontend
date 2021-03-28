@@ -89,24 +89,24 @@
                 <div class="share-all-outer">
                   <ul>
                     <li>
-                      <a :href="'https://www.facebook.com/sharer/sharer.php?u='+encodeURI(baseUrl)"  target="_blank"
+                      <a :href="'https://www.facebook.com/sharer/sharer.php?u='+encodeURI(currentUrl)"  target="_blank"
                         ><img src="~/assets/img/icons/facebook.svg" alt
                       /></a>
                     </li>
                     <li>
                       <a
-                        :href="'https://twitter.com/intent/tweet?url='+encodeURI(baseUrl)+'&text=Check Stoxticker: '+stoxtickerDetails.board.name+' valued@ '+stoxtickerData.sale.toFixed(2)+' ' +encodeURI(this.graphImage)"
+                        :href="'https://twitter.com/intent/tweet?url='+encodeURI(currentUrl)+'&text=Check Stoxticker: '+stoxtickerDetails.board.name+' valued@ '+stoxtickerData.sale.toFixed(2)+' ' +encodeURI(this.graphImage)"
                         target="_blank"
                         ><img src="~/assets/img/icons/twitter.svg" alt
                       /></a>
                     </li>
                     <li>
-                      <a :href="'http://pinterest.com/pin/create/button/?url='+encodeURI(this.baseUrl)+'&media='+encodeURI(this.graphImage)+'&description='+encodeURI('Check Stoxticker: '+stoxtickerDetails.board.name)" target="_blank"
+                      <a :href="'http://pinterest.com/pin/create/button/?url='+encodeURI(currentUrl)+'&media='+encodeURI(graphImage)+'&description='+encodeURI('Check Stoxticker: '+stoxtickerDetails.board.name)" target="_blank"
                         ><img src="~/assets/img/pinterest.png" alt
                       /></a>
                     </li>
                     <li>
-                      <a :href="'https://www.linkedin.com/sharing/share-offsite/?url='+encodeURI(baseUrl)" target="_blank"
+                      <a :href="'https://www.linkedin.com/sharing/share-offsite/?url='+encodeURI(currentUrl)" target="_blank"
                         ><img src="~/assets/img/icons/linkedin-circled.svg" alt
                       /></a>
                     </li>
@@ -114,7 +114,7 @@
                 </div>
              
               </span>
-<button v-if="user.id == stoxtickerDetails.board.user_id"
+<button v-if="user.id == stoxtickerDetails.board.user_id" style="margin-right: 8px;"
             class="theme-red-btn card-btn float-right" @click="deleteBoard()">
              Delete
               </button>
@@ -242,7 +242,7 @@
     <b-modal id="embedStatsCode" title="" size="xl" hide-footer>
           <h5>Copy code and paste to your website.</h5>
           <p class="code-text">
-            <textarea cols="3" rows="10"><iframe :src="currentUrl+'/stoxticker-board-details'" width="1400" height="260" style="border:none;" frameborder="0"></iframe>
+            <textarea cols="3" rows="10"><iframe src="https://pro.slabstox.com/stoxticker-board-details" width="1400" height="260" style="border:none;" frameborder="0"></iframe>
           </textarea
             >
           </p>
@@ -298,7 +298,7 @@ export default {
           property: 'og:description',
           content: 'Check Stoxticker: ' + this.stoxtickerDetails.board.name,
         },
-        { property: 'og:url', content: this.baseUrl },
+        { property: 'og:url', content: this.currentUrl },
         { property: 'og:site_name', content: 'Slabstox' },
         { property: 'og:type', content: 'website' },
       ],
@@ -308,25 +308,6 @@ export default {
     dialogVisible(visible) {
       const self = this
       if (visible) {
-        // $('.g-main-text .g-title').text(
-        //   $('.featured-graph-title .fg-title').text()
-        // )
-        // $('.g-main-text .g-sx').text(
-        //   $('.my-card.active .sxvalue .sxvalue-text').text()
-        // )
-        // $('.g-main-text .g-to-sales').text(
-        //   'Total Sales ' + $('.total_sales').text()
-        // )
-        // $('.g-main-text .g-sales-diff').text(
-        //   'Price Change ' + $('.g-dollar-d-val').text()
-        // )
-        // $('.g-img-full .slab_image').attr(
-        //   'src',
-        //   $('.my-card.active .image-container img').attr('src')
-        // )
-        // self.cardImage = $('.my-card.active .image-container img').attr('src')
-        // $('.g-main-text .g-image-link').text(self.graphImage)
-        // $('.g-main-text .slab-image-link').text(self.cardImage)
       }
     },
   },
@@ -336,9 +317,6 @@ export default {
     } else {
       //error
     }
-    // console.log(this.user);
-    // console.log(this.stoxtickerDetails.board);
-    // this.updateGraph()
   },
   components: {
     // CardListItem,

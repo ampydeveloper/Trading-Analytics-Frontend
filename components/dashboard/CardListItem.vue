@@ -1,7 +1,7 @@
 <template>
   <li class="my-card" v-if="itemdata">
     <h4 class="my-card-title" :title="itemdata.title">
-      {{ trimTitle(itemdata.title) }}
+      {{ (itemdata.title!=''?trimTitle(itemdata.title):'') }}
     </h4>
     <button class="theme-btn my-card-current-bid-btn" :class="[(valueDifference>0) ? 'green' : (valueDifference<0) ? 'red' : '']">
       current Bid: <span>${{ itemdata.price }}</span>
