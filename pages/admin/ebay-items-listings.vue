@@ -90,7 +90,7 @@
                   <th>Price</th>
                   <th>Sold Price</th>
                   <th>Listing Id</th>
-                  <th>Card Id</th>
+                  <th>Slab Id</th>
                   <th>Status</th>
                   <th>Actions</th>
                 </tr>
@@ -267,7 +267,7 @@ this.getItems(this.page)
     }
   },
   watch() {
-  console.log('redd');
+  
   },
   updated() {
     $('.main-checkbox').change(function () {
@@ -430,9 +430,11 @@ this.getItems(this.page)
               this.hideLoader()
               if (key != false) {
                 this.items[key].status = event.target.value
-              } else {
-                location.reload()
-              }
+              } 
+              this.getItems(this.page - 1)
+              // else {
+              //   location.reload()
+              // }
             })
         } catch (err) {
           this.hideLoader()

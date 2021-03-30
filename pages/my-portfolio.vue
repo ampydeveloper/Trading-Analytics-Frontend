@@ -396,7 +396,7 @@ export default {
         year: '',
         brand: '',
         card: '',
-        rc: 'yes',
+        rc: '',
         variation: '',
         grade: '',
       },

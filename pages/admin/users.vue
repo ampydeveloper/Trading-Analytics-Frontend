@@ -395,12 +395,19 @@
           </div>
         </section>
         <section
-          v-else-if="['delete', 'active'].includes(activeType)"
+          v-else-if="['delete'].includes(activeType)"
           class="p-4 search-form"
         >
           <h6 class="text-capitalize">
-            Do you really want to
-            {{ popUpTitle }} of "{{ activeUser.full_name }}"?
+            Do you really want to delete user "{{ activeUser.full_name }}"?
+          </h6>
+        </section>
+        <section
+          v-else-if="['active'].includes(activeType)"
+          class="p-4 search-form"
+        >
+          <h6 class="text-capitalize">
+            Do you really want to Change The Status of "{{ activeUser.full_name }}"?
           </h6>
         </section>
         <section v-else-if="activeType == 'password'" class="p-4 search-form">

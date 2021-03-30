@@ -360,7 +360,8 @@
       <div class="shar-text">Share Graphics</div>
       <div class="g-img-full" id="g-img-full">
         <!-- <img src="https://images.unsplash.com/photo-1556629538-fc3eba61504e?auto=format&fit=crop&w=1300&q=80" alt="Cityscape" crossorigin="anonymous" class="slab_image" /> -->
-        <img src="" class="slab_image" alt="Slab Title" crossorigin="anonymous" />
+        <!-- <img src="" class="slab_image_dup" alt="" /> -->
+        <img src="" class="slab_image" alt="" crossorigin="anonymous" />
         <canvas class="slab_image_canvas"></canvas>
         <img :src="graphImageBase" alt="" class="slab_graph" />
       </div>
@@ -527,7 +528,7 @@ export default {
           'Price Change ' + $('.g-dollar-d-val').text()
         )
         
-        $('.g-img-full .slab_image').attr(
+        $('.g-img-full .slab_image, .g-img-full .slab_image_dup').attr(
           'src',
           $('.my-card.active .image-container img').attr('src')
         )
@@ -917,7 +918,7 @@ ul.featured-listing {
 }
 .g-img-full {
   margin: -10px 20px 0 20px;
-  .slab_image {
+  .slab_image ,.slab_image_dup {
     width: calc(20% - 5px);
     margin-right: 5px;
     float: left;

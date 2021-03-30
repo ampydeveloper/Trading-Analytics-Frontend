@@ -86,7 +86,7 @@ export default {
       this.sport = this.$route.query.sport
     }
     this.searchCards();
-    this.search();
+    // this.search();
   },
   components: {
     CardSlabItem,

@@ -177,13 +177,6 @@
                     </button>
                   </td>
                   <td class="text-center">
-                    <!-- <button
-                      class="card-btn btn btn-primary btn-table-spec"
-                      style="margin-top: 4px"
-                      @click="addItem(card.id)"
-                    >
-                      Add Listing
-                    </button> -->
                      <button
                       class="card-btn btn btn-primary btn-table-spec"
                       style="margin-top: 4px"
@@ -225,20 +218,6 @@
                 </tr>
               </tbody>
               <tfoot>
-                <!-- <tr>
-                  <td colspan="6">
-                    <button
-                      class="theme-btn card-btn"
-                      :disabled="page == 2"
-                      @click="getCards(page - 1)"
-                    >
-                      Previous
-                    </button>
-                    <button class="theme-btn card-btn" @click="getCards(page)">
-                      Next
-                    </button>
-                  </td>
-                </tr> -->
                  <tr v-if="page-1 == 1">
                   <td colspan="14">
                     <button class="theme-btn card-btn active-pagination" @click="getCards(1)">
@@ -388,7 +367,7 @@ export default {
 
       this.statusChange(statusVal, listingArr)
       
-      setTimeout(() => this.getCards(1), 500);
+      setTimeout(() => this.getCards(1), 100);
     },
     statusChange(statusVal, id) {
       if (!this.requestInProcess) {

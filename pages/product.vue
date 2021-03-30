@@ -57,7 +57,7 @@
                 <h5 class="card-title sx-stats-all">
                   <button class="theme-cart-btn card-btn">Listing Info</button>
                   <button class="theme-btn card-btn">
-                    *$$ Value
+                    SX Value $
                     {{ data.card != null && data.card.value != null ? data.card.value.value : '0' }}
                   </button>
                   <button
@@ -379,11 +379,11 @@ export default {
           id: this.id,
           message: this.seeProblemMessage,
         })
-        console.log(res)
         if (res.status == 200) {
           this.seeProblemMessage = null
           this.$bvModal.hide('openSeeProblemPopup')
           this.loaded = true
+          this.$toast.success('Listed has been flaged successfully.')
         }
       } catch (err) {
         console.log(err)

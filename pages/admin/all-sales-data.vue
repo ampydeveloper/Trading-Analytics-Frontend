@@ -61,29 +61,30 @@
                   <td>{{ item.source }}</td>
                   <td>{{ item.quantity }}</td>
                   <td>${{ item.cost }}</td>
-                  <!-- <td>{{ (item.status==1?'Active':'Inactive') }}</td> -->
                   <td>
-                    <!-- <select @change="statusChange($event, item.id, key)" class="form-control text-capitalize">
-                      <option disabled>Status</option>
-                      <option value="0">Active</option>
-                      <option value="2">Disable</option>
-                    </select> -->
                     <nuxt-link
                       class="card-btn btn btn-primary btn-table-spec"
                       :to="`edit-sales-data?sale_id=${item.id}`"
                       >Edit</nuxt-link
                     >
+                    <button
+                      class="card-btn btn btn-primary btn-table-spec"
+                      @click="statusChange(item.id)"
+                      type="button"
+                    >
+                      Delete
+                    </button>
                   </td>
                 </tr>
               </tbody>
               <tbody v-if="items.length == 0 && requestInProcess">
                 <tr>
-                  <td colspan="6" class="text-center">loading...</td>
+                  <td colspan="7" class="text-center">loading...</td>
                 </tr>
               </tbody>
               <tbody v-if="items.length == 0 && requestInProcess == false">
                 <tr>
-                  <td colspan="6" class="text-center">No sales data found.</td>
+                  <td colspan="7" class="text-center">No sales data found.</td>
                 </tr>
               </tbody>
               <!-- <tfoot>
@@ -142,12 +143,8 @@ export default {
           this.$axios
             .post('get-sales-list', payload)
             .then((res) => {
-              console.log(res)
               if (res.status == 200) {
-                // this.currentPage = page;
                 this.items = res.data.data
-                // this.page = res.data.next
-                // this.sportsList = res.data.sportsList
               }
               this.requestInProcess = false
               this.hideLoader()
@@ -172,25 +169,23 @@ export default {
         return 'Disabled manually'
       }
     },
-    statusChange(event, id, key) {
+    statusChange(id) {
       if (!this.requestInProcess) {
         try {
           this.showLoader()
           this.requestInProcess = true
           this.$axios
-            .$post('admin/change-ebay-status', {
+            .$post('change-sales-status', {
               id: id,
-              status: event.target.value,
             })
             .then((res) => {
               this.requestInProcess = false
               this.hideLoader()
-              this.items[key].status = event.target.value
+              this.getItems(this.card_id)
             })
         } catch (err) {
           this.hideLoader()
           this.requestInProcess = false
-          console.log(err)
         }
       }
     },

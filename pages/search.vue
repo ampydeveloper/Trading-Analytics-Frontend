@@ -208,9 +208,15 @@ export default {
               this.slabItems = []
             }
           }
+          // console.log(this.user);
+          if(this.user == false){
+var callString = 'get-card-list';
+          }else{
+            var callString = 'get-card-list-user';
+          }
           this.requestInProcess = true
           this.$axios
-            .$post('search/get-card-list', {
+            .$post('search/'+callString, {
               search: this.keyword,
               filter: this.filter,
               page: this.page,

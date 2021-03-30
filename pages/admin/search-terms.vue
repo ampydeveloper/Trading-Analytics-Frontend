@@ -13,23 +13,28 @@
               <thead>
                 <tr>
                   <th>Card Id</th>
-                  <th>Search Terms</th>
+                  <th>Search Term</th>
                   <th>User</th>
                    <th>Timestamp</th>
                 </tr>
               </thead>
               <tbody v-if="cards.length > 0">
                 <tr v-for="card of cards" :key="card.id">
-                  <td>{{ card.card_details.id }}</td>
+                  <td>{{ (card.card_details?card.card_details.id:'N/A') }}</td>
                   <td>
                     <nuxt-link
                       style="color: #fff;"
+                      v-if="card.card_details != null"
                       :to="`ebay-specific-listings?card=${card.id}`"
                       >{{ card.card_details.title }}</nuxt-link
                     >
+                    <span v-if="card.search!=null">
+                      {{ card.search }}
+                    </span>
                   </td>
                   <td>
                     <nuxt-link
+                    v-if="card.user_details != null"
                       style="color:#28a745;"
                       :to="`users?id=${card.user_details.id}`"
                       >{{ card.user_details.full_name }}</nuxt-link

@@ -65,7 +65,7 @@
                 v-model="card.qualifiers"
                   placeholder="Qualifiers"
                   class="form-control"
-                  required
+                  
                 ></textarea>
               </div>
               <div class="form_column">
