@@ -1195,7 +1195,9 @@ export default {
               //  var percDiff = res.data.perc_diff
               // var dollerDiff = String(res.data.doller_diff)
 
-              if (res.data.length == 4) {
+              $('.create-board-out').hide()
+ var bpage = (res.page-1) * 4;
+              if (res.data.length > bpage) {
                 $('.create-board-out').show()
               }
               if (res.data != null && res.data.length > 0) {
@@ -2061,6 +2063,11 @@ ul.my-card-listing {
 }
 .analytics_page .card-single-row-outer {
   height: auto;
+}
+.card-single-row-outer {
+      height: 600px;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 html body main .card.search-slabs-out .my-card-listing .my-card {
   width: 16.66%;

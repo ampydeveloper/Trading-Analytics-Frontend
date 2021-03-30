@@ -692,8 +692,9 @@ export default {
               // this.activeDaysGraph = 2
               //  var percDiff = res.data.perc_diff
               // var dollerDiff = String(res.data.doller_diff)
-
-              if (res.data.length == 4) {
+ $('.create-board-out').hide()
+ var bpage = (res.page-1) * 4;
+              if (res.data.length < bpage) {
                 $('.create-board-out').show()
               }
               if (res.data != null && res.data.length > 0) {
@@ -769,9 +770,6 @@ export default {
                   }
                 })
               }
-
-              // this.last_timestamp = res.data.last_timestamp
-              // this.initGraphLabelLength = res.card_data.labels.length
             }
           })
           .catch((err) => {
@@ -1723,6 +1721,11 @@ html body main .card.search-slabs-out .my-card-listing .my-card {
       margin-left: 10px;
     }
   }
+}
+.card-single-row-outer {
+      height: 600px;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 .share-lk-top span {
   font-family: 'Nexabold', Helvetica, Arial, sans-serif;
