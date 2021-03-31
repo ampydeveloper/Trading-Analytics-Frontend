@@ -111,12 +111,12 @@
                     <input
                       type="text"
                       class="form-control"
-                      v-model="soldPrice"
+                      v-model="item.sold_price"
                       placeholder=""
                     />
                     <button
                       class="btn btn-outline-secondary"
-                      @click="saveSoldPrice(item.id)"
+                      @click="saveSoldPrice(item)"
                       type="button"
                       id="button-addon2"
                     >
@@ -287,7 +287,6 @@ this.getItems(this.page)
       page: 1,
       currentPage: 1,
       noMoreData: false,
-      soldPrice: '',
       sportsList: [],
       sportFilter: '',
       filter: null,
@@ -443,19 +442,18 @@ this.getItems(this.page)
         }
       }
     },
-    saveSoldPrice(id) {
+    saveSoldPrice(item) {
       if (!this.requestInProcess) {
         try {
           this.showLoader()
           this.requestInProcess = true
           this.$axios
             .$post('save-sold-price', {
-              id: id,
-              sold_price: this.soldPrice,
+              id: item.id,
+              sold_price: item.sold_price,
             })
             .then((res) => {
               this.requestInProcess = false
-              this.soldPrice = ''
               this.hideLoader()
             })
         } catch (err) {
