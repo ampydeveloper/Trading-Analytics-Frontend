@@ -59,42 +59,38 @@
               </button>
             </h4>
             <h5 class="card-title">
-              <!-- <button class="theme-btn card-btn theme-green-btn">
-                SX Stoxticker ${{ stoxtickerData.sale.toFixed(2) }}
-              </button> -->
-
               <button
                 :class="
-                  (stoxtickerData.change_arrow &&
-                  stoxtickerData.change_arrow == 'up'
+                  (sxIcon &&
+                  sxIcon == 'up'
                     ? 'theme-green-btn'
                     : 'theme-red-btn') + ' card-btn'
                 "
               >
                 <font-awesome-icon
-                  v-if="stoxtickerData.change_arrow !== undefined"
+                  v-if="sxIcon !== undefined"
                   :icon="[
                     'fas',
-                    'long-arrow-alt-' + stoxtickerData.change_arrow,
+                    'long-arrow-alt-' + sxIcon,
                   ]"
-                />&nbsp;&nbsp;
+                />&nbsp;
                 <span class="g-dollar-d-val"> ${{ doller_diff }}</span>
               </button>
               <button
                 :class="
-                  (stoxtickerData.change_arrow &&
-                  stoxtickerData.change_arrow == 'up'
+                  (sxIcon &&
+                  sxIcon == 'up'
                     ? 'theme-btn'
                     : 'theme-red-btn') + ' card-btn'
                 "
               >
                 <font-awesome-icon
-                  v-if="stoxtickerData.change_arrow !== undefined"
+                  v-if="sxIcon !== undefined"
                   :icon="[
                     'fas',
-                    'long-arrow-alt-' + stoxtickerData.change_arrow,
+                    'long-arrow-alt-' + sxIcon,
                   ]"
-                />&nbsp;&nbsp;{{ perc_diff }}%
+                />&nbsp;{{ perc_diff }}%
               </button>
               <span class="card-link" v-b-modal.openSeeProblemPopup>
                 Export Data
@@ -447,11 +443,12 @@ export default {
       total_sales: 0,
       last_timestamp: 0,
       keyCount: 0,
+      sxIcon:'',
       stoxtickerData: {
         total: 0,
         sale: 0,
         change: 0,
-        change_icon: 'up',
+        change_arrow: 'up',
         last_updated: '',
       },
       salesQty: [],
@@ -689,6 +686,8 @@ setTimeout(() => {
               this.activeDaysGraph = days
               var percDiff = res.data.perc_diff
               var dollerDiff = String(res.data.doller_diff)
+              this.sxIcon = res.data.sx_icon
+            
               if (this.initGraphLabelLength != res.data.labels.length) {
                 this.graphDataEmpty = false
                 this.series = [{ name: 'Sales', data: res.data.values }]
@@ -706,11 +705,6 @@ setTimeout(() => {
                       },
                       formatter: (value, ind) => {
                         let lblStr = `$${value}`
-                        // if (typeof ind == 'object')
-                        //   lblStr = `$${value} (${
-                        //     this.salesQty[ind.dataPointIndex]
-                        //   })`
-                        // else lblStr = `$${value} (${this.salesQty[ind]})`
                         return lblStr
                       },
                     },
@@ -731,8 +725,8 @@ setTimeout(() => {
                   },
                 }
                 this.initGraphLabelLength = res.data.labels.length
-                this.doller_diff = dollerDiff.replace('-', '')
-                this.perc_diff = percDiff.toFixed(2)
+                this.doller_diff = dollerDiff
+                this.perc_diff = percDiff
                 this.total_sales = res.data.total_sales
                 this.last_timestamp = res.data.last_timestamp
                 setTimeout(() => {

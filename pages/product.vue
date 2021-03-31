@@ -57,25 +57,30 @@
                 <h5 class="card-title sx-stats-all">
                   <button class="theme-cart-btn card-btn">Listing Info</button>
                   <button class="theme-btn card-btn">
-                    SX Value $
-                    {{ data.card != null && data.card.value != null ? data.card.value.value : '0' }}
+                    SX Value ${{ sx != null ? sx : '0' }}
                   </button>
                   <button
                     class="theme-green-btn card-btn"
-                    v-if="valueDifference > 0"
+                    v-if="sx_icon == 'up'"
                   >
                     <font-awesome-icon
                       :icon="['fas', 'long-arrow-alt-up']"
                       v-if="valueDifference > 0"
-                    />&nbsp;&nbsp;{{ getValueDifference() }}
+                    />&nbsp;&nbsp;{{ sx_value }}
                   </button>
                   <button
                     class="theme-red-btn card-btn"
-                    v-if="valueDifference < 0"
+                    v-if="sx_icon == 'down'"
                   >
                     <font-awesome-icon
                       :icon="['fas', 'long-arrow-alt-down']"
-                    />&nbsp;&nbsp;{{ getValueDifference() }}
+                    />&nbsp;&nbsp;{{ sx_value }}
+                  </button>
+                  <button
+                    class="theme-red-btn card-btn"
+                    v-if="sx_icon == null"
+                  >
+                    {{ sx_value }}
                   </button>
                   <nuxt-link
                     class="theme-btn card-btn vsd-btn"
@@ -120,7 +125,7 @@
             </div>
           </div>
           <div class="col-md-4 col-sm-4 seller-info">
-            <div class="card">
+            <div class="card" style="height: 100%">
               <div class="card-body">
                 <h5 class="card-title">
                   <button class="theme-cart-btn card-btn">Seller Info</button>
@@ -149,6 +154,7 @@
                   </p>
                   <p>
                     <a
+                    v-if="data.seller_info && data.seller_info.seller_store_link"
                       :href="(data.seller_info?data.seller_info.seller_store_link:'')"
                       target="_blank"
                       >Visit Store</a
@@ -361,6 +367,7 @@ export default {
       viewItemURL: '',
       valueDifference: 0,
       seeProblemMessage: null,
+      sx:null,
       timeLeft: {
         days: 0,
         hours: 0,
@@ -402,7 +409,7 @@ export default {
       }
     },
     getValueDifference() {
-      if (this.valueDifference > 0) {
+      if (this.sx_icon > 0) {
         return this.valueDifference.toFixed(2)
       } else {
         let a = this.valueDifference * 2
@@ -414,9 +421,11 @@ export default {
         const res = await this.$axios.$post('get-item-details', {
           id: this.id,
         })
-        console.log(res)
         if (res.status == 200) {
-          this.data = res.data
+          this.data = res.data.items
+           this.sx = res.data.sx
+           this.sx_value = res.data.sx_value
+           this.sx_icon = res.data.sx_icon
 
           window.mobileAndTabletCheck = function () {
             let check = false

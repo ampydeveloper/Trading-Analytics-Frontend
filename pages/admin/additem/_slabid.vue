@@ -29,7 +29,7 @@
                 </div>
                 <div class="form_column">
                     <label>Time Left</label>
-                    <input v-model="item.time_left" type="text" class="form-control" required />
+                    <input v-model="item.time_left" type="text" class="form-control" />
                 </div>
 <div class="form_column">
                     <label>Image</label>

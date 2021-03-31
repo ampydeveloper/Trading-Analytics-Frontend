@@ -455,6 +455,7 @@ this.getItems(this.page)
             .then((res) => {
               this.requestInProcess = false
               this.hideLoader()
+              this.getItems(this.page-1)
             })
         } catch (err) {
           this.hideLoader()

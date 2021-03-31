@@ -86,28 +86,22 @@
                     *SX Value ${{ slabstoxValue }}
                   </button>
                   <button
-                    :class="
-                      (cardGraph.sx_icon == 'up'
-                        ? 'theme-green-btn'
-                        : 'theme-red-btn') + ' card-btn'
-                    "
+                    :class="sx_icon_class + ' card-btn'"
                   >
-                    <!-- <font-awesome-icon
+                    <font-awesome-icon
+                    v-if="cardGraph.sx_icon=='up' || cardGraph.sx_icon=='down'"
                       :icon="['fas', 'long-arrow-alt-' + cardGraph.sx_icon]"
-                    /> -->
-                    &nbsp;&nbsp;${{ (cardGraph.dollar_diff?cardGraph.dollar_diff:0) }}
+                    />
+                    &nbsp;${{ (cardGraph.dollar_diff?cardGraph.dollar_diff:0) }}
                   </button>
                   <button
-                    :class="
-                      (cardGraph.sx_icon == 'up'
-                        ? 'theme-green-btn'
-                        : 'theme-red-btn') + ' card-btn'
-                    "
+                    :class="sx_icon_class + ' card-btn'"
                   >
-                    <!-- <font-awesome-icon
+                    <font-awesome-icon
+                    v-if="cardGraph.sx_icon=='up' || cardGraph.sx_icon=='down'"
                       :icon="['fas', 'long-arrow-alt-' + cardGraph.sx_icon]"
-                    /> -->
-                    &nbsp;&nbsp;{{ (cardGraph.pert_diff?cardGraph.pert_diff:0) }}%
+                    />
+                    &nbsp;{{ (cardGraph.pert_diff?cardGraph.pert_diff:0) }}%
                   </button>
                   <span
                     class="card-link"
@@ -573,6 +567,7 @@ export default {
       highestSale: '',
       lowestSale: '',
       slabstoxValue: 0,
+      sx_icon_class:'theme-btn',
       currentUrl: location.href,
       cardHistory: [],
       cardGraph: [],
@@ -849,6 +844,12 @@ export default {
                 this.lastSalePrice = res.data.lastSalePrice
                 this.initGraphLabelLength = res.data.labels.length
                 this.slabstoxValue = res.data.slabstoxValue
+                
+                if(this.cardGraph.sx_icon =='up'){
+ this.sx_icon_class = 'theme-green-btn';
+                } else if(this.cardGraph.sx_icon =='down'){
+ this.sx_icon_class = 'theme-red-btn';
+                }
               // }
               setTimeout(() => {
                 this.generateImageOfGraph()

@@ -147,6 +147,8 @@ export default {
       }
     },
     getTimeLeft() {
+      if(this.itemdata.data.listing_info != null && this.itemdata.data.listing_info.listingType == 'Auction'){
+
       this.timeLeft.intervalObject = setInterval(() => {
         var date1 = this.$moment(this.itemdata.listing_ending_at)
         var a = date1.format('YYYY-MM-DD HH:mm:ss')
@@ -155,6 +157,7 @@ export default {
         var x = this.$moment(a)
         var y = this.$moment(b)
         var final = x.diff(y)
+        
         if (final > 0) {
           const d = this.$moment(final).format('D')
           const h = this.$moment(final).format('H')
@@ -178,6 +181,10 @@ export default {
           this.viewListingText= 'Sold Listing';
         }
       }, 1000)
+        }else{
+           this.timeLeft.value = 'N/A'
+          this.viewListingText= 'View Listing';
+        }
     },
     calculateValueDifference() {
       if(this.itemdata.data.card  != null){
