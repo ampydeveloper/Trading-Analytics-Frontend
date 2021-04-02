@@ -104,7 +104,7 @@ export default {
         this.requestInProcessRecent = true
         this.$axios
           .$post('search/slab-listing', {
-            take: 6,
+            take: 12,
             search: this.keyword,
             top_trend: true,
           })
@@ -125,7 +125,7 @@ export default {
         this.requestInProcessEndingSoon = true
         this.$axios
           .$post('search/ending-soon-listing', {
-            take: 6,
+            take: 12,
           })
           .then((res) => {
             this.requestInProcessEndingSoon = false
@@ -148,7 +148,7 @@ export default {
           this.requestInProcess = true
           this.$axios
             .$post('search/slab-listing', {
-              take: 6,
+              take: 12,
               page: this.page,
             })
             .then((res) => {

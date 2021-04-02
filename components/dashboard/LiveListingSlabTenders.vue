@@ -129,7 +129,7 @@ export default {
         this.requestInProcess = true
         this.$axios
           .$post('search/slab-listing', {
-            take: 6,
+            take: 12,
             sport: this.card,
             search: this.keyword,
             orderby: this.orderBy            
