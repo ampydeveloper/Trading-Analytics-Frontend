@@ -154,7 +154,8 @@ export default {
     return {
       data: [],
       keyword: null,
-      filterByKeword: 'ending_soon',
+      // filterByKeword: 'ending_soon',
+            filterByKeword: '',
       requestInProcess: false,
       filterVal: 1,
       showSmartSearch: false,

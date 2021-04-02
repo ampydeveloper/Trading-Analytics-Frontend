@@ -32,11 +32,11 @@
             
             <div class="trender-cards-footer">
                 <button :class="(orderByPrice == 'up'? 'theme-btn':'theme-green-btn') + ' card-btn t-p-5'" @click="filterOrderBy('price'+orderByPrice)">
-                    <font-awesome-icon v-if='orderByPrice !== undefined' :icon="['fas', 'long-arrow-alt-'+orderByPrice]" />&nbsp;&nbsp;$ Price
+                    <font-awesome-icon v-if='orderByPrice !== undefined' :icon="['fas', 'long-arrow-alt-'+(orderByPrice=='up'?'down':'up')]" />&nbsp;&nbsp;$ Price
                 </button>
                 
                 <button :class="(orderByPercent == 'up'? 'theme-btn':'theme-green-btn') + ' card-btn t-p-5'" @click="filterOrderBy('percent'+orderByPercent)">
-                    <font-awesome-icon v-if='orderByPercent !== undefined' :icon="['fas', 'long-arrow-alt-'+orderByPercent]" />&nbsp;&nbsp;Percent %
+                    <font-awesome-icon v-if='orderByPercent !== undefined' :icon="['fas', 'long-arrow-alt-'+(orderByPercent=='up'?'down':'up')]" />&nbsp;&nbsp;Percent %
                 </button>
             </div>
             
@@ -129,7 +129,7 @@ export default {
         this.requestInProcess = true
         this.$axios
           .$post('search/slab-listing', {
-            take: 6,
+            take: 12,
             sport: this.card,
             search: this.keyword,
             orderby: this.orderBy            

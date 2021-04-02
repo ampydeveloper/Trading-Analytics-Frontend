@@ -73,7 +73,8 @@ export default {
               take: 100,
               page: this.page,
               sport: this.sport,
-              filterBy: 'ending_soon',
+              // filterBy: 'ending_soon',
+              filterBy: '',
             })
             .then(res => {
               this.requestInProcess = false

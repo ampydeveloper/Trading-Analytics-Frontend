@@ -77,7 +77,7 @@ export default {
   mounted() {
     this.getEndingSoonListing()
     this.getNormalRecentListing()
-    this.scroll()
+    // this.scroll()
   },
   components: {
     CardListItem,
