@@ -67,6 +67,7 @@ export default {
   data() {
     return {
       data: [],
+      itemIds: [],
       dataTwo: [],
       requestInProcess: false,
       page: 1,
@@ -106,8 +107,12 @@ export default {
           if (res.data != null && res.data.length > 0) {
             if (status) {
               res.data.map(item => {
-                this.data.push(item)
+                if(Object.keys(item).includes('id') && !this.itemIds.includes(item.id)){
+                  this.itemIds.push(item.id)
+                  this.data.push(item)
+                }
               })
+              this.data = this.data.filter(Boolean)
             } else {
               this.data = res.data
             }

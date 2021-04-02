@@ -68,7 +68,7 @@
                 "
               >
                 <font-awesome-icon
-                  v-if="sxIcon !== undefined"
+                  v-if="sxIcon && sxIcon !== undefined"
                   :icon="[
                     'fas',
                     'long-arrow-alt-' + sxIcon,
@@ -85,7 +85,7 @@
                 "
               >
                 <font-awesome-icon
-                  v-if="sxIcon !== undefined"
+                  v-if="sxIcon && sxIcon !== undefined"
                   :icon="[
                     'fas',
                     'long-arrow-alt-' + sxIcon,
