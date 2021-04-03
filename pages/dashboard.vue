@@ -55,7 +55,7 @@
               </nuxt-link>
 
               <button class="theme-btn card-btn btn-sxvalue float-right">
-                Slabstox ${{ stoxtickerData.total }}
+                Slabstox ${{ stoxtickerData.sale }}
               </button>
             </h4>
             <h5 class="card-title">

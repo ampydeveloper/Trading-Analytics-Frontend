@@ -7,7 +7,7 @@
             <h5 class="card-title product-title">
               {{ card.title }}
             </h5>
-            <ul class="labels">
+            <ul class="labels clearfix">
               <li v-if="card.rc == 'yes'" class="grey">Rookie</li> 
               <li class="green">{{ card.brand }}</li>
               <li v-if="card.grade != null" class="yellow">{{card.grade}}</li>
@@ -1447,6 +1447,19 @@ ul.my-card-listing {
     }
   }
 }
+@media (max-width:768px){
+  .headwrapper .card-body .image-conatiner{
+text-align: center;
+    padding: 20px 0 113px 0;
+  }
+.listing-lebron .column_one .image-conatiner img {
+    position: relative;
+    left: 0;
+    top: 0;
+    transform: translate(0px, 0px);
+}
+}
+
 // .grade-image-text{
 //   position: absolute;
 //   bottom: 26.5vw;

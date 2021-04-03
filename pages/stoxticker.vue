@@ -177,7 +177,7 @@
                     'fas',
                     'long-arrow-alt-' + stoxtickerData.change_arrow,
                   ]"
-                />&nbsp;&nbsp;
+                />&nbsp;
                 <span class="g-dollar-d-val"> ${{ stoxtickerData.doller_diff }}</span>
               </button>
               <button
@@ -194,7 +194,7 @@
                     'fas',
                     'long-arrow-alt-' + stoxtickerData.change_arrow,
                   ]"
-                />&nbsp;&nbsp;{{ stoxtickerData.perc_diff }}%
+                />&nbsp;{{ stoxtickerData.perc_diff }}%
               </button>
              
               <span class="total_sales" style="display: none">{{
@@ -706,7 +706,7 @@ slabstox.com
                   >
                     <font-awesome-icon
                       :icon="['fas', 'long-arrow-alt-' + boardSearch[key].sx_icon]"
-                    />&nbsp;&nbsp; ${{ boardSearch[key].sx_value }}
+                    />&nbsp;${{ boardSearch[key].sx_value }}
                   </button>
                   <button
                     :class="
@@ -717,7 +717,7 @@ slabstox.com
                   >
                     <font-awesome-icon
                       :icon="['fas', 'long-arrow-alt-' + boardSearch[key].sx_icon]"
-                    />&nbsp;&nbsp;{{ boardSearch[key].pert_diff }}%
+                    />&nbsp;{{ boardSearch[key].pert_diff }}%
                   </button>
                 </h5>
                 <div class="dashboard-apex-top">
