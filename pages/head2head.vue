@@ -189,7 +189,11 @@
               }}
             </h5>
             <ul class="labels">
-              <li class="orange">{{ selectedCardOne.brand }}</li>
+              <!-- <li class="orange">{{ selectedCardOne.brand }}</li> -->
+
+               <li v-if="selectedCardOne.rc == 'yes'" class="grey">Rookie</li> 
+              <li class="green">{{ selectedCardOne.brand }}</li>
+              <li v-if="selectedCardOne.grade != null" class="yellow">{{selectedCardOne.grade}}</li>
             </ul>
             <div class="image-conatiner">
               <img
@@ -249,8 +253,8 @@
                   <div class="col-md-6 left">
                     <h3>
                       *SX VALUE ${{
-                        selectedCardOne.details
-                          ? selectedCardOne.details.currentPrice
+                        card_one.sx
+                          ? card_one.sx
                           : 0
                       }}
                     </h3>
@@ -258,8 +262,8 @@
                   <div class="col-md-6 right">
                     <h3>
                       *SX VALUE ${{
-                        selectedCardTwo.details
-                          ? selectedCardTwo.details.currentPrice
+                        card_two.sx
+                          ? card_two.sx
                           : 0
                       }}
                     </h3>
@@ -359,8 +363,8 @@
               <ul>
                 <li>
                   SlabStox Value: ${{
-                    selectedCardOne.details
-                      ? selectedCardOne.details.currentPrice
+                    card_one.sx
+                      ? card_one.sx
                       : 0
                   }}
                 </li>
@@ -412,8 +416,8 @@
               <ul>
                 <li>
                   SlabStox Value: ${{
-                    selectedCardTwo.details
-                      ? selectedCardTwo.details.currentPrice
+                    card_two.sx
+                      ? card_two.sx
                       : 0
                   }}
                 </li>
@@ -482,7 +486,10 @@
               }}
             </h5>
             <ul class="labels">
-              <li class="orange">{{ selectedCardTwo.brand }}</li>
+              <!-- <li class="orange">{{ selectedCardTwo.brand }}</li> -->
+              <li v-if="selectedCardTwo.rc == 'yes'" class="grey">Rookie</li> 
+              <li class="green">{{ selectedCardTwo.brand }}</li>
+              <li v-if="selectedCardTwo.grade != null" class="yellow">{{selectedCardTwo.grade}}</li>
             </ul>
             <div class="image-conatiner">
               <img
@@ -929,6 +936,8 @@ export default {
               }
               this.initGraphLabel1Length = res.data.lable1.length
               // }
+               this.card_one.sx = res.data.sx1
+              this.card_two.sx = res.data.sx2
               this.card_one.rank = res.data.rank1
               this.card_two.rank = res.data.rank2
               this.card_one.low_sale = res.data.low_sale1

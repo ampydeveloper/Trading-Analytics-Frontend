@@ -9,12 +9,12 @@
     <button class="theme-btn timeLeft">Time left: {{ timeLeft.value }}</button>
     <div class="image-container">
       <div class="icons-container">
-        <button class="buynow-btn beta-ver-hide" v-if="itemdata.showBuyNow" @click="buyNow(itemdata.data)">
+        <!-- <button class="buynow-btn beta-ver-hide" v-if="itemdata.showBuyNow" @click="buyNow(itemdata.data)">
           Buy Now
         </button> 
         <a class="buynow-btn staging-ver-hide" v-if="itemdata.showBuyNow" :href="viewItemURL" target="_blank">
           Buy Now
-        </a>
+        </a> -->
         
         <!-- <img
           v-if="!isInWatchList(itemdata.id)"
@@ -147,7 +147,8 @@ export default {
       }
     },
     getTimeLeft() {
-      if(this.itemdata.data.listing_info != null && this.itemdata.data.listing_info.listingType == 'Auction'){
+      // && this.itemdata.data.listing_info.listingType == 'Auction'
+      if(this.itemdata.listing_ending_at != null){
 
       this.timeLeft.intervalObject = setInterval(() => {
         var date1 = this.$moment(this.itemdata.listing_ending_at)
@@ -159,7 +160,7 @@ export default {
         var final = x.diff(y)
         
         if (final > 0) {
-          const d = this.$moment(final).format('D')
+          const d = this.$moment(final).format('D') - 1
           const h = this.$moment(final).format('H')
           const m = this.$moment(final).format('mm')
           const s = this.$moment(final).format('ss')
@@ -174,12 +175,13 @@ export default {
           }
           
           this.viewListingText= 'View Listing';
-        } else {
-          this.timeLeft.value = '00:00'
-          clearInterval(this.timeLeft.intervalObject)
-          this.timeEndClass= 'time-end-grey';
-          this.viewListingText= 'Sold Listing';
-        }
+        } 
+        // else {
+        //   this.timeLeft.value = '00:00'
+        //   clearInterval(this.timeLeft.intervalObject)
+        //   this.timeEndClass= 'time-end-grey';
+        //   this.viewListingText= 'Sold Listing';
+        // }
       }, 1000)
         }else{
            this.timeLeft.value = 'N/A'

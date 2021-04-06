@@ -92,10 +92,10 @@ export default {
       requestInProcessEndingSoon: false,
       noMoreData: false,
       cards: [
-        'soccer',
-        'football', 
-        'baseball', 
         'basketball',
+        'soccer',
+        'baseball',
+        'football', 
         'pokemon',
         'random bin'
       ]

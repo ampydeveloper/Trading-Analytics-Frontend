@@ -61,35 +61,26 @@
             <h5 class="card-title">
               <button
                 :class="
-                  (sxIcon &&
-                  sxIcon == 'up'
+                  (sxIcon && sxIcon == 'up'
                     ? 'theme-green-btn'
                     : 'theme-red-btn') + ' card-btn'
                 "
               >
                 <font-awesome-icon
                   v-if="sxIcon && sxIcon !== undefined"
-                  :icon="[
-                    'fas',
-                    'long-arrow-alt-' + sxIcon,
-                  ]"
+                  :icon="['fas', 'long-arrow-alt-' + sxIcon]"
                 />&nbsp;
                 <span class="g-dollar-d-val"> ${{ doller_diff }}</span>
               </button>
               <button
                 :class="
-                  (sxIcon &&
-                  sxIcon == 'up'
-                    ? 'theme-btn'
-                    : 'theme-red-btn') + ' card-btn'
+                  (sxIcon && sxIcon == 'up' ? 'theme-btn' : 'theme-red-btn') +
+                  ' card-btn'
                 "
               >
                 <font-awesome-icon
                   v-if="sxIcon && sxIcon !== undefined"
-                  :icon="[
-                    'fas',
-                    'long-arrow-alt-' + sxIcon,
-                  ]"
+                  :icon="['fas', 'long-arrow-alt-' + sxIcon]"
                 />&nbsp;{{ perc_diff }}%
               </button>
               <span class="card-link" v-b-modal.openSeeProblemPopup>
@@ -263,7 +254,7 @@
                 :to="'/product?id=' + item.id + '&slag=' + item.title"
                 :title="item.title"
               >
-                ${{ trimString(item.price) }}
+                ${{ (item.price>0?trimString(item.price):0) }}
               </nuxt-link>
             </span>
           </div>
@@ -294,7 +285,7 @@
                 class=""
                 :to="'/product?id=' + item.id + '&slag=' + item.title"
                 :title="item.title"
-                >${{ trimString(item.price) }}
+                >${{ (item.price>0?trimString(item.price):0) }}
               </nuxt-link>
             </span>
           </div>
@@ -328,7 +319,7 @@
                 :to="'/product?id=' + item.id + '&slag=' + item.title"
                 :title="item.title"
               >
-                ${{ trimString(item.price) }}
+                ${{ (item.price>0?trimString(item.price):0) }}
               </nuxt-link>
             </span>
           </div>
@@ -348,8 +339,9 @@
         <span class="g-title"></span>
         &nbsp;&nbsp;<span class="g-sx"></span> &nbsp;&nbsp;
         <span class="g-to-sales"></span> &nbsp;&nbsp;
-        <span class="g-sales-diff"></span>&nbsp;&nbsp; 
-        <span class="g-image-link"></span>&nbsp;&nbsp;
+        <span class="g-sales-diff"></span>&nbsp;&nbsp;
+        <span class="g-sales-pert">Percentage Change {{ perc_diff }}%</span
+        >&nbsp;&nbsp; <span class="g-image-link"></span>&nbsp;&nbsp;
         <span class="slab-image-link"></span>
       </div>
 
@@ -389,13 +381,20 @@ export default {
     return {
       title: 'Dashboard - Slabstox',
       meta: [
-        {  hid: 'dashboard', name: 'Dashboard - Slabstox', content: 'Check Slabstox Featured Slabs' },
+        {
+          hid: 'dashboard',
+          name: 'Dashboard - Slabstox',
+          content: 'Check Slabstox Featured Slabs',
+        },
         { property: 'og:title', content: 'Check Slabstox Featured Slabs' },
         { property: 'og:image', content: this.logo },
         {
           property: 'og:description',
           content:
-            'StoxTicker@' + (this.stoxtickerData.total ? this.stoxtickerData.total.toFixed(2) : ''),
+            'StoxTicker@' +
+            (this.stoxtickerData.total
+              ? this.stoxtickerData.total.toFixed(2)
+              : ''),
         },
         { property: 'og:url', content: this.baseUrl },
         { property: 'og:site_name', content: 'Slabstox' },
@@ -429,7 +428,7 @@ export default {
       logo: null,
       baseUrl: BASE_URL,
       graphImage: '',
-      graphImageBase:'',
+      graphImageBase: '',
       cardImage: '',
       liveAuction: [],
       ternder: [],
@@ -443,7 +442,7 @@ export default {
       total_sales: 0,
       last_timestamp: 0,
       keyCount: 0,
-      sxIcon:'',
+      sxIcon: '',
       stoxtickerData: {
         total: 0,
         sale: 0,
@@ -524,20 +523,19 @@ export default {
         $('.g-main-text .g-sales-diff').text(
           'Price Change ' + $('.g-dollar-d-val').text()
         )
-        
+
         $('.g-img-full .slab_image, .g-img-full .slab_image_dup').attr(
           'src',
           $('.my-card.active .image-container img').attr('src')
         )
         self.cardImage = $('.my-card.active .image-container img').attr('src')
-        // $('.g-download-slab').attr(
-        //   'href',
-        //   $('.my-card.active .image-container img').attr('src')
-        // )
-        $('.g-main-text .g-image-link').text(self.graphImage)
-        $('.g-main-text .slab-image-link').text(self.cardImage)
 
-        // console.log(graphImageBase);
+        if (self.graphImage != '') {
+          $('.g-main-text .g-image-link').text('Graph URL ' + self.graphImage)
+        }
+        if (self.cardImage != '') {
+          $('.g-main-text .slab-image-link').text('Slab URL ' + self.cardImage)
+        }
       }
     },
   },
@@ -551,16 +549,16 @@ export default {
       const wrapper = document.getElementById('g-img-full')
       const img = wrapper.querySelector('.slab_image')
       const canvas = wrapper.querySelector('.slab_image_canvas')
-          canvas.width = img.width
-          canvas.height = img.height
-          const ctx = canvas.getContext('2d')
-          ctx.drawImage(img, 0, 0, img.width, img.height)
+      canvas.width = img.width
+      canvas.height = img.height
+      const ctx = canvas.getContext('2d')
+      ctx.drawImage(img, 0, 0, img.width, img.height)
 
-setTimeout(() => {
-      canvas.toBlob((blob) => {
-        const downloadLink = downloadBlob(blob)
-      })
-}, 1000)
+      setTimeout(() => {
+        canvas.toBlob((blob) => {
+          const downloadLink = downloadBlob(blob)
+        })
+      }, 1000)
       function downloadBlob(blob) {
         const url = URL.createObjectURL(blob)
 
@@ -577,7 +575,7 @@ setTimeout(() => {
         }
         a.addEventListener('click', clickHandler, false)
         a.click()
-        $('.slab_image_canvas').hide();
+        $('.slab_image_canvas').hide()
         return a
       }
     },
@@ -684,10 +682,12 @@ setTimeout(() => {
           .then((res) => {
             if (res.status == 200) {
               this.activeDaysGraph = days
-              var percDiff = res.data.perc_diff
-              var dollerDiff = String(res.data.doller_diff)
+              this.perc_diff = res.data.perc_diff
+              this.doller_diff = String(res.data.doller_diff)
               this.sxIcon = res.data.sx_icon
-            
+              this.total_sales = res.data.total_sales
+              this.last_timestamp = res.data.last_timestamp
+
               if (this.initGraphLabelLength != res.data.labels.length) {
                 this.graphDataEmpty = false
                 this.series = [{ name: 'Sales', data: res.data.values }]
@@ -725,10 +725,10 @@ setTimeout(() => {
                   },
                 }
                 this.initGraphLabelLength = res.data.labels.length
-                this.doller_diff = dollerDiff
-                this.perc_diff = percDiff
-                this.total_sales = res.data.total_sales
-                this.last_timestamp = res.data.last_timestamp
+                // this.doller_diff = dollerDiff
+                // this.perc_diff = percDiff
+                // this.total_sales = res.data.total_sales
+                // this.last_timestamp = res.data.last_timestamp
                 setTimeout(() => {
                   this.generateImageOfGraph()
                 }, 1000)
@@ -767,7 +767,6 @@ setTimeout(() => {
           })
       })
     },
-    
   },
 }
 </script>
@@ -784,7 +783,6 @@ ul.my-card-listing {
 ul.featured-listing {
   .my-card {
     width: 20% !important;
-   
   }
 }
 
@@ -805,13 +803,13 @@ ul.featured-listing {
   a {
     color: #1ce783;
     float: right;
-    width: 64px;
+    width: 84px;
     &:hover {
       color: #1ce783;
     }
   }
   .card-text-s {
-    width: calc(100% - 64px);
+    width: calc(100% - 84px);
     display: inline-block;
     text-decoration: underline;
     padding-right: 10px;
@@ -847,15 +845,14 @@ ul.featured-listing {
     padding-top: 25px;
     padding-bottom: 25px;
     position: relative;
-     @media (max-width: 767px) {
-          width: 100% !important;
+    @media (max-width: 767px) {
+      width: 100% !important;
     }
   }
   li.my-card.active {
     background: #39414a;
     margin-right: -2px;
   }
-  
 }
 .featured-graph-title {
   font-family: 'CocogoosePro-SemiLightItalic', Helvetica, Arial, sans-serif;
@@ -912,7 +909,8 @@ ul.featured-listing {
 }
 .g-img-full {
   margin: -10px 20px 0 20px;
-  .slab_image ,.slab_image_dup {
+  .slab_image,
+  .slab_image_dup {
     width: calc(20% - 5px);
     margin-right: 5px;
     float: left;
@@ -932,8 +930,8 @@ ul.featured-listing {
 .g-download-out {
   margin: 20px 20px 0 20px;
 }
-.slab_image_canvas{
+.slab_image_canvas {
   position: absolute;
-    left: 20px;
+  left: 20px;
 }
 </style>

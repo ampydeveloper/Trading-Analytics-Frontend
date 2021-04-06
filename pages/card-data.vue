@@ -366,9 +366,13 @@
           <div class="shar-text">Share Text</div>
           <div class="g-main-text">
             <span class="g-title"></span>
-            &nbsp;&nbsp;<span class="g-sx"></span> &nbsp;&nbsp;
-            <span class="g-to-sales"></span> &nbsp;&nbsp;
-            <span class="g-sales-diff"></span> &nbsp;&nbsp;
+            &nbsp;&nbsp;
+            <span class="g-sx">*SX Value ${{ slabstoxValue }}</span> &nbsp;&nbsp;
+            <span class="g-to-sales">
+              Price Change ${{ (cardGraph.dollar_diff? cardGraph.dollar_diff:0) }} 
+              Percentage Change {{ (cardGraph.pert_diff? cardGraph.pert_diff:0) }}%
+               </span> &nbsp;&nbsp;
+            <!-- <span class="g-sales-diff"></span> &nbsp;&nbsp; -->
             <span class="g-image-link"></span> &nbsp;&nbsp;
             <span class="slab-image-link"></span>
           </div>
@@ -521,16 +525,20 @@ export default {
     dialogVisible(visible) {
       if (visible) {
         $('.g-main-text .g-title').text($('.product-title').text())
-        $('.g-main-text .g-sx').text(
-          'Card Cost Change ' + $('.card-title_new .theme-green-btn').text()
-        )
-        $('.g-main-text .g-to-sales').text(
-          $('.card-title_new .theme-btn').text()
-        )
-        $('.g-main-text .g-image-link').text(this.graphImage)
+        // $('.g-main-text .g-sx').text(
+        //   'Card Cost Change ' + $('.card-title_new .theme-green-btn').text()
+        // )
+        // $('.g-main-text .g-to-sales').text(
+        //   $('.card-title_new .theme-btn').text()
+        // )
+        if(this.graphImage != ''){
+$('.g-main-text .g-image-link').text('Graph URL ' + this.graphImage)
+        }
+        if($('.image-conatiner img').attr('src') != ''){
         $('.g-main-text .slab-image-link').text(
-          $('.image-conatiner img').attr('src')
+          'Slab URL ' +$('.image-conatiner img').attr('src')
         )
+        }
         $('.g-img-full .slab_image').attr(
           'src',
           $('.image-conatiner img').attr('src')

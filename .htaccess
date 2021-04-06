@@ -5,9 +5,9 @@
 
 # allow social media crawlers to work by redirecting them to a server-rendered static version on the page
 RewriteCond %{HTTP_USER_AGENT} googlebot|bingbot|yandex|baiduspider|facebookexternalhit|twitterbot|rogerbot>
-RewriteRule card-data(.*)$ http://api.slabstox.leagueofclicks.com/card-data [R=301,L]
-RewriteRule stoxticker http://api.slabstox.leagueofclicks.com/stoxticker [R=301,L]
-RewriteRule stoxticker-details(.*)$ http://api.slabstox.leagueofclicks.com/stoxticker-details [R=301,L]
+RewriteRule card-data(.*)$ https://api.slabstox.com/card-data [R=301,L]
+RewriteRule stoxticker https://api.slabstox.com/stoxticker [R=301,L]
+RewriteRule stox-details(.*)$ https://api.slabstox.com/stoxticker-details [R=301,L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

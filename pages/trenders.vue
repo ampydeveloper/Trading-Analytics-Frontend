@@ -94,7 +94,7 @@ export default {
       requestInProcessEndingSoon: true,
       noMoreData: false,
       keyword: null,
-      cards: ['soccer', 'football', 'baseball', 'basketball', 'pokemon'],
+      cards: ['basketball', 'soccer','baseball', 'football', 'pokemon'],
     }
   },
   methods: {
