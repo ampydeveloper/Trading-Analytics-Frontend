@@ -483,7 +483,7 @@ slabstox.com
                 <div class="share-all-outer" style="top: 19px;">
                   <ul>
                     <li style="margin: 0;">
-                      <a :href="'https://www.facebook.com/sharer/sharer.php?u='+encodeURI(currentUrl)"  target="_blank"
+                      <a :href="'https://www.facebook.com/sharer/sharer.php?u='+encodeURI(sxStoxtickerUrl)"  target="_blank"
                         ><img src="~/assets/img/icons/facebook.svg" alt
                       /></a>
                     </li>
@@ -491,7 +491,7 @@ slabstox.com
                       <a
                         :href="
                           'https://twitter.com/intent/tweet?url=' +
-                          encodeURI(currentUrl) +
+                          encodeURI(sxStoxtickerUrl) +
                           '&text=StoxTicker@' +
                          (stoxtickerData.sale?stoxtickerData.sale:'')
                         "
@@ -503,7 +503,7 @@ slabstox.com
                       <a
                         :href="
                           'http://pinterest.com/pin/create/button/?url=' +
-                          encodeURI(currentUrl) +
+                          encodeURI(sxStoxtickerUrl) +
                           '&media=' +
                           encodeURI(this.graphImage) +
                           '&description=' +
@@ -517,7 +517,7 @@ slabstox.com
                       <a
                         :href="
                           'https://www.linkedin.com/shareArticle?mini=true&url=' +
-                          encodeURI(currentUrl)
+                          encodeURI(sxStoxtickerUrl)
                         "
                         target="_blank"
                         ><img src="~/assets/img/icons/linkedin-circled.svg" alt
@@ -1057,6 +1057,7 @@ export default {
       searchSalesQty: [],
       smartKeyword: [],
       showSmartSearch: false,
+      sxStoxtickerUrl:location.href+'/stox-sells',
       data: {
         total: 0,
         sale: 0,
