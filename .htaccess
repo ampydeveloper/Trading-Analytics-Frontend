@@ -8,6 +8,7 @@ RewriteCond %{HTTP_USER_AGENT} googlebot|bingbot|yandex|baiduspider|facebookexte
 RewriteRule card-data(.*)$ https://api.slabstox.com/card-data [R=301,L]
 RewriteRule stoxticker https://api.slabstox.com/stoxticker [R=301,L]
 RewriteRule stox-details(.*)$ https://api.slabstox.com/stoxticker-details [R=301,L]
+RewriteRule stox-sells(.*)$ https://api.slabstox.com/sx-stoxticker [R=301,L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

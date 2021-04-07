@@ -232,12 +232,12 @@
           </div>
         </div>
       </div>
-<div class="social_share ss-h4">
+<!-- <div class="social_share ss-h4">
         <h4>
               <a class="embed-link" href="javascript:;"  @click="embedStatsCode()">EMBEDD CODE </>
               </a>
             </h4>
-        </div>
+        </div> -->
     </div>
     <b-modal id="embedStatsCode" title="" size="xl" hide-footer>
           <h5>Copy code and paste to your website.</h5>

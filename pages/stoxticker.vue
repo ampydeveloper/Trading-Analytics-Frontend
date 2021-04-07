@@ -965,6 +965,9 @@ export default {
     }
   },
   mounted() {
+    var currentHref = location.href
+    this.sxStoxtickerUrl = currentHref.replace('stoxticker', 'stox-sells')
+
     this.getData()
     this.slabstoxGraph()
     this.getSoldListing()
@@ -1057,7 +1060,7 @@ export default {
       searchSalesQty: [],
       smartKeyword: [],
       showSmartSearch: false,
-      sxStoxtickerUrl:location.href+'/stox-sells',
+      sxStoxtickerUrl: '',
       data: {
         total: 0,
         sale: 0,
@@ -1167,7 +1170,7 @@ export default {
     }
   },
   methods: {
-    searchBoard(days=2) {
+    searchBoard(days = 2) {
       var sportList = []
       $('.cat-btn li.active').each(function () {
         var $this = $(this)
@@ -1182,7 +1185,7 @@ export default {
             keyword: this.searchKeyword,
             sport: sportList,
             page: this.boardPage,
-            days: days
+            days: days,
           })
           .then((res) => {
             this.requestInProcess = false
@@ -1197,7 +1200,7 @@ export default {
               // var dollerDiff = String(res.data.doller_diff)
 
               $('.create-board-out').hide()
- var bpage = (res.page-1) * 4;
+              var bpage = (res.page - 1) * 4
               if (res.data.length > bpage) {
                 $('.create-board-out').show()
               }
@@ -1633,13 +1636,11 @@ export default {
     },
     allBoardGraphSingleFunc(days, board, boardKey) {
       try {
-        
         // this.graphDataEmpty = false;
         this.$axios
           .$get(`stoxticker/single-graph-board/${days}/${board}`)
           .then((res) => {
             if (res.status == 200) {
-
               this.boardDaysGraph.splice(boardKey, 1, days)
 
               // if (this.initGraphLabelLength != res.data.labels.length) {
@@ -1652,7 +1653,9 @@ export default {
 
               this.allBoardGraph.splice(boardKey, 1, res.data)
 
-              this.boardSeries.splice(boardKey, 1, [{name: 'Sales', data: res.data.sales_graph.values, }])
+              this.boardSeries.splice(boardKey, 1, [
+                { name: 'Sales', data: res.data.sales_graph.values },
+              ])
 
               this.boardSalesQty.splice(boardKey, 1, res.data.sales_graph.qty)
               this.boardChartOptions.splice(boardKey, 1, {
@@ -1708,7 +1711,10 @@ export default {
                   y: {
                     formatter: (value, ind) => {
                       let lblStr = `$${value}`
-                      if (typeof ind == 'object') lblStr = `$${value} (${this.boardSalesQty[ind.dataPointIndex]})`
+                      if (typeof ind == 'object')
+                        lblStr = `$${value} (${
+                          this.boardSalesQty[ind.dataPointIndex]
+                        })`
                       else lblStr = `$${value} (${this.boardSalesQty[ind]})`
                       return lblStr
                     },
@@ -2066,9 +2072,9 @@ ul.my-card-listing {
   height: auto;
 }
 .card-single-row-outer {
-      height: 600px;
-    overflow-y: scroll;
-    overflow-x: hidden;
+  height: 600px;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 html body main .card.search-slabs-out .my-card-listing .my-card {
   width: 16.66%;
