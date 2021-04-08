@@ -77,7 +77,9 @@ export default {
     }
   },
   async mounted() {
-    this.card_one()
+     setTimeout(() => {
+        this.card_one()
+      }, 200)
     if (this.datascroll) {
       this.scroll()
     }

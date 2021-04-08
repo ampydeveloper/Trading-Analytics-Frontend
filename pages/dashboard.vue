@@ -338,7 +338,7 @@
       <div class="g-main-text">
         <span class="g-title"></span>
         &nbsp;&nbsp;<span class="g-sx"></span> &nbsp;&nbsp;
-        <span class="g-to-sales"></span> &nbsp;&nbsp;
+        <!-- <span class="g-to-sales"></span> &nbsp;&nbsp; -->
         <span class="g-sales-diff"></span>&nbsp;&nbsp;
         <span class="g-sales-pert">Percentage Change {{ perc_diff }}%</span
         >&nbsp;&nbsp; <span class="g-image-link"></span>&nbsp;&nbsp;
@@ -517,9 +517,9 @@ export default {
         $('.g-main-text .g-sx').text(
           $('.my-card.active .sxvalue .sxvalue-text').text()
         )
-        $('.g-main-text .g-to-sales').text(
-          'Total Sales ' + $('.total_sales').text()
-        )
+        // $('.g-main-text .g-to-sales').text(
+        //   'Total Sales ' + $('.total_sales').text()
+        // )
         $('.g-main-text .g-sales-diff').text(
           'Price Change ' + $('.g-dollar-d-val').text()
         )

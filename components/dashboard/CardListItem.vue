@@ -100,13 +100,13 @@ export default {
         hours: 0,
         mins: 0,
         secs: 0,
-        value: null,
+        value: 'N/A',
         datetime: null,
         intervalObject: null,
       },
       viewItemURL:'',
        timeEndClass: '',
-      viewListingText: '',
+      viewListingText: 'View Listing',
       valueDifference: 0,
     }
   },
@@ -231,7 +231,8 @@ var selling_status_price = this.itemdata.data.selling_status.price;
     text-decoration: underline;
     font-size: 11px;
     letter-spacing: 1px;
-    height: 43px;
+       height: 38px;
+    overflow: hidden;
   }
   .timeLeft.theme-btn {
     width: 100%;

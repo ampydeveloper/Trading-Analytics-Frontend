@@ -116,7 +116,8 @@ export default {
     text-decoration: underline;
     font-size: 11px;
     letter-spacing: 1px;
-    height: 43px;
+        height: 38px;
+    overflow: hidden;
   }
   .sxvalue.theme-btn {
     width: 100%;

@@ -325,7 +325,7 @@
             <div class="stat_box">
               <h3>stats</h3>
               <ul>
-                <li>SlabStox Value: {{ slabstoxValue }}</li>
+                <li>SlabStox Value: ${{ slabstoxValue }}</li>
                 <li>Overall Rank: {{ card.rank }}</li>
                 <li>
                   Last Sale Price:

@@ -1254,7 +1254,8 @@ html body main .card.search-slabs-out .my-card-listing .my-card {
     text-decoration: underline;
     font-size: 11px;
     letter-spacing: 1px;
-    height: 43px;
+        height: 38px;
+    overflow: hidden;
   }
   .image-container {
     position: relative;
