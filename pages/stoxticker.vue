@@ -1200,8 +1200,9 @@ export default {
               // var dollerDiff = String(res.data.doller_diff)
 
               $('.create-board-out').hide()
-              var bpage = (res.page - 1) * 4
-              if (res.data.length > bpage) {
+              // var bpage = (res.page - 1) * 4
+              // if (res.data.length > bpage) {
+              if (res.data.length > 0) {
                 $('.create-board-out').show()
               }
               if (res.data != null && res.data.length > 0) {

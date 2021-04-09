@@ -850,9 +850,9 @@ $('.g-main-text .g-image-link').text('Graph URL ' + this.graphImage)
                 this.lowestSale = res.data.lowestSale
                 this.lastSaleDate = res.data.lastSaleDate
                 this.lastSalePrice = res.data.lastSalePrice
-                this.initGraphLabelLength = res.data.labels.length
+                this.initGraphLabelLength = (res.data.labels?res.data.labels.length:0)
                 this.slabstoxValue = res.data.slabstoxValue
-                
+                // console.log(res.data);
                 if(this.cardGraph.sx_icon =='up'){
  this.sx_icon_class = 'theme-green-btn';
                 } else if(this.cardGraph.sx_icon =='down'){
@@ -861,7 +861,7 @@ $('.g-main-text .g-image-link').text('Graph URL ' + this.graphImage)
               // }
               setTimeout(() => {
                 this.generateImageOfGraph()
-              }, 100)
+              }, 50)
             } else {
               this.$router.push('/404')
             }
@@ -875,7 +875,7 @@ $('.g-main-text .g-image-link').text('Graph URL ' + this.graphImage)
         this.$axios.$get(`get-card-all-graph/${this.id}`).then((res) => {
           if (res.status == 200) {
             this.cardHistory = res.data.card_history
-            this.barseries = [{ name: 'SX', data: res.data.values }]
+            this.barseries = [{ name: 'Sales', data: res.data.values }]
             this.barchartOptions = {
               xaxis: { categories: res.data.labels },
               plotOptions: {

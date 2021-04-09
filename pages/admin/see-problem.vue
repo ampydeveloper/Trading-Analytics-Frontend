@@ -29,7 +29,7 @@
                       >{{ problem.user.full_name }}</nuxt-link
                     >
                   </td>
-                  <td>{{ problem.ebay.title }}</td>
+                  <td>{{ (problem.ebay!=null?problem.ebay.title:0) }}</td>
                   <td>{{ problem.message }}</td>
                   <td>
                     <button

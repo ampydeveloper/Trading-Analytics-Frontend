@@ -2439,16 +2439,16 @@ html body #__nuxt .b-profileImage .dropdown-menu {
 }
 .headwrapper , .product-image-card, .labels{
  li.yellow, label.yellow {
-  background-color: #e9cb1d;
+  background-color: #e9cb1d !important;
 }
  li.grey, label.grey {
-  background-color: #cccccc;
+  background-color: #cccccc !important;
 }
  li.green, label.green {
-  background-color: #1de783;
+  background-color: #1de783 !important;
 }
  li.orange, label.orange {
-  background-color: #e57c13;
+  background-color: #e57c13 !important;
 }
 }
 @media (max-width: 1300px) {
