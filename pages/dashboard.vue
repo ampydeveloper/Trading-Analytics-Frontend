@@ -265,7 +265,7 @@
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">
-              <button class="theme-btn card-btn">Watchlist</button>
+              <button class="theme-btn card-btn">Wishlist</button>
               <nuxt-link class="card-link float-right" to="/watch-list">
                 View All
                 <font-awesome-icon :icon="['fas', 'chevron-right']" />
@@ -453,7 +453,7 @@ export default {
       salesQty: [],
       series: [
         {
-          name: 'Sales',
+          name: 'SX',
           data: [],
         },
       ],
@@ -690,7 +690,7 @@ export default {
 
               if (this.initGraphLabelLength != res.data.labels.length) {
                 this.graphDataEmpty = false
-                this.series = [{ name: 'Sales', data: res.data.values }]
+                this.series = [{ name: 'SX', data: res.data.values }]
                 this.salesQty = res.data.qty
                 this.chartOptions = {
                   xaxis: {

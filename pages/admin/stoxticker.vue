@@ -565,7 +565,7 @@ export default {
       },
       series: [
         {
-          name: 'Sales',
+          name: 'SX',
           data: [0],
         },
       ],
@@ -614,7 +614,7 @@ export default {
       },
       sxSeries: [
         {
-          name: 'Sales',
+          name: 'SX',
           data: [0],
         },
       ],
@@ -703,7 +703,7 @@ export default {
                     this.boardSearch[key] = item
                     this.searchSeries[key] = [
                       {
-                        name: 'Sales',
+                        name: 'SX',
                         data: item.sales_graph.values,
                       },
                     ]
@@ -977,7 +977,7 @@ export default {
             this.stoxtickerData.change_arrow = res.data.change_arrow
             this.stoxtickerData.last_timestamp = res.data.last_timestamp
 
-            this.sxSeries = [{ name: 'Sales', data: res.data.values }]
+            this.sxSeries = [{ name: 'SX', data: res.data.values }]
             this.sxSalesQty = res.data.qty
             this.sxChartOptions = {
               xaxis: {
@@ -1043,7 +1043,7 @@ export default {
                   this.allBoardGraph[key] = item
                   this.boardSeries[key] = [
                     {
-                      name: 'Sales',
+                      name: 'SX',
                       data: item.sales_graph.values,
                     },
                   ]
@@ -1143,7 +1143,7 @@ export default {
               this.allBoardGraph[boardKey] = res.data
               this.boardSeries[boardKey] = [
                 {
-                  name: 'Sales',
+                  name: 'SX',
                   data: res.data.sales_graph.values,
                 },
               ]

@@ -13,7 +13,7 @@
           <div class="col-7 text-right">
             <div class="top-card">
               <button class="theme-light-grey-btn card-btn">
-                Purchase ${{ apiData.total_purchases }}
+                Purchase ${{ (apiData.total_purchases!= null?apiData.total_purchases:0) }}
               </button>
               <button class="theme-green-btn card-btn">
                 Sx value ${{ value }}

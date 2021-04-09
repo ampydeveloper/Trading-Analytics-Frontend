@@ -378,7 +378,7 @@ export default {
               this.boardFollow = res.follow != null ? true : false
 
               this.series = [
-                { name: 'Sales', data: res.card_data.sales_graph.values },
+                { name: 'SX', data: res.card_data.sales_graph.values },
               ]
               this.salesQty = res.card_data.sales_graph.qty
               this.chartOptions = {

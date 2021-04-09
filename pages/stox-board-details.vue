@@ -278,7 +278,7 @@ embedStatsCode() {
             this.stoxtickerDetails.board = res.board
             this.stoxtickerDetails.cards = res.cards
 
-            this.series = [{ name: 'Sales', data: res.card_data.values }]
+            this.series = [{ name: 'SX', data: res.card_data.values }]
             this.chartOptions = {
               xaxis: {
                 categories: res.card_data.labels,

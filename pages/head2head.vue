@@ -630,11 +630,11 @@ export default {
       },
       series: [
         {
-          name: 'Sales',
+          name: 'SX',
           data: [],
         },
         {
-          name: 'Sales',
+          name: 'SX',
           data: [],
         },
       ],
@@ -879,11 +879,11 @@ export default {
               // if(this.initGraphLabelLength != res.data.labels.length){
               this.series = [
                 {
-                  name: '<span class="sales-t1">Sales</span>',
+                  name: '<span class="sales-t1">SX</span>',
                   data: res.data.values1,
                 },
                 {
-                  name: '<span class="sales-t2">Sales</span>',
+                  name: '<span class="sales-t2">SX</span>',
                   data: res.data.values2,
                 },
               ]

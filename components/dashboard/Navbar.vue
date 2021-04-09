@@ -253,6 +253,7 @@ export default {
       smartKeyword: [],
       requestInProcess: false,
       showSmartSearch: false,
+       currentUrl: location.href,
     }
   },
   computed: {
@@ -294,22 +295,24 @@ export default {
       this.mobileNavShow = !this.mobileNavShow
     },
     getSmartKeyword() {
-      console.log('redd33')
       try {
+        // const urlCheck = this.currentUrl.indexOf('head2head');
+        // if (urlCheck !== -1) {
+        //   this.$router.push('/search/?id=' + value)
+        // }
         if (this.keyword == '') {
           this.hideSmartSearch()
         }
-        const cancelTokenSource = this.$axios.CancelToken.source()
+        // const cancelTokenSource = this.$axios.CancelToken.source()
         this.requestInProcess = true
         this.$axios
           .$post('search/get-smart-keyword', {
             keyword: this.keyword,
-            cancelToken: cancelTokenSource.token,
+            // cancelToken: cancelTokenSource.token,
           })
-          .before((xhr) => {
-            cancelTokenSource.cancel()
-            console.log('redd')
-          })
+          // .before((xhr) => {
+          //   cancelTokenSource.cancel()
+          // })
           .then((res) => {
             this.requestInProcess = false
             if (res.status == 200) {

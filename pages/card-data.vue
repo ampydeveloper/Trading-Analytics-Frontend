@@ -581,7 +581,7 @@ $('.g-main-text .g-image-link').text('Graph URL ' + this.graphImage)
       cardGraph: [],
       series: [
         {
-          name: 'Sales',
+          name: 'SX',
           data: [],
         },
       ],
@@ -633,7 +633,7 @@ $('.g-main-text .g-image-link').text('Graph URL ' + this.graphImage)
       },
       barseries: [
         {
-          name: 'Sales',
+          name: 'SX',
           data: [0, 0, 0, 0, 0, 0, 0],
         },
       ],
@@ -806,7 +806,7 @@ $('.g-main-text .g-image-link').text('Graph URL ' + this.graphImage)
               this.activeDaysGraph = days
               // if (this.initGraphLabelLength != res.data.values.length) {
                 // console.log(res.data);
-                this.series = [{ name: 'Sales', data: res.data.values }]
+                this.series = [{ name: 'SX', data: res.data.values }]
                 this.salesQty = res.data.qty
                 this.chartOptions = {
                   xaxis: {
@@ -875,7 +875,7 @@ $('.g-main-text .g-image-link').text('Graph URL ' + this.graphImage)
         this.$axios.$get(`get-card-all-graph/${this.id}`).then((res) => {
           if (res.status == 200) {
             this.cardHistory = res.data.card_history
-            this.barseries = [{ name: 'Sales', data: res.data.values }]
+            this.barseries = [{ name: 'SX', data: res.data.values }]
             this.barchartOptions = {
               xaxis: { categories: res.data.labels },
               plotOptions: {
@@ -1251,18 +1251,7 @@ ul.my-card-listing {
   .card-body {
     padding-bottom: 15px;
   }
-  .labels li.yellow {
-    background-color: #e9cb1d;
-  }
-  .labels li.grey {
-    background-color: #cccccc;
-  }
-  .labels li.green {
-    background-color: #1de783;
-  }
-  .labels li.orange {
-    background-color: #e57c13;
-  }
+
   .stat_box {
     padding: 10px 15px;
     background-color: #1de783;

@@ -6,7 +6,7 @@
           <div class="card-body product-image-card">
             <h5 class="card-title product-title">{{ data.title }}</h5>
             <div class="labels">
-              <label
+              <!-- <label
                 class="topps"
                 v-if="data.card != null && data.card.brand != ''"
                 >{{data.card.brand}}</label
@@ -21,7 +21,12 @@
                 v-if="data.card != null && data.card.rc == 'yes'"
                 >Rookie</label
               >
-              <label class="trender" v-if="false">Trender</label>
+              <label class="trender" v-if="false">Trender</label> -->
+
+               <label v-if="data.card.rc == 'yes'" class="grey">Rookie</label> 
+              <label v-if="data.card.brand != null" class="green">{{ data.card.brand }}</label>
+              <label v-if="data.card.grade != null" class="yellow">{{data.card.grade}}</label>
+
             </div>
             <!-- <div class="icons-container">
               <img

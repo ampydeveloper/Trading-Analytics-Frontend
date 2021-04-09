@@ -447,7 +447,7 @@ export default {
       },
       barseries: [
         {
-          name: 'Sales',
+          name: 'SX',
           data: [0, 0, 0, 0, 0, 0, 0],
         },
       ],
