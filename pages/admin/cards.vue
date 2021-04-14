@@ -19,6 +19,7 @@
                   Create Slab
                 </nuxt-link>
                 <nuxt-link
+                  v-if='isAdmin'
                   class="theme-green-btn card-btn pull-right"
                   to="/admin/create-cards-excel"
                   style="margin-right: 5px"

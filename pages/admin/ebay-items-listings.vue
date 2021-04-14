@@ -7,6 +7,7 @@
             <h5 class="card-title">
               <button class="theme-btn card-btn">All Listings</button>
               <nuxt-link
+                v-if='!isAdmin'
                 class="theme-green-btn card-btn pull-right"
                 :to='`/admin/create-listings-excel`'
                 style="margin-right: 5px"
@@ -92,7 +93,7 @@
                   <th>Listing Id</th>
                   <th>Slab Id</th>
                   <th>Status</th>
-                  <th>Actions</th>
+                  <th v-if='!isDataEntry'>Actions</th>
                 </tr>
               </thead>
               <tbody v-if="items.length > 0">
@@ -126,7 +127,7 @@
                   <td>{{ item.itemId }}</td>
                     <td>{{ item.card_id }}</td>
                   <td>{{ item.status == 0 ? 'Active' : 'Inactive' }}</td>
-                  <td>
+                  <td v-if='!isDataEntry'>
                     <select
                       @change="statusChange($event, item.id, key)"
                       class="form-control text-capitalize"

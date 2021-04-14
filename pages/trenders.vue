@@ -111,6 +111,7 @@ export default {
           .then((res) => {
             this.requestInProcessRecent = false
             if (res.status == 200) {
+              this.cards = res.order
               this.recentListingItems = res.data
             }
           })

@@ -16,6 +16,9 @@ const User = {
                     appLoaded: false,
                     user_fullname: null,
                     showloader: true,
+                    isAdmin: false,
+                    isModerator: false,
+                    isDataEntry: false
                 }
             },
             // metaInfo() {},
@@ -32,6 +35,11 @@ const User = {
                 this.showloader = false;
                 if (this.user) {
                     this.user_fullname = this.user.first_name
+                    if(this.user.roles.length > 0){
+                        if((this.user.roles[0].name).toLowerCase() == 'administrator') this.isAdmin = true
+                        if((this.user.roles[0].name).toLowerCase() == 'moderator') this.isModerator = true
+                        if((this.user.roles[0].name).toLowerCase() == 'data entry') this.isDataEntry = true
+                    }
                 }
             },
             methods: {
@@ -47,8 +55,7 @@ const User = {
                         this.$router.push('/')
                     } else {
                         if (this.user) {
-                            console.log(this.user);
-                            if (this.user.roles[0].name != 'administrator' && (this.user.roles[0].name).toLowerCase() != 'moderator') {
+                            if (this.user.roles[0].name != 'administrator' && (this.user.roles[0].name).toLowerCase() != 'moderator' && (this.user.roles[0].name).toLowerCase() != 'data entry') {
                                 this.$router.push('/dashboard')
                             } else {
                                 this.$router.push('/admin')

@@ -114,6 +114,7 @@ export default {
           .then(res => {
              this.requestInProcessEndingSoon = false;
             if (res.status == 200) {
+              this.cards = [...res.order, ...['random bin']]
               this.endingSoonListingItems = res.data
             }
           })

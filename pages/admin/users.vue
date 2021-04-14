@@ -94,6 +94,7 @@
                   <td>{{ user.slab_value }}</td> -->
                   <td>
                     <button
+                      v-if='(user.roles.length && user.roles[0].name != "administrator") || isAdmin'
                       class="card-btn btn btn-primary btn-table-spec"
                       @click="action(user, 'password', 'Change Password')"
                       style="margin-top: 4px"
@@ -101,6 +102,7 @@
                       Change Password
                     </button>
                     <button
+                      v-if='(user.roles.length && user.roles[0].name != "administrator") || isAdmin'
                       class="card-btn btn btn-primary btn-table-spec"
                       @click="action(user, 'edit', 'Edit User')"
                       style="margin-top: 4px"
@@ -117,7 +119,7 @@
                     </button>
                     <button
                       class="card-btn btn btn-danger btn-table-spec"
-                      v-if="user.roles[0]!= null && user.roles[0].name != 'administrator'"
+                      v-if="user.roles[0]!= null && user.roles[0].name != 'administrator' && isAdmin"
                       @click="action(user, 'delete', 'Change Deletion Status')"
                       style="margin-top: 4px"
                     >
@@ -467,6 +469,7 @@ export default {
       page: 1,
       requestInProcess: false,
       activeType: '',
+      activeRole: 0,
       activeUser: {},
       searchTerm: '',
     }
@@ -531,8 +534,10 @@ export default {
     },
     action(user, type, popUpTitle = null) {
       this.activeType = type
+      this.activeUser = {}
       if(type != 'create'){
-this.activeUser = { ...user }
+        this.activeUser = { ...user }
+        if(this.activeUser.roles.length > 0) this.activeUser.user_roles = this.activeUser.roles[0].id
       }
       this.popUpTitle = popUpTitle
       this.$bvModal.show('updatePopup')

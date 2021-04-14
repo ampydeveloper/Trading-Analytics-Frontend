@@ -16,7 +16,7 @@
                   <th>Import date</th>
                   <th>CSV Uploads</th>
                   <th>Status</th>
-                  <th>Actions</th>
+                  <th v-if='isAdmin'>Actions</th>
                 </tr>
               </thead>
               <tbody v-if="cards.length > 0">
@@ -24,7 +24,7 @@
                   <td>{{ $moment(card.created_at).format('MMMM DD Y - hh:mm:ss') }}</td>
                   <td>{{ card.file_name }}</td>
                   <td>{{ card.status == 1 ? 'Done' : 'Processing' }}</td>
-                  <td class="text-center">
+                  <td class="text-center" v-if='isAdmin'>
                     <button
                       class="card-btn btn btn-danger btn-table-spec"
                       style="margin-top: 4px"
