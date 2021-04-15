@@ -412,7 +412,7 @@ this.getItems(this.page)
     },
     statusChange(event, id, key) {
       if (!this.requestInProcess) {
-        if (key == false) {
+        if (typeof key == "boolean" &&  key == false) {
           var statusVal = event
         } else {
           var statusVal = event.target.value
