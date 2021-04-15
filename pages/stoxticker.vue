@@ -415,11 +415,11 @@
               </span>
 
               </h5>
-              <div class="row">
-                <div class="col-md-2 bs-stats">
+              <div class="row" style="justify-content: center;">
+                <div class="bs-stats" style="width: 175px;">
                   <h2>SX</h2>
                 </div>
-                <div class="col-md-2 bs-stats">
+                <div class="bs-stats" style="width: 125px;">
                   <h3>{{ intToString(data.total) }}@</h3>
                   <span class="tot-sla">TOTAL SLABS</span>
                 </div>
@@ -427,7 +427,7 @@
                   <h2>{{ (data.sale?data.sale:'') }}</h2>
                   <span class="avg-sla">AVG. SLAB SALE</span>
                 </div>
-                <div class="col-md-3 bs-stats">
+                <div class="col-md-4 bs-stats">
                   <div class="up_img">
                     <font-awesome-icon
                       :icon="['fas', 'caret-' + data.change_arrow]"
@@ -737,7 +737,7 @@ slabstox.com
                     >
                       1D
                     </li>
-                    <li
+                    <!-- <li
                       :class="[{'active': boardActiveDay == 7}, 'dashboard-graph-footer-month-filter-item']"
                       @click="searchBoard(7)"
                     >
@@ -772,7 +772,7 @@ slabstox.com
                       @click="searchBoard(1825)"
                     >
                       5Y
-                    </li>
+                    </li> -->
                   </ul>
                   <p class="dashboard-graph-footer-update-at float-right">
                     Last Updated - 
@@ -2110,7 +2110,7 @@ html body main .card.search-slabs-out .my-card-listing .my-card {
     text-decoration: underline;
     font-size: 11px;
     letter-spacing: 1px;
-       height: 38px;
+    height: 38px;
     overflow: hidden;
   }
   .image-container {

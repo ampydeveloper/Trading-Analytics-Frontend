@@ -67,7 +67,7 @@
                       :to="`edit-sales-data?sale_id=${item.id}`"
                       >Edit</nuxt-link
                     >
-                    <button
+                    <button v-if='isAdmin'
                       class="card-btn btn btn-primary btn-table-spec"
                       @click="statusChange(item.id)"
                       type="button"

@@ -147,7 +147,7 @@
                     <button class="theme-btn card-btn" @click="getUsers(++page)">Next</button>
                   </td>
                 </tr> -->
-                <tr v-if="page - 1 == 1">
+                <tr v-if="page - 1 == 1 && users.length >= 30">
                   <td colspan="11">
                     <button
                       class="theme-btn card-btn active-pagination"
@@ -163,7 +163,7 @@
                     </button>
                   </td>
                 </tr>
-                <tr v-if="page - 1 == 2">
+                <tr v-if="page - 1 == 2 && users.length >= 30">
                   <td colspan="11">
                     <button class="theme-btn card-btn" @click="getUsers(1)">
                       1
@@ -182,7 +182,7 @@
                     </button>
                   </td>
                 </tr>
-                <tr v-if="page - 1 == 3">
+                <tr v-if="page - 1 == 3 && users.length >= 30">
                   <td colspan="11">
                     <button class="theme-btn card-btn" @click="getUsers(1)">
                       Previous
@@ -204,7 +204,7 @@
                     </button>
                   </td>
                 </tr>
-                <tr v-if="page - 1 > 3">
+                <tr v-if="page - 1 > 3 && users.length >= 30">
                   <td colspan="11">
                     <button
                       class="theme-btn card-btn"

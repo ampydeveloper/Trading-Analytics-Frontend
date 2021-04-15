@@ -15,11 +15,12 @@
               <div class="form_column">
                 <label>Sport</label>
                 <select v-model="card.sport" class="form-control">
-                  <option value="basketball">Basketball</option>
-                  <option value="baseball">Baseball</option>
-                  <option value="football">Football</option>
-                  <option value="soccer">Soccer</option>
-                  <option value="pokemon">Pokémon</option>
+                  <option value="Basketball">Basketball</option>
+                  <option value="Baseball">Baseball</option>
+                  <option value="Football">Football</option>
+                  <option value="Soccer">Soccer</option>
+                  <option value="Pokémon">Pokémon</option>
+                  <option value="Hockey">Hockey</option>
                 </select>
               </div>
               <div class="form_column">

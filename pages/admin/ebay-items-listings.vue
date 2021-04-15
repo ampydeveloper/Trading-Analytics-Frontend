@@ -155,7 +155,7 @@
                 </tr>
               </tbody>
               <tfoot>
-                <tr v-if="page-1 == 1">
+                <tr v-if="page-1 == 1 && items.length >= 30">
                   <td colspan="9">
                     <button class="theme-btn card-btn active-pagination" @click="getItems(1)">
                       1
@@ -168,7 +168,7 @@
                     </button>
                   </td>
                 </tr>
-                <tr v-if="page-1 == 2">
+                <tr v-if="page-1 == 2 && items.length >= 30">
                   <td colspan="9">
                     <button class="theme-btn card-btn" @click="getItems(1)">
                       1
@@ -184,7 +184,7 @@
                     </button>
                   </td>
                 </tr>
-                <tr v-if="page-1 == 3">
+                <tr v-if="page-1 == 3 && items.length >= 30">
                   <td colspan="9">
                     <button
                       class="theme-btn card-btn"
@@ -207,7 +207,7 @@
                     </button>
                   </td>
                 </tr>
-                <tr v-if="(page-1) > 3">
+                <tr v-if="(page-1) > 3 && items.length >= 30">
                   <td colspan="9">
                     <button
                       class="theme-btn card-btn"

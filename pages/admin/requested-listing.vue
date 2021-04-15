@@ -56,7 +56,7 @@
                     <button class="theme-btn card-btn" @click="getRequestedListing(page)">Next</button>
                   </td>
                 </tr> -->
-                <tr v-if="page-1 == 1">
+                <tr v-if="page-1 == 1 && cards.length >= 30">
                   <td colspan="5">
                     <button class="theme-btn card-btn active-pagination" @click="getRequestedListing(1)">
                       1
@@ -69,7 +69,7 @@
                     </button>
                   </td>
                 </tr>
-                <tr v-if="page-1 == 2">
+                <tr v-if="page-1 == 2 && cards.length >= 30">
                   <td colspan="5">
                     <button class="theme-btn card-btn" @click="getRequestedListing(1)">
                       1
@@ -85,7 +85,7 @@
                     </button>
                   </td>
                 </tr>
-                <tr v-if="page-1 == 3">
+                <tr v-if="page-1 == 3 && cards.length >= 30">
                   <td colspan="5">
                     <button
                       class="theme-btn card-btn"
@@ -108,7 +108,7 @@
                     </button>
                   </td>
                 </tr>
-                <tr v-if="(page-1) > 3">
+                <tr v-if="(page-1) > 3 && cards.length >= 30">
                   <td colspan="5">
                     <button
                       class="theme-btn card-btn"

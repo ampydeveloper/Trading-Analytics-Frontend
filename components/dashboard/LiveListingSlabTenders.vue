@@ -29,6 +29,63 @@
                 </ul>
               </div>
             </div>
+
+             <div
+              class="trender-cards-footer"
+              v-if="data.length >= 0 && !requestInProcess && showFilters"
+            >
+              <ul class="trender-cards-footer-month-filter">
+                <li
+                  class="trender-cards-footer-month-filter-item"
+                  :class="[(filterVal == 1 && data.length > 0) ? 'active' : '', (filterVal == 1 && data.length == 0) ? 'nodata' : '' ]"
+                  @click="changeFilter(1)"
+                >
+                  1D
+                </li>
+                <li
+                  class="trender-cards-footer-month-filter-item"
+                  :class="[(filterVal == 2 && data.length > 0) ? 'active' : '', (filterVal == 2 && data.length == 0) ? 'nodata' : '' ]"
+                  @click="changeFilter(2)"
+                >
+                  1W
+                </li>
+                <li
+                  class="trender-cards-footer-month-filter-item"
+                  :class="[(filterVal == 3 && data.length > 0) ? 'active' : '', (filterVal == 3 && data.length == 0) ? 'nodata' : '' ]"
+                  @click="changeFilter(3)"
+                >
+                  1M
+                </li>
+                <li
+                  class="trender-cards-footer-month-filter-item"
+                  :class="[(filterVal == 4 && data.length > 0) ? 'active' : '', (filterVal == 4 && data.length == 0) ? 'nodata' : '' ]"
+                  @click="changeFilter(4)"
+                >
+                  3M
+                </li>
+                <li
+                  class="trender-cards-footer-month-filter-item"
+                  :class="[(filterVal == 5 && data.length > 0) ? 'active' : '', (filterVal == 5 && data.length == 0) ? 'nodata' : '' ]"
+                  @click="changeFilter(5)"
+                >
+                  6M
+                </li>
+                <li
+                  class="trender-cards-footer-month-filter-item"
+                  :class="[(filterVal == 6 && data.length > 0) ? 'active' : '', (filterVal == 6 && data.length == 0) ? 'nodata' : '' ]"
+                  @click="changeFilter(6)"
+                >
+                  1Y
+                </li>
+                <li
+                  class="trender-cards-footer-month-filter-item"
+                  :class="[(filterVal == 7 && data.length > 0) ? 'active' : '', (filterVal == 7 && data.length == 0) ? 'nodata' : '' ]"
+                  @click="changeFilter(7)"
+                >
+                  5Y
+                </li>
+              </ul>
+            </div> 
             
             <div class="trender-cards-footer">
                 <button :class="(orderByPrice == 'up'? 'theme-btn':'theme-green-btn') + ' card-btn t-p-5'" @click="filterOrderBy('price'+orderByPrice)">
@@ -203,7 +260,7 @@ ul.my-card-listing {
 .trender-cards-footer {
   display: inline-block;
       margin-left: 5px;
-      width: calc(100% - 453px);
+      // width: calc(100% - 453px);
     text-align: left;
     padding-left: 15px;
   .trender-cards-footer-month-filter {

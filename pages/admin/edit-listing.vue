@@ -44,7 +44,7 @@
                   v-model="item.time_left"
                   type="text"
                   class="form-control"
-                  required
+                  
                 />
               </div>
               <div class="form_column">
@@ -71,7 +71,7 @@
                   v-model="item.location"
                   type="text"
                   class="form-control"
-                  required
+                  
                 />
               </div>
               <div class="form_column">
@@ -83,7 +83,7 @@
                   required
                 />
               </div>
-              <div class="form_column">
+              <!-- <div class="form_column">
                 <label>Web Link</label>
                 <input
                   v-model="item.web_link"
@@ -91,7 +91,7 @@
                   class="form-control"
                   required
                 />
-              </div>
+              </div> -->
 
               <h3 class="head-h3">Specifications</h3>
               <div
@@ -135,7 +135,7 @@
                   v-model="item.seller_contact_link"
                   type="text"
                   class="form-control"
-                  required
+                  
                 />
               </div>
               <div class="form_column">
@@ -144,7 +144,7 @@
                   v-model="item.seller_store_link"
                   type="text"
                   class="form-control"
-                  required
+                  
                 />
               </div>
 

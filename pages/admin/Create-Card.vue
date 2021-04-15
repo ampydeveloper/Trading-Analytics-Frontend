@@ -13,11 +13,12 @@
               <div class="form_column">
                 <label>Sport</label>
                 <select v-model="card.sport" class="form-control">
-                  <option value="basketball">Basketball</option>
-                  <option value="baseball">Baseball</option>
-                  <option value="football">Football</option>
-                  <option value="soccer">Soccer</option>
-                  <option value="pokemon">Pokémon</option>
+                  <option value="Basketball">Basketball</option>
+                  <option value="Baseball">Baseball</option>
+                  <option value="Football">Football</option>
+                  <option value="Soccer">Soccer</option>
+                  <option value="Pokémon">Pokémon</option>
+                   <option value="Hockey">Hockey</option>
                 </select>
               </div>
               <div class="form_column">
@@ -243,7 +244,7 @@ export default {
                 rc: (res.data.rc=='yes'?1:0),
                 variation: res.data.variation,
                 grade: res.data.grade,
-                image: res.data.cardImage,
+                image: res.data.image,
                 request_slab : card_id
               }
               this.imgSrc= res.data.cardImage

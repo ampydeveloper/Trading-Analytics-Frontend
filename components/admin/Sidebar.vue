@@ -38,7 +38,7 @@
             <div class="link-text">All Listings</div>
           </nuxt-link>
         </li>
-        <li class="nav-item" v-if='!dataEntry'>
+        <li class="nav-item" v-if='isAdmin'>
           <nuxt-link class="nav-link" to="/admin/scrapitem/null?random=1">
             <div class="icon live-auctions-icon"></div>
             <div class="link-text">Random Bin</div>

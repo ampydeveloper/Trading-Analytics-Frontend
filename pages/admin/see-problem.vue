@@ -61,7 +61,7 @@
                     <button class="theme-btn card-btn" @click="getSeeProblems(page)">Next</button>
                   </td>
                 </tr> -->
-                <tr v-if="page - 1 == 1 && page!=0">
+                <tr v-if="page - 1 == 1 && problems.length >= 30">
                   <td colspan="4">
                     <button
                       class="theme-btn card-btn active-pagination"
@@ -83,7 +83,7 @@
                     </button>
                   </td>
                 </tr>
-                <tr v-if="page - 1 == 2 && page!=0">
+                <tr v-if="page - 1 == 2 && problems.length >= 30">
                   <td colspan="4">
                     <button
                       class="theme-btn card-btn"
@@ -111,7 +111,7 @@
                     </button>
                   </td>
                 </tr>
-                <tr v-if="page - 1 == 3 && page!=0">
+                <tr v-if="page - 1 == 3 && problems.length >= 30">
                   <td colspan="4">
                     <button
                       class="theme-btn card-btn"
@@ -145,7 +145,7 @@
                     </button>
                   </td>
                 </tr>
-                <tr v-if="page - 1 > 3 && page!=0">
+                <tr v-if="page - 1 > 3 && problems.length >= 30">
                   <td colspan="4">
                     <button
                       class="theme-btn card-btn"
