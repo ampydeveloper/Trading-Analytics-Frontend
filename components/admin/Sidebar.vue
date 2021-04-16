@@ -99,6 +99,12 @@
             <div class="link-text">Settings</div>
           </nuxt-link>
         </li>
+        <li class="nav-item" v-if='isAdmin'>
+          <nuxt-link class="nav-link" to="/admin/activity-logs">
+            <font-awesome-icon class="mt-2" :icon="['fas', 'clipboard-check']" style="font-size: 20px;" />
+            <div class="link-text">Activity Logs</div>
+          </nuxt-link>
+        </li>
         <!-- <li class="nav-item">
           <nuxt-link class="nav-link" to="/admin/advance-search-options">
             <div class="icon stoxticker-icon"></div>
