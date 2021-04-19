@@ -20,6 +20,11 @@
                       <template slot="no-options"> Select entity type...</template>
                   </v-select>
               </div>
+              <div class="col-2" v-if='selModel != null && selModel.includes("RequestListing")'>
+                  <v-select label='name' placeholder="Select Approval Status" :reduce='name => name.id' :options="[{'id': 1, 'name': 'Approved'}, {'id': -1, 'name': 'Rejected'}]" v-model='selSt'>
+                      <template slot="no-options"> Select Approval Status...</template>
+                  </v-select>
+              </div>
               <div class="col-1">
                   <button class="btn btn-outline-secondary" @click="getActivityLogs(1)" type="button" >Fetch</button>
               </div>
@@ -118,6 +123,7 @@ export default {
     return {
         selUser: 0,
         selModel: null,
+        selSt: null,
         totalCount: 0,
         users: [],
         models: [],
@@ -159,7 +165,7 @@ export default {
           this.showLoader()
           this.requestInProcess = true
           this.$axios
-            .get(`users/get-activity-logs-for-admin/${this.selUser}?model=${this.selModel}&page=${page}`)
+            .get(`users/get-activity-logs-for-admin/${this.selUser}?model=${this.selModel}&sts=${this.selSt}&page=${page}`)
             .then((res) => {
               if (res.status == 200) {
                 this.logs = res.data.data.data

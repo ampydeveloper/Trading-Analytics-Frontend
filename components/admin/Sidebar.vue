@@ -14,7 +14,7 @@
             <div class="link-text">Dashboard</div>
           </nuxt-link>
         </li>
-        <li class="nav-item" v-if='!dataEntry'>
+        <li class="nav-item">
           <nuxt-link class="nav-link" to="/admin/cards">
             <div class="icon live-auctions-icon"></div>
             <div class="link-text">Slabs</div>

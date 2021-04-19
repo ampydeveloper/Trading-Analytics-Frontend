@@ -13,6 +13,7 @@
 
               <div class="col-11">
                 <nuxt-link
+                  v-if='!isDataEntry'
                   class="theme-green-btn card-btn pull-right"
                   to="/admin/create-card"
                 >
@@ -104,9 +105,9 @@
                   <th>rc</th>
                   <th>variation</th>
                   <th>grade</th>
-                  <th class="text-center">Published</th>
-                  <th class="text-center">Featured</th>
-                  <th class="text-center">SX Pro</th>
+                  <th class="text-center" v-if='!isDataEntry'>Published</th>
+                  <th class="text-center" v-if='!isDataEntry'>Featured</th>
+                  <th class="text-center" v-if='!isDataEntry'>SX Pro</th>
                   <th class="text-center">Actions</th>
                 </tr>
               </thead>
@@ -128,7 +129,7 @@
                   <td>{{ card.rc }}</td>
                   <td>{{ card.variation }}</td>
                   <td>{{ card.grade }}</td>
-                  <td class="text-center">
+                  <td class="text-center" v-if='!isDataEntry'>
                     <button
                       class="card-btn btn btn-danger btn-table-spec tag"
                       v-if="card.active == 0"
@@ -144,7 +145,7 @@
                       <i class="fa fa-check" aria-hidden="true"></i> Published
                     </button>
                   </td>
-                  <td class="text-center">
+                  <td class="text-center" v-if='!isDataEntry'>
                     <button
                       class="card-btn btn btn-danger btn-table-spec tag"
                       v-if="card.is_featured == 0"
@@ -161,7 +162,7 @@
                       <i class="fa fa-check" aria-hidden="true"></i> Featured
                     </button>
                   </td>
-                  <td class="text-center">
+                  <td class="text-center" v-if='!isDataEntry'>
                     <button
                       class="card-btn btn btn-danger btn-table-spec tag"
                       v-if="card.is_sx == 0"
@@ -177,7 +178,17 @@
                       <i class="fa fa-check" aria-hidden="true"></i> Active
                     </button>
                   </td>
-                  <td class="text-center">
+                  <td class="text-center" v-if='isDataEntry'>
+                    <button
+                      v-b-modal.submitAListingPopup
+                      class="card-btn btn btn-primary btn-table-spec"
+                      style="margin-top: 4px"
+                      @click="reqAList.card_id=card.id"
+                    >
+                      Submit a Listing
+                    </button>
+                  </td>
+                  <td class="text-center" v-else>
                      <button
                       class="card-btn btn btn-primary btn-table-spec"
                       style="margin-top: 4px"
@@ -315,6 +326,31 @@
       ref="excel"
       @change="uploadExcelNow()"
     />
+    <b-modal
+      id="submitAListingPopup"
+      title="Submit a Listing"
+      hide-footer
+    >
+      <div class="shar-text">Enter eBay Link</div>
+      <div class="form_column">
+        <input
+          v-model="reqAList.link"
+          type="text"
+          class="form-control"
+          placeholder="Enter eBay link"
+          required
+        />
+      </div>
+      <div class="clearfix g-download-out text-right">
+        <a
+          href="javascript:void(0);"
+          @click="submitAListing"
+          class="g-download-img-all"
+        >
+          Submit
+        </a>
+      </div>
+    </b-modal>
   </div>
 </template>
 
@@ -352,6 +388,10 @@ export default {
       sportsList: [],
       sportFilter: '',
       filter: null,
+      reqAList:{
+        card_id: 0,
+        link: ''
+      }
     }
   },
   methods: {
@@ -561,6 +601,32 @@ export default {
         this.$toast.error('Invalid File')
       }
     },
+    submitAListing(){
+      try {
+        if(this.reqAList.link.trim().length == 0){
+          this.$toast.error('Please enter a valid link')
+          return false
+        }
+        if(this.reqAList.card_id == 0) return false
+        this.$axios
+          .$post('card/add-request-listing', {
+            "card_id": this.reqAList.card_id,
+            "link": this.reqAList.link
+          })
+          .then((res) => {
+            this.$bvModal.hide('submitAListingPopup')
+            this.reqAList = {'card_id': 0, 'link': ''}
+            this.$toast.success('Listing request submitted successfully.')
+          })
+          .catch((err) => {
+            console.log(err)
+            this.$toast.error('Invalid link - Please copy exact url from your browser address bar!')
+          })
+      } catch (err) {
+        console.log(err)
+        this.$toast.error('Invalid link - Please copy exact url from your browser address bar!')
+      }
+    }
   },
 }
 </script>
@@ -584,5 +650,35 @@ ul.my-card-listing {
 .main-sel-all{
   width: calc(100% - 82px);
     float: left;
+}
+.form_column input{
+  width: 1000%;
+  background: #39414a;
+  border: 0px;
+  color: #ffffff;
+  font-size: 11px;
+  letter-spacing: 2px;
+  line-height: 20px;
+  font-family: 'NexaBold', Helvetica, Arial, sans-serif;
+  margin: 0px 20px;
+  border-bottom: 1px solid #fff !important;
+  border-radius: 0;
+  &:focus {
+    box-shadow: none;
+  }
+}
+.shar-text {
+  margin-left: 20px;
+  padding: 10px 0 4px 0;
+}
+.g-download-img-all {
+  font-family: 'CocogoosePro-Italic', Helvetica, Arial, sans-serif;
+  color: #1ce783;
+  text-transform: uppercase;
+  font-size: 9px;
+  letter-spacing: 1px;
+}
+.g-download-out {
+  margin: 20px 20px 0 20px;
 }
 </style>

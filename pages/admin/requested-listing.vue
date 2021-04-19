@@ -28,7 +28,7 @@
                      <nuxt-link
                       style="color:#28a745;"
                       :to="`users?id=${card.user.id}`"
-                      >{{ card.user.full_name }}</nuxt-link
+                      >{{ card.user.full_name }} ({{ card.user.roles_label }})</nuxt-link
                     >
                   </td>
                   <td>
