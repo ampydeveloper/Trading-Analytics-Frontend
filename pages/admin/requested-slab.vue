@@ -74,12 +74,12 @@
               </tbody>
               <tbody v-if="cards.length == 0 && requestInProcess">
                 <tr>
-                  <td colspan="9" class="text-center">loading...</td>
+                  <td colspan="11" class="text-center">loading...</td>
                 </tr>
               </tbody>
               <tbody v-if="cards.length == 0 && requestInProcess == false">
                 <tr>
-                  <td colspan="9" class="text-center">
+                  <td colspan="11" class="text-center">
                     No requested slab available.
                   </td>
                 </tr>

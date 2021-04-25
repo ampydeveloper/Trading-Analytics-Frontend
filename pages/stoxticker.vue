@@ -530,15 +530,13 @@ slabstox.com
               <ul>
                 <li>
                   <h3 class="h3-title">BASKETBALL</h3>
-                  <marquee direction="left">
-                    <!-- <h4>LEBRON JAMES 2003 TOPPS CHROME $ 45.75</h4>
-                    <h5>LEBRON JAMES 2003...</h5> -->
+                  <marquee direction="left" onmouseover="this.stop();" onmouseout="this.start();">
                     <template v-for="list in soldListing.basketball">
                     <h4>
                        <nuxt-link
       class="sx-stox-card-link"
       :to="'/card-data/?id=' + list.card.id"
-    >{{list.card.title}}
+    >{{list.card.title}} - ${{list.sold_price}}
      </nuxt-link> &nbsp;&nbsp;</h4>
                       </template>
                       <template v-if="soldListing.basketball==0">
@@ -548,9 +546,14 @@ slabstox.com
                 </li>
                 <li>
                   <h3 class="h3-title">FOOTBALL</h3>
-                  <marquee direction="left">
+                  <marquee direction="left" onmouseover="this.stop();" onmouseout="this.start();">
                    <template v-if="soldListing.football>0" v-for="list in soldListing.football">
-                    <h4>{{list.card.title}}&nbsp;&nbsp;</h4>
+                    <h4>
+                      <nuxt-link
+      class="sx-stox-card-link"
+      :to="'/card-data/?id=' + list.card.id"
+    >{{list.card.title}} - ${{list.sold_price}}
+     </nuxt-link>&nbsp;&nbsp;</h4>
                       </template>
                   <template v-if="soldListing.football==0">
                     <h4>No recent sold listings.</h4>
@@ -559,9 +562,14 @@ slabstox.com
                 </li>
                 <li>
                   <h3 class="h3-title">BASEBALL</h3>
-                  <marquee direction="left">
+                  <marquee direction="left" onmouseover="this.stop();" onmouseout="this.start();">
                     <template v-for="list in soldListing.baseball">
-                    <h4>{{list.card.title}}&nbsp;&nbsp;</h4>
+                    <h4>
+                      <nuxt-link
+      class="sx-stox-card-link"
+      :to="'/card-data/?id=' + list.card.id"
+    >{{list.card.title}} - ${{list.sold_price}}
+     </nuxt-link>&nbsp;&nbsp;</h4>
                       </template>
                       <template v-if="soldListing.baseball==0">
                     <h4>No recent sold listings.</h4>
@@ -570,9 +578,14 @@ slabstox.com
                 </li>
                 <li>
                   <h3 class="h3-title">SOCCER</h3>
-                  <marquee direction="left">
+                  <marquee direction="left" onmouseover="this.stop();" onmouseout="this.start();">
                    <template v-for="list in soldListing.soccer">
-                    <h4>{{list.card.title}}&nbsp;&nbsp;</h4>
+                    <h4>
+                      <nuxt-link
+      class="sx-stox-card-link"
+      :to="'/card-data/?id=' + list.card.id"
+    >{{list.card.title}} - ${{list.sold_price}}
+     </nuxt-link>&nbsp;&nbsp;</h4>
                       </template>
                       <template v-if="soldListing.soccer==0">
                     <h4>No recent sold listings.</h4>
@@ -581,9 +594,14 @@ slabstox.com
                 </li>
                 <li>
                   <h3 class="h3-title">POKÉMON</h3> 
-                  <marquee direction="left">
+                  <marquee direction="left" onmouseover="this.stop();" onmouseout="this.start();">
                    <template v-for="list in soldListing.pokemon">
-                    <h4>{{list.card.title}}&nbsp;&nbsp;</h4>
+                    <h4>
+                      <nuxt-link
+      class="sx-stox-card-link"
+      :to="'/card-data/?id=' + list.card.id"
+    >{{list.card.title}} - ${{list.sold_price}}
+     </nuxt-link>&nbsp;&nbsp;</h4>
                       </template>
                       <template v-if="soldListing.pokemon==0">
                     <h4>No recent sold listings.</h4>
@@ -1022,6 +1040,8 @@ export default {
       $(this).parent().addClass('active')
       e.preventDefault()
     })
+
+    
   },
   components: {
     CardListItem,
@@ -1163,7 +1183,8 @@ export default {
               fontFamily: 'NexaBold',
             },
           },
-          type: 'category',
+          type: 'datetime',
+          tickAmount: 6,
           categories: [],
         },
       },
@@ -1480,7 +1501,7 @@ export default {
         this.$axios.$get(`get-sx-dashboard-graph/${days}`).then((res) => {
           if (res.status == 200) {
             this.sxActiveDaysGraph = days
-            // if (this.initGraphLabelLength != res.data.labels.length) {
+            // if: days == 2 ? 24: 6, (this.initGraphLabelLength != res.data.labels.length) {
             // this.graphDataEmpty = false;
             this.stoxtickerData.total = res.data.total_sales
             this.stoxtickerData.sale = res.data.total_sales
@@ -1493,6 +1514,8 @@ export default {
             this.sxSalesQty = res.data.qty
             this.sxChartOptions = {
               xaxis: {
+                type: days == 2 ? 'category': 'datetime',
+                tickAmount: days == 2 ? 24: 6,
                 categories: res.data.labels,
               },
               yaxis: {

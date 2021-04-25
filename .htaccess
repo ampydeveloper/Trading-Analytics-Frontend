@@ -18,3 +18,9 @@ RewriteRule ^(.*)$ /index.html [NC,QSA]
 RewriteCond %{HTTP:Authorization} .
 RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 </IfModule>
+
+#order deny,allow
+#allow from 179.61.195.37
+#allow from 76.109.216.181
+#allow from 117.247.227.86
+#deny from all

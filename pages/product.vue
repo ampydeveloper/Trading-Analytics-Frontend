@@ -23,10 +23,13 @@
               >
               <label class="trender" v-if="false">Trender</label> -->
 
-               <label v-if="data.card.rc == 'yes'" class="grey">Rookie</label> 
-              <label v-if="data.card.brand != null" class="green">{{ data.card.brand }}</label>
-              <label v-if="data.card.grade != null" class="yellow">{{data.card.grade}}</label>
-
+              <label v-if="data.card.rc == 'yes'" class="grey">Rookie</label>
+              <label v-if="data.card.brand != null" class="green">{{
+                data.card.brand
+              }}</label>
+              <label v-if="data.card.grade != null" class="yellow">{{
+                data.card.grade
+              }}</label>
             </div>
             <!-- <div class="icons-container">
               <img
@@ -81,10 +84,7 @@
                       :icon="['fas', 'long-arrow-alt-down']"
                     />&nbsp;&nbsp;{{ sx_value }}
                   </button>
-                  <button
-                    class="theme-red-btn card-btn"
-                    v-if="sx_icon == null"
-                  >
+                  <button class="theme-red-btn card-btn" v-if="sx_icon == null">
                     {{ sx_value }}
                   </button>
                   <nuxt-link
@@ -152,15 +152,25 @@
                   </p>
                   <p>
                     <a
-                      :href="(data.seller_info?data.seller_info.seller_contact_link:'')"
+                      :href="
+                        data.seller_info
+                          ? data.seller_info.seller_contact_link
+                          : ''
+                      "
                       target="_blank"
                       >Contact Seller</a
                     >
                   </p>
                   <p>
                     <a
-                    v-if="data.seller_info && data.seller_info.seller_store_link"
-                      :href="(data.seller_info?data.seller_info.seller_store_link:'')"
+                      v-if="
+                        data.seller_info && data.seller_info.seller_store_link
+                      "
+                      :href="
+                        data.seller_info
+                          ? data.seller_info.seller_store_link
+                          : ''
+                      "
                       target="_blank"
                       >Visit Store</a
                     >
@@ -191,9 +201,7 @@
                       <li class="slab-specs-li" v-if="key < 14">
                         <p>
                           {{ value.name }}
-                          {{
-                            value.value
-                          }}
+                          {{ value.value }}
                         </p>
                       </li>
                     </template>
@@ -202,7 +210,7 @@
               </div>
             </div>
             <div class="slab-specs-btn-group">
-              <a
+               <a
                 class="slab-specs-btn theme-green-btn"
                 target="_blank"
                 v-if="
@@ -233,7 +241,6 @@
                 >Make Offer</a
               >
             </div>
-            
           </div>
           <div class="col-md-5 col-sm-5 purchase-info">
             <div class="card">
@@ -302,9 +309,7 @@
           <li>
             <p>
               {{ value.name }}
-              {{
-                value.value
-              }}
+              {{ value.value }}
             </p>
           </li>
         </template>
@@ -372,7 +377,7 @@ export default {
       viewItemURL: '',
       valueDifference: 0,
       seeProblemMessage: null,
-      sx:null,
+      sx: null,
       timeLeft: {
         days: 0,
         hours: 0,
@@ -428,9 +433,9 @@ export default {
         })
         if (res.status == 200) {
           this.data = res.data.items
-           this.sx = res.data.sx
-           this.sx_value = res.data.sx_value
-           this.sx_icon = res.data.sx_icon
+          this.sx = res.data.sx
+          this.sx_value = res.data.sx_value
+          this.sx_icon = res.data.sx_icon
 
           // window.mobileAndTabletCheck = function () {
           //   let check = false
@@ -447,8 +452,11 @@ export default {
           //   })(navigator.userAgent || navigator.vendor || window.opera)
           //   return check
           // }
- let itemUrl = 'https://www.ebay.com/itm/'+res.data.items.itemId+'?mkevt=1&mkcid=1&mkrid=711-53200-19255-0&campid=5338548209&toolid=10001';
-           this.viewItemURL = itemUrl
+          let itemUrl =
+            'https://www.ebay.com/itm/' +
+            res.data.items.itemId +
+            '?mkevt=1&mkcid=1&mkrid=711-53200-19255-0&campid=5338548209&toolid=10001'
+          this.viewItemURL = itemUrl
           // if (window.mobileAndTabletCheck()) {
           //   this.viewItemURL = itemUrl
           // } else {
@@ -609,17 +617,24 @@ export default {
       background: #272d33;
       padding: 5px 7px;
       text-align: center;
-      vertical-align: middle;
+      // vertical-align: middle;
       border: 6px solid #fff;
-      display: table-cell;
-      width: 359px;
-      height: 505px;
+      // display: table-cell;
+      // width: 359px;
+      // height: 505px;
+      width: 100%;
+      height: calc(100% - 112px);
+      display: block;
+
       img {
         width: auto;
         display: block;
         margin: 0 auto;
         max-width: 100%;
-        vertical-align: middle;
+        // vertical-align: middle;
+        transform: translate(0, -50%);
+        top: 50%;
+        position: relative;
       }
     }
     .view-listing-on-ebay {
@@ -714,6 +729,7 @@ export default {
         font-weight: bolder;
         line-height: 2;
         margin-bottom: 10px;
+        padding-right: 10px;
         p {
           padding: 2px 0px;
           margin: 0px;
@@ -755,6 +771,7 @@ export default {
 
   .slab-specs-btn-group {
     margin-top: 10px;
+    padding-left: 1px;
     .slab-specs-btn {
       border-radius: 0px;
       padding: 22px 5px;
@@ -762,6 +779,9 @@ export default {
       display: inline-block;
       text-align: center;
       font-size: 14px !important;
+      width: calc(33% - 3px);
+      float: left;
+      margin: 0 2px;
       &.theme-green-btn {
         color: #000;
       }
@@ -781,107 +801,107 @@ export default {
   }
 }
 @media (min-width: 425px) {
-  .slab-specs-btn {
-    width: 32.4%;
-  }
-  .product-details {
-    .product-image-card {
-      .image-conatiner {
-        width: 375px;
-      }
-    }
-  }
+  // .slab-specs-btn {
+  //   width: 32.4%;
+  // }
+  // .product-details {
+  //   .product-image-card {
+  //     .image-conatiner {
+  //       width: 375px;
+  //     }
+  //   }
+  // }
 }
 @media (min-width: 768px) {
-  .slab-specs-btn {
-    width: 32.4%;
-  }
-  .product-details {
-    .product-image-card {
-      .image-conatiner {
-        height: 553px;
-        width: 521px;
-      }
-    }
-  }
+  // .slab-specs-btn {
+  //   width: 32.4%;
+  // }
+  // .product-details {
+  //   .product-image-card {
+  //     .image-conatiner {
+  //       height: 553px;
+  //       width: 521px;
+  //     }
+  //   }
+  // }
 }
 @media (min-width: 1024px) {
-  .slab-specs-btn {
-    width: 32.4%;
-  }
-  .product-details {
-    .product-image-card {
-      .image-conatiner {
-        height: 593px;
-      }
-    }
-  }
+  // .slab-specs-btn {
+  //   width: 32.4%;
+  // }
+  // .product-details {
+  //   .product-image-card {
+  //     .image-conatiner {
+  //       height: 593px;
+  //     }
+  //   }
+  // }
 }
 @media (min-width: 1366px) {
-  .slab-specs-btn {
-    width: 32.4%;
-  }
-  .product-details {
-    .product-image-card {
-      .image-conatiner {
-        height: 538px;
-        img {
-          max-height: 401px;
-        }
-      }
-    }
-  }
+  // .slab-specs-btn {
+  //   width: 32.4%;
+  // }
+  // .product-details {
+  //   .product-image-card {
+  //     .image-conatiner {
+  //       height: 538px;
+  //       img {
+  //         max-height: 401px;
+  //       }
+  //     }
+  //   }
+  // }
 }
 @media (min-width: 1440px) {
-  .slab-specs-btn {
-    width: 32.4%;
-  }
-  .product-details {
-    .product-image-card {
-      .image-conatiner {
-        height: 514px;
-      }
-    }
-  }
+  // .slab-specs-btn {
+  //   width: 32.4%;
+  // }
+  // .product-details {
+  //   .product-image-card {
+  //     .image-conatiner {
+  //       height: 514px;
+  //     }
+  //   }
+  // }
 }
 @media (min-width: 1600px) {
-  .slab-specs-btn {
-    width: 32.6%;
-  }
-  .product-details {
-    .product-image-card {
-      .image-conatiner {
-        height: 514px;
-      }
-    }
-  }
+  // .slab-specs-btn {
+  //   width: 32.6%;
+  // }
+  // .product-details {
+  //   .product-image-card {
+  //     .image-conatiner {
+  //       height: 514px;
+  //     }
+  //   }
+  // }
 }
 @media (min-width: 1856px) {
-  .slab-specs-btn {
-    width: 32.6%;
-  }
-  .product-details {
-    .product-image-card {
-      .image-conatiner {
-        height: 514px;
-        img {
-          max-height: 415px;
-        }
-      }
-    }
-  }
+  // .slab-specs-btn {
+  //   width: 32.6%;
+  // }
+  // .product-details {
+  //   .product-image-card {
+  //     .image-conatiner {
+  //       height: 514px;
+  //       img {
+  //         max-height: 415px;
+  //       }
+  //     }
+  //   }
+  // }
 }
 @media (min-width: 1921px) {
-  .slab-specs-btn {
-    width: 32.8%;
-  }
-  .product-details {
-    .product-image-card {
-      .image-conatiner {
-        height: 514px;
-      }
-    }
-  }
+  // .slab-specs-btn {
+  //   width: 32.8%;
+  // }
+  // .product-details {
+  //   .product-image-card {
+  //     .image-conatiner {
+  //       height: 514px;
+  //     }
+  //   }
+  // }
   .product-details-col-md-4 {
     flex: 0 0 22.333333%;
     max-width: 22.333333%;
@@ -892,18 +912,18 @@ export default {
   }
 }
 @media (min-width: 2048px) {
-  .slab-specs-btn {
-    width: 32.8%;
-  }
-  .product-details {
-    .product-image-card {
-      .image-conatiner {
-        img {
-          max-height: 415px;
-        }
-      }
-    }
-  }
+  // .slab-specs-btn {
+  //   width: 32.8%;
+  // }
+  // .product-details {
+  //   .product-image-card {
+  //     .image-conatiner {
+  //       img {
+  //         max-height: 415px;
+  //       }
+  //     }
+  //   }
+  // }
 }
 
 #specsDetails,

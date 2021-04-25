@@ -31,7 +31,7 @@
             </div>
 
             <div class="form_btns">
-              <input type="file" style="display: none" ref="excel" />
+              <input type="file" multiple style="display: none" ref="excel" />
 
               <div class="left_btn">
                 <button

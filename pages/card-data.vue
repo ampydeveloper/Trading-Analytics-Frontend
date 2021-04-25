@@ -8,9 +8,9 @@
               {{ card.title }}
             </h5>
             <ul class="labels clearfix">
-              <li v-if="card.rc == 'yes'" class="grey">Rookie</li> 
+              <li v-if="card.rc == 'yes'" class="grey">Rookie</li>
               <li class="green">{{ card.brand }}</li>
-              <li v-if="card.grade != null" class="yellow">{{card.grade}}</li>
+              <li v-if="card.grade != null" class="yellow">{{ card.grade }}</li>
               <!-- <li class="orange">trender</li> -->
             </ul>
             <div class="icons-container" v-if="user.full_name != null">
@@ -29,7 +29,6 @@
             </div>
             <div class="image-conatiner">
               <img :src="card.cardImage" alt="data.title" />
-              
             </div>
 
             <a
@@ -40,12 +39,14 @@
               >Sell This Card
               <font-awesome-icon :icon="['fas', 'chevron-right']"
             /></a>
-             <span
-      :class="'theme-green-btn card-btn add-my-port2'" v-if="user == null || user.full_name == null" v-b-modal.loginTopPopup
-    >
-      Sell This Card
-      <font-awesome-icon :icon="['fas', 'chevron-right']" />
-    </span>
+            <span
+              :class="'theme-green-btn card-btn add-my-port2'"
+              v-if="user == null || user.full_name == null"
+              v-b-modal.loginTopPopup
+            >
+              Sell This Card
+              <font-awesome-icon :icon="['fas', 'chevron-right']" />
+            </span>
             <button
               class="theme-green-btn card-btn add-my-port1"
               v-if="user.full_name != null"
@@ -53,12 +54,14 @@
             >
               Submit a Listing
             </button>
-             <span
-      :class="'theme-green-btn card-btn add-my-port1'" v-if="user == null || user.full_name == null" v-b-modal.loginTopPopup
-    >
-       Submit a Listing
-      <font-awesome-icon :icon="['fas', 'chevron-right']" />
-    </span>
+            <span
+              :class="'theme-green-btn card-btn add-my-port1'"
+              v-if="user == null || user.full_name == null"
+              v-b-modal.loginTopPopup
+            >
+              Submit a Listing
+              <font-awesome-icon :icon="['fas', 'chevron-right']" />
+            </span>
             <button
               class="theme-green-btn card-btn add-my-port"
               v-if="user.full_name != null"
@@ -66,12 +69,14 @@
             >
               Add to My Portfolio
             </button>
-             <span
-      :class="'theme-green-btn card-btn add-my-port'" v-if="user == null || user.full_name == null" v-b-modal.loginTopPopup
-    >
-      Add to My Portfolio
-      <font-awesome-icon :icon="['fas', 'chevron-right']" />
-    </span>
+            <span
+              :class="'theme-green-btn card-btn add-my-port'"
+              v-if="user == null || user.full_name == null"
+              v-b-modal.loginTopPopup
+            >
+              Add to My Portfolio
+              <font-awesome-icon :icon="['fas', 'chevron-right']" />
+            </span>
           </div>
         </div>
       </div>
@@ -85,23 +90,25 @@
                   <button class="theme-btn card-btn">
                     *SX Value ${{ slabstoxValue }}
                   </button>
-                  <button
-                    :class="sx_icon_class + ' card-btn'"
-                  >
+                  <button :class="sx_icon_class + ' card-btn'">
                     <font-awesome-icon
-                    v-if="cardGraph.sx_icon=='up' || cardGraph.sx_icon=='down'"
+                      v-if="
+                        cardGraph.sx_icon == 'up' || cardGraph.sx_icon == 'down'
+                      "
                       :icon="['fas', 'long-arrow-alt-' + cardGraph.sx_icon]"
                     />
-                    &nbsp;${{ (cardGraph.dollar_diff?cardGraph.dollar_diff:0) }}
+                    &nbsp;${{
+                      cardGraph.dollar_diff ? cardGraph.dollar_diff : 0
+                    }}
                   </button>
-                  <button
-                    :class="sx_icon_class + ' card-btn'"
-                  >
+                  <button :class="sx_icon_class + ' card-btn'">
                     <font-awesome-icon
-                    v-if="cardGraph.sx_icon=='up' || cardGraph.sx_icon=='down'"
+                      v-if="
+                        cardGraph.sx_icon == 'up' || cardGraph.sx_icon == 'down'
+                      "
                       :icon="['fas', 'long-arrow-alt-' + cardGraph.sx_icon]"
                     />
-                    &nbsp;{{ (cardGraph.pert_diff?cardGraph.pert_diff:0) }}%
+                    &nbsp;{{ cardGraph.pert_diff ? cardGraph.pert_diff : 0 }}%
                   </button>
                   <span
                     class="card-link"
@@ -119,7 +126,12 @@
                       <div class="share-all-outer">
                         <ul>
                           <li>
-                            <a :href="'https://www.facebook.com/sharer/sharer.php?u='+encodeURI(currentUrl)"  target="_blank"
+                            <a
+                              :href="
+                                'https://www.facebook.com/sharer/sharer.php?u=' +
+                                encodeURI(currentUrl)
+                              "
+                              target="_blank"
                               ><img src="~/assets/img/icons/facebook.svg" alt
                             /></a>
                           </li>
@@ -298,7 +310,7 @@
             <div class="card">
               <div class="card-body sales_graph-graph">
                 <h5 class="card-title1">
-                  <button class="theme-btn card-btn">SALES</button>
+                  <button class="theme-btn card-btn">SALES VOLUME</button>
 
                   <a
                     href="javascript:;"
@@ -340,17 +352,25 @@
                   }}
                 </li>
                 <li>
-                  High Sale: {{ highestSale ? '$' + highestSale.cost : 'N/A' }} {{
+                  High Sale: {{ highestSale ? '$' + highestSale.cost : 'N/A' }}
+                  {{
                     lastSaleDate
-                      ? '('+this.$moment(highestSale.timestamp).format('M/D/Y')+')'
+                      ? '(' +
+                        this.$moment(highestSale.timestamp).format('M/D/Y') +
+                        ')'
                       : ''
                   }}
                 </li>
-                <li>Low Sale: {{ lowestSale ? '$' + lowestSale.cost : 'N/A' }} {{
+                <li>
+                  Low Sale: {{ lowestSale ? '$' + lowestSale.cost : 'N/A' }}
+                  {{
                     lastSaleDate
-                      ? '('+this.$moment(lowestSale.timestamp).format('M/D/Y')+')'
+                      ? '(' +
+                        this.$moment(lowestSale.timestamp).format('M/D/Y') +
+                        ')'
                       : ''
-                  }}</li>
+                  }}
+                </li>
               </ul>
               <!-- <span>READ MORE ABOUT OUR STATS</span> -->
             </div>
@@ -367,11 +387,16 @@
           <div class="g-main-text">
             <span class="g-title"></span>
             &nbsp;&nbsp;
-            <span class="g-sx">*SX Value ${{ slabstoxValue }}</span> &nbsp;&nbsp;
+            <span class="g-sx">*SX Value ${{ slabstoxValue }}</span>
+            &nbsp;&nbsp;
             <span class="g-to-sales">
-              Price Change ${{ (cardGraph.dollar_diff? cardGraph.dollar_diff:0) }} 
-              Percentage Change {{ (cardGraph.pert_diff? cardGraph.pert_diff:0) }}%
-               </span> &nbsp;&nbsp;
+              Price Change ${{
+                cardGraph.dollar_diff ? cardGraph.dollar_diff : 0
+              }}
+              Percentage Change
+              {{ cardGraph.pert_diff ? cardGraph.pert_diff : 0 }}%
+            </span>
+            &nbsp;&nbsp;
             <!-- <span class="g-sales-diff"></span> &nbsp;&nbsp; -->
             <span class="g-image-link"></span> &nbsp;&nbsp;
             <span class="slab-image-link"></span>
@@ -398,11 +423,7 @@
             </a>
           </div>
         </b-modal>
-        <b-modal
-          id="submitAListingPopup"
-          title="Submit a Listing"
-          hide-footer
-        >
+        <b-modal id="submitAListingPopup" title="Submit a Listing" hide-footer>
           <div class="shar-text">Enter eBay Link</div>
           <div class="form_column">
             <input
@@ -485,24 +506,60 @@ export default {
           name: 'description',
           content: this.metaTitle,
         },
-        {hid: 'card-og-title', property: 'og:title', content: this.metaTitle },
-        { hid: 'card-og-image',property: 'og:image', content: this.metaImage },
+        { hid: 'card-og-title', property: 'og:title', content: this.metaTitle },
+        { hid: 'card-og-image', property: 'og:image', content: this.metaImage },
         {
-          hid: 'card-og-description',property: 'og:description',
+          hid: 'card-og-description',
+          property: 'og:description',
           content: this.metaDesc,
         },
-        { hid: 'card-og-url',property: 'og:url', content: this.currentUrl },
-        { hid: 'card-og-site_name',property: 'og:site_name', content: 'Slabstox' },
-        { hid: 'card-og-type',property: 'og:type', content: 'article' },
-        { hid: 'card-og-app_id',property: 'fb:app_id', content: '2791823984386463' },
+        { hid: 'card-og-url', property: 'og:url', content: this.currentUrl },
+        {
+          hid: 'card-og-site_name',
+          property: 'og:site_name',
+          content: 'Slabstox',
+        },
+        { hid: 'card-og-type', property: 'og:type', content: 'article' },
+        {
+          hid: 'card-og-app_id',
+          property: 'fb:app_id',
+          content: '2791823984386463',
+        },
 
-        { hid: 'card-article-published_time',property: 'article:published_time', content: (this.lastSaleDate!='N/A'?this.$moment(this.lastSaleDate).format('MMMM DD Y - hh:mm:ss A'):this.$moment().format('MMMM DD Y - hh:mm:ss A')) },
-        { hid: 'card-article-author',property: 'article:author', content: 'Slabstox' },
+        {
+          hid: 'card-article-published_time',
+          property: 'article:published_time',
+          content:
+            this.lastSaleDate != 'N/A'
+              ? this.$moment(this.lastSaleDate).format('MMMM DD Y - hh:mm:ss A')
+              : this.$moment().format('MMMM DD Y - hh:mm:ss A'),
+        },
+        {
+          hid: 'card-article-author',
+          property: 'article:author',
+          content: 'Slabstox',
+        },
 
-        {hid: 'card-twitter-card', property: 'twitter:card', content: this.graphImage },
-        { hid: 'card-twitter-url',property: 'twitter:url', content: this.currentUrl },
-        { hid: 'card-twitter-title',property: 'twitter:title', content: this.metaTitle },
-        { hid: 'card-twitter-image',property: 'twitter:image', content: this.metaImage },
+        {
+          hid: 'card-twitter-card',
+          property: 'twitter:card',
+          content: this.graphImage,
+        },
+        {
+          hid: 'card-twitter-url',
+          property: 'twitter:url',
+          content: this.currentUrl,
+        },
+        {
+          hid: 'card-twitter-title',
+          property: 'twitter:title',
+          content: this.metaTitle,
+        },
+        {
+          hid: 'card-twitter-image',
+          property: 'twitter:image',
+          content: this.metaImage,
+        },
         {
           hid: 'card-twitter-description',
           property: 'twitter:description',
@@ -531,13 +588,13 @@ export default {
         // $('.g-main-text .g-to-sales').text(
         //   $('.card-title_new .theme-btn').text()
         // )
-        if(this.graphImage != ''){
-$('.g-main-text .g-image-link').text('Graph URL ' + this.graphImage)
+        if (this.graphImage != '') {
+          $('.g-main-text .g-image-link').text('Graph URL ' + this.graphImage)
         }
-        if($('.image-conatiner img').attr('src') != ''){
-        $('.g-main-text .slab-image-link').text(
-          'Slab URL ' +$('.image-conatiner img').attr('src')
-        )
+        if ($('.image-conatiner img').attr('src') != '') {
+          $('.g-main-text .slab-image-link').text(
+            'Slab URL ' + $('.image-conatiner img').attr('src')
+          )
         }
         $('.g-img-full .slab_image').attr(
           'src',
@@ -575,7 +632,7 @@ $('.g-main-text .g-image-link').text('Graph URL ' + this.graphImage)
       highestSale: '',
       lowestSale: '',
       slabstoxValue: 0,
-      sx_icon_class:'theme-btn',
+      sx_icon_class: 'theme-btn',
       currentUrl: location.href,
       cardHistory: [],
       cardGraph: [],
@@ -752,29 +809,33 @@ $('.g-main-text .g-image-link').text('Graph URL ' + this.graphImage)
         console.log(err)
       }
     },
-    submitAListing(){
+    submitAListing() {
       try {
-        if(this.reqAListLink.trim().length == 0){
+        if (this.reqAListLink.trim().length == 0) {
           this.$toast.error('Please enter a valid link')
           return false
         }
         this.$axios
           .$post('card/add-request-listing', {
-            "card_id": this.id,
-            "link": this.reqAListLink
+            card_id: this.id,
+            link: this.reqAListLink,
           })
           .then((res) => {
             this.$bvModal.hide('submitAListingPopup')
-            this.reqAListLink = '';
+            this.reqAListLink = ''
             this.$toast.success('Listing request submitted successfully.')
           })
           .catch((err) => {
             console.log(err)
-            this.$toast.error('Invalid link - Please copy exact url from your browser address bar!')
+            this.$toast.error(
+              'Invalid link - Please copy exact url from your browser address bar!'
+            )
           })
       } catch (err) {
         console.log(err)
-        this.$toast.error('Invalid link - Please copy exact url from your browser address bar!')
+        this.$toast.error(
+          'Invalid link - Please copy exact url from your browser address bar!'
+        )
       }
     },
     getData() {
@@ -794,8 +855,12 @@ $('.g-main-text .g-image-link').text('Graph URL ' + this.graphImage)
     },
     addToMyPortfolio() {
       try {
-        this.$axios.$post('portfolio/add', { id: this.id }).then((res) => {})
-      } catch (error) {}
+        this.$axios.$post('portfolio/add', { id: this.id }).then((res) => {
+          this.$toast.success('Card added to portfolio successfully.')
+        })
+      } catch (error) {
+        this.$toast.success('There has been an error. Please try again.')
+      }
     },
     updateGraph(days = 2) {
       try {
@@ -805,59 +870,61 @@ $('.g-main-text .g-image-link').text('Graph URL ' + this.graphImage)
             if (res.status == 200) {
               this.activeDaysGraph = days
               // if (this.initGraphLabelLength != res.data.values.length) {
-                // console.log(res.data);
-                this.series = [{ name: 'SX', data: res.data.values }]
-                this.salesQty = res.data.qty
-                this.chartOptions = {
-                  xaxis: {
-                    categories: res.data.labels,
-                  },
-                  yaxis: {
-                    labels: {
-                      style: {
-                        colors: '#edecec',
-                        fontSize: '10px',
-                        fontFamily: 'NexaBold',
-                      },
-                      formatter: (value, ind) => {
-                        let valCheck = value
-                        if (Number(value) === value && value % 1 !== 0) {
-                          let valCheck = Number(value).toFixed(2)
-                        }
+              // console.log(res.data);
+              this.series = [{ name: 'SX', data: res.data.values }]
+              this.salesQty = res.data.qty
+              this.chartOptions = {
+                xaxis: {
+                  categories: res.data.labels,
+                },
+                yaxis: {
+                  labels: {
+                    style: {
+                      colors: '#edecec',
+                      fontSize: '10px',
+                      fontFamily: 'NexaBold',
+                    },
+                    formatter: (value, ind) => {
+                      let valCheck = value
+                      if (Number(value) === value && value % 1 !== 0) {
+                        let valCheck = Number(value).toFixed(2)
+                      }
 
-                        let lblStr = `$${valCheck}`
-                        return lblStr
-                      },
+                      let lblStr = `$${valCheck}`
+                      return lblStr
                     },
                   },
-                  tooltip: {
-                    enabled: true,
-                    y: {
-                      formatter: (value, ind) => {
-                        let lblStr = `$${value}`
-                        if (typeof ind == 'object')
-                          lblStr = `$${value} (${
-                            this.salesQty[ind.dataPointIndex]
-                          })`
-                        else lblStr = `$${value} (${this.salesQty[ind]})`
-                        return lblStr
-                      },
+                },
+                tooltip: {
+                  enabled: true,
+                  y: {
+                    formatter: (value, ind) => {
+                      let lblStr = `$${value}`
+                      if (typeof ind == 'object')
+                        lblStr = `$${value} (${
+                          this.salesQty[ind.dataPointIndex]
+                        })`
+                      else lblStr = `$${value} (${this.salesQty[ind]})`
+                      return lblStr
                     },
                   },
-                }
-                this.cardGraph = res.data
-                this.highestSale = res.data.highestSale
-                this.lowestSale = res.data.lowestSale
-                this.lastSaleDate = res.data.lastSaleDate
-                this.lastSalePrice = res.data.lastSalePrice
-                this.initGraphLabelLength = (res.data.labels?res.data.labels.length:0)
-                this.slabstoxValue = res.data.slabstoxValue
-                // console.log(res.data);
-                if(this.cardGraph.sx_icon =='up'){
- this.sx_icon_class = 'theme-green-btn';
-                } else if(this.cardGraph.sx_icon =='down'){
- this.sx_icon_class = 'theme-red-btn';
-                }
+                },
+              }
+              this.cardGraph = res.data
+              this.highestSale = res.data.highestSale
+              this.lowestSale = res.data.lowestSale
+              this.lastSaleDate = res.data.lastSaleDate
+              this.lastSalePrice = res.data.lastSalePrice
+              this.initGraphLabelLength = res.data.labels
+                ? res.data.labels.length
+                : 0
+              this.slabstoxValue = res.data.slabstoxValue
+              // console.log(res.data);
+              if (this.cardGraph.sx_icon == 'up') {
+                this.sx_icon_class = 'theme-green-btn'
+              } else if (this.cardGraph.sx_icon == 'down') {
+                this.sx_icon_class = 'theme-red-btn'
+              }
               // }
               setTimeout(() => {
                 this.generateImageOfGraph()
@@ -960,7 +1027,7 @@ $('.g-main-text .g-image-link').text('Graph URL ' + this.graphImage)
     }
   }
 }
-.form_column input{
+.form_column input {
   width: 1000%;
   background: #39414a;
   border: 0px;
@@ -1444,17 +1511,17 @@ ul.my-card-listing {
     }
   }
 }
-@media (max-width:768px){
-  .headwrapper .card-body .image-conatiner{
-text-align: center;
+@media (max-width: 768px) {
+  .headwrapper .card-body .image-conatiner {
+    text-align: center;
     padding: 20px 0 113px 0;
   }
-.listing-lebron .column_one .image-conatiner img {
+  .listing-lebron .column_one .image-conatiner img {
     position: relative;
     left: 0;
     top: 0;
     transform: translate(0px, 0px);
-}
+  }
 }
 
 // .grade-image-text{

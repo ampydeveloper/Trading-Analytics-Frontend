@@ -2502,6 +2502,12 @@ html body #__nuxt .b-profileImage .dropdown-menu {
   html body main .my-card-listing {
     .my-card {
       width: 33.333%;
+      .image-container{
+        height: 29vw;
+        .card-image{
+          max-height: 29vw;
+        }
+      }
     }
   }
 
@@ -2614,6 +2620,12 @@ html body #__nuxt .b-profileImage .dropdown-menu {
   html body main .my-card-listing {
     .my-card {
       width: 50%;
+      .image-container{
+        height: 34vw;
+        .card-image{
+          max-height: 32vw;
+        }
+      }
     }
   }
 
@@ -2953,6 +2965,12 @@ html body #__nuxt .b-profileImage .dropdown-menu {
   html body main .my-card-listing {
     .my-card {
       width: 100%;
+      .image-container{
+        height: 340px;
+        .card-image{
+          max-height: 340px;
+        }
+      }
     }
   }
 
@@ -3882,7 +3900,7 @@ html body #__nuxt .b-profileImage .dropdown-menu {
 }
 
 #openSeeProblemPopup, #viewSalesHistory, #loginTopPopup, #submitAListingPopup, #disconnectSocialAccount,
-#updatePopup  {
+#updatePopup, #csvDeletePopup  {
   .modal-dialog {
     .modal-content {
       background: $theme-card-background-color;

@@ -324,14 +324,9 @@
               >Grading</label
             >
             <div class="col-md-9 col-sm-9">
-              <!-- <input
-                v-model="addPortfolioVar.quantity"
-                type="text"
-                class="form-control-plaintext"
-              /> -->
-              <select class="form-control grading" v-model="addPortfolioVar.grade" @change="updateGrading(addPortfolioVar)">
-                <option value="null" selected>Select Grade Status</option>
-                <option v-for='gr in ["review", "pending", "graded"]' :key='"grading-"+gr' :value="gr" v-text="gr" class="text-capitalize"></option>
+              <select class="form-control grading" v-model="addPortfolioVar.review_grade" @change="updateGrading(addPortfolioVar)">
+                <!-- <option value="null" selected>Select Grade Status</option> -->
+                <option v-for='gr in ["pending", "graded"]' :key='"grading-"+gr' :value="gr" v-text="gr" class="text-capitalize"></option>
               </select>
             </div>
           </div>
@@ -406,7 +401,7 @@ export default {
         id: 0,
         quantity: 0,
         price: 0,
-        grade: 0,
+        review_grade: 0,
       },
       portfolioFilter: {
         sport: [],
@@ -623,7 +618,7 @@ export default {
         this.$axios
             .post('portfolio/gradeCard', {
               my_portfolio_id: addPortfolioVar.id,
-              grade: addPortfolioVar.grade
+              grade: addPortfolioVar.review_grade
             })
             .then(res => {
               this.getCards()
@@ -642,7 +637,7 @@ export default {
       this.addPortfolioVar.id = tarr.portfolio_id
       this.addPortfolioVar.quantity = tarr.quantity
       this.addPortfolioVar.price = tarr.purchase_price
-      this.addPortfolioVar.grade = tarr.grade
+      this.addPortfolioVar.review_grade = tarr.review_grade
       this.$bvModal.show('addToPortfolioPurchasePrice')
     },
     addToMyPortfolioPrice(id) {

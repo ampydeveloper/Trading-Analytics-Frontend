@@ -10,14 +10,14 @@
       {{ itemdata.title != '' ? trimTitle(itemdata.title) : '' }}
     </h4>
     <button class="theme-btn sxvalue">
-      <span class="sxvalue-text"> SX Value: {{ (itemdata.price!=null?itemdata.price:0) }}</span>
+      <span class="sxvalue-text"> SX $: {{ (itemdata.price!=null?itemdata.price:0) }}</span>
       <span
         :class="(itemdata.sx_icon == 'up' ? 'high' : 'low') + ' float-right'"
         ><font-awesome-icon
           v-if="itemdata.sx_icon !== undefined"
           :icon="['fas', 'long-arrow-alt-' + itemdata.sx_icon]"
         />
-        {{ itemdata.sx_value }}</span
+        ${{ itemdata.sx_value }}</span
       >
     </button>
     <div class="image-container">

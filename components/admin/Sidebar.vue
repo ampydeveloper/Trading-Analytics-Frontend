@@ -1,5 +1,5 @@
 <template>
-  <nav class=" col-md-2 d-none d-md-block bg-light sidebar">
+  <nav class="col-md-2 d-none d-md-block bg-light sidebar">
     <div class="sidebar-sticky">
       <div class="sibar-logo-top">
         <img
@@ -34,11 +34,11 @@
         </li> -->
         <li class="nav-item">
           <nuxt-link class="nav-link" to="/admin/ebay-items-listings">
-            <div class="icon  trenders-icon"></div>
+            <div class="icon trenders-icon"></div>
             <div class="link-text">All Listings</div>
           </nuxt-link>
         </li>
-        <li class="nav-item" v-if='isAdmin'>
+        <li class="nav-item" v-if="isAdmin">
           <nuxt-link class="nav-link" to="/admin/scrapitem/null?random=1">
             <div class="icon live-auctions-icon"></div>
             <div class="link-text">Random Bin</div>
@@ -46,62 +46,79 @@
         </li>
         <li class="nav-item">
           <nuxt-link class="nav-link" to="/admin/sold-listings">
-            <div class="icon  trenders-icon"></div>
+            <div class="icon trenders-icon"></div>
             <div class="link-text">Sold Listings</div>
           </nuxt-link>
         </li>
-        <li class="nav-item" v-if='!dataEntry'>
+        <li class="nav-item" v-if="!dataEntry">
           <nuxt-link class="nav-link" to="/admin/requested-slab">
             <div class="icon stox-request-icon"></div>
             <div class="link-text">Slab Requests</div>
           </nuxt-link>
         </li>
-        <li class="nav-item" v-if='!dataEntry'>
+        <li class="nav-item" v-if="!dataEntry">
           <nuxt-link class="nav-link" to="/admin/requested-listing">
             <div class="icon stox-request-icon"></div>
             <div class="link-text">Listing Requests</div>
           </nuxt-link>
         </li>
-        <li class="nav-item" v-if='!dataEntry'>
+        <li class="nav-item" v-if="!dataEntry">
           <nuxt-link class="nav-link" to="/admin/see-problem">
             <div class="icon my-listing-icon"></div>
             <div class="link-text">Flag a Listing</div>
           </nuxt-link>
         </li>
-          <li class="nav-item" v-if='!dataEntry'>
+        <li class="nav-item" v-if="!dataEntry">
           <nuxt-link class="nav-link" to="/admin/search-terms">
             <div class="icon head-to-head-icon"></div>
             <div class="link-text">Search Terms</div>
           </nuxt-link>
         </li>
-          <li class="nav-item" v-if='isAdmin'>
+        <li class="nav-item" v-if="isAdmin">
           <nuxt-link class="nav-link" to="/admin/csv-uploads">
             <div class="icon my-listing-icon"></div>
             <div class="link-text">CSV Uploads</div>
           </nuxt-link>
         </li>
-          <li class="nav-item" v-if='isAdmin'>
+        <li class="nav-item" v-if="isAdmin">
           <nuxt-link class="nav-link" to="/admin/stoxticker">
             <div class="icon stoxticker-icon"></div>
             <div class="link-text">Stoxticker</div>
           </nuxt-link>
         </li>
-        <li class="nav-item" v-if='!dataEntry'>
+        <li class="nav-item" v-if="!dataEntry">
           <nuxt-link class="nav-link" to="/admin/users">
-            <!-- <div class="icon my-listing-icon"></div> -->
-            <font-awesome-icon class="mt-1" :icon="['fas', 'users']" style="font-size: 20px;" />
+            <div class="icon">
+              <font-awesome-icon
+                class="mt-1"
+                :icon="['fas', 'users']"
+                style="font-size: 20px"
+              />
+            </div>
             <div class="link-text">Users Management</div>
           </nuxt-link>
         </li>
-        <li class="nav-item" v-if='isAdmin'>
+        <li class="nav-item" v-if="isAdmin">
           <nuxt-link class="nav-link" to="/admin/settings">
-            <font-awesome-icon class="mt-2" :icon="['fas', 'cog']" style="font-size: 20px;" />
+            <div class="icon">
+              <font-awesome-icon
+                class="mt-2"
+                :icon="['fas', 'cog']"
+                style="font-size: 20px"
+              />
+            </div>
             <div class="link-text">Settings</div>
           </nuxt-link>
         </li>
-        <li class="nav-item" v-if='isAdmin'>
+        <li class="nav-item" v-if="isAdmin">
           <nuxt-link class="nav-link" to="/admin/activity-logs">
-            <font-awesome-icon class="mt-2" :icon="['fas', 'clipboard-check']" style="font-size: 20px;" />
+            <div class="icon">
+              <font-awesome-icon
+                class="mt-2"
+                :icon="['fas', 'clipboard-check']"
+                style="font-size: 20px"
+              />
+            </div>
             <div class="link-text">Activity Logs</div>
           </nuxt-link>
         </li>
@@ -111,7 +128,6 @@
             <div class="link-text">Advance Search</div>
           </nuxt-link>
         </li> -->
-        
       </ul>
     </div>
   </nav>
@@ -119,14 +135,15 @@
 
 <script>
 export default {
-  data(){
+  data() {
     return {
-      dataEntry: false
+      dataEntry: false,
     }
   },
-  mounted(){
-    if((this.user.roles[0].name).toLowerCase() == 'data entry') this.dataEntry = true
-  }
+  mounted() {
+    if (this.user.roles[0].name.toLowerCase() == 'data entry')
+      this.dataEntry = true
+  },
 }
 </script>
 
@@ -182,8 +199,8 @@ export default {
         .link-text {
           line-height: 3 !important;
           margin-left: 10px !important;
-              font-family: 'CocogoosePro-Italic', Helvetica, Arial, sans-serif;
-    font-weight: 400 !important;
+          font-family: 'CocogoosePro-Italic', Helvetica, Arial, sans-serif;
+          font-weight: 400 !important;
         }
         &.nuxt-link-exact-active {
           background-color: $theme-sidebar-link-hover;
@@ -195,6 +212,7 @@ export default {
           background-position: center; /* Center the image */
           background-repeat: no-repeat; /* Do not repeat the image */
           background-size: 27px;
+          text-align: center;
         }
 
         .dashboard-icon {

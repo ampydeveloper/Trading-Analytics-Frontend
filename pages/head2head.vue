@@ -191,15 +191,65 @@
             <ul class="labels">
               <!-- <li class="orange">{{ selectedCardOne.brand }}</li> -->
 
-               <li v-if="selectedCardOne.rc == 'yes'" class="grey">Rookie</li> 
+              <li v-if="selectedCardOne.rc == 'yes'" class="grey">Rookie</li>
               <li class="green">{{ selectedCardOne.brand }}</li>
-              <li v-if="selectedCardOne.grade != null" class="yellow">{{selectedCardOne.grade}}</li>
+              <li v-if="selectedCardOne.grade != null" class="yellow">
+                {{ selectedCardOne.grade }}
+              </li>
             </ul>
             <div class="image-conatiner">
               <img
                 :src="selectedCardOne.cardImage"
                 :alt="selectedCardOne.title"
               />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 column_two d-none">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="vs_wrap">
+              <div class="team_vs">
+                <div class="row">
+                  <div class="vs_tip">VS</div>
+                  <div class="col-md-6 left">
+                    <h3>
+                      {{
+                        selectedCardOne.title != ''
+                          ? selectedCardOne.title
+                          : selectedCardOne.player +
+                            ' ' +
+                            selectedCardOne.year +
+                            ' ' +
+                            selectedCardOne.brand +
+                            ' ' +
+                            selectedCardOne.card +
+                            ' ' +
+                            selectedCardOne.variation
+                      }}
+                    </h3>
+                  </div>
+                  <div class="col-md-6 right">
+                    <h3>
+                      {{
+                        selectedCardTwo.title != ''
+                          ? selectedCardTwo.title
+                          : selectedCardTwo.player +
+                            ' ' +
+                            selectedCardTwo.year +
+                            ' ' +
+                            selectedCardTwo.brand +
+                            ' ' +
+                            selectedCardTwo.card +
+                            ' ' +
+                            selectedCardTwo.variation
+                      }}
+                    </h3>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -251,22 +301,10 @@
               <div class="sx_value">
                 <div class="row">
                   <div class="col-md-6 left">
-                    <h3>
-                      *SX VALUE ${{
-                        card_one.sx
-                          ? card_one.sx
-                          : 0
-                      }}
-                    </h3>
+                    <h3>SX: ${{ card_one.sx ? card_one.sx : 0 }}</h3>
                   </div>
                   <div class="col-md-6 right">
-                    <h3>
-                      *SX VALUE ${{
-                        card_two.sx
-                          ? card_two.sx
-                          : 0
-                      }}
-                    </h3>
+                    <h3>SX: ${{ card_two.sx ? card_two.sx : 0 }}</h3>
                   </div>
                 </div>
               </div>
@@ -361,13 +399,7 @@
             <div class="stat_box">
               <h3>stats</h3>
               <ul>
-                <li>
-                  SlabStox Value: ${{
-                    card_one.sx
-                      ? card_one.sx
-                      : 0
-                  }}
-                </li>
+                <li>SlabStox Value: ${{ card_one.sx ? card_one.sx : 0 }}</li>
                 <li>Overall Rank: {{ card_one.rank }}</li>
                 <li>
                   Last Sale Price: ${{
@@ -414,13 +446,7 @@
             <div class="stat_box">
               <h3>stats</h3>
               <ul>
-                <li>
-                  SlabStox Value: ${{
-                    card_two.sx
-                      ? card_two.sx
-                      : 0
-                  }}
-                </li>
+                <li>SlabStox Value: ${{ card_two.sx ? card_two.sx : 0 }}</li>
                 <li>Overall Rank: {{ card_two.rank }}</li>
                 <li>
                   Last Sale Price: ${{
@@ -487,9 +513,11 @@
             </h5>
             <ul class="labels">
               <!-- <li class="orange">{{ selectedCardTwo.brand }}</li> -->
-              <li v-if="selectedCardTwo.rc == 'yes'" class="grey">Rookie</li> 
+              <li v-if="selectedCardTwo.rc == 'yes'" class="grey">Rookie</li>
               <li class="green">{{ selectedCardTwo.brand }}</li>
-              <li v-if="selectedCardTwo.grade != null" class="yellow">{{selectedCardTwo.grade}}</li>
+              <li v-if="selectedCardTwo.grade != null" class="yellow">
+                {{ selectedCardTwo.grade }}
+              </li>
             </ul>
             <div class="image-conatiner">
               <img
@@ -936,7 +964,7 @@ export default {
               }
               this.initGraphLabel1Length = res.data.lable1.length
               // }
-               this.card_one.sx = res.data.sx1
+              this.card_one.sx = res.data.sx1
               this.card_two.sx = res.data.sx2
               this.card_one.rank = res.data.rank1
               this.card_two.rank = res.data.rank2
@@ -1478,8 +1506,8 @@ ul.my-card-listing {
       text-decoration: underline;
       font-size: 11px;
       letter-spacing: 1px;
-    height: 38px;
-    overflow: hidden;
+      height: 38px;
+      overflow: hidden;
     }
     .sxvalue.theme-btn {
       width: 100%;

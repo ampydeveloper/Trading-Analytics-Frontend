@@ -23,13 +23,20 @@
                 <tr v-for="problem of problems" :key="problem.id">
                   <!-- <td>{{ problem.id }}</td> -->
                   <td>
-<nuxt-link
-                      style="color:#28a745;"
+                    <nuxt-link
+                      style="color: #28a745"
                       :to="`users?id=${problem.user.id}`"
                       >{{ problem.user.full_name }}</nuxt-link
                     >
                   </td>
-                  <td>{{ (problem.ebay!=null?problem.ebay.title:0) }}</td>
+                  <td>
+                    <nuxt-link
+                      v-if="problem.ebay != null"
+                      style="color: #28a745"
+                      :to="`ebay-items-listings?item=${problem.ebay.id}`"
+                      >{{ problem.ebay.title }}
+                    </nuxt-link>
+                  </td>
                   <td>{{ problem.message }}</td>
                   <td>
                     <button
@@ -53,14 +60,6 @@
                 </tr>
               </tbody>
               <tfoot>
-                <!-- <tr>
-                  <td colspan="6">
-                    <button class="theme-btn card-btn" :disabled="page == 2" @click="getSeeProblems(page - 1)">
-                      Previous
-                    </button>
-                    <button class="theme-btn card-btn" @click="getSeeProblems(page)">Next</button>
-                  </td>
-                </tr> -->
                 <tr v-if="page - 1 == 1 && problems.length >= 30">
                   <td colspan="4">
                     <button
@@ -270,5 +269,9 @@ ul.my-card-listing {
 .card-link {
   line-height: 2;
   margin-top: 2px;
+}
+.active-pagination {
+  color: #1ce783;
+  background: #272d33;
 }
 </style>

@@ -14,6 +14,7 @@
             <div class="dataloader" v-if="requestInProcessFeatured">
               <b-spinner variant="success" label="Spinning"></b-spinner>
             </div>
+            <div class="featured-listing-outer">
             <ul class="my-card-listing featured-listing">
               <CardSlabItem
                 v-for="item in featuredListingItems"
@@ -24,7 +25,7 @@
                 @updateGraph="updateGraph"
               />
             </ul>
-
+</div>
             <div
               class="empty-result"
               v-if="
@@ -496,7 +497,8 @@ export default {
               fontFamily: 'NexaBold',
             },
           },
-          type: 'category',
+          type: 'datetime',
+          tickAmount: 6,
           categories: [],
         },
         tooltip: {
@@ -692,8 +694,11 @@ export default {
                 this.graphDataEmpty = false
                 this.series = [{ name: 'SX', data: res.data.values }]
                 this.salesQty = res.data.qty
+                this.chartOptions = {}
+                window.setTimeout(function(){
                 this.chartOptions = {
                   xaxis: {
+                    type: res.data.ctype,
                     categories: res.data.labels,
                   },
                   yaxis: {
@@ -724,6 +729,7 @@ export default {
                     },
                   },
                 }
+                }, 1000)
                 this.initGraphLabelLength = res.data.labels.length
                 // this.doller_diff = dollerDiff
                 // this.perc_diff = percDiff

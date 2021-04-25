@@ -2,9 +2,9 @@
   <li :class="['my-card', (tindex === 0 ? 'active' : '')]" v-if="itemdata">
     <h4 class="my-card-title" :title="itemdata.title">{{trimTitle(itemdata.title)}}</h4>
     <button class="theme-btn sxvalue">
-      SX Value: {{ itemdata.price }}
+      SX $: {{ itemdata.price }}
       <span :class="(itemdata.sx_icon == 'up'? 'high':'low') + ' float-right'"
-        ><font-awesome-icon v-if='itemdata.sx_icon!==undefined' :icon="['fas', 'long-arrow-alt-'+itemdata.sx_icon]" /> {{itemdata.sx_value}}</span
+        ><font-awesome-icon v-if='itemdata.sx_icon!==undefined' :icon="['fas', 'long-arrow-alt-'+itemdata.sx_icon]" /> ${{itemdata.sx_value}}</span
       >
     </button>
     <div class="image-container">
