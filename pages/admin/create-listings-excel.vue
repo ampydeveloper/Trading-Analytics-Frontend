@@ -101,8 +101,13 @@ export default {
     uploadExcelNow() {
       let formData = new FormData()
       var files = this.$refs.excel.files
-      const file = files.item(0)
-      formData.append('file', file)
+
+      for (let i = 0; i < files.length; i++) {
+    formData.append("file[]", files[i])
+  }
+
+      // const file = files.item(0)
+      // formData.append('file', files)
 
       // if (
       //   files.type ==
