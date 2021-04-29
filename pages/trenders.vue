@@ -94,7 +94,7 @@ export default {
       requestInProcessEndingSoon: true,
       noMoreData: false,
       keyword: null,
-      cards: ['basketball', 'soccer','baseball', 'football', 'pokemon'],
+      cards: [],
     }
   },
   methods: {
@@ -120,25 +120,25 @@ export default {
         console.log(err)
       }
     },
-    getEndingSoonListing() {
-      try {
-        this.endingSoonListingItems = []
-        this.requestInProcessEndingSoon = true
-        this.$axios
-          .$post('search/ending-soon-listing', {
-            take: 12,
-          })
-          .then((res) => {
-            this.requestInProcessEndingSoon = false
-            if (res.status == 200) {
-              this.endingSoonListingItems = res.data
-            }
-          })
-      } catch (err) {
-        this.requestInProcessEndingSoon = false
-        console.log(err)
-      }
-    },
+    // getEndingSoonListing() {
+    //   try {
+    //     this.endingSoonListingItems = []
+    //     this.requestInProcessEndingSoon = true
+    //     this.$axios
+    //       .$post('search/ending-soon-listing', {
+    //         take: 12,
+    //       })
+    //       .then((res) => {
+    //         this.requestInProcessEndingSoon = false
+    //         if (res.status == 200) {
+    //           this.endingSoonListingItems = res.data
+    //         }
+    //       })
+    //   } catch (err) {
+    //     this.requestInProcessEndingSoon = false
+    //     console.log(err)
+    //   }
+    // },
     getNormalRecentListing(status = false) {
       if (!this.requestInProcess) {
         try {

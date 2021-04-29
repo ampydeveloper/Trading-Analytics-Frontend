@@ -10,14 +10,16 @@
       {{ itemdata.title != '' ? trimTitle(itemdata.title) : '' }}
     </h4>
     <button class="theme-btn sxvalue">
-      <span class="sxvalue-text"> SX $: {{ (itemdata.price!=null?itemdata.price:0) }}</span>
+      <span class="sxvalue-text">
+        SX $: {{ itemdata.price != null ? itemdata.price : 0 }}</span
+      >
       <span
         :class="(itemdata.sx_icon == 'up' ? 'high' : 'low') + ' float-right'"
         ><font-awesome-icon
           v-if="itemdata.sx_icon !== undefined"
           :icon="['fas', 'long-arrow-alt-' + itemdata.sx_icon]"
         />
-        ${{ itemdata.sx_value }}</span
+        {{ pert_change_space }}</span
       >
     </button>
     <div class="image-container">
@@ -62,6 +64,7 @@ export default {
   data() {
     return {
       isActive: false,
+      pert_change_space: 0,
     }
   },
   watch: {
@@ -71,6 +74,9 @@ export default {
   },
   mounted() {
     this.isActive = this.activeSt
+    var sx_val = this.itemdata.sx_value != null ? this.itemdata.sx_value : 0
+    this.pert_change_space =
+      this.itemdata.show_perentage == true ? this.itemdata.sx_percent + '%' : '$' + sx_val
   },
   methods: {
     selectSlabCard(id) {
@@ -116,7 +122,7 @@ export default {
     text-decoration: underline;
     font-size: 11px;
     letter-spacing: 1px;
-        height: 38px;
+    height: 38px;
     overflow: hidden;
   }
   .sxvalue.theme-btn {

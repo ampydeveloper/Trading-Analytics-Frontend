@@ -207,7 +207,7 @@
         </div>
       </div>
 
-      <div class="col-md-4 column_two d-none">
+      <!-- <div class="col-md-4 column_two d-none">
         <div class="row">
           <div class="col-md-12">
             <div class="vs_wrap">
@@ -253,8 +253,46 @@
             </div>
           </div>
         </div>
+      </div> -->
+      
+      <div
+        class="col-md-4 col-sm-4 t-p-5 product-details-col-md-4 column_three visible-mobile"
+      >
+        <div class="card" v-if="selectedCardTwo != null">
+          <div class="card-body product-image-card">
+            <h5 class="card-title product-title">
+              {{
+                selectedCardTwo.title != ''
+                  ? selectedCardTwo.title
+                  : selectedCardTwo.player +
+                    ' ' +
+                    selectedCardTwo.year +
+                    ' ' +
+                    selectedCardTwo.brand +
+                    ' ' +
+                    selectedCardTwo.card +
+                    ' ' +
+                    selectedCardTwo.variation
+              }}
+            </h5>
+            <ul class="labels">
+              <!-- <li class="orange">{{ selectedCardTwo.brand }}</li> -->
+              <li v-if="selectedCardTwo.rc == 'yes'" class="grey">Rookie</li>
+              <li class="green">{{ selectedCardTwo.brand }}</li>
+              <li v-if="selectedCardTwo.grade != null" class="yellow">
+                {{ selectedCardTwo.grade }}
+              </li>
+            </ul>
+            <div class="image-conatiner">
+              <img
+                :src="selectedCardTwo.cardImage"
+                :alt="selectedCardTwo.title"
+              />
+            </div>
+          </div>
+        </div>
       </div>
-
+      
       <div class="col-md-4 column_two">
         <div class="row">
           <div class="col-md-12">
@@ -399,7 +437,7 @@
             <div class="stat_box">
               <h3>stats</h3>
               <ul>
-                <li>SlabStox Value: ${{ card_one.sx ? card_one.sx : 0 }}</li>
+                <li>SlabStox Value: ${{ card_one.slabstoxvalue1 ? card_one.slabstoxvalue1 : 0 }}</li>
                 <li>Overall Rank: {{ card_one.rank }}</li>
                 <li>
                   Last Sale Price: ${{
@@ -446,7 +484,7 @@
             <div class="stat_box">
               <h3>stats</h3>
               <ul>
-                <li>SlabStox Value: ${{ card_two.sx ? card_two.sx : 0 }}</li>
+                <li>SlabStox Value: ${{ card_two.slabstoxvalue2 ? card_two.slabstoxvalue2 : 0 }}</li>
                 <li>Overall Rank: {{ card_two.rank }}</li>
                 <li>
                   Last Sale Price: ${{
@@ -492,7 +530,7 @@
       </div>
 
       <div
-        class="col-md-4 col-sm-4 t-p-5 product-details-col-md-4 column_three"
+        class="col-md-4 col-sm-4 t-p-5 product-details-col-md-4 column_three visible-not-mobile"
       >
         <div class="card" v-if="selectedCardTwo != null">
           <div class="card-body product-image-card">
@@ -632,7 +670,7 @@ export default {
   data() {
     return {
       initGraphLabelLength: 0,
-      activeDaysGraph: 2,
+      activeDaysGraph: 90,
       keyword: null,
       showSelectedCards: false,
       selectedCardOne: null,
@@ -702,7 +740,9 @@ export default {
               fontFamily: 'NexaBold',
             },
           },
-          type: 'category',
+          // type: 'category',
+              type: 'datetime',
+          tickAmount: 6,
           categories: [],
         },
         tooltip: {
@@ -893,7 +933,7 @@ export default {
         this.autoselected.two.open = false
       }
     },
-    getGraphData(days) {
+    getGraphData(days=90) {
       try {
         let cardIds =
           this.card_one.selectedCard.id + '|' + this.card_two.selectedCard.id
@@ -918,6 +958,8 @@ export default {
               this.salesQty = [{ data: res.data.qty1 }, { data: res.data.qty2 }]
               this.chartOptions = {
                 xaxis: {
+                  type: days == 2 ? 'category' : 'datetime',
+                tickAmount: days == 2 ? 24 : 6,
                   categories: res.data.lable1,
                 },
                 yaxis: {
@@ -964,6 +1006,8 @@ export default {
               }
               this.initGraphLabel1Length = res.data.lable1.length
               // }
+              this.card_one.slabstoxvalue1 = res.data.slabstoxvalue1
+              this.card_two.slabstoxvalue2 = res.data.slabstoxvalue2
               this.card_one.sx = res.data.sx1
               this.card_two.sx = res.data.sx2
               this.card_one.rank = res.data.rank1
@@ -1340,6 +1384,7 @@ ul.my-card-listing {
     padding: 10px 15px;
     background-color: #1de783;
     border-radius: 3px;
+    height: 100%;
     h3 {
       padding: 7px 12px 5px 12px;
       background: #edecec;
@@ -1386,6 +1431,18 @@ ul.my-card-listing {
         letter-spacing: 1px;
         text-transform: uppercase;
         margin-bottom: 0px;
+        @media (max-width: 991px) {
+              font-size: 10px;
+          overflow-wrap: break-word;
+          word-wrap: break-word;
+          -ms-word-break: break-all;
+          word-break: break-all;
+          word-break: break-word;
+          -ms-hyphens: auto;
+          -moz-hyphens: auto;
+          -webkit-hyphens: auto;
+          hyphens: auto;
+        }
       }
       .right h3 {
         text-align: right;
@@ -1452,6 +1509,7 @@ ul.my-card-listing {
   border-radius: 4px;
   text-align: center;
   display: table;
+
   li {
     display: inline;
     padding: 8px 8px 4px 8px;
@@ -1620,7 +1678,7 @@ ul.my-card-listing {
     float: left;
   }
 }
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   html body #__nuxt .dashboard-nav-bar {
     padding-left: 0;
   }

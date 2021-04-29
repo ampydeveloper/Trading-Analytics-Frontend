@@ -37,35 +37,35 @@
               <ul class="trender-cards-footer-month-filter">
                 <li
                   class="trender-cards-footer-month-filter-item"
-                  :class="[(filterVal == 1 && data.length > 0) ? 'active' : '', (filterVal == 1 && data.length == 0) ? 'nodata' : '' ]"
+                  :class="[(filterVal == 1) ? 'active' : '', (filterVal == 1 && data.length == 0) ? 'nodata' : '' ]"
                   @click="changeFilter(1)"
                 >
                   1D
                 </li>
                 <li
                   class="trender-cards-footer-month-filter-item"
-                  :class="[(filterVal == 2 && data.length > 0) ? 'active' : '', (filterVal == 2 && data.length == 0) ? 'nodata' : '' ]"
+                  :class="[(filterVal == 2) ? 'active' : '', (filterVal == 2 && data.length == 0) ? 'nodata' : '' ]"
                   @click="changeFilter(2)"
                 >
                   1W
                 </li>
                 <li
                   class="trender-cards-footer-month-filter-item"
-                  :class="[(filterVal == 3 && data.length > 0) ? 'active' : '', (filterVal == 3 && data.length == 0) ? 'nodata' : '' ]"
+                  :class="[(filterVal == 3) ? 'active' : '', (filterVal == 3 && data.length == 0) ? 'nodata' : '' ]"
                   @click="changeFilter(3)"
                 >
                   1M
                 </li>
                 <li
                   class="trender-cards-footer-month-filter-item"
-                  :class="[(filterVal == 4 && data.length > 0) ? 'active' : '', (filterVal == 4 && data.length == 0) ? 'nodata' : '' ]"
+                  :class="[(filterVal == 4) ? 'active' : '', (filterVal == 4 && data.length == 0) ? 'nodata' : '' ]"
                   @click="changeFilter(4)"
                 >
                   3M
                 </li>
                 <li
                   class="trender-cards-footer-month-filter-item"
-                  :class="[(filterVal == 5 && data.length > 0) ? 'active' : '', (filterVal == 5 && data.length == 0) ? 'nodata' : '' ]"
+                  :class="[(filterVal == 5) ? 'active' : '', (filterVal == 5 && data.length == 0) ? 'nodata' : '' ]"
                   @click="changeFilter(5)"
                 >
                   6M
@@ -88,11 +88,11 @@
             </div> 
             
             <div class="trender-cards-footer">
-                <button :class="(orderByPrice == 'up'? 'theme-btn':'theme-green-btn') + ' card-btn t-p-5'" @click="filterOrderBy('price'+orderByPrice)">
+                <button :class="(orderByPrice == 'up'? 'theme-red-btn':'theme-green-btn') + ' card-btn t-p-5'" @click="filterOrderBy('price'+orderByPrice)">
                     <font-awesome-icon v-if='orderByPrice !== undefined' :icon="['fas', 'long-arrow-alt-'+(orderByPrice=='up'?'down':'up')]" />&nbsp;&nbsp;$ Price
                 </button>
                 
-                <button :class="(orderByPercent == 'up'? 'theme-btn':'theme-green-btn') + ' card-btn t-p-5'" @click="filterOrderBy('percent'+orderByPercent)">
+                <button :class="(orderByPercent == 'up'? 'theme-red-btn':'theme-green-btn') + ' card-btn t-p-5'" @click="filterOrderBy('percent'+orderByPercent)">
                     <font-awesome-icon v-if='orderByPercent !== undefined' :icon="['fas', 'long-arrow-alt-'+(orderByPercent=='up'?'down':'up')]" />&nbsp;&nbsp;Percent %
                 </button>
             </div>
@@ -155,12 +155,12 @@ export default {
       keyword: null,
       filterByKeword: null,
       requestInProcess: false,
-      filterVal: 1,
+      filterVal: 4,
       showSmartSearch: false,
       smartKeyword: [],
       orderByPrice: 'up',
-      orderByPercent: 'up',
-      orderBy: null
+      orderByPercent: 'down',
+      orderBy: 'percentup'
     }
   },
   async mounted() {
@@ -189,7 +189,8 @@ export default {
             take: 12,
             sport: this.card,
             search: this.keyword,
-            orderby: this.orderBy            
+            orderby: this.orderBy,
+            filterval: this.filterVal            
           })
           .then(res => {
             this.requestInProcess = false

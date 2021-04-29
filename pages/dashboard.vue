@@ -15,17 +15,19 @@
               <b-spinner variant="success" label="Spinning"></b-spinner>
             </div>
             <div class="featured-listing-outer">
-            <ul class="my-card-listing featured-listing">
-              <CardSlabItem
-                v-for="item in featuredListingItems"
-                :key="item.id"
-                :itemdata="item"
-                :activeSt="item.id == cardActiveId ? !cardsActive : cardsActive"
-                @toggleCardActive="toggleCardActive"
-                @updateGraph="updateGraph"
-              />
-            </ul>
-</div>
+              <ul class="my-card-listing featured-listing">
+                <CardSlabItem
+                  v-for="item in featuredListingItems"
+                  :key="item.id"
+                  :itemdata="item"
+                  :activeSt="
+                    item.id == cardActiveId ? !cardsActive : cardsActive
+                  "
+                  @toggleCardActive="toggleCardActive"
+                  @updateGraph="updateGraph"
+                />
+              </ul>
+            </div>
             <div
               class="empty-result"
               v-if="
@@ -255,7 +257,7 @@
                 :to="'/product?id=' + item.id + '&slag=' + item.title"
                 :title="item.title"
               >
-                ${{ (item.price>0?trimString(item.price):0) }}
+                ${{ item.price > 0 ? trimString(item.price) : 0 }}
               </nuxt-link>
             </span>
           </div>
@@ -286,7 +288,7 @@
                 class=""
                 :to="'/product?id=' + item.id + '&slag=' + item.title"
                 :title="item.title"
-                >${{ (item.price>0?trimString(item.price):0) }}
+                >${{ item.price > 0 ? trimString(item.price) : 0 }}
               </nuxt-link>
             </span>
           </div>
@@ -320,7 +322,7 @@
                 :to="'/product?id=' + item.id + '&slag=' + item.title"
                 :title="item.title"
               >
-                ${{ (item.price>0?trimString(item.price):0) }}
+                ${{ item.price > 0 ? trimString(item.price) : 0 }}
               </nuxt-link>
             </span>
           </div>
@@ -609,7 +611,7 @@ export default {
               this.featuredListingItems = res.data
               if (this.featuredListingItems.length > 0) {
                 this.toggleCardActive(this.featuredListingItems[0])
-                this.updateGraph()
+                this.updateGraph(90)
               }
             }
           })
@@ -676,7 +678,7 @@ export default {
         console.log(error)
       }
     },
-    updateGraph(days = 2) {
+    updateGraph(days = 90) {
       try {
         this.graphDataEmpty = false
         this.$axios
@@ -695,40 +697,51 @@ export default {
                 this.series = [{ name: 'SX', data: res.data.values }]
                 this.salesQty = res.data.qty
                 this.chartOptions = {}
-                window.setTimeout(function(){
-                this.chartOptions = {
-                  xaxis: {
-                    type: res.data.ctype,
-                    categories: res.data.labels,
-                  },
-                  yaxis: {
-                    labels: {
-                      style: {
-                        colors: '#edecec',
-                        fontSize: '10px',
-                        fontFamily: 'NexaBold',
-                      },
-                      formatter: (value, ind) => {
-                        let lblStr = `$${value}`
-                        return lblStr
+                window.setTimeout(function () {
+                  this.chartOptions = {
+                    xaxis: {
+                      // type: res.data.ctype,
+                      type: days == 2 ? 'category' : 'datetime',
+                      tickAmount: days == 2 ? 24 : 6,
+                      categories: res.data.labels,
+                    },
+                    yaxis: {
+                      labels: {
+                        style: {
+                          colors: '#edecec',
+                          fontSize: '10px',
+                          fontFamily: 'NexaBold',
+                        },
+                        // formatter: (value, ind) => {
+                        //   let lblStr = `$${value}`
+                        //   return lblStr
+                        // },
+                        formatter: (value, ind) => {
+                          let valCheck = value
+                          if (Number(value) === value && value % 1 !== 0) {
+                            let valCheck = Number(value).toFixed(2)
+                          }
+
+                          let lblStr = `$${valCheck}`
+                          return lblStr
+                        },
                       },
                     },
-                  },
-                  tooltip: {
-                    enabled: true,
-                    y: {
-                      formatter: (value, ind) => {
-                        let lblStr = `$${value}`
-                        if (typeof ind == 'object')
-                          lblStr = `$${value} (${
-                            this.salesQty[ind.dataPointIndex]
-                          })`
-                        else lblStr = `$${value} (${this.salesQty[ind]})`
-                        return lblStr
+                    tooltip: {
+                      enabled: true,
+                      y: {
+                        formatter: (value, ind) => {
+                          let lblStr = `$${value}`
+                          if (typeof ind == 'object')
+                            lblStr = `$${value} (${
+                              this.salesQty[ind.dataPointIndex]
+                            })`
+                          else lblStr = `$${value} (${this.salesQty[ind]})`
+                          return lblStr
+                        },
                       },
                     },
-                  },
-                }
+                  }
                 }, 1000)
                 this.initGraphLabelLength = res.data.labels.length
                 // this.doller_diff = dollerDiff
@@ -851,13 +864,30 @@ ul.featured-listing {
     padding-top: 25px;
     padding-bottom: 25px;
     position: relative;
-    @media (max-width: 767px) {
-      width: 100% !important;
+    
+    @media (max-width: 1200px) {
+      padding-left: 15px !important;
+      padding-right: 15px !important;
     }
   }
   li.my-card.active {
     background: #39414a;
     margin-right: -2px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .featured-listing-outer {
+    overflow-x: scroll;
+    margin: 0 -15px;
+    .featured-listing {
+      min-width: 936px;
+    }
+  }
+  html body main .featured-listing-outer {
+    .featured-listing {
+      margin: 0 0 0 -2px !important;
+    }
   }
 }
 .featured-graph-title {

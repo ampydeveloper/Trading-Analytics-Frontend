@@ -1,21 +1,16 @@
 <template>
   <div class="col-md-11 col-sm-11 dashboard_page">
-      
-      <div class="row">
-        <div class="col-md-12 pl-1 mb-4 mt-2">
-            <div class="top-btn">
-<nuxt-link
-                      class="card-btn custom-stox"
-                      :to="`stoxticker`"
-                      >
-                      <font-awesome-icon :icon="['fas', 'chevron-left']" />
-                       Back to board search</nuxt-link
-                    >
-            </div>
+    <div class="row">
+      <div class="col-md-12 pl-1 mb-4 mt-2">
+        <div class="top-btn">
+          <nuxt-link class="card-btn custom-stox" :to="`stoxticker`">
+            <font-awesome-icon :icon="['fas', 'chevron-left']" />
+            Back to board search</nuxt-link
+          >
         </div>
+      </div>
     </div>
-    
-    
+
     <div class="row">
       <div class="col-md-12 col-sm-12 t-p-5">
         <div class="card">
@@ -26,9 +21,11 @@
           >
             <h5 class="card-title">
               <button class="theme-btn card-btn">
-                {{ stoxtickerDetails.board.name }} ${{stoxtickerDetails.cardData.total_card_value}}
+                {{ stoxtickerDetails.board.name }} ${{
+                  stoxtickerDetails.cardData.total_card_value
+                }}
               </button>
-               <button
+              <button
                 :class="
                   (stoxtickerDetails.cardData.sx_icon &&
                   stoxtickerDetails.cardData.sx_icon == 'up'
@@ -40,12 +37,12 @@
                   v-if="stoxtickerDetails.cardData.sx_icon !== undefined"
                   :icon="[
                     'fas',
-                    'long-arrow-alt-' + stoxtickerDetails.cardData.sx_icon
+                    'long-arrow-alt-' + stoxtickerDetails.cardData.sx_icon,
                   ]"
-                />&nbsp;&nbsp;${{stoxtickerDetails.cardData.sx_value}}
+                />&nbsp;&nbsp;${{ stoxtickerDetails.cardData.sx_value }}
               </button>
-                
-                <button
+
+              <button
                 :class="
                   (stoxtickerDetails.cardData.sx_icon &&
                   stoxtickerDetails.cardData.sx_icon == 'up'
@@ -57,30 +54,26 @@
                   v-if="stoxtickerDetails.cardData.sx_icon !== undefined"
                   :icon="[
                     'fas',
-                    'long-arrow-alt-' + stoxtickerDetails.cardData.sx_icon
+                    'long-arrow-alt-' + stoxtickerDetails.cardData.sx_icon,
                   ]"
-                />&nbsp;&nbsp;{{stoxtickerDetails.cardData.pert_diff}}%
-              </button>
-              
-            <button v-if="user.id != stoxtickerDetails.board.user_id"
-            :class="
-                  (boardFollow
-                    ? 'theme-green-btn'
-                    : 'theme-btn') + ' card-btn'
-                " @click="followBoard()">
-              
-              {{ (boardFollow
-                    ? 'Unfollow'
-                    : 'Follow') }}
+                />&nbsp;&nbsp;{{ stoxtickerDetails.cardData.pert_diff }}%
               </button>
 
-<span class="card-link" v-b-modal.openSeeProblemPopup>
+              <button
+                v-if="user.id != stoxtickerDetails.board.user_id"
+                :class="
+                  (boardFollow ? 'theme-green-btn' : 'theme-btn') + ' card-btn'
+                "
+                @click="followBoard()"
+              >
+                {{ boardFollow ? 'Unfollow' : 'Follow' }}
+              </button>
+
+              <span class="card-link" v-b-modal.openSeeProblemPopup>
                 Export Data
                 <font-awesome-icon :icon="['fas', 'chevron-right']" />
               </span>
 
-              
-                   
               <span class="float-right share-lk-top">
                 <span class="share-icon">
                   Share
@@ -89,65 +82,105 @@
                 <div class="share-all-outer">
                   <ul>
                     <li>
-                      <a :href="'https://www.facebook.com/sharer/sharer.php?u='+encodeURI(currentUrl)"  target="_blank"
+                      <a
+                        :href="
+                          'https://www.facebook.com/sharer/sharer.php?u=' +
+                          encodeURI(currentUrl)
+                        "
+                        target="_blank"
                         ><img src="~/assets/img/icons/facebook.svg" alt
                       /></a>
                     </li>
                     <li>
                       <a
-                        :href="'https://twitter.com/intent/tweet?url='+encodeURI(currentUrl)+'&text=Check Stoxticker: '+stoxtickerDetails.board.name+' valued@ '+stoxtickerData.sale.toFixed(2)+' ' +encodeURI(this.graphImage)"
+                        :href="
+                          'https://twitter.com/intent/tweet?url=' +
+                          encodeURI(currentUrl) +
+                          '&text=Check Stoxticker: ' +
+                          stoxtickerDetails.board.name +
+                          ' valued@ ' +
+                          stoxtickerData.sale.toFixed(2) +
+                          ' ' +
+                          encodeURI(this.graphImage)
+                        "
                         target="_blank"
                         ><img src="~/assets/img/icons/twitter.svg" alt
                       /></a>
                     </li>
                     <li>
-                      <a :href="'http://pinterest.com/pin/create/button/?url='+encodeURI(currentUrl)+'&media='+encodeURI(graphImage)+'&description='+encodeURI('Check Stoxticker: '+stoxtickerDetails.board.name)" target="_blank"
+                      <a
+                        :href="
+                          'http://pinterest.com/pin/create/button/?url=' +
+                          encodeURI(currentUrl) +
+                          '&media=' +
+                          encodeURI(graphImage) +
+                          '&description=' +
+                          encodeURI(
+                            'Check Stoxticker: ' + stoxtickerDetails.board.name
+                          )
+                        "
+                        target="_blank"
                         ><img src="~/assets/img/pinterest.png" alt
                       /></a>
                     </li>
                     <li>
-                      <a :href="'https://www.linkedin.com/sharing/share-offsite/?url='+encodeURI(currentUrl)" target="_blank"
+                      <a
+                        :href="
+                          'https://www.linkedin.com/sharing/share-offsite/?url=' +
+                          encodeURI(currentUrl)
+                        "
+                        target="_blank"
                         ><img src="~/assets/img/icons/linkedin-circled.svg" alt
                       /></a>
                     </li>
                   </ul>
                 </div>
-             
               </span>
-<button v-if="user.id == stoxtickerDetails.board.user_id" style="margin-right: 8px;"
-            class="theme-red-btn card-btn float-right" @click="deleteBoard()">
-             Delete
+              <button
+                v-if="user.id == stoxtickerDetails.board.user_id"
+                style="margin-right: 8px"
+                class="theme-red-btn card-btn float-right"
+                @click="deleteBoard()"
+              >
+                Delete
               </button>
 
               <b-modal
-      id="openSeeProblemPopup"
-      title="EXPORT DATA"
-      hide-footer
-      v-model="dialogVisible"
-    >
-      <div class="shar-text">Share Text</div>
-      <div class="g-main-text">
-        <span class="g-title">{{stoxtickerDetails.board.name}} ${{stoxtickerDetails.cardData.total_card_value}}</span>
-        &nbsp;&nbsp;
-        <span class="g-sx">Sales Change ${{stoxtickerDetails.cardData.sx_value}} {{stoxtickerDetails.cardData.pert_diff}}%</span> &nbsp;&nbsp;
-        <span class="slab-image-link">{{graphImage}}</span>
-      </div>
+                id="openSeeProblemPopup"
+                title="EXPORT DATA"
+                hide-footer
+                v-model="dialogVisible"
+              >
+                <div class="shar-text">Share Text</div>
+                <div class="g-main-text">
+                  <span class="g-title"
+                    >{{ stoxtickerDetails.board.name }} ${{
+                      stoxtickerDetails.cardData.total_card_value
+                    }}</span
+                  >
+                  &nbsp;&nbsp;
+                  <span class="g-sx"
+                    >Sales Change ${{ stoxtickerDetails.cardData.sx_value }}
+                    {{ stoxtickerDetails.cardData.pert_diff }}%</span
+                  >
+                  &nbsp;&nbsp;
+                  <span class="slab-image-link">{{ graphImage }}</span>
+                </div>
 
-      <div class="shar-text">Share Graphics</div>
-      <div class="g-img-full" id="g-img-full">
-        <img :src="graphImage" alt="" class="slab_graph" />
-      </div>
-      <div class="clearfix g-download-out text-right">
-        <a
-          href="javascript:void(0);"
-          @click="downloadImage"
-          class="g-download-img-all"
-        >
-          Download Graphics
-        </a>
-      </div>
-    </b-modal>
-
+                <div class="shar-text">Share Graphics</div>
+                <div class="g-img-full" id="g-img-full">
+                  <img :src="graphImage" alt="" class="slab_graph" />
+                </div>
+                <div class="clearfix g-download-out text-right">
+                  <a
+                    href="javascript:void(0);"
+                    @click="downloadImage"
+                    class="g-download-img-all"
+                  >
+                    Download Graphics
+                  </a>
+                </div>
+              </b-modal>
             </h5>
             <div class="dashboard-apex-top" ref="dashboardApexChart">
               <VueApexCharts
@@ -163,7 +196,7 @@
                 <li
                   :class="
                     'dashboard-graph-footer-month-filter-item ' +
-                      (activeDaysGraph == 2 ? 'active' : '')
+                    (activeDaysGraph == 2 ? 'active' : '')
                   "
                   @click="getStoxtickerData(2)"
                 >
@@ -172,7 +205,7 @@
                 <li
                   :class="
                     'dashboard-graph-footer-month-filter-item ' +
-                      (activeDaysGraph == 7 ? 'active' : '')
+                    (activeDaysGraph == 7 ? 'active' : '')
                   "
                   @click="getStoxtickerData(7)"
                 >
@@ -181,7 +214,7 @@
                 <li
                   :class="
                     'dashboard-graph-footer-month-filter-item ' +
-                      (activeDaysGraph == 30 ? 'active' : '')
+                    (activeDaysGraph == 30 ? 'active' : '')
                   "
                   @click="getStoxtickerData(30)"
                 >
@@ -190,7 +223,7 @@
                 <li
                   :class="
                     'dashboard-graph-footer-month-filter-item ' +
-                      (activeDaysGraph == 90 ? 'active' : '')
+                    (activeDaysGraph == 90 ? 'active' : '')
                   "
                   @click="getStoxtickerData(90)"
                 >
@@ -199,7 +232,7 @@
                 <li
                   :class="
                     'dashboard-graph-footer-month-filter-item ' +
-                      (activeDaysGraph == 180 ? 'active' : '')
+                    (activeDaysGraph == 180 ? 'active' : '')
                   "
                   @click="getStoxtickerData(180)"
                 >
@@ -208,7 +241,7 @@
                 <li
                   :class="
                     'dashboard-graph-footer-month-filter-item ' +
-                      (activeDaysGraph == 365 ? 'active' : '')
+                    (activeDaysGraph == 365 ? 'active' : '')
                   "
                   @click="getStoxtickerData(365)"
                 >
@@ -217,7 +250,7 @@
                 <li
                   :class="
                     'dashboard-graph-footer-month-filter-item ' +
-                      (activeDaysGraph == 1825 ? 'active' : '')
+                    (activeDaysGraph == 1825 ? 'active' : '')
                   "
                   @click="getStoxtickerData(1825)"
                 >
@@ -225,14 +258,14 @@
                 </li>
               </ul>
               <p class="dashboard-graph-footer-update-at float-right">
-                Last Updated - 
+                Last Updated -
                 {{ stoxtickerDetails.last_timestamp }}
               </p>
             </div>
           </div>
         </div>
       </div>
-<!-- <div class="social_share ss-h4">
+      <!-- <div class="social_share ss-h4">
         <h4>
               <a class="embed-link" href="javascript:;"  @click="embedStatsCode()">EMBEDD CODE </>
               </a>
@@ -240,36 +273,45 @@
         </div> -->
     </div>
     <b-modal id="embedStatsCode" title="" size="xl" hide-footer>
-          <h5>Copy code and paste to your website.</h5>
-          <p class="code-text">
-            <textarea cols="3" rows="10"><iframe src="https://pro.slabstox.com/stoxticker-board-details" width="1400" height="260" style="border:none;" frameborder="0"></iframe>
+      <h5>Copy code and paste to your website.</h5>
+      <p class="code-text">
+        <textarea cols="3" rows="10">
+<iframe src="https://pro.slabstox.com/stoxticker-board-details" width="1400" height="260" style="border:none;" frameborder="0"></iframe>
           </textarea
-            >
-          </p>
-        </b-modal>
-      
-        <div class="row slabs-ticker">
-        <div class="col-md-12 col-sm-12 t-p-5">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">
-                      <button class="theme-btn card-btn">slabs in ticker</button>
-                    </h5>
-                    <div class="dataloader" v-if="requestInProcessFeatured">
-                      <b-spinner variant="success" label="Spinning"></b-spinner>
-                    </div>
-                    <ul class="my-card-listing">
-                      <CardSlabItem v-for="item in stoxtickerDetails.cards" :key="item.card_data.id" :itemdata="item.card_data" />
-                    </ul>
+        >
+      </p>
+    </b-modal>
 
-                    <div class="empty-result" v-if="stoxtickerDetails.cards.length == 0 && !requestInProcessFeatured">
-                      <p>There are no cards here. Check again soon.</p>
-                    </div>
-                </div>
+    <div class="row slabs-ticker">
+      <div class="col-md-12 col-sm-12 t-p-5">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">
+              <button class="theme-btn card-btn">slabs in ticker</button>
+            </h5>
+            <div class="dataloader" v-if="requestInProcessFeatured">
+              <b-spinner variant="success" label="Spinning"></b-spinner>
             </div>
+            <ul class="my-card-listing">
+              <CardSlabItem
+                v-for="item in stoxtickerDetails.cards"
+                :key="item.card_data.id"
+                :itemdata="item.card_data"
+              />
+            </ul>
+
+            <div
+              class="empty-result"
+              v-if="
+                stoxtickerDetails.cards.length == 0 && !requestInProcessFeatured
+              "
+            >
+              <p>There are no cards here. Check again soon.</p>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
-      
   </div>
 </template>
 
@@ -286,7 +328,8 @@ export default {
       title: 'Stoxticker - Slabstox',
       meta: [
         {
-         hid: 'stoxticker-details', name: 'Stoxticker - Slabstox',
+          hid: 'stoxticker-details',
+          name: 'Stoxticker - Slabstox',
           content: 'Check Stoxticker: ' + this.stoxtickerDetails.board.name,
         },
         {
@@ -351,7 +394,7 @@ export default {
       salesQty: [],
       series: [
         {
-          name: 'Stoxticker',
+          name: 'SX',
           data: [],
         },
       ],
@@ -391,7 +434,9 @@ export default {
               fontFamily: 'NexaBold',
             },
           },
-          type: 'category',
+          // type: 'category',
+          type: 'datetime',
+          tickAmount: 6,
           categories: [],
         },
         tooltip: {
@@ -417,7 +462,7 @@ export default {
     embedStatsCode() {
       this.$bvModal.show('embedStatsCode')
     },
-    getStoxtickerData(days = 2) {
+    getStoxtickerData(days = 90) {
       try {
         this.$axios
           .$get(`stoxticker/board-details/${this.$route.query.board}/${days}`)
@@ -437,6 +482,8 @@ export default {
               this.salesQty = res.card_data.sales_graph.qty
               this.chartOptions = {
                 xaxis: {
+                  type: days == 2 ? 'category' : 'datetime',
+                  tickAmount: days == 2 ? 24 : 6,
                   categories: res.card_data.sales_graph.labels,
                 },
                 yaxis: {
@@ -446,8 +493,17 @@ export default {
                       fontSize: '10px',
                       fontFamily: 'NexaBold',
                     },
+                    // formatter: (value, ind) => {
+                    //   let lblStr = `$${value}`
+                    //   return lblStr
+                    // },
                     formatter: (value, ind) => {
-                      let lblStr = `$${value}`
+                      let valCheck = value
+                      if (Number(value) === value && value % 1 !== 0) {
+                        let valCheck = Number(value).toFixed(2)
+                      }
+
+                      let lblStr = `$${valCheck}`
                       return lblStr
                     },
                   },
@@ -558,9 +614,9 @@ ul.featured-listing {
 }
 
 .card-link {
-      margin-left: 15px;
-    vertical-align: middle;
-    display: inline-block;
+  margin-left: 15px;
+  vertical-align: middle;
+  display: inline-block;
 }
 .card-text-link {
   display: block;

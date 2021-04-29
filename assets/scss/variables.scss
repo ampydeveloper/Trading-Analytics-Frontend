@@ -355,9 +355,9 @@ html body .gift-cart-form .gift-cart-form-input {
     }
   }
 
-  .my-card .sxvalue.theme-btn {
-    background: #149555;
-  }
+  // .my-card .sxvalue.theme-btn {
+  //   background: #149555;
+  // }
 
   .card .card-body .card-link {
     color: #272d33;
@@ -369,6 +369,7 @@ html body .gift-cart-form .gift-cart-form-input {
   padding: 15px 40px;
   font-style: normal;
   font-family: "NexaBold", Helvetica, Arial, sans-serif;
+
   @media (max-width: 768px) {
     padding: 15px 10px;
   }
@@ -684,7 +685,9 @@ html body main .my-card-listing {
 }
 
 .profile_page {
-  .payment-option-left, .payment-option-side-cards {
+
+  .payment-option-left,
+  .payment-option-side-cards {
     margin-bottom: 15px;
   }
 
@@ -844,10 +847,10 @@ html body main .my-card-listing {
     text-align: center;
     margin-bottom: 15px;
 
-   @media (max-width: 768px) {
-    font-size: 45px;
-    margin: 0;
-  }
+    @media (max-width: 768px) {
+      font-size: 45px;
+      margin: 0;
+    }
   }
 
   .card {
@@ -967,6 +970,7 @@ html body main .my-card-listing {
       padding-top: 1.4vw;
       margin: 0;
       font-size: 2.4vw;
+
       @media (max-width: 768px) {
         font-size: 45px;
         margin: 0;
@@ -987,9 +991,11 @@ html body main .my-card-listing {
       left: 50%;
       transform: translate(-50%, 0);
       width: 100%;
+
       @media (max-width: 768px) {
         font-size: 20px;
         position: relative;
+        margin: 0 0 20px 0;
       }
     }
 
@@ -1000,9 +1006,11 @@ html body main .my-card-listing {
       left: 50%;
       transform: translate(-50%, 0);
       width: 100%;
+
       @media (max-width: 768px) {
         font-size: 20px;
         position: relative;
+        margin: 0 0 20px 0;
       }
     }
 
@@ -1013,9 +1021,11 @@ html body main .my-card-listing {
       left: 50%;
       transform: translate(-50%, 0);
       width: 100%;
+
       @media (max-width: 768px) {
         font-size: 20px;
         position: relative;
+        margin: 0 0 20px 0;
       }
     }
   }
@@ -1157,6 +1167,10 @@ html body main .my-card-listing {
   position: absolute;
   left: -7px;
   top: 7px;
+
+  @media (max-width: 768px) {
+    position: relative;
+  }
 
   svg {
     font-size: 4vw;
@@ -1690,6 +1704,7 @@ html body #__nuxt .b-profileImage .dropdown-menu {
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
     text-align: center;
+
     h5 {
       font-size: 11px;
       letter-spacing: 2px;
@@ -1789,10 +1804,24 @@ html body #__nuxt .b-profileImage .dropdown-menu {
 
 .headwrapper .column_two .col-left {
   padding-right: 8px;
+
+  @media (max-width: 991px) {
+    padding: 0 12px;
+  }
+
+  @media (max-width: 768px) {
+    .stat_box {
+      background: #e57c13;
+    }
+  }
 }
 
 .headwrapper .column_two .col-right {
   padding-left: 8px;
+
+  @media (max-width: 991px) {
+    padding: 0 12px;
+  }
 }
 
 .headtohead_graph .card {
@@ -2167,20 +2196,24 @@ html body #__nuxt .b-profileImage .dropdown-menu {
   align-items: center;
   justify-content: flex-end;
 }
+
 // .dashboard-graph {
-  .share-lk-top {
-    position: relative;
-    &:hover {
-      .share-all-outer {
-        display: block;
-      }
-    }
-    svg {
-      cursor: pointer;
-      margin-right: 10px;
-      color: #1ce783;
+.share-lk-top {
+  position: relative;
+
+  &:hover {
+    .share-all-outer {
+      display: block;
     }
   }
+
+  svg {
+    cursor: pointer;
+    margin-right: 10px;
+    color: #1ce783;
+  }
+}
+
 // }
 .stoxticker_listing ul {
   padding: 0px;
@@ -2217,14 +2250,16 @@ html body #__nuxt .b-profileImage .dropdown-menu {
       float: left;
       display: inherit;
       padding-right: 20px;
-      &:nth-child(odd){
-        a{
-        color: #1de783;
+
+      &:nth-child(odd) {
+        a {
+          color: #1de783;
         }
       }
-      &:nth-child(even){
-        a{
-        color: #dd4d4d;
+
+      &:nth-child(even) {
+        a {
+          color: #dd4d4d;
         }
       }
     }
@@ -2437,20 +2472,32 @@ html body #__nuxt .b-profileImage .dropdown-menu {
     }
   }
 }
-.headwrapper , .product-image-card, .labels{
- li.yellow, label.yellow {
-  background-color: #e9cb1d !important;
+
+.headwrapper,
+.product-image-card,
+.labels {
+
+  li.yellow,
+  label.yellow {
+    background-color: #e9cb1d !important;
+  }
+
+  li.grey,
+  label.grey {
+    background-color: #cccccc !important;
+  }
+
+  li.green,
+  label.green {
+    background-color: #1de783 !important;
+  }
+
+  li.orange,
+  label.orange {
+    background-color: #e57c13 !important;
+  }
 }
- li.grey, label.grey {
-  background-color: #cccccc !important;
-}
- li.green, label.green {
-  background-color: #1de783 !important;
-}
- li.orange, label.orange {
-  background-color: #e57c13 !important;
-}
-}
+
 @media (max-width: 1300px) {
   #__nuxt .headwrapper .labels {
     display: block;
@@ -2502,9 +2549,11 @@ html body #__nuxt .b-profileImage .dropdown-menu {
   html body main .my-card-listing {
     .my-card {
       width: 33.333%;
-      .image-container{
+
+      .image-container {
         height: 29vw;
-        .card-image{
+
+        .card-image {
           max-height: 29vw;
         }
       }
@@ -2620,9 +2669,11 @@ html body #__nuxt .b-profileImage .dropdown-menu {
   html body main .my-card-listing {
     .my-card {
       width: 50%;
-      .image-container{
+
+      .image-container {
         height: 34vw;
-        .card-image{
+
+        .card-image {
           max-height: 32vw;
         }
       }
@@ -2683,6 +2734,16 @@ html body #__nuxt .b-profileImage .dropdown-menu {
 
     h3 {
       display: block;
+    }
+
+    @media (max-width: 768px) {
+      &.left h3 {
+        background: #e57c13;
+      }
+
+      &.right h3 {
+        background: #1de783;
+      }
     }
   }
 
@@ -2833,6 +2894,7 @@ html body #__nuxt .b-profileImage .dropdown-menu {
 }
 
 @media (max-width: 767px) {
+
   .stoxticker_page h2,
   .stoxticker_page h2,
   .stoxticker_page h2 {
@@ -2965,9 +3027,11 @@ html body #__nuxt .b-profileImage .dropdown-menu {
   html body main .my-card-listing {
     .my-card {
       width: 100%;
-      .image-container{
+
+      .image-container {
         height: 340px;
-        .card-image{
+
+        .card-image {
           max-height: 340px;
         }
       }
@@ -3401,6 +3465,11 @@ html body #__nuxt .b-profileImage .dropdown-menu {
       text-align: center;
       float: left;
 
+      @media (max-width: 1100px) {
+        padding: 8px 5px 5px 5px;
+        width: 231px;
+      }
+
       .dashboard-graph-footer-month-filter-item {
         display: inline;
         padding: 5px 6px 4px 6px;
@@ -3409,6 +3478,10 @@ html body #__nuxt .b-profileImage .dropdown-menu {
         font-size: 11px;
         margin: 0 3px;
         cursor: pointer;
+
+        @media (max-width: 1100px) {
+          margin: 0;
+        }
 
         &.active {
           background: $theme-btn-green;
@@ -3735,12 +3808,14 @@ html body #__nuxt .b-profileImage .dropdown-menu {
     fill: rgb(237, 236, 236) !important;
   }
 }
-.apexcharts-text{
+
+.apexcharts-text {
   font-family: "NexaBold", Helvetica, Arial, sans-serif !important;
-    color: #edecec !important;
-    text-transform: uppercase !important;
-    font-size: 11px !important;
-    fill: rgb(237, 236, 236) !important;
+  color: #edecec !important;
+  text-transform: uppercase !important;
+  font-size: 11px !important;
+  fill: rgb(237, 236, 236) !important;
+
   text {
     font-family: "NexaBold", Helvetica, Arial, sans-serif !important;
     color: #edecec !important;
@@ -3749,11 +3824,13 @@ html body #__nuxt .b-profileImage .dropdown-menu {
     fill: rgb(237, 236, 236) !important;
   }
 }
+
 .sales_graph .apexcharts-series {
   path {
     fill: #1de783;
   }
 }
+
 .apexcharts-toolbar {
   display: none !important;
 }
@@ -3767,15 +3844,17 @@ html body #__nuxt .b-profileImage .dropdown-menu {
     color: #14f078 !important;
   }
 }
-.headtohead_serach-out{
-.apexcharts-tooltip.apexcharts-theme-light{ 
-  background: rgb(39, 45, 51) !important;
-  border: 1px solid rgb(39, 45, 51) !important;
-    
-}
-.apexcharts-tooltip .apexcharts-tooltip-text-value{
-  color: rgb(237, 236, 236) !important;
-}
+
+.headtohead_serach-out {
+  .apexcharts-tooltip.apexcharts-theme-light {
+    background: rgb(39, 45, 51) !important;
+    border: 1px solid rgb(39, 45, 51) !important;
+
+  }
+
+  .apexcharts-tooltip .apexcharts-tooltip-text-value {
+    color: rgb(237, 236, 236) !important;
+  }
 }
 
 .apexcharts-tooltip.apexcharts-theme-light {
@@ -3893,14 +3972,20 @@ html body #__nuxt .b-profileImage .dropdown-menu {
   .trender-cards-footer-month-filter {
     display: inline-block;
   }
+
   @media (max-width: 768px) {
     width: 100% !important;
     text-align: right !important;
   }
 }
 
-#openSeeProblemPopup, #viewSalesHistory, #loginTopPopup, #submitAListingPopup, #disconnectSocialAccount,
-#updatePopup, #csvDeletePopup  {
+#openSeeProblemPopup,
+#viewSalesHistory,
+#loginTopPopup,
+#submitAListingPopup,
+#disconnectSocialAccount,
+#updatePopup,
+#csvDeletePopup {
   .modal-dialog {
     .modal-content {
       background: $theme-card-background-color;
@@ -4084,27 +4169,60 @@ html body #__nuxt .b-profileImage .dropdown-menu {
   .my-card {
     .image-container {
       height: 21vw;
+
       .card-image {
         max-height: 21vw;
       }
     }
   }
 }
+
 .embed-link {
   color: #fff;
 }
+
 .ss-h4 {
   text-align: right;
   width: 100%;
   margin-top: 15px;
   margin-bottom: 20px;
 }
-#loginTopPopup{
-  .modal-dialog{
+
+#loginTopPopup {
+  .modal-dialog {
     transform: translate(-50%, -50%);
     position: relative;
     top: 50%;
     left: 50%;
     margin: 0;
   }
+}
+
+.visible-mobile {
+  display: none !important;
+
+  @media (max-width: 768px) {
+    display: block !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .visible-not-mobile {
+    display: none !important;
+  }
+}
+
+@media (max-width: 1200px) {
+  html body main .featured-listing li.my-card {
+    .image-container {
+      height: 220px !important;
+
+      .card-image {
+        max-height: 220px !important;
+      }
+    }
+  }
+}
+html body main .featured-listing li.my-card .sxvalue.theme-btn {
+  font-size: 9px;
 }

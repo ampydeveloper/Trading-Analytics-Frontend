@@ -331,7 +331,7 @@
               </ul>
               <p class="dashboard-graph-footer-update-at float-right">
                 Last Updated - 
-                {{ stoxtickerData.last_timestamp }}
+                {{ (stoxtickerData.last_timestamp?stoxtickerData.last_timestamp:'N/A') }}
               </p>
             </div>
           </div>
@@ -416,24 +416,24 @@
 
               </h5>
               <div class="row" style="justify-content: center;">
-                <div class="bs-stats" style="width: 175px;">
+                <div class="bs-stats bs-stats1">
                   <h2>SX</h2>
                 </div>
-                <div class="bs-stats" style="width: 125px;">
-                  <h3>{{ intToString(data.total) }}@</h3>
+                <div class="bs-stats bs-stats2">
+                  <h3>{{ intToString(data.total) }}</h3>
                   <span class="tot-sla">TOTAL SLABS</span>
                 </div>
-                <div class="col-md-5 bs-stats">
-                  <h2>{{ (data.sale?data.sale:'') }}</h2>
-                  <span class="avg-sla">AVG. SLAB SALE</span>
+                <div class="bs-stats bs-stats3">
+                  <h2>${{ (data.sale?data.sale:0) }}</h2>
+                  <span class="avg-sla">TOTAL SX VALUE</span>
                 </div>
-                <div class="col-md-4 bs-stats">
+                <div class="bs-stats bs-stats4">
                   <div class="up_img">
                     <font-awesome-icon
                       :icon="['fas', 'caret-' + data.change_arrow]"
                     />
                   </div>
-                  <h2>{{ data.change }}</h2>
+                  <h2>{{ data.change }}%</h2>
                   <span class="cha-amo">CHANGE AMOUNT</span>
                 </div>
               </div>
@@ -987,7 +987,7 @@ export default {
     this.sxStoxtickerUrl = currentHref.replace('stoxticker', 'stox-sells')
 
     this.getData()
-    this.slabstoxGraph()
+    this.slabstoxGraph(90)
     this.getSoldListing()
     // this.getAllBoards()
     this.allBoardGraphFunc(2)
@@ -1040,8 +1040,6 @@ export default {
       $(this).parent().addClass('active')
       e.preventDefault()
     })
-
-    
   },
   components: {
     CardListItem,
@@ -1265,7 +1263,9 @@ export default {
                             fontFamily: 'NexaBold',
                           },
                         },
-                        type: 'category',
+                        // type: 'category',
+                        type: days == 2 ? 'category' : 'datetime',
+                tickAmount: days == 2 ? 24 : 6,
                         categories: item.sales_graph.labels,
                       },
                       yaxis: {
@@ -1275,10 +1275,19 @@ export default {
                             fontSize: '10px',
                             fontFamily: 'NexaBold',
                           },
+                          // formatter: (value, ind) => {
+                          //   let lblStr = `$${value}`
+                          //   return lblStr
+                          // },
                           formatter: (value, ind) => {
-                            let lblStr = `$${value}`
-                            return lblStr
-                          },
+                    let valCheck = value
+                    if (Number(value) === value && value % 1 !== 0) {
+                      let valCheck = Number(value).toFixed(2)
+                    }
+
+                    let lblStr = `$${valCheck}`
+                    return lblStr
+                  },
                         },
                       },
                       tooltip: {
@@ -1495,7 +1504,7 @@ export default {
           })
       })
     },
-    slabstoxGraph(days = 2) {
+    slabstoxGraph(days = 90) {
       try {
         // this.graphDataEmpty = false;
         this.$axios.$get(`get-sx-dashboard-graph/${days}`).then((res) => {
@@ -1514,8 +1523,8 @@ export default {
             this.sxSalesQty = res.data.qty
             this.sxChartOptions = {
               xaxis: {
-                type: days == 2 ? 'category': 'datetime',
-                tickAmount: days == 2 ? 24: 6,
+                type: days == 2 ? 'category' : 'datetime',
+                tickAmount: days == 2 ? 24 : 6,
                 categories: res.data.labels,
               },
               yaxis: {
@@ -1891,6 +1900,11 @@ ul.my-card-listing {
   text-transform: uppercase;
   outline: none;
   margin-right: 10px;
+
+  @media (max-width: 768px) {
+    padding: 20px 20px 17px 20px;
+  }
+
   &:after {
     display: none;
   }
@@ -1940,6 +1954,33 @@ ul.my-card-listing {
 }
 .stoxticker_page .bs-stats {
   height: auto;
+  position: relative;
+}
+.stoxticker_page {
+  .bs-stats1 {
+    width: 10vw;
+    @media (max-width: 768px) {
+      width: 100%;
+    }
+  }
+  .bs-stats2 {
+    width: 110px;
+    @media (max-width: 768px) {
+      width: 100%;
+    }
+  }
+  .bs-stats3 {
+    width: 34vw;
+    @media (max-width: 768px) {
+      width: 100%;
+    }
+  }
+  .bs-stats4 {
+    width: 22vw;
+    @media (max-width: 768px) {
+      width: 100%;
+    }
+  }
 }
 
 .search-stox-box,
@@ -2064,6 +2105,13 @@ ul.my-card-listing {
   text-align: right;
   padding-right: 12px;
 }
+@media (max-width: 1300px) {
+  .search-wrap {
+    max-width: 100%;
+    text-align: right;
+    flex: 100%;
+  }
+}
 @media (max-width: 991px) {
   .cat-wrap,
   .search-wrap {
@@ -2072,6 +2120,7 @@ ul.my-card-listing {
     flex: 100%;
   }
 }
+
 
 @media (max-width: 570px) {
   .top-btn .card-btn {

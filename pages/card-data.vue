@@ -88,7 +88,7 @@
               <div class="card-body dashboard-graph">
                 <h5 class="card-title_new">
                   <button class="theme-btn card-btn">
-                    *SX Value ${{ slabstoxValue }}
+                    *SX Value ${{ cardGraph.sx_value ? cardGraph.sx_value : 0 }}
                   </button>
                   <button :class="sx_icon_class + ' card-btn'">
                     <font-awesome-icon
@@ -575,7 +575,7 @@ export default {
       this.$router.push('/404')
     }
     this.getData()
-    this.updateGraph()
+    this.updateGraph(90)
     this.getSalesGraph()
   },
   watch: {
@@ -679,7 +679,8 @@ export default {
               fontFamily: 'NexaBold',
             },
           },
-          type: 'category',
+          type: 'datetime',
+          tickAmount: 6,
           categories: [],
         },
         tooltip: {
@@ -862,7 +863,7 @@ export default {
         this.$toast.success('There has been an error. Please try again.')
       }
     },
-    updateGraph(days = 2) {
+    updateGraph(days = 90) {
       try {
         this.$axios
           .$get(`get-single-card-graph/${this.id}/${days}`)
@@ -875,7 +876,10 @@ export default {
               this.salesQty = res.data.qty
               this.chartOptions = {
                 xaxis: {
-                  categories: res.data.labels,
+                  // categories: res.data.labels,
+                  type: days == 2 ? 'category' : 'datetime',
+                tickAmount: days == 2 ? 24 : 6,
+                categories: res.data.labels,
                 },
                 yaxis: {
                   labels: {
