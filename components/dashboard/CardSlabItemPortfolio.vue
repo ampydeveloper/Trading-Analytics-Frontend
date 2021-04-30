@@ -4,7 +4,7 @@
       {{ trimTitle(itemdata.title) }}
     </h4>
     <button class="theme-btn sxvalue">
-      SX $: {{ itemdata.sx_value }}
+      SX $:{{ itemdata.sx_value }}
       <span
         :class="(itemdata.sx_icon == 'up' ? 'high' : 'low') + ' float-right'"
         ><font-awesome-icon

@@ -29,6 +29,9 @@
             </div>
             <div class="image-conatiner">
               <img :src="card.cardImage" alt="data.title" />
+              <!-- <span v-if="card.grade != null" class="grade-image-text">{{
+        card.grade
+      }}</span> -->
             </div>
 
             <a

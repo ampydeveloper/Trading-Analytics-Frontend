@@ -693,7 +693,7 @@ slabstox.com
     </div>
 
     <div class="row board-search-list-outer" style="display:none;">
-      <div class="col-sm-6 board-search-list"  v-for="(itemdata, key) in boardSearch" :key='`boardSearch-${key}`'>
+      <div class="col-sm-12 col-md-12 col-lg-6 board-search-list"  v-for="(itemdata, key) in boardSearch" :key='`boardSearch-${key}`'>
 
             <div class="card">
               <div class="card-body dashboard-graph">

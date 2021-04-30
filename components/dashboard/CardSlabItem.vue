@@ -11,7 +11,7 @@
     </h4>
     <button class="theme-btn sxvalue">
       <span class="sxvalue-text">
-        SX $: {{ itemdata.price != null ? itemdata.price : 0 }}</span
+        SX $:{{ itemdata.price != null ? itemdata.price : 0 }}</span
       >
       <span
         :class="(itemdata.sx_icon == 'up' ? 'high' : 'low') + ' float-right'"

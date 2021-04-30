@@ -1,5 +1,5 @@
 <template>
-  <div class="col-md-11 col-sm-11 dashboard_page">
+  <div class="col-md-12 col-sm-12 col-lg-11 dashboard_page">
     <div class="row">
       <div class="col-md-12 pl-1 mb-4 mt-2">
         <div class="top-btn">

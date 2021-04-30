@@ -8,7 +8,7 @@
     </button> -->
     <button class="theme-btn sxvalue">
       <span class="sxvalue-text">
-        SX $: {{ itemdata.sx_value != null ? itemdata.sx_value : 0 }}</span
+        SX $:{{ itemdata.sx_value != null ? itemdata.sx_value : 0 }}</span
       >
       <span
         :class="(itemdata.sx_icon == 'up' ? 'high' : 'low') + ' float-right'"

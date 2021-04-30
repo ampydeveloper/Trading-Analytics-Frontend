@@ -88,11 +88,11 @@
             </div> 
             
             <div class="trender-cards-footer">
-                <button :class="(orderByPrice == 'up'? 'theme-red-btn':'theme-green-btn') + ' card-btn t-p-5'" @click="filterOrderBy('price'+orderByPrice)">
+                <button :class="orderByPriceClass + ' card-btn t-p-5'" @click="filterOrderBy('price'+orderByPrice)">
                     <font-awesome-icon v-if='orderByPrice !== undefined' :icon="['fas', 'long-arrow-alt-'+(orderByPrice=='up'?'down':'up')]" />&nbsp;&nbsp;$ Price
                 </button>
                 
-                <button :class="(orderByPercent == 'up'? 'theme-red-btn':'theme-green-btn') + ' card-btn t-p-5'" @click="filterOrderBy('percent'+orderByPercent)">
+                <button :class="orderByPercentClass + ' card-btn t-p-5'" @click="filterOrderBy('percent'+orderByPercent)">
                     <font-awesome-icon v-if='orderByPercent !== undefined' :icon="['fas', 'long-arrow-alt-'+(orderByPercent=='up'?'down':'up')]" />&nbsp;&nbsp;Percent %
                 </button>
             </div>
@@ -160,7 +160,9 @@ export default {
       smartKeyword: [],
       orderByPrice: 'up',
       orderByPercent: 'down',
-      orderBy: 'percentup'
+      orderBy: 'percentup',
+      orderByPriceClass: 'theme-btn',
+      orderByPercentClass: 'theme-green-btn'
     }
   },
   async mounted() {
@@ -168,8 +170,15 @@ export default {
   },
   methods: {
     filterOrderBy(orderType) {
-        if(orderType == 'priceup') { this.orderByPrice = 'down'; }else { this.orderByPrice = 'up'; }
-        if(orderType == 'percentup') { this.orderByPercent = 'down'; }else { this.orderByPercent = 'up'; }
+        if(orderType == 'priceup') { 
+          this.orderByPrice = 'down'; this.orderByPriceClass = 'theme-green-btn'; this.orderByPercentClass = 'theme-btn'; }
+          else { this.orderByPrice = 'up'; this.orderByPriceClass = 'theme-red-btn'; this.orderByPercentClass = 'theme-btn'; }
+        
+        if(orderType == 'percentup') {
+           this.orderByPercent = 'down'; this.orderByPercentClass = 'theme-green-btn'; this.orderByPriceClass = 'theme-btn'; }
+           else { this.orderByPercent = 'up'; this.orderByPercentClass = 'theme-red-btn'; this.orderByPriceClass = 'theme-btn'; }
+        // console.log(this.orderByPriceClass);
+        //  console.log(this.orderByPercentClass);
         this.orderBy = orderType
         this.search()
     },
