@@ -990,7 +990,7 @@ export default {
     this.slabstoxGraph(90)
     this.getSoldListing()
     // this.getAllBoards()
-    this.allBoardGraphFunc(2)
+    this.allBoardGraphFunc(90)
     this.logo = document.getElementById('sidebarLogo').src
 
     $('.custom-stox').on('click', function () {
@@ -1292,6 +1292,9 @@ export default {
                       },
                       tooltip: {
                         enabled: true,
+                        x: {
+            format: 'MM/dd/yy',
+          },
                         y: {
                           formatter: (value, ind) => {
                             let lblStr = `$${value}`
@@ -1412,7 +1415,7 @@ export default {
               $('.search-stox-box .search-bar input').val('')
               this.searchSlabs = res.data
               this.$toast.success('Stoxticker board created successfully.')
-              this.allBoardGraphFunc(2)
+              this.allBoardGraphFunc(90)
               // this.$router.push('/stoxticker')
             }
           })
@@ -1542,6 +1545,9 @@ export default {
               },
               tooltip: {
                 enabled: true,
+                x: {
+            format: 'MM/dd/yy',
+          },
                 y: {
                   formatter: (value, ind) => {
                     let lblStr = `$${value}`
@@ -1568,7 +1574,7 @@ export default {
         console.log(error)
       }
     },
-    allBoardGraphFunc(days = 2) {
+    allBoardGraphFunc(days = 90) {
       try {
         // this.graphDataEmpty = false;
         this.$axios.$get(`stoxticker/all-boards/${days}`).then((res) => {
@@ -1643,6 +1649,9 @@ export default {
                     },
                     tooltip: {
                       enabled: true,
+                      x: {
+            format: 'MM/dd/yy',
+          },
                       y: {
                         formatter: (value, ind) => {
                           let lblStr = `$${value}`
@@ -1741,6 +1750,9 @@ export default {
                 },
                 tooltip: {
                   enabled: true,
+                  x: {
+            format: 'MM/dd/yy',
+          },
                   y: {
                     formatter: (value, ind) => {
                       let lblStr = `$${value}`

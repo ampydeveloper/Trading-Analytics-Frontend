@@ -4174,6 +4174,16 @@ html body #__nuxt .b-profileImage .dropdown-menu {
         max-height: 21vw;
       }
     }
+    width: 20% !important;
+    @media (max-width: 1200px) {
+      width: 33.333% !important;
+    }
+    @media (max-width: 991px) {
+      width: 50% !important;
+    }
+    @media (max-width: 767px) {
+      width: 100% !important;
+    }
   }
 }
 
@@ -4201,12 +4211,12 @@ html body #__nuxt .b-profileImage .dropdown-menu {
 .visible-mobile {
   display: none !important;
 
-  @media (max-width: 768px) {
+  @media (max-width: 767px) {
     display: block !important;
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .visible-not-mobile {
     display: none !important;
   }
@@ -4225,4 +4235,40 @@ html body #__nuxt .b-profileImage .dropdown-menu {
 }
 html body main .featured-listing li.my-card .sxvalue.theme-btn {
   font-size: 9px;
+}
+.sx-pro-text {
+  position: absolute;
+  top: 18px;
+  left: 8px;
+  letter-spacing: 1.4px;
+  z-index: 9;
+  border: 1px solid #1ce783;
+  text-transform: uppercase;
+  float: left;
+  margin-top: -10px;
+  font-family: 'NexaBold', Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  border-radius: 2px;
+  padding: 3px 5px 0px 5px;
+  color: #000;
+  font-size: 10px;
+  background: #1ce783;
+}
+.grade-image-text {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  letter-spacing: 1.4px;
+  z-index: 9;
+  border: 1px solid #1ce783;
+  text-transform: uppercase;
+  float: left;
+  margin-top: -10px;
+  font-family: 'NexaBold', Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  border-radius: 2px;
+  padding: 3px 5px 0px 5px;
+  color: #000;
+  font-size: 10px;
+  background: #1ce783;
 }

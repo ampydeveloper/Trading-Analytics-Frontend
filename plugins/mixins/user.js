@@ -2,6 +2,10 @@ import Vue from 'vue';
 
 import { mapGetters } from 'vuex';
 
+import { OverlayScrollbarsPlugin } from 'overlayscrollbars-vue';
+Vue.use(OverlayScrollbarsPlugin);
+import "overlayscrollbars/css/OverlayScrollbars.css";
+
 // import VueMeta from 'vue-meta'
 // Vue.use(VueMeta)
 // Vue.use(VueMeta, {

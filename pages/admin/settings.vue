@@ -11,12 +11,12 @@
           <div class="table_wrapper ap">
             <form class="form-inline" v-on:submit.prevent="saveSettings">
               <div class="form_column">
-                <label>Default Slab Image</label>
+                <label>Default Basketball Image</label>
                 <div class="input-file">
-                  <img :src='src.slab' alt='Card-image' v-if='src.slab.length > 0' width="60" @click="viewImg(src.slab)"/>
+                  <img :src='src.basketball' alt='Card-image' v-if='src.basketball.length > 0' width="60" @click="viewImg(src.basketball)"/>
                   <input
                     type="file"
-                    model="slab"
+                    model="basketball"
                     placeholder="Image"
                     class="form-control"
                     accept="image/jpg"
@@ -24,6 +24,63 @@
                   />
                 </div>
               </div>
+              <div class="form_column">
+                <label>Default Baseball Image</label>
+                <div class="input-file">
+                  <img :src='src.baseball' alt='Card-image' v-if='src.baseball.length > 0' width="60" @click="viewImg(src.baseball)"/>
+                  <input
+                    type="file"
+                    model="baseball"
+                    placeholder="Image"
+                    class="form-control"
+                    accept="image/jpg"
+                    @change="assignImg"                  
+                  />
+                </div>
+              </div>
+              <div class="form_column">
+                <label>Default Football Image</label>
+                <div class="input-file">
+                  <img :src='src.football' alt='Card-image' v-if='src.football.length > 0' width="60" @click="viewImg(src.slab)"/>
+                  <input
+                    type="file"
+                    model="football"
+                    placeholder="Image"
+                    class="form-control"
+                    accept="image/jpg"
+                    @change="assignImg"                  
+                  />
+                </div>
+              </div>
+              <div class="form_column">
+                <label>Default Soccer Image</label>
+                <div class="input-file">
+                  <img :src='src.soccer' alt='Card-image' v-if='src.soccer.length > 0' width="60" @click="viewImg(src.soccer)"/>
+                  <input
+                    type="file"
+                    model="soccer"
+                    placeholder="Image"
+                    class="form-control"
+                    accept="image/jpg"
+                    @change="assignImg"                  
+                  />
+                </div>
+              </div>
+              <div class="form_column">
+                <label>Default Pokémon Image</label>
+                <div class="input-file">
+                  <img :src='src.pokemon' alt='Card-image' v-if='src.pokemon.length > 0' width="60" @click="viewImg(src.pokemon)"/>
+                  <input
+                    type="file"
+                    model="pokemon"
+                    placeholder="Image"
+                    class="form-control"
+                    accept="image/jpg"
+                    @change="assignImg"                  
+                  />
+                </div>
+              </div>
+              
               
               <div class="form_column border-bottom py-3">
                 <label>Default Listing Image</label>
@@ -92,13 +149,21 @@ export default {
     return {
       requestInProcess: false,
       settings:{
-        slab_image: '',
+        basketball_image: '',
+        baseball_image: '',
+        football_image: '',
+        soccer_image: '',
+        pokemon_image: '',
         listing_image: '',
         trenders_order: ['basketball', 'soccer','baseball', 'football', 'pokemon'],
         live_listings_order: ['basketball', 'soccer','baseball', 'football', 'pokemon']
       },
       src:{
-        slab: '',
+        basketball: '',
+        baseball: '',
+        football: '',
+        soccer: '',
+        pokemon: '',
         listing: ''
       }
     }
@@ -115,8 +180,7 @@ export default {
       draggable
   },
   methods: {
-    assignImg(event){
-      console.log()
+    assignImg(event){      
       const self = this
       if(event.target.files.length){
         var reader = new FileReader();
@@ -125,10 +189,10 @@ export default {
         }
         reader.readAsDataURL(event.target.files[0]); 
         this.settings[`${event.target.getAttribute('model')}_image`] = event.target.files[0]
+        console.log(this.settings);
       }
     },
-    viewImg(src){
-      console.log(src)
+    viewImg(src){  
       window.open(src, '_blank')
     },
     getSettings() {
@@ -141,7 +205,9 @@ export default {
             .then((res) => {
               if (res.status == 200) {
                 this.settings = res.data.data
-                this.src.slab = this.settings.slab_image
+                // this.src.football = res.data.data.football
+                // this.src.baseball = res.data.data.baseball
+                // this.src.baseball = res.data.data.baseball
                 this.src.listing = this.settings.listing_image
               }
               this.requestInProcess = false

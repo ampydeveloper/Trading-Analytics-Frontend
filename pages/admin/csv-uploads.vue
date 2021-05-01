@@ -181,7 +181,7 @@
     <b-modal id="csvDeletePopup" title="Delete CSV UPLOAD" hide-footer>
       <section class="ap p-4">
         <h6 class="text-capitalize">
-          Do you really want to delete CSV upload?
+          Do you really want to delete this data from the system?
         </h6>
         </section>
         <div class="ap clearfix text-right">

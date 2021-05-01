@@ -12,10 +12,6 @@
                 type="text"
                 aria-label="Search"
               />
-              <!-- <span
-                class="advance-search-label"
-                @click="openAdvanceSearch('card_one')"
-              >Advanced&nbsp;&nbsp;search</span> -->
               <div
                 class="autoselected"
                 v-if="autoselected.one.open && card_one.items.length > 0"
@@ -54,10 +50,6 @@
                 type="text"
                 aria-label="Search"
               />
-              <!-- <span
-                class="advance-search-label"
-                @click="openAdvanceSearch('card_two')"
-              >Advanced&nbsp;&nbsp;search</span> -->
               <div
                 class="autoselected"
                 v-if="autoselected.two.open && card_two.items.length > 0"
@@ -747,7 +739,7 @@ export default {
         },
         tooltip: {
           x: {
-            format: 'dd/MM/yy',
+            format: 'MM/dd/yy',
           },
         },
       },

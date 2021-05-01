@@ -7,7 +7,11 @@
         ><font-awesome-icon v-if='itemdata.sx_icon!==undefined' :icon="['fas', 'long-arrow-alt-'+itemdata.sx_icon]" /> ${{itemdata.sx_value}}</span
       >
     </button>
-    <div class="image-container">
+    <div class="image-container ddd54">
+      <span v-if="itemdata.is_sx == 1" class="sx-pro-text">SX PRO</span>
+      <span v-if="itemdata.grade != null" class="grade-image-text">{{
+        itemdata.grade
+      }}</span>
       <img
         class="card-image"
         @click="selectSlabCard(itemdata.id)"
@@ -44,9 +48,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.rfive-columns .my-card{
-    width: 20% !important;
-}
+// .rfive-columns .my-card{
+//     width: 20% !important;
+// }
 .my-card {
   display: inline-block;
   width: 200px;

@@ -106,9 +106,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.rfive-columns .my-card {
-  width: 20% !important;
-}
+// .rfive-columns .my-card {
+//   width: 20% !important;
+// }
 .my-card {
   display: inline-block;
   width: 200px;

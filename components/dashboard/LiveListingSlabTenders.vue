@@ -4,7 +4,9 @@
       <div class="card card-single-row-outer">
         <div class="card-body">
           <h5 class="card-title custom-smart-search-player-name">
-            <button class="card-btn theme-btn">{{ (card != 'pokemon'?card:'Pokémon') }}</button>
+            <button class="card-btn theme-btn">
+              {{ card != 'pokemon' ? card : 'Pokémon' }}
+            </button>
             <div class="internal-search-container">
               <input
                 v-model="keyword"
@@ -30,81 +32,118 @@
               </div>
             </div>
 
-             <div
+            <div
               class="trender-cards-footer"
               v-if="data.length >= 0 && !requestInProcess && showFilters"
             >
               <ul class="trender-cards-footer-month-filter">
                 <li
                   class="trender-cards-footer-month-filter-item"
-                  :class="[(filterVal == 1) ? 'active' : '', (filterVal == 1 && data.length == 0) ? 'nodata' : '' ]"
+                  :class="[
+                    filterVal == 1 ? 'active' : '',
+                    filterVal == 1 && data.length == 0 ? 'nodata' : '',
+                  ]"
                   @click="changeFilter(1)"
                 >
                   1D
                 </li>
                 <li
                   class="trender-cards-footer-month-filter-item"
-                  :class="[(filterVal == 2) ? 'active' : '', (filterVal == 2 && data.length == 0) ? 'nodata' : '' ]"
+                  :class="[
+                    filterVal == 2 ? 'active' : '',
+                    filterVal == 2 && data.length == 0 ? 'nodata' : '',
+                  ]"
                   @click="changeFilter(2)"
                 >
                   1W
                 </li>
                 <li
                   class="trender-cards-footer-month-filter-item"
-                  :class="[(filterVal == 3) ? 'active' : '', (filterVal == 3 && data.length == 0) ? 'nodata' : '' ]"
+                  :class="[
+                    filterVal == 3 ? 'active' : '',
+                    filterVal == 3 && data.length == 0 ? 'nodata' : '',
+                  ]"
                   @click="changeFilter(3)"
                 >
                   1M
                 </li>
                 <li
                   class="trender-cards-footer-month-filter-item"
-                  :class="[(filterVal == 4) ? 'active' : '', (filterVal == 4 && data.length == 0) ? 'nodata' : '' ]"
+                  :class="[
+                    filterVal == 4 ? 'active' : '',
+                    filterVal == 4 && data.length == 0 ? 'nodata' : '',
+                  ]"
                   @click="changeFilter(4)"
                 >
                   3M
                 </li>
                 <li
                   class="trender-cards-footer-month-filter-item"
-                  :class="[(filterVal == 5) ? 'active' : '', (filterVal == 5 && data.length == 0) ? 'nodata' : '' ]"
+                  :class="[
+                    filterVal == 5 ? 'active' : '',
+                    filterVal == 5 && data.length == 0 ? 'nodata' : '',
+                  ]"
                   @click="changeFilter(5)"
                 >
                   6M
                 </li>
                 <li
                   class="trender-cards-footer-month-filter-item"
-                  :class="[(filterVal == 6 && data.length > 0) ? 'active' : '', (filterVal == 6 && data.length == 0) ? 'nodata' : '' ]"
+                  :class="[
+                    filterVal == 6 && data.length > 0 ? 'active' : '',
+                    filterVal == 6 && data.length == 0 ? 'nodata' : '',
+                  ]"
                   @click="changeFilter(6)"
                 >
                   1Y
                 </li>
                 <li
                   class="trender-cards-footer-month-filter-item"
-                  :class="[(filterVal == 7 && data.length > 0) ? 'active' : '', (filterVal == 7 && data.length == 0) ? 'nodata' : '' ]"
+                  :class="[
+                    filterVal == 7 && data.length > 0 ? 'active' : '',
+                    filterVal == 7 && data.length == 0 ? 'nodata' : '',
+                  ]"
                   @click="changeFilter(7)"
                 >
                   5Y
                 </li>
               </ul>
-            </div> 
-            
-            <div class="trender-cards-footer">
-                <button :class="orderByPriceClass + ' card-btn t-p-5'" @click="filterOrderBy('price'+orderByPrice)">
-                    <font-awesome-icon v-if='orderByPrice !== undefined' :icon="['fas', 'long-arrow-alt-'+(orderByPrice=='up'?'down':'up')]" />&nbsp;&nbsp;$ Price
-                </button>
-                
-                <button :class="orderByPercentClass + ' card-btn t-p-5'" @click="filterOrderBy('percent'+orderByPercent)">
-                    <font-awesome-icon v-if='orderByPercent !== undefined' :icon="['fas', 'long-arrow-alt-'+(orderByPercent=='up'?'down':'up')]" />&nbsp;&nbsp;Percent %
-                </button>
             </div>
-            
+
+            <div class="trender-cards-footer">
+              <button
+                :class="orderByPriceClass + ' card-btn t-p-5'"
+                @click="filterOrderBy('price' + orderByPrice)"
+              >
+                <font-awesome-icon
+                  v-if="orderByPrice !== undefined"
+                  :icon="[
+                    'fas',
+                    'long-arrow-alt-' + (orderByPrice == 'up' ? 'down' : 'up'),
+                  ]"
+                />&nbsp;&nbsp;$ Price
+              </button>
+
+              <button
+                :class="orderByPercentClass + ' card-btn t-p-5'"
+                @click="filterOrderBy('percent' + orderByPercent)"
+              >
+                <font-awesome-icon
+                  v-if="orderByPercent !== undefined"
+                  :icon="[
+                    'fas',
+                    'long-arrow-alt-' +
+                      (orderByPercent == 'up' ? 'down' : 'up'),
+                  ]"
+                />&nbsp;&nbsp;Percent %
+              </button>
+            </div>
+
             <div class="ll-head-right float-right">
-                <nuxt-link
-                  class="card-link"
-                  :to="'/top-trenders?sport=' + card"
-                >
-                  View Top 100
-                  <font-awesome-icon :icon="['fas', 'chevron-right']" />
-                </nuxt-link>
+              <nuxt-link class="card-link" :to="'/top-trenders?sport=' + card">
+                View Top 100
+                <font-awesome-icon :icon="['fas', 'chevron-right']" />
+              </nuxt-link>
             </div>
           </h5>
           <div class="dataloader" v-if="requestInProcess">
@@ -135,19 +174,19 @@ import CardSlabItem from '~/components/dashboard/CardSlabItem'
 import vClickOutside from 'v-click-outside'
 export default {
   directives: {
-      clickOutside: vClickOutside.directive
+    clickOutside: vClickOutside.directive,
   },
   props: {
     card: {
-      type: String
+      type: String,
     },
     showFilters: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   components: {
-    CardSlabItem
+    CardSlabItem,
   },
   data() {
     return {
@@ -162,7 +201,7 @@ export default {
       orderByPercent: 'down',
       orderBy: 'percentup',
       orderByPriceClass: 'theme-btn',
-      orderByPercentClass: 'theme-green-btn'
+      orderByPercentClass: 'theme-green-btn',
     }
   },
   async mounted() {
@@ -170,24 +209,34 @@ export default {
   },
   methods: {
     filterOrderBy(orderType) {
-        if(orderType == 'priceup') { 
-          this.orderByPrice = 'down'; this.orderByPriceClass = 'theme-green-btn'; this.orderByPercentClass = 'theme-btn'; }
-          else { this.orderByPrice = 'up'; this.orderByPriceClass = 'theme-red-btn'; this.orderByPercentClass = 'theme-btn'; }
-        
-        if(orderType == 'percentup') {
-           this.orderByPercent = 'down'; this.orderByPercentClass = 'theme-green-btn'; this.orderByPriceClass = 'theme-btn'; }
-           else { this.orderByPercent = 'up'; this.orderByPercentClass = 'theme-red-btn'; this.orderByPriceClass = 'theme-btn'; }
-        // console.log(this.orderByPriceClass);
-        //  console.log(this.orderByPercentClass);
-        this.orderBy = orderType
-        this.search()
+      if (orderType == 'priceup') {
+        this.orderByPrice = 'down'
+        this.orderByPriceClass = 'theme-green-btn'
+        this.orderByPercentClass = 'theme-btn'
+      } else if (orderType == 'pricedown') {
+        this.orderByPrice = 'up'
+        this.orderByPriceClass = 'theme-red-btn'
+        this.orderByPercentClass = 'theme-btn'
+      }
+
+      if (orderType == 'percentup') {
+        this.orderByPercent = 'down'
+        this.orderByPercentClass = 'theme-green-btn'
+        this.orderByPriceClass = 'theme-btn'
+      } else if (orderType == 'percentdown') {
+        this.orderByPercent = 'up'
+        this.orderByPercentClass = 'theme-red-btn'
+        this.orderByPriceClass = 'theme-btn'
+      }
+      this.orderBy = orderType
+      this.search()
     },
     filterBy(data) {
       this.filterByKeword = data
       this.search()
     },
-    hideSmartSearch(event){
-      this.showSmartSearch = false;
+    hideSmartSearch(event) {
+      this.showSmartSearch = false
     },
     search() {
       try {
@@ -199,9 +248,9 @@ export default {
             sport: this.card,
             search: this.keyword,
             orderby: this.orderBy,
-            filterval: this.filterVal            
+            filterval: this.filterVal,
           })
-          .then(res => {
+          .then((res) => {
             this.requestInProcess = false
             if (res.status == 200) {
               this.data = res.data
@@ -218,18 +267,18 @@ export default {
         this.$axios
           .$post('search/get-smart-keyword-onlyname', {
             keyword: this.keyword,
-            sport: this.card
+            sport: this.card,
           })
-          .then(res => {
+          .then((res) => {
             //this.requestInProcess = false
             if (res.status == 200) {
-              if(this.keyword == res.keyword){
+              if (this.keyword == res.keyword) {
                 this.smartKeyword = res.data
                 this.showSmartSearch = true
               }
             }
           })
-          .catch(err => {
+          .catch((err) => {
             //this.requestInProcess = false
             console.log(err)
           })
@@ -247,8 +296,8 @@ export default {
     changeFilter(val) {
       this.filterVal = val
       this.search()
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -269,10 +318,10 @@ ul.my-card-listing {
 }
 .trender-cards-footer {
   display: inline-block;
-      margin-left: 5px;
-      // width: calc(100% - 453px);
-    text-align: left;
-    padding-left: 15px;
+  margin-left: 5px;
+  // width: calc(100% - 453px);
+  text-align: left;
+  padding-left: 15px;
   .trender-cards-footer-month-filter {
     list-style: none;
     background: $theme-off-white;
@@ -283,7 +332,7 @@ ul.my-card-listing {
     font-family: 'NexaBold', Helvetica, Arial, sans-serif;
     border-radius: 4px;
     text-align: center;
-        display: inline-block;
+    display: inline-block;
 
     .trender-cards-footer-month-filter-item {
       display: inline;
@@ -302,14 +351,14 @@ ul.my-card-listing {
 }
 
 .custom-smart-search-player-name {
-  .internal-search-container{
+  .internal-search-container {
     width: 200px;
     display: inline-grid;
     position: relative;
     padding-left: 20px;
     .card-title-search-field {
-        margin-left: 0px;
-        width: 100%;
+      margin-left: 0px;
+      width: 100%;
     }
     .display_keyword {
       position: absolute;

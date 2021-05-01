@@ -104,12 +104,12 @@ export default {
 .t-p-5 {
   padding: 5px;
 }
-.rfive-columns .my-card {
-  width: 20% !important;
-  @media (max-width: 767px) {
-    width: 100% !important;
-  }
-}
+// .rfive-columns .my-card {
+//   width: 20% !important;
+//   @media (max-width: 767px) {
+//     width: 100% !important;
+//   }
+// }
 .my-card {
   display: inline-block;
   width: 200px;
@@ -220,44 +220,6 @@ export default {
       font-style: italic;
     }
   }
-}
-.sx-pro-text {
-  position: absolute;
-  top: 18px;
-  left: 8px;
-  letter-spacing: 1.4px;
-  z-index: 9;
-  border: 1px solid #1ce783;
-  text-transform: uppercase;
-  float: left;
-  margin-top: -10px;
-  // font-family: 'CocogoosePro-Regular', Helvetica, Arial, sans-serif;
-  font-family: 'NexaBold', Helvetica, Arial, sans-serif;
-  font-weight: 400;
-  border-radius: 2px;
-  padding: 3px 5px 0px 5px;
-  color: #000;
-  font-size: 10px;
-  background: #1ce783;
-}
-.grade-image-text {
-  position: absolute;
-  bottom: 8px;
-  left: 8px;
-  letter-spacing: 1.4px;
-  z-index: 9;
-  border: 1px solid #1ce783;
-  text-transform: uppercase;
-  float: left;
-  margin-top: -10px;
-  // font-family: 'CocogoosePro-Regular', Helvetica, Arial, sans-serif;
-  font-family: 'NexaBold', Helvetica, Arial, sans-serif;
-  font-weight: 400;
-  border-radius: 2px;
-  padding: 3px 5px 0px 5px;
-  color: #000;
-  font-size: 10px;
-  background: #1ce783;
 }
 .my-card-view-link {
   display: none;

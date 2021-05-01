@@ -14,19 +14,27 @@
             <div class="dataloader" v-if="requestInProcessFeatured">
               <b-spinner variant="success" label="Spinning"></b-spinner>
             </div>
-            <div class="featured-listing-outer">
-              <ul class="my-card-listing featured-listing">
-                <CardSlabItem
-                  v-for="item in featuredListingItems"
-                  :key="item.id"
-                  :itemdata="item"
-                  :activeSt="
-                    item.id == cardActiveId ? !cardsActive : cardsActive
-                  "
-                  @toggleCardActive="toggleCardActive"
-                  @updateGraph="updateGraph"
-                />
-              </ul>
+            <div
+              class="featured-listing-outer"
+              :style="'height:' + featureHeight + ';'"
+            >
+              <overlay-scrollbars>
+                <ul
+                  class="my-card-listing featured-listing"
+                  :style="'height:' + featureHeight + ';'"
+                >
+                  <CardSlabItem
+                    v-for="item in featuredListingItems"
+                    :key="item.id"
+                    :itemdata="item"
+                    :activeSt="
+                      item.id == cardActiveId ? !cardsActive : cardsActive
+                    "
+                    @toggleCardActive="toggleCardActive"
+                    @updateGraph="updateGraph"
+                  />
+                </ul>
+              </overlay-scrollbars>
             </div>
             <div
               class="empty-result"
@@ -375,6 +383,7 @@ import CardListItem from '~/components/dashboard/CardListItem'
 import MyListing from '~/components/dashboard/MyListing'
 import { BASE_URL } from '../constants/keys'
 import $ from 'jquery'
+// import 'overlayscrollbars-vue/css/OverlayScrollbars.css';
 
 export default {
   transition: 'fade',
@@ -415,6 +424,16 @@ export default {
     this.$store.dispatch('advancesearch/fetchAttributes')
     // this.print()
   },
+  updated() {
+    this.featureHeight =
+      $('.featured-listing .my-card').outerHeight() + 20 + 'px'
+
+    $(window).resize(function () {
+      this.featureHeight =
+        $('.featured-listing .my-card').outerHeight() + 20 + 'px'
+      // console.log($('.featured-listing .my-card').outerHeight())
+    })
+  },
   components: {
     CardListItem,
     CardSlabItem,
@@ -423,6 +442,7 @@ export default {
   },
   data() {
     return {
+      featureHeight: '400px',
       cardsActive: false,
       cardActiveId: 0,
       cardActiveTitle: '',
@@ -505,7 +525,7 @@ export default {
         },
         tooltip: {
           x: {
-            format: 'dd/MM/yy',
+            format: 'MM/dd/yy',
           },
         },
       },
@@ -864,7 +884,7 @@ ul.featured-listing {
     padding-top: 25px;
     padding-bottom: 25px;
     position: relative;
-    
+
     @media (max-width: 1200px) {
       padding-left: 15px !important;
       padding-right: 15px !important;
@@ -878,7 +898,7 @@ ul.featured-listing {
 
 @media (max-width: 1200px) {
   .featured-listing-outer {
-    overflow-x: scroll;
+    // overflow-x: scroll;
     margin: 0 -15px;
     .featured-listing {
       min-width: 936px;

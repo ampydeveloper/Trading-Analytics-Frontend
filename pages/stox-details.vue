@@ -356,9 +356,7 @@ export default {
   },
   mounted() {
     if (this.$route.query.board != null) {
-      this.getStoxtickerData()
-    } else {
-      //error
+      this.getStoxtickerData(90)
     }
   },
   components: {
