@@ -59,15 +59,16 @@
           >
             <h4 class="featured-graph-title">
               <span class="fg-title">{{ cardActiveTitle }}</span>
+              <div class="fg-slabbstox-ticker float-right">
+                <nuxt-link class="card-link" to="/stoxticker">
+                  Get the Ticker
+                  <font-awesome-icon :icon="['fas', 'chevron-right']" />
+                </nuxt-link>
 
-              <nuxt-link class="card-link float-right" to="/stoxticker">
-                Get the Ticker
-                <font-awesome-icon :icon="['fas', 'chevron-right']" />
-              </nuxt-link>
-
-              <button class="theme-btn card-btn btn-sxvalue float-right">
-                Slabstox ${{ stoxtickerData.sale }}
-              </button>
+                <button class="theme-btn card-btn btn-sxvalue">
+                  Slabstox ${{ stoxtickerData.sale }}
+                </button>
+              </div>
             </h4>
             <h5 class="card-title">
               <button
@@ -231,7 +232,7 @@
                 </li>
               </ul>
               <p class="dashboard-graph-footer-update-at float-right">
-                Last Updated - {{ (last_timestamp?last_timestamp:'N/A') }}
+                Last Updated - {{ last_timestamp ? last_timestamp : 'N/A' }}
               </p>
             </div>
           </div>
@@ -337,7 +338,7 @@
         </div>
       </div>
     </div>
-  
+
     <b-modal
       id="openSeeProblemPopup"
       title="EXPORT DATA"
@@ -425,11 +426,11 @@ export default {
   },
   updated() {
     this.featureHeight =
-      $('.featured-listing .my-card').outerHeight() + 20 + 'px'
+      $('.featured-listing .my-card').outerHeight() + 10 + 'px'
 
     $(window).resize(function () {
       this.featureHeight =
-        $('.featured-listing .my-card').outerHeight() + 20 + 'px'
+        $('.featured-listing .my-card').outerHeight() + 10 + 'px'
       // console.log($('.featured-listing .my-card').outerHeight())
     })
   },
@@ -991,5 +992,21 @@ ul.featured-listing {
 .slab_image_canvas {
   position: absolute;
   left: 20px;
+}
+@media (max-width: 768px) {
+  .fg-title {
+    display: block;
+    width: 100%;
+    margin-bottom: 5px;
+  }
+  .fg-slabbstox-ticker {
+    margin-bottom: 5px;
+    text-align: right;
+    width: 100%;
+    .card-link {
+      margin-bottom: 5px !important;
+    display: inline-block !important;
+    }
+  }
 }
 </style>

@@ -1,7 +1,9 @@
 <template>
   <div class="col-md-12 col-sm-12 listing-lebron" v-if="card">
     <div class="row headwrapper">
-      <div class="col-md-4 col-sm-4 t-p-5 product-details-col-md-4 column_one">
+      <div
+        class="col-lg-4 col-md-12 col-sm-12 t-p-5 product-details-col-md-4 column_one"
+      >
         <div class="card">
           <div class="card-body product-image-card">
             <h5 class="card-title product-title">
@@ -84,7 +86,7 @@
         </div>
       </div>
 
-      <div class="col-md-8 pr-0">
+      <div class="col-lg-8 col-md-12 pr-0 column_graph_sales_stats">
         <div class="row">
           <div class="col-md-12">
             <div class="card">
@@ -881,8 +883,8 @@ export default {
                 xaxis: {
                   // categories: res.data.labels,
                   type: days == 2 ? 'category' : 'datetime',
-                tickAmount: days == 2 ? 24 : 6,
-                categories: res.data.labels,
+                  tickAmount: days == 2 ? 24 : 6,
+                  categories: res.data.labels,
                 },
                 yaxis: {
                   labels: {
@@ -1472,6 +1474,13 @@ ul.my-card-listing {
   padding: 15px 15px;
   border-radius: 2px;
   text-transform: initial;
+  word-wrap: break-word;
+    -ms-word-break: break-all;
+    word-break: break-all;
+    word-break: break-word;
+    -ms-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
 }
 .shar-text {
   margin-left: 20px;
@@ -1484,9 +1493,15 @@ ul.my-card-listing {
     margin-right: 5px;
     float: left;
     margin-top: 10px;
+    @media (max-width: 767px) {
+width: 100%;
+    }
   }
   .slab_graph {
     width: 80%;
+     @media (max-width: 767px) {
+width: 100%;
+    }
   }
 }
 .g-download-img-all {
@@ -1517,8 +1532,12 @@ ul.my-card-listing {
       }
     }
   }
+  @media (max-width: 768px) {
+    padding: 0;
+    font-size: 10px;
+  }
 }
-@media (max-width: 768px) {
+@media (max-width: 991px) {
   .headwrapper .card-body .image-conatiner {
     text-align: center;
     padding: 20px 0 113px 0;
@@ -1529,8 +1548,20 @@ ul.my-card-listing {
     top: 0;
     transform: translate(0px, 0px);
   }
+  .listing-lebron .column_graph_sales_stats {
+    padding-right: 15px !important;
+  }
+  .t-p-5 {
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+  
 }
-
+@media (max-width: 767px) {
+.pr-0 {
+    padding-right: 15px !important;
+  }
+}
 // .grade-image-text{
 //   position: absolute;
 //   bottom: 26.5vw;

@@ -4040,10 +4040,27 @@ html body #__nuxt .b-profileImage .dropdown-menu {
     }
   }
 }
+@media (max-width: 768px) {
+  #viewSalesHistory{
+  .modal-dialog {
+    margin: 2px;
+  }
+  .sale-h-out {
 
+      .table th,
+      .table td {
+        padding: 7px;
+      }
+
+  }
+  }
+}
 #openSeeProblemPopup___BV_modal_outer_ .modal-dialog {
   width: 80%;
   max-width: 1000px;
+  @media (max-width: 767px) {
+    width: auto;
+  }
 }
 
 #addToPortfolioPurchasePrice .modal-content {

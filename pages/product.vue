@@ -926,6 +926,18 @@ export default {
   // }
 }
 
+@media (max-width: 991px) {
+ .product-details .t-p-5 {
+    padding-right: 15px !important;
+    padding-left: 15px !important;
+    padding-bottom: 5px !important;
+  }
+}
+    @media (max-width: 767px) {
+  .pr-0 {
+    padding-right: 15px !important;
+  }
+}
 #specsDetails,
 #openSeeProblemPopup {
   .modal-dialog {
@@ -984,4 +996,15 @@ export default {
     color: #212529;
   }
 }
+   @media (max-width: 767px) {
+     #specsDetails .modal-dialog {
+    .modal-content {
+      .modal-body {
+        ul li {
+              width: calc(100% - 20px);
+        }
+      }
+    }
+   }
+   }
 </style>

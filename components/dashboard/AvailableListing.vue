@@ -185,4 +185,10 @@ export default {
   padding-left: 5px;
   padding-right: 5px;
 }
+@media (max-width: 991px) {
+  .t-p-5{
+        padding-right: 15px;
+    padding-left: 15px;
+  }
+}
 </style>

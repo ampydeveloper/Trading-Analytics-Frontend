@@ -6,12 +6,6 @@ import { OverlayScrollbarsPlugin } from 'overlayscrollbars-vue';
 Vue.use(OverlayScrollbarsPlugin);
 import "overlayscrollbars/css/OverlayScrollbars.css";
 
-// import VueMeta from 'vue-meta'
-// Vue.use(VueMeta)
-// Vue.use(VueMeta, {
-//     metaInfo: {},
-// })
-
 const User = {
     install(Vue, option) {
         Vue.mixin({
@@ -25,8 +19,6 @@ const User = {
                     isDataEntry: false
                 }
             },
-            // metaInfo() {},
-            // metaInfo: {},
             computed: {
                 ...mapGetters({
                     user: 'loggedInUser',
@@ -80,8 +72,6 @@ const User = {
                     }
                 },
                 guestMiddleware() {
-                    console.log(this.$route.path);
-
                     if (this.user) {
                         if (this.user.roles && this.user.roles[0].name != 'user') {
                             this.$router.push('/admin')

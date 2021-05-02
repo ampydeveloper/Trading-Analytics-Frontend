@@ -341,7 +341,6 @@ export default {
     },
   },
   mounted() {
-    console.log('YUH')
     if (this.user == null) {
       this.logout()
     }

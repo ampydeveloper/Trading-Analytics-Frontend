@@ -439,7 +439,7 @@ export default {
         },
         tooltip: {
           x: {
-            format: 'dd/MM/yy',
+            format: 'MM/dd/yy',
           },
         },
       },
