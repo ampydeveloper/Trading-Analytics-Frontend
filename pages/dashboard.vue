@@ -231,7 +231,7 @@
                 </li>
               </ul>
               <p class="dashboard-graph-footer-update-at float-right">
-                Last Updated - {{ last_timestamp }}
+                Last Updated - {{ (last_timestamp?last_timestamp:'N/A') }}
               </p>
             </div>
           </div>
@@ -337,8 +337,7 @@
         </div>
       </div>
     </div>
-    <MyListing />
-
+  
     <b-modal
       id="openSeeProblemPopup"
       title="EXPORT DATA"
@@ -380,7 +379,7 @@
 <script>
 import CardSlabItem from '~/components/dashboard/CardSlabItem'
 import CardListItem from '~/components/dashboard/CardListItem'
-import MyListing from '~/components/dashboard/MyListing'
+// import MyListing from '~/components/dashboard/MyListing'
 import { BASE_URL } from '../constants/keys'
 import $ from 'jquery'
 // import 'overlayscrollbars-vue/css/OverlayScrollbars.css';
@@ -437,7 +436,7 @@ export default {
   components: {
     CardListItem,
     CardSlabItem,
-    MyListing,
+    // MyListing,
     VueApexCharts: () => import('vue-apexcharts'),
   },
   data() {
@@ -523,11 +522,11 @@ export default {
           tickAmount: 6,
           categories: [],
         },
-        tooltip: {
-          x: {
-            format: 'MM/dd/yy',
-          },
-        },
+        // tooltip: {
+        //   x: {
+        //     format: 'MM/dd/yy',
+        //   },
+        // },
       },
     }
   },
@@ -749,6 +748,9 @@ export default {
                     },
                     tooltip: {
                       enabled: true,
+                      x: {
+                        format: 'MM/dd/yy',
+                      },
                       y: {
                         formatter: (value, ind) => {
                           let lblStr = `$${value}`

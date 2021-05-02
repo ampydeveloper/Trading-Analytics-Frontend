@@ -1265,7 +1265,7 @@ export default {
                         },
                         // type: 'category',
                         type: days == 2 ? 'category' : 'datetime',
-                tickAmount: days == 2 ? 24 : 6,
+                        tickAmount: days == 2 ? 24 : 6,
                         categories: item.sales_graph.labels,
                       },
                       yaxis: {
@@ -1280,21 +1280,21 @@ export default {
                           //   return lblStr
                           // },
                           formatter: (value, ind) => {
-                    let valCheck = value
-                    if (Number(value) === value && value % 1 !== 0) {
-                      let valCheck = Number(value).toFixed(2)
-                    }
+                            let valCheck = value
+                            if (Number(value) === value && value % 1 !== 0) {
+                              let valCheck = Number(value).toFixed(2)
+                            }
 
-                    let lblStr = `$${valCheck}`
-                    return lblStr
-                  },
+                            let lblStr = `$${valCheck}`
+                            return lblStr
+                          },
                         },
                       },
                       tooltip: {
                         enabled: true,
                         x: {
-            format: 'MM/dd/yy',
-          },
+                          format: 'MM/dd/yy',
+                        },
                         y: {
                           formatter: (value, ind) => {
                             let lblStr = `$${value}`
@@ -1546,8 +1546,8 @@ export default {
               tooltip: {
                 enabled: true,
                 x: {
-            format: 'MM/dd/yy',
-          },
+                  format: 'MM/dd/yy',
+                },
                 y: {
                   formatter: (value, ind) => {
                     let lblStr = `$${value}`
@@ -1650,8 +1650,8 @@ export default {
                     tooltip: {
                       enabled: true,
                       x: {
-            format: 'MM/dd/yy',
-          },
+                        format: 'MM/dd/yy',
+                      },
                       y: {
                         formatter: (value, ind) => {
                           let lblStr = `$${value}`
@@ -1751,8 +1751,8 @@ export default {
                 tooltip: {
                   enabled: true,
                   x: {
-            format: 'MM/dd/yy',
-          },
+                    format: 'MM/dd/yy',
+                  },
                   y: {
                     formatter: (value, ind) => {
                       let lblStr = `$${value}`
@@ -2132,7 +2132,6 @@ ul.my-card-listing {
     flex: 100%;
   }
 }
-
 
 @media (max-width: 570px) {
   .top-btn .card-btn {
