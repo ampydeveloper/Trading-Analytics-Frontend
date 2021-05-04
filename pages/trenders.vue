@@ -5,14 +5,124 @@
         <div class="card card-single-row-outer myportfolio">
           <div class="card-body">
             <h5 class="card-title">
+              <div class="card-btn-head-outer">
               <button class="theme-light-grey-btn card-btn">
                 Top Trenders
               </button>
+              </div>
+
+              <div
+              class="trender-cards-footer"
+              v-if="recentListingItems.length >= 0 && !requestInProcess"
+            >
+              <ul class="trender-cards-footer-month-filter">
+                <li
+                  class="trender-cards-footer-month-filter-item"
+                  :class="[
+                    filterVal == 1 ? 'active' : '',
+                    filterVal == 1 && recentListingItems.length == 0 ? 'nodata' : '',
+                  ]"
+                  @click="changeFilter(1)"
+                >
+                  1D
+                </li>
+                <li
+                  class="trender-cards-footer-month-filter-item"
+                  :class="[
+                    filterVal == 2 ? 'active' : '',
+                    filterVal == 2 && recentListingItems.length == 0 ? 'nodata' : '',
+                  ]"
+                  @click="changeFilter(2)"
+                >
+                  1W
+                </li>
+                <li
+                  class="trender-cards-footer-month-filter-item"
+                  :class="[
+                    filterVal == 3 ? 'active' : '',
+                    filterVal == 3 && recentListingItems.length == 0 ? 'nodata' : '',
+                  ]"
+                  @click="changeFilter(3)"
+                >
+                  1M
+                </li>
+                <li
+                  class="trender-cards-footer-month-filter-item"
+                  :class="[
+                    filterVal == 4 ? 'active' : '',
+                    filterVal == 4 && recentListingItems.length == 0 ? 'nodata' : '',
+                  ]"
+                  @click="changeFilter(4)"
+                >
+                  3M
+                </li>
+                <li
+                  class="trender-cards-footer-month-filter-item"
+                  :class="[
+                    filterVal == 5 ? 'active' : '',
+                    filterVal == 5 && recentListingItems.length == 0 ? 'nodata' : '',
+                  ]"
+                  @click="changeFilter(5)"
+                >
+                  6M
+                </li>
+                <li
+                  class="trender-cards-footer-month-filter-item"
+                  :class="[
+                    filterVal == 6 && recentListingItems.length > 0 ? 'active' : '',
+                    filterVal == 6 && recentListingItems.length == 0 ? 'nodata' : '',
+                  ]"
+                  @click="changeFilter(6)"
+                >
+                  1Y
+                </li>
+                <li
+                  class="trender-cards-footer-month-filter-item"
+                  :class="[
+                    filterVal == 7 && recentListingItems.length > 0 ? 'active' : '',
+                    filterVal == 7 && recentListingItems.length == 0 ? 'nodata' : '',
+                  ]"
+                  @click="changeFilter(7)"
+                >
+                  5Y
+                </li>
+              </ul>
+            </div>
+
+            <div class="trender-cards-footer">
+              <button
+                :class="orderByPriceClass + ' card-btn t-p-5'"
+                @click="filterOrderBy('price' + orderByPrice)"
+              >
+                <font-awesome-icon
+                  v-if="orderByPrice !== undefined"
+                  :icon="[
+                    'fas',
+                    'long-arrow-alt-' + (orderByPrice == 'up' ? 'down' : 'up'),
+                  ]"
+                />&nbsp;&nbsp;$ Price
+              </button>
+
+              <button
+                :class="orderByPercentClass + ' card-btn t-p-5'"
+                @click="filterOrderBy('percent' + orderByPercent)"
+              >
+                <font-awesome-icon
+                  v-if="orderByPercent !== undefined"
+                  :icon="[
+                    'fas',
+                    'long-arrow-alt-' +
+                      (orderByPercent == 'up' ? 'down' : 'up'),
+                  ]"
+                />&nbsp;&nbsp;Percent %
+              </button>
+            </div>
+
               <!-- <input  v-model="keyword" @keyup="getRecentListing()" class="card-title-search-field" type="text" placeholder="search"> -->
-              <nuxt-link class="card-link float-right" :to="'/top-trenders'">
+              <!-- <nuxt-link class="card-link float-right" :to="'/top-trenders'">
                 View Top 25
                 <font-awesome-icon :icon="['fas', 'chevron-right']" />
-              </nuxt-link>
+              </nuxt-link> -->
             </h5>
             <div class="dataloader" v-if="requestInProcessRecent">
               <b-spinner variant="success" label="Spinning"></b-spinner>
@@ -95,18 +205,53 @@ export default {
       noMoreData: false,
       keyword: null,
       cards: [],
+      filterVal: 4,
+      orderByPrice: 'up',
+      orderByPercent: 'down',
+      orderBy: 'percentup',
+      orderByPriceClass: 'theme-btn',
+      orderByPercentClass: 'theme-green-btn',
     }
   },
   methods: {
+    changeFilter(val) {
+      this.filterVal = val
+      this.getRecentListing()
+    },
+    filterOrderBy(orderType) {
+      if (orderType == 'priceup') {
+        this.orderByPrice = 'down'
+        this.orderByPriceClass = 'theme-green-btn'
+        this.orderByPercentClass = 'theme-btn'
+      } else if (orderType == 'pricedown') {
+        this.orderByPrice = 'up'
+        this.orderByPriceClass = 'theme-red-btn'
+        this.orderByPercentClass = 'theme-btn'
+      }
+
+      if (orderType == 'percentup') {
+        this.orderByPercent = 'down'
+        this.orderByPercentClass = 'theme-green-btn'
+        this.orderByPriceClass = 'theme-btn'
+      } else if (orderType == 'percentdown') {
+        this.orderByPercent = 'up'
+        this.orderByPercentClass = 'theme-red-btn'
+        this.orderByPriceClass = 'theme-btn'
+      }
+      this.orderBy = orderType
+      this.getRecentListing()
+    },
     getRecentListing() {
       try {
         this.recentListingItems = []
         this.requestInProcessRecent = true
         this.$axios
           .$post('search/slab-listing', {
-            take: 12,
-            search: this.keyword,
+            take: 5,
+            // search: this.keyword,
             top_trend: true,
+            orderby: this.orderBy,
+            filterval: this.filterVal,
           })
           .then((res) => {
             this.requestInProcessRecent = false
@@ -289,6 +434,12 @@ export default {
     text-transform: uppercase;
     text-align: center;
     color: #ffffff;
+  }
+}
+.card-single-row-outer.myportfolio{
+  .theme-green-btn{
+    border: 1px solid #212529;
+    padding: 7px 11px 4px 11px;
   }
 }
 </style>

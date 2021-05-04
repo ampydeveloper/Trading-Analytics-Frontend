@@ -658,6 +658,9 @@ slabstox.com
                     :src="itemdata.cardImage"
                     :alt="itemdata.id"
                   />
+                    <span v-if="itemdata.grade != null" class="grade-image-text">{{
+                itemdata.grade
+              }}</span>
                 </div>
                 <button class="my-card-view-listing add-to-board">
                   Add to Board

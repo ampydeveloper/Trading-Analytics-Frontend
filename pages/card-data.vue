@@ -12,7 +12,7 @@
             <ul class="labels clearfix">
               <li v-if="card.rc == 'yes'" class="grey">Rookie</li>
               <li class="green">{{ card.brand }}</li>
-              <li v-if="card.grade != null" class="yellow">{{ card.grade }}</li>
+              <!-- <li v-if="card.grade != null" class="yellow">{{ card.grade }}</li> -->
               <!-- <li class="orange">trender</li> -->
             </ul>
             <div class="icons-container" v-if="user.full_name != null">
@@ -31,9 +31,9 @@
             </div>
             <div class="image-conatiner">
               <img :src="card.cardImage" alt="data.title" />
-              <!-- <span v-if="card.grade != null" class="grade-image-text">{{
-        card.grade
-      }}</span> -->
+              <span v-if="card.grade != null" class="grade-image-text">{{
+                card.grade
+              }}</span>
             </div>
 
             <a
@@ -682,7 +682,7 @@ export default {
               colors: '#edecec',
               fontSize: '10px',
               fontFamily: 'NexaBold',
-            },
+            },        
           },
           type: 'datetime',
           tickAmount: 6,
@@ -875,6 +875,7 @@ export default {
           .then((res) => {
             if (res.status == 200) {
               this.activeDaysGraph = days
+              // console.log(this.$moment().format('MMMM DD Y - hh:mm:ss A'));
               // if (this.initGraphLabelLength != res.data.values.length) {
               // console.log(res.data);
               this.series = [{ name: 'SX', data: res.data.values }]
@@ -885,6 +886,22 @@ export default {
                   type: days == 2 ? 'category' : 'datetime',
                   tickAmount: days == 2 ? 24 : 6,
                   categories: res.data.labels,
+                //   labels: {
+                //         format: days == 2 ? 'HH:mm' : 'MM/dd/yy'
+                // //     formatter: function (value, timestamp) {
+                // //       console.log(timestamp);
+                // //       // return new Date(timestamp)
+                // // const date = new Date(timestamp)
+                // //       // return value;
+                // //       if (days == 2) {
+                // //  const hours = date.getHours()
+                // //       const mins = date.getMinutes()
+                // //        return hours+':'+mins;
+                // //       } else {
+                // //         return value;
+                // //       }
+                // //     },
+                //   },
                 },
                 yaxis: {
                   labels: {
@@ -906,6 +923,9 @@ export default {
                 },
                 tooltip: {
                   enabled: true,
+                  // x: {
+                  //   format: days == 2 ? 'HH:mm' : 'MM/dd/yy',
+                  // },
                   y: {
                     formatter: (value, ind) => {
                       let lblStr = `$${value}`
@@ -1475,12 +1495,12 @@ ul.my-card-listing {
   border-radius: 2px;
   text-transform: initial;
   word-wrap: break-word;
-    -ms-word-break: break-all;
-    word-break: break-all;
-    word-break: break-word;
-    -ms-hyphens: auto;
-    -webkit-hyphens: auto;
-    hyphens: auto;
+  -ms-word-break: break-all;
+  word-break: break-all;
+  word-break: break-word;
+  -ms-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
 }
 .shar-text {
   margin-left: 20px;
@@ -1494,13 +1514,13 @@ ul.my-card-listing {
     float: left;
     margin-top: 10px;
     @media (max-width: 767px) {
-width: 100%;
+      width: 100%;
     }
   }
   .slab_graph {
     width: 80%;
-     @media (max-width: 767px) {
-width: 100%;
+    @media (max-width: 767px) {
+      width: 100%;
     }
   }
 }
@@ -1555,29 +1575,31 @@ width: 100%;
     padding-right: 15px;
     padding-left: 15px;
   }
-  
 }
 @media (max-width: 767px) {
-.pr-0 {
+  .pr-0 {
     padding-right: 15px !important;
   }
 }
-// .grade-image-text{
-//   position: absolute;
-//   bottom: 26.5vw;
-//   left: 8px;
-//   letter-spacing: 1.4px;
-//   z-index: 9;
-//   border: 1px solid #1ce783;
-//     text-transform: uppercase;
-//     float: left;
-//     margin-top: -10px;
-//     font-family: "NexaBold", Helvetica, Arial, sans-serif;
-//     font-weight: 400;
-//     border-radius: 2px;
-//     padding: 3px 5px 0px 5px;
-//     color: #000;
-//     font-size: 10px;
-//     background: #1ce783;
-// }
+.grade-image-text {
+  position: absolute;
+  bottom: 111px;
+  left: 0;
+  z-index: 9;
+  border: 1px solid #1ce783;
+  font-family: 'NexaBold', Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  border-radius: 2px;
+  color: #000;
+  background: #1ce783;
+  padding: 7px 12px 5px 12px;
+  width: 85px;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-right: 2px;
+  font-style: italic;
+  font-size: 12px;
+  line-height: 1;
+}
 </style>

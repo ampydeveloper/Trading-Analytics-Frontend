@@ -171,7 +171,7 @@ export default {
       // && this.itemdata.data.listing_info.listingType == 'Auction'
       if (this.itemdata.listing_ending_at != null) {
         this.timeLeft.intervalObject = setInterval(() => {
-          var date1 = this.$moment(this.itemdata.listing_ending_at)
+          var date1 = this.$(this.itemdata.listing_ending_at)
           var a = date1.format('YYYY-MM-DD HH:mm:ss')
           var date2 = this.$moment()
           var b = date2.format('YYYY-MM-DD HH:mm:ss')

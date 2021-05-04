@@ -5,7 +5,10 @@
         <div class="card">
           <div class="card-body">
             <h5 class="card-title custom-smart-search-player-name">
+              <div class="card-btn-head-outer">
               <button class="theme-green-btn card-btn">Top Trenders</button>
+              </div>
+
               <div class="internal-search-container">
               <input
                 v-model="keyword"
@@ -29,6 +32,84 @@
                   </li>
                 </ul>
               </div>
+            </div>
+
+             <div
+              class="trender-cards-footer"
+              v-if="items.length >= 0 && !requestInProcess"
+            >
+              <ul class="trender-cards-footer-month-filter">
+                <li
+                  class="trender-cards-footer-month-filter-item"
+                  :class="[
+                    filterVal == 1 ? 'active' : '',
+                    filterVal == 1 && items.length == 0 ? 'nodata' : '',
+                  ]"
+                  @click="changeFilter(1)"
+                >
+                  1D
+                </li>
+                <li
+                  class="trender-cards-footer-month-filter-item"
+                  :class="[
+                    filterVal == 2 ? 'active' : '',
+                    filterVal == 2 && items.length == 0 ? 'nodata' : '',
+                  ]"
+                  @click="changeFilter(2)"
+                >
+                  1W
+                </li>
+                <li
+                  class="trender-cards-footer-month-filter-item"
+                  :class="[
+                    filterVal == 3 ? 'active' : '',
+                    filterVal == 3 && items.length == 0 ? 'nodata' : '',
+                  ]"
+                  @click="changeFilter(3)"
+                >
+                  1M
+                </li>
+                <li
+                  class="trender-cards-footer-month-filter-item"
+                  :class="[
+                    filterVal == 4 ? 'active' : '',
+                    filterVal == 4 && items.length == 0 ? 'nodata' : '',
+                  ]"
+                  @click="changeFilter(4)"
+                >
+                  3M
+                </li>
+                <li
+                  class="trender-cards-footer-month-filter-item"
+                  :class="[
+                    filterVal == 5 ? 'active' : '',
+                    filterVal == 5 && items.length == 0 ? 'nodata' : '',
+                  ]"
+                  @click="changeFilter(5)"
+                >
+                  6M
+                </li>
+                <li
+                  class="trender-cards-footer-month-filter-item"
+                  :class="[
+                    filterVal == 6 && items.length > 0 ? 'active' : '',
+                    filterVal == 6 && items.length == 0 ? 'nodata' : '',
+                  ]"
+                  @click="changeFilter(6)"
+                >
+                  1Y
+                </li>
+                <li
+                  class="trender-cards-footer-month-filter-item"
+                  :class="[
+                    filterVal == 7 && items.length > 0 ? 'active' : '',
+                    filterVal == 7 && items.length == 0 ? 'nodata' : '',
+                  ]"
+                  @click="changeFilter(7)"
+                >
+                  5Y
+                </li>
+              </ul>
             </div>
             
             <div class="custom-dropdown float-right">
@@ -69,6 +150,12 @@ export default {
   directives: {
       clickOutside: vClickOutside.directive
   },
+  props: {
+    showFilters: {
+      type: Boolean,
+      default: false,
+    },
+  },
   transition: 'fade',
   layout: 'guestOuter',
   auth: 'guest',
@@ -101,7 +188,7 @@ export default {
       sport: null,
       keyword: null,
       filterByKeword: null,
-      filterVal: 'NA',
+      filterVal: 4,
       showSmartSearch: false,
       smartKeyword: [],
        orderByPrice: 'up',
@@ -110,6 +197,10 @@ export default {
     }
   },
   methods: {
+    changeFilter(val) {
+      this.filterVal = val
+      this.search()
+    },
     filterOrderBy(orderType) {
         if(orderType == 'priceup') { this.orderByPrice = 'down'; }else { this.orderByPrice = 'up'; }
         if(orderType == 'percentup') { this.orderByPercent = 'down'; }else { this.orderByPercent = 'up'; }
@@ -166,7 +257,8 @@ export default {
             take: 100,
             sport: this.sport,
             search: this.keyword,
-            orderby: this.orderBy 
+            orderby: this.orderBy,
+            filterval: this.filterVal,
           })
           .then(res => {
             this.requestInProcess = false
@@ -221,7 +313,7 @@ export default {
         const offsetHeight = document.documentElement.offsetHeight
         let bottomOfWindow =
           scrollTop >= offsetHeight - 10 && scrollTop <= offsetHeight + 10
-          console.log(bottomOfWindow)
+          // console.log(bottomOfWindow)
         if (bottomOfWindow) {
           if (!this.noMoreData) {
             this.searchCards(true)
@@ -359,9 +451,14 @@ export default {
 }
 .custom-smart-search-player-name {
   .internal-search-container {
-    width: 250px;
+    width: 200px;
     display: inline-grid;
     position: relative;
+    padding-left: 20px;
+    .card-title-search-field {
+    margin-left: 0px;
+    width: 100%;
+}
     .display_keyword {
       position: absolute;
       background: #fff;

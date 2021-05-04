@@ -185,15 +185,20 @@
 
               <li v-if="selectedCardOne.rc == 'yes'" class="grey">Rookie</li>
               <li class="green">{{ selectedCardOne.brand }}</li>
-              <li v-if="selectedCardOne.grade != null" class="yellow">
+              <!-- <li v-if="selectedCardOne.grade != null" class="yellow">
                 {{ selectedCardOne.grade }}
-              </li>
+              </li> -->
             </ul>
             <div class="image-conatiner">
               <img
                 :src="selectedCardOne.cardImage"
                 :alt="selectedCardOne.title"
               />
+              <span
+                v-if="selectedCardOne.grade != null"
+                class="grade-image-text"
+                >{{ selectedCardOne.grade }}</span
+              >
             </div>
           </div>
         </div>
@@ -246,7 +251,7 @@
           </div>
         </div>
       </div> -->
-      
+
       <div
         class="col-md-4 col-sm-4 t-p-5 product-details-col-md-4 column_three visible-mobile"
       >
@@ -271,20 +276,25 @@
               <!-- <li class="orange">{{ selectedCardTwo.brand }}</li> -->
               <li v-if="selectedCardTwo.rc == 'yes'" class="grey">Rookie</li>
               <li class="green">{{ selectedCardTwo.brand }}</li>
-              <li v-if="selectedCardTwo.grade != null" class="yellow">
+              <!-- <li v-if="selectedCardTwo.grade != null" class="yellow">
                 {{ selectedCardTwo.grade }}
-              </li>
+              </li> -->
             </ul>
             <div class="image-conatiner">
               <img
                 :src="selectedCardTwo.cardImage"
                 :alt="selectedCardTwo.title"
               />
+              <span
+                v-if="selectedCardTwo.grade != null"
+                class="grade-image-text"
+                >{{ selectedCardTwo.grade }}</span
+              >
             </div>
           </div>
         </div>
       </div>
-      
+
       <div class="col-md-4 column_two">
         <div class="row">
           <div class="col-md-12">
@@ -429,7 +439,11 @@
             <div class="stat_box">
               <h3>stats</h3>
               <ul>
-                <li>SlabStox Value: ${{ card_one.slabstoxvalue1 ? card_one.slabstoxvalue1 : 0 }}</li>
+                <li>
+                  SlabStox Value: ${{
+                    card_one.slabstoxvalue1 ? card_one.slabstoxvalue1 : 0
+                  }}
+                </li>
                 <li>Overall Rank: {{ card_one.rank }}</li>
                 <li>
                   Last Sale Price: ${{
@@ -476,7 +490,11 @@
             <div class="stat_box">
               <h3>stats</h3>
               <ul>
-                <li>SlabStox Value: ${{ card_two.slabstoxvalue2 ? card_two.slabstoxvalue2 : 0 }}</li>
+                <li>
+                  SlabStox Value: ${{
+                    card_two.slabstoxvalue2 ? card_two.slabstoxvalue2 : 0
+                  }}
+                </li>
                 <li>Overall Rank: {{ card_two.rank }}</li>
                 <li>
                   Last Sale Price: ${{
@@ -545,15 +563,20 @@
               <!-- <li class="orange">{{ selectedCardTwo.brand }}</li> -->
               <li v-if="selectedCardTwo.rc == 'yes'" class="grey">Rookie</li>
               <li class="green">{{ selectedCardTwo.brand }}</li>
-              <li v-if="selectedCardTwo.grade != null" class="yellow">
+              <!-- <li v-if="selectedCardTwo.grade != null" class="yellow">
                 {{ selectedCardTwo.grade }}
-              </li>
+              </li> -->
             </ul>
             <div class="image-conatiner">
               <img
                 :src="selectedCardTwo.cardImage"
                 :alt="selectedCardTwo.title"
               />
+              <span
+                v-if="selectedCardTwo.grade != null"
+                class="grade-image-text"
+                >{{ selectedCardTwo.grade }}</span
+              >
             </div>
           </div>
         </div>
@@ -733,7 +756,7 @@ export default {
             },
           },
           // type: 'category',
-              type: 'datetime',
+          type: 'datetime',
           tickAmount: 6,
           categories: [],
         },
@@ -925,7 +948,7 @@ export default {
         this.autoselected.two.open = false
       }
     },
-    getGraphData(days=90) {
+    getGraphData(days = 90) {
       try {
         let cardIds =
           this.card_one.selectedCard.id + '|' + this.card_two.selectedCard.id
@@ -951,7 +974,7 @@ export default {
               this.chartOptions = {
                 xaxis: {
                   type: days == 2 ? 'category' : 'datetime',
-                tickAmount: days == 2 ? 24 : 6,
+                  tickAmount: days == 2 ? 24 : 6,
                   categories: res.data.lable1,
                 },
                 yaxis: {
@@ -1424,7 +1447,7 @@ ul.my-card-listing {
         text-transform: uppercase;
         margin-bottom: 0px;
         @media (max-width: 991px) {
-              font-size: 10px;
+          font-size: 10px;
           overflow-wrap: break-word;
           word-wrap: break-word;
           -ms-word-break: break-all;
@@ -1768,5 +1791,17 @@ ul.my-card-listing {
       }
     }
   }
+}
+.grade-image-text {
+  bottom: 1px;
+  left: 0;
+  letter-spacing: 1px;
+  margin-right: 2px;
+  font-style: italic;
+  font-size: 12px;
+  line-height: 1;
+  padding: 7px 12px 5px 12px;
+  width: 85px;
+  text-align: center;
 }
 </style>

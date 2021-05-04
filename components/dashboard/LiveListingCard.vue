@@ -248,35 +248,35 @@ ul.my-card-listing {
   color: #ffffff;
 }
 .trender-cards-footer {
-  display: inline-block;
-      margin-left: 5px;
+  // display: inline-block;
+  //     margin-left: 5px;
       width: calc(100% - 435px);
     text-align: center;
   .trender-cards-footer-month-filter {
-    list-style: none;
-    background: $theme-off-white;
-    color: #000000;
-    // width: 270px;
-    padding: 3px 7px 6px 7px;
-    margin: 0px;
-    font-family: 'NexaBold', Helvetica, Arial, sans-serif;
-    border-radius: 4px;
-    text-align: center;
-        display: inline-block;
+    // list-style: none;
+    // background: $theme-off-white;
+    // color: #000000;
+    // // width: 270px;
+    // padding: 3px 7px 6px 7px;
+    // margin: 0px;
+    // font-family: 'NexaBold', Helvetica, Arial, sans-serif;
+    // border-radius: 4px;
+    // text-align: center;
+    //     display: inline-block;
 
-    .trender-cards-footer-month-filter-item {
-      display: inline;
-      padding: 4px 6px 3px 6px;
-      border-radius: 2px;
-      letter-spacing: 1px;
-      font-size: 11px;
-      margin: 0 3px;
-      cursor: pointer;
+    // .trender-cards-footer-month-filter-item {
+    //   display: inline;
+    //   padding: 4px 6px 3px 6px;
+    //   border-radius: 2px;
+    //   letter-spacing: 1px;
+    //   font-size: 11px;
+    //   margin: 0 3px;
+    //   cursor: pointer;
 
-      &.active {
-        background: $theme-btn-green;
-      }
-    }
+    //   &.active {
+    //     background: $theme-btn-green;
+    //   }
+    // }
   }
 }
 
