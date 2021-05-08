@@ -3,17 +3,19 @@
     <div class="row">
       <div class="col-12 t-p-5">
         <div class="row">
-          <div class="col-5">
+          <div class="col-md-12 col-lg-5">
             <div class="add_portfolio">
               <button class="theme-green-btn card-btn" @click="openModal()">
                 ADD SLAB TO PORTFOLIO
               </button>
             </div>
           </div>
-          <div class="col-7 text-right">
+          <div class="col-md-12 col-lg-7 text-right">
             <div class="top-card">
               <button class="theme-light-grey-btn card-btn">
-                Purchase ${{ (apiData.total_purchases!= null?apiData.total_purchases:0) }}
+                Purchase ${{
+                  apiData.total_purchases != null ? apiData.total_purchases : 0
+                }}
               </button>
               <button class="theme-green-btn card-btn">
                 Sx value ${{ value }}
@@ -37,7 +39,7 @@
                   ' card-btn doll-right'
                 "
               >
-              <span class="doll-bor"></span>
+                <span class="doll-bor"></span>
                 <font-awesome-icon
                   v-if="apiData.diff_icon !== undefined"
                   :icon="['fas', 'long-arrow-alt-' + apiData.diff_icon]"
@@ -55,7 +57,12 @@
             <ul class="my-card-listing" v-if="items.length > 0">
               <CardSlabItemPortfolio
                 v-for="item of items"
-                :key="'portfolio' + item.id + item.purchase_price + item.portfolio_id"
+                :key="
+                  'portfolio' +
+                  item.id +
+                  item.purchase_price +
+                  item.portfolio_id
+                "
                 :itemdata="item"
                 :addPortfolioVar="addPortfolioVar"
                 @onEditPortfolioOwned="updateToMyPortfolioPrice"
@@ -83,8 +90,11 @@
             <div class="dataloader" v-if="wishlistRequestInProcess">
               <b-spinner variant="success" label="Spinning"></b-spinner>
             </div>
-            <ul class="my-card-listing watchlist-card-listing" v-if="wishlistitems.length > 0">
-               <CardSlabItemFeatured
+            <ul
+              class="my-card-listing watchlist-card-listing"
+              v-if="wishlistitems.length > 0"
+            >
+              <CardSlabItemFeatured
                 v-for="item of wishlistitems"
                 :key="'portfolio' + item.id"
                 :itemdata="item"
@@ -262,7 +272,9 @@
                 :src="item.cardImage"
                 :alt="item.id"
               />
-               <span v-if="item.grade != null" class="grade-image-text">{{item.grade}}</span>
+              <span v-if="item.grade != null" class="grade-image-text">{{
+                item.grade
+              }}</span>
             </div>
             <button
               class="my-card-view-listing"
@@ -324,29 +336,39 @@
               >Grading</label
             >
             <div class="col-md-9 col-sm-9">
-              <select class="form-control grading" v-model="addPortfolioVar.review_grade" @change="updateGrading(addPortfolioVar)">
-                <!-- <option value="null" selected>Select Grade Status</option> -->
-                <option v-for='gr in ["pending", "graded"]' :key='"grading-"+gr' :value="gr" v-text="gr" class="text-capitalize"></option>
+              <select
+                class="form-control grading"
+                v-model="addPortfolioVar.review_grade"
+                @change="updateGrading(addPortfolioVar)"
+              >
+                <option value=""></option>
+                <option
+                  v-for="gr in ['pending', 'graded']"
+                  :key="'grading-' + gr"
+                  :value="gr"
+                  v-text="gr"
+                  class="text-capitalize"
+                ></option>
               </select>
             </div>
           </div>
         </div>
-
-
       </div>
       <div class="row">
         <div class="col-sm-12 text-center">
           <button class="update-search-result" @click="addToMyPortfolio()">
             Save
           </button>
-            <button class="update-search-result" @click="deleteMyPortfolio()"  v-if="addPortfolioVar.isedit != 'no'">
+          <button
+            class="update-search-result"
+            @click="deleteMyPortfolio()"
+            v-if="addPortfolioVar.isedit != 'no'"
+          >
             Delete From Portfolio
           </button>
         </div>
       </div>
     </b-modal>
-
-    
   </div>
 </template>
 
@@ -613,23 +635,24 @@ export default {
         }
       }
     },
-    updateGrading(addPortfolioVar){
-      try{
+    updateGrading(addPortfolioVar) {
+      try {
         this.$axios
-            .post('portfolio/gradeCard', {
-              my_portfolio_id: addPortfolioVar.id,
-              grade: addPortfolioVar.review_grade
-            })
-            .then(res => {
-              this.getCards()
-              // this.$toast.success('Card graded successfully.')
-              this.hideLoader()
-            }).catch(err => {
-              console.log(err)
-            })
-        } catch (err) {        
-          console.log(err)
-        }
+          .post('portfolio/gradeCard', {
+            my_portfolio_id: addPortfolioVar.id,
+            grade: addPortfolioVar.review_grade,
+          })
+          .then((res) => {
+            this.getCards()
+            // this.$toast.success('Card graded successfully.')
+            this.hideLoader()
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+      } catch (err) {
+        console.log(err)
+      }
     },
     updateToMyPortfolioPrice(tarr) {
       this.portfolioPopUpTitle = 'Update ' + tarr.title
@@ -646,7 +669,7 @@ export default {
       this.addPortfolioVar.id = id
       this.addPortfolioVar.quantity = 0
       this.addPortfolioVar.price = 0
-       this.addPortfolioVar.grade = 0
+      this.addPortfolioVar.grade = 0
       this.$bvModal.hide('addToPortfolio')
       this.$bvModal.show('addToPortfolioPurchasePrice')
     },
@@ -663,7 +686,7 @@ export default {
               this.requestInProcess = false
               if (res.status == 200) {
                 this.getCards()
-                this.getValue();
+                this.getValue()
                 this.$bvModal.hide('addToPortfolio')
                 this.$bvModal.hide('addToPortfolioPurchasePrice')
                 this.addPortfolioVar.id = 0
@@ -678,7 +701,7 @@ export default {
         }
       }
     },
-     deleteMyPortfolio() {
+    deleteMyPortfolio() {
       if (!this.requestInProcess) {
         try {
           this.showLoader()
@@ -691,7 +714,7 @@ export default {
               this.requestInProcess = false
               if (res.status == 200) {
                 this.getCards()
-                this.getValue();
+                this.getValue()
                 this.$bvModal.hide('addToPortfolio')
                 this.$bvModal.hide('addToPortfolioPurchasePrice')
                 this.addPortfolioVar.id = 0
@@ -711,6 +734,10 @@ export default {
 </script> 
 
 <style lang="scss" scoped>
+.my-portfolio-page {
+  padding-right: 25px !important;
+  padding-left: 25px !important;
+}
 .t-p-5 {
   padding: 5px;
 }
@@ -905,7 +932,7 @@ export default {
     text-decoration: underline;
     font-size: 11px;
     letter-spacing: 1px;
-        height: 38px;
+    height: 38px;
     overflow: hidden;
   }
   .my-card-current-bid-btn {
@@ -922,9 +949,13 @@ export default {
     background: #272d33;
     border-radius: 2px;
     height: 152px;
+    @media (max-width: 992px) {
+      height: 21vw;
+    }
     @media (max-width: 768px) {
       height: 250px;
     }
+
     .icons-container {
       position: absolute;
       padding: 10px;
@@ -948,7 +979,13 @@ export default {
       top: 50%;
       transform: translate(-50%, -50%);
       padding: 5px;
-      max-height: 245px;
+      max-height: 152px;
+      @media (max-width: 992px) {
+        max-height: 21vw;
+      }
+      @media (max-width: 768px) {
+        max-height: 245px;
+      }
     }
   }
   .my-card-view-listing {
@@ -1017,14 +1054,14 @@ export default {
     border-bottom-right-radius: 0;
   }
   &.doll-right {
-    .doll-bor{
-    height: 21px;
-    width: 1px;
-    background: #c9c9c9;
-    display: inline-block;
-    position: absolute;
-    left: 0;
-    top: 4px;
+    .doll-bor {
+      height: 21px;
+      width: 1px;
+      background: #c9c9c9;
+      display: inline-block;
+      position: absolute;
+      left: 0;
+      top: 4px;
     }
     position: relative;
     margin-left: -5px;
@@ -1032,30 +1069,30 @@ export default {
     border-bottom-left-radius: 0;
   }
 }
-.form-control.grading{
+.form-control.grading {
   background-color: #f4f4f4;
-    height: 30px;
-    border-radius: 2px;
-    padding: 0px 10px;
-    font-family: 'NexaBold', Helvetica, Arial, sans-serif;
-        border: 0;
+  height: 30px;
+  border-radius: 2px;
+  padding: 0px 10px;
+  font-family: 'NexaBold', Helvetica, Arial, sans-serif;
+  border: 0;
 }
-.grade-image-text{
+.grade-image-text {
   position: absolute;
   bottom: 8px;
   left: 8px;
   letter-spacing: 1.4px;
   z-index: 9;
   border: 1px solid #1ce783;
-    text-transform: uppercase;
-    float: left;
-    margin-top: -10px;
-    font-family: "NexaBold", Helvetica, Arial, sans-serif;
-    font-weight: 400;
-    border-radius: 2px;
-    padding: 3px 5px 0px 5px;
-    color: #000;
-    font-size: 10px;
-    background: #1ce783;
+  text-transform: uppercase;
+  float: left;
+  margin-top: -10px;
+  font-family: 'NexaBold', Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  border-radius: 2px;
+  padding: 3px 5px 0px 5px;
+  color: #000;
+  font-size: 10px;
+  background: #1ce783;
 }
 </style>

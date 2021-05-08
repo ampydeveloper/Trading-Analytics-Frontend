@@ -185,20 +185,20 @@
 
               <li v-if="selectedCardOne.rc == 'yes'" class="grey">Rookie</li>
               <li class="green">{{ selectedCardOne.brand }}</li>
-              <!-- <li v-if="selectedCardOne.grade != null" class="yellow">
+              <li v-if="selectedCardOne.grade != null" class="yellow">
                 {{ selectedCardOne.grade }}
-              </li> -->
+              </li>
             </ul>
             <div class="image-conatiner">
               <img
                 :src="selectedCardOne.cardImage"
                 :alt="selectedCardOne.title"
               />
-              <span
+              <!-- <span
                 v-if="selectedCardOne.grade != null"
                 class="grade-image-text"
                 >{{ selectedCardOne.grade }}</span
-              >
+              > -->
             </div>
           </div>
         </div>
@@ -276,20 +276,20 @@
               <!-- <li class="orange">{{ selectedCardTwo.brand }}</li> -->
               <li v-if="selectedCardTwo.rc == 'yes'" class="grey">Rookie</li>
               <li class="green">{{ selectedCardTwo.brand }}</li>
-              <!-- <li v-if="selectedCardTwo.grade != null" class="yellow">
+              <li v-if="selectedCardTwo.grade != null" class="yellow">
                 {{ selectedCardTwo.grade }}
-              </li> -->
+              </li>
             </ul>
             <div class="image-conatiner">
               <img
                 :src="selectedCardTwo.cardImage"
                 :alt="selectedCardTwo.title"
               />
-              <span
+              <!-- <span
                 v-if="selectedCardTwo.grade != null"
                 class="grade-image-text"
                 >{{ selectedCardTwo.grade }}</span
-              >
+              > -->
             </div>
           </div>
         </div>
@@ -563,20 +563,20 @@
               <!-- <li class="orange">{{ selectedCardTwo.brand }}</li> -->
               <li v-if="selectedCardTwo.rc == 'yes'" class="grey">Rookie</li>
               <li class="green">{{ selectedCardTwo.brand }}</li>
-              <!-- <li v-if="selectedCardTwo.grade != null" class="yellow">
+              <li v-if="selectedCardTwo.grade != null" class="yellow">
                 {{ selectedCardTwo.grade }}
-              </li> -->
+              </li>
             </ul>
             <div class="image-conatiner">
               <img
                 :src="selectedCardTwo.cardImage"
                 :alt="selectedCardTwo.title"
               />
-              <span
+              <!-- <span
                 v-if="selectedCardTwo.grade != null"
                 class="grade-image-text"
                 >{{ selectedCardTwo.grade }}</span
-              >
+              > -->
             </div>
           </div>
         </div>
@@ -1467,7 +1467,8 @@ ul.my-card-listing {
         left: 0;
         right: 0;
         font-family: 'NexaBold', Helvetica, Arial, sans-serif;
-        top: -10px;
+        top: 50%;
+        transform: translate(0, -50%);
         text-align: center;
         background-color: #fff;
         width: 55px;
@@ -1613,10 +1614,16 @@ ul.my-card-listing {
       background: #272d33;
       // border-radius: 2px;
       height: 230px;
+      @media (max-width: 1200px) {
+        border: 5px solid #fff !important;
+      }
       .card-image {
         max-height: 230px !important;
         border: 5px solid #fff !important;
         padding: 0 !important;
+        @media (max-width: 1200px) {
+          border: 0 !important;
+        }
       }
       .icons-container {
         position: absolute;
@@ -1734,26 +1741,26 @@ ul.my-card-listing {
     margin: 0;
   }
   .sec-h2h-out.headtohead_serach {
-    padding-left: 5px;
-    padding-right: 5px;
+    // padding-left: 5px;
+    // padding-right: 5px;
     margin-top: 10px;
   }
-  .headwrapper .column_two .vs_wrap {
-    margin-left: 5px;
-    margin-right: 5px;
-  }
+  // .headwrapper .column_two .vs_wrap {
+  //   margin-left: 5px;
+  //   margin-right: 5px;
+  // }
   #__nuxt .headwrapper .column_three {
-    margin-left: 5px;
-    margin-right: 5px;
-    margin-bottom: 10px;
+    // margin-left: 5px;
+    // margin-right: 5px;
+    margin-top: 15px;
   }
   #__nuxt .headwrapper .column_two .stat,
   #__nuxt .headwrapper .column_two .stat {
     flex: none;
     max-width: 100%;
     width: 100%;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 15px;
+    padding-right: 15px;
     margin-bottom: 15px;
   }
   // .card-50-div {
@@ -1773,7 +1780,7 @@ ul.my-card-listing {
     font-size: 17px;
     line-height: 39px;
     margin-top: -17px;
-    left: -15px;
+    // left: -15px;
   }
   .headwrapper .vs_wrap .team_vs {
     .left {
@@ -1791,17 +1798,23 @@ ul.my-card-listing {
       }
     }
   }
+  
 }
-.grade-image-text {
-  bottom: 1px;
-  left: 0;
-  letter-spacing: 1px;
-  margin-right: 2px;
-  font-style: italic;
-  font-size: 12px;
-  line-height: 1;
-  padding: 7px 12px 5px 12px;
-  width: 85px;
-  text-align: center;
+@media (max-width: 575px) {
+  .t-p-5 {
+    padding: 0 !important;
+  }
 }
+// .grade-image-text {
+//   bottom: 1px;
+//   left: 0;
+//   letter-spacing: 1px;
+//   margin-right: 2px;
+//   font-style: italic;
+//   font-size: 12px;
+//   line-height: 1;
+//   padding: 7px 12px 5px 12px;
+//   width: 85px;
+//   text-align: center;
+// }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="col-md-12 col-sm-12 search-page">
+  <div class="col-md-12 col-sm-12 search-page trenders-page">
     <div class="row">
       <div class="col-12 t-p-5">
         <div class="card card-single-row-outer myportfolio">
@@ -343,6 +343,10 @@ export default {
 </script> 
 
 <style lang="scss" scoped>
+.trenders-page{
+  padding-right: 25px !important;
+  padding-left: 25px !important;
+}
 .t-p-5 {
   padding: 5px;
 }

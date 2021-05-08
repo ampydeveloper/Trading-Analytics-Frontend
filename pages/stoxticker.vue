@@ -1780,6 +1780,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.dashboard-main {
+    padding: 0 10px !important;
+  }
 .t-p-5 {
   padding: 5px;
 }

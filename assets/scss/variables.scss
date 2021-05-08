@@ -2521,9 +2521,9 @@ html body #__nuxt .b-profileImage .dropdown-menu {
     //   width: 60%;
     // }
 
-    .nav-bar-search-btn {
-      width: 40%;
-    }
+    // .nav-bar-search-btn {
+    //   width: 40%;
+    // }
   }
 }
 
@@ -2714,12 +2714,20 @@ html body #__nuxt .b-profileImage .dropdown-menu {
   #__nuxt .headtohead_serach .dashboard-nav-bar {
     .nav-bar-form-input {
       width: 100%;
-      padding-right: 0px;
+      // padding-right: 0px;
     }
 
-    .nav-bar-search-btn {
-      width: 100%;
-    }
+    // .nav-bar-search-btn {
+    //   width: 100%;
+    // }
+  }
+
+  .headtohead_serach .col-md-6:first-child {
+    padding-right: 5px !important;
+  }
+
+  .headtohead_serach .col-md-6:last-child {
+    padding-left: 5px !important;
   }
 
   .headwrapper .column_two .stat {
@@ -2971,7 +2979,7 @@ html body #__nuxt .b-profileImage .dropdown-menu {
   #__nuxt main {
     max-width: 100%;
     flex: 100%;
-    padding: 0 10px !important;
+    // padding: 0 10px !important;
   }
 
   #__nuxt .supping-cart-summary-details h4 {
@@ -3017,7 +3025,8 @@ html body #__nuxt .b-profileImage .dropdown-menu {
   }
 
   #__nuxt .dashboard-nav-bar .nav-bar-form .nav-bar-form-input {
-    width: 70%;
+    width: 100%;
+    padding: 0;
   }
 
   #__nuxt .dashboard-nav-bar .nav-bar-form .nav-bar-search-btn {
@@ -3543,6 +3552,17 @@ html body #__nuxt .b-profileImage .dropdown-menu {
     /* Microsoft Edge */
     color: $theme-btn-green;
   }
+
+  @media (max-width: 575px) {
+    margin: 0;
+  }
+}
+
+@media (max-width: 575px) {
+  .internal-search-container {
+    width: 100%;
+    padding: 0 !important;
+  }
 }
 
 .custom-dropdown {
@@ -3595,6 +3615,16 @@ html body #__nuxt .b-profileImage .dropdown-menu {
       background-color: #25b56f;
     }
   }
+}
+
+@media (max-width: 768px) {
+  .ll-head-right {
+    width: 100%;
+    margin: 10px 0 0 0;
+    text-align: right;
+    float: none !important;
+  }
+
 }
 
 #addToPortfolio .modal-content {
@@ -3706,12 +3736,14 @@ html body #__nuxt .b-profileImage .dropdown-menu {
   }
 }
 
-@media (max-width: 768px) {
-  #addToPortfolio {
+@media (max-width: 992px) {
+
+  #addToPortfolio,
+  #addToPortfolioPurchasePrice {
     padding: 0 !important;
 
     .modal-dialog {
-      max-width: 96%;
+      max-width: calc(100% - 20px);
     }
   }
 }
@@ -3720,9 +3752,34 @@ html body #__nuxt .b-profileImage .dropdown-menu {
   .my-card-listing .my-card {
     width: 33.33%;
 
+    @media (max-width: 1200px) {
+      width: 50%;
+    }
+    @media (max-width: 767px) {
+      width: 100%;
+    }
+
     &:nth-child(3n+4) {
       clear: both;
     }
+
+    @media (max-width: 991px) {
+      .image-container {
+        height: 26vw;
+        .card-image {
+          max-height: 26vw;
+        }
+      }
+    }
+    @media (max-width: 991px) {
+      .image-container {
+        height: 340px;
+        .card-image {
+          max-height: 340px;
+        }
+      }
+    }
+
   }
 }
 
@@ -3971,6 +4028,7 @@ html body #__nuxt .b-profileImage .dropdown-menu {
   // width: calc(100% - 453px);
   text-align: left;
   padding-left: 15px;
+
   .trender-cards-footer-month-filter {
     list-style: none;
     background: $theme-off-white;
@@ -3995,6 +4053,7 @@ html body #__nuxt .b-profileImage .dropdown-menu {
       &.active {
         background: $theme-btn-green;
       }
+
       &.nodata {
         background: $theme-background-color;
         color: #ffffff;
@@ -4014,6 +4073,9 @@ html body #__nuxt .b-profileImage .dropdown-menu {
   @media (max-width: 768px) {
     width: 100% !important;
     text-align: right !important;
+    padding: 0;
+    margin: 0;
+    margin-top: 10px;
   }
 }
 
@@ -4078,24 +4140,28 @@ html body #__nuxt .b-profileImage .dropdown-menu {
     }
   }
 }
+
 @media (max-width: 768px) {
-  #viewSalesHistory{
-  .modal-dialog {
-    margin: 2px;
-  }
-  .sale-h-out {
+  #viewSalesHistory {
+    .modal-dialog {
+      margin: 2px;
+    }
+
+    .sale-h-out {
 
       .table th,
       .table td {
         padding: 7px;
       }
 
-  }
+    }
   }
 }
+
 #openSeeProblemPopup___BV_modal_outer_ .modal-dialog {
   width: 80%;
   max-width: 1000px;
+
   @media (max-width: 767px) {
     width: auto;
   }
@@ -4229,13 +4295,17 @@ html body #__nuxt .b-profileImage .dropdown-menu {
         max-height: 21vw;
       }
     }
+
     width: 20% !important;
+
     @media (max-width: 1200px) {
       width: 33.333% !important;
     }
+
     @media (max-width: 991px) {
       width: 50% !important;
     }
+
     @media (max-width: 767px) {
       width: 100% !important;
     }
@@ -4288,9 +4358,11 @@ html body #__nuxt .b-profileImage .dropdown-menu {
     }
   }
 }
+
 html body main .featured-listing li.my-card .sxvalue.theme-btn {
   font-size: 9px;
 }
+
 .sx-pro-text {
   position: absolute;
   top: 18px;
@@ -4309,6 +4381,7 @@ html body main .featured-listing li.my-card .sxvalue.theme-btn {
   font-size: 10px;
   background: #1ce783;
 }
+
 .grade-image-text {
   position: absolute;
   bottom: 8px;
@@ -4327,12 +4400,14 @@ html body main .featured-listing li.my-card .sxvalue.theme-btn {
   font-size: 10px;
   background: #1ce783;
 }
-.card-btn-head-outer{
+
+.card-btn-head-outer {
   width: 140px;
   display: inline-block;
 }
-.myportfolio{
-  .card-btn-head-outer{
-  width: 344px;
-}
+
+.myportfolio {
+  .card-btn-head-outer {
+    width: 344px;
+  }
 }

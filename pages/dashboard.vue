@@ -814,8 +814,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 .t-p-5 {
   padding: 5px;
+}
+.dashboard_page {
+  padding-right: 25px !important;
+  padding-left: 25px !important;
 }
 ul.my-card-listing {
   list-style: none;
@@ -901,7 +906,6 @@ ul.featured-listing {
 
 @media (max-width: 1200px) {
   .featured-listing-outer {
-    // overflow-x: scroll;
     margin: 0 -15px;
     .featured-listing {
       min-width: 936px;
@@ -910,6 +914,13 @@ ul.featured-listing {
   html body main .featured-listing-outer {
     .featured-listing {
       margin: 0 0 0 -2px !important;
+    }
+  }
+}
+@media (min-width: 1201px) {
+  html body main .featured-listing-outer {
+    .featured-listing {
+      margin: 0 !important;
     }
   }
 }
@@ -1005,7 +1016,7 @@ ul.featured-listing {
     width: 100%;
     .card-link {
       margin-bottom: 5px !important;
-    display: inline-block !important;
+      display: inline-block !important;
     }
   }
 }

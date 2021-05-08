@@ -1,5 +1,5 @@
 <template>
-  <div class="col-md-12 col-sm-12 search-page">
+  <div class="col-md-12 col-sm-12 search-page live-auctions-page">
     
     <div class="row">
       <div class="col-12 t-p-5">
@@ -71,7 +71,7 @@ export default {
   auth: 'guest',
   head() {
     return {
-      title: 'Live Listings - Slabstox'
+      title: 'Live Listings - Slabstox',
     }
   },
   mounted() {
@@ -81,7 +81,7 @@ export default {
   },
   components: {
     CardListItem,
-    LiveListingCard
+    LiveListingCard,
   },
   data() {
     return {
@@ -95,31 +95,31 @@ export default {
         'basketball',
         'soccer',
         'baseball',
-        'football', 
+        'football',
         'pokemon',
-        'random bin'
-      ]
+        'random bin',
+      ],
     }
   },
   methods: {
     getEndingSoonListing() {
       try {
         this.endingSoonListingItems = []
-        this.requestInProcessEndingSoon = true;
+        this.requestInProcessEndingSoon = true
         this.$axios
           .$post('search/ending-soon-listing', {
             take: 12,
             filterBy: 'ending_soon',
           })
-          .then(res => {
-             this.requestInProcessEndingSoon = false;
+          .then((res) => {
+            this.requestInProcessEndingSoon = false
             if (res.status == 200) {
               this.cards = [...res.order, ...['random bin']]
               this.endingSoonListingItems = res.data
             }
           })
       } catch (err) {
-        this.requestInProcessEndingSoon = false;
+        this.requestInProcessEndingSoon = false
         console.log(err)
       }
     },
@@ -134,9 +134,9 @@ export default {
           this.$axios
             .$post('search/get-recent-auction-list', {
               take: 6,
-              page: this.page
+              page: this.page,
             })
-            .then(res => {
+            .then((res) => {
               this.requestInProcess = false
               if (res.status == 200) {
                 if (res.items != null && res.items.length > 0) {
@@ -145,7 +145,7 @@ export default {
                   //     this.normalListingItems.push(item)
                   //   })
                   // } else {
-                    this.normalListingItems = res.items
+                  this.normalListingItems = res.items
                   // }
                   this.page = 1
                 } else {
@@ -176,12 +176,16 @@ export default {
           }
         }
       }
-    }
-  }
+    },
+  },
 }
 </script> 
 
 <style lang="scss" scoped>
+.live-auctions-page {
+  padding-right: 25px !important;
+  padding-left: 25px !important;
+}
 .t-p-5 {
   padding: 5px;
 }
@@ -274,7 +278,7 @@ export default {
     color: #ffffff;
   }
 }
-.card-btn.ending-title{
-background: #f95050;
+.card-btn.ending-title {
+  background: #f95050;
 }
 </style>

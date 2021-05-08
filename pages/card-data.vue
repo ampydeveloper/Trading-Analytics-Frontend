@@ -12,7 +12,7 @@
             <ul class="labels clearfix">
               <li v-if="card.rc == 'yes'" class="grey">Rookie</li>
               <li class="green">{{ card.brand }}</li>
-              <!-- <li v-if="card.grade != null" class="yellow">{{ card.grade }}</li> -->
+              <li v-if="card.grade != null" class="yellow">{{ card.grade }}</li>
               <!-- <li class="orange">trender</li> -->
             </ul>
             <div class="icons-container" v-if="user.full_name != null">
@@ -31,9 +31,9 @@
             </div>
             <div class="image-conatiner">
               <img :src="card.cardImage" alt="data.title" />
-              <span v-if="card.grade != null" class="grade-image-text">{{
+              <!-- <span v-if="card.grade != null" class="grade-image-text">{{
                 card.grade
-              }}</span>
+              }}</span> -->
             </div>
 
             <a
@@ -682,10 +682,10 @@ export default {
               colors: '#edecec',
               fontSize: '10px',
               fontFamily: 'NexaBold',
-            },        
+            },
           },
           type: 'datetime',
-          tickAmount: 6,
+          tickAmount: 24,
           categories: [],
         },
         tooltip: {
@@ -882,26 +882,30 @@ export default {
               this.salesQty = res.data.qty
               this.chartOptions = {
                 xaxis: {
-                  // categories: res.data.labels,
-                  type: days == 2 ? 'category' : 'datetime',
-                  tickAmount: days == 2 ? 24 : 6,
+                  // type: days == 2 ? 'category' : 'datetime',
+                  // type: 'datetime',
+                  // tickAmount: days == 2 ? 24 : 6,
+                  // tickAmount: 6,
                   categories: res.data.labels,
-                //   labels: {
-                //         format: days == 2 ? 'HH:mm' : 'MM/dd/yy'
-                // //     formatter: function (value, timestamp) {
-                // //       console.log(timestamp);
-                // //       // return new Date(timestamp)
-                // // const date = new Date(timestamp)
-                // //       // return value;
-                // //       if (days == 2) {
-                // //  const hours = date.getHours()
-                // //       const mins = date.getMinutes()
-                // //        return hours+':'+mins;
-                // //       } else {
-                // //         return value;
-                // //       }
-                // //     },
-                //   },
+                  // labels: {
+                    //  format: days == 2 ? 'MM/dd/yy HH:mm' : 'MM/dd/yy',
+                  //   formatter: function (value, timestamp) {
+                  //     const date = new Date(timestamp)
+                  //     if (days == 2) {
+                  //       const hours = date.getHours()
+                  //       const mins = date.getMinutes()
+                  //       return hours + ':' + mins
+                  //     } else {
+                  //       return (
+                  //         date.getMonth() +
+                  //         '/' +
+                  //         date.getDate() +
+                  //         '/' +
+                  //         date.getFullYear()
+                  //       )
+                  //     }
+                  //   },
+                  // },
                 },
                 yaxis: {
                   labels: {
@@ -924,7 +928,7 @@ export default {
                 tooltip: {
                   enabled: true,
                   // x: {
-                  //   format: days == 2 ? 'HH:mm' : 'MM/dd/yy',
+                  //   format: days == 2 ? 'MM/dd/yy HH:mm' : 'MM/dd/yy',
                   // },
                   y: {
                     formatter: (value, ind) => {
@@ -1581,25 +1585,25 @@ ul.my-card-listing {
     padding-right: 15px !important;
   }
 }
-.grade-image-text {
-  position: absolute;
-  bottom: 111px;
-  left: 0;
-  z-index: 9;
-  border: 1px solid #1ce783;
-  font-family: 'NexaBold', Helvetica, Arial, sans-serif;
-  font-weight: 400;
-  border-radius: 2px;
-  color: #000;
-  background: #1ce783;
-  padding: 7px 12px 5px 12px;
-  width: 85px;
-  text-align: center;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-right: 2px;
-  font-style: italic;
-  font-size: 12px;
-  line-height: 1;
-}
+// .grade-image-text {
+//   position: absolute;
+//   bottom: 140px;
+//   left: 0;
+//   z-index: 9;
+//   border: 1px solid #1ce783;
+//   font-family: 'NexaBold', Helvetica, Arial, sans-serif;
+//   font-weight: 400;
+//   border-radius: 2px;
+//   color: #000;
+//   background: #1ce783;
+//   padding: 7px 12px 5px 12px;
+//   width: 85px;
+//   text-align: center;
+//   text-transform: uppercase;
+//   letter-spacing: 1px;
+//   margin-right: 2px;
+//   font-style: italic;
+//   font-size: 12px;
+//   line-height: 1;
+// }
 </style>

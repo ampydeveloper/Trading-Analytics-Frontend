@@ -190,5 +190,23 @@ export default {
         padding-right: 15px;
     padding-left: 15px;
   }
+  .card-50-div {
+    .t-p-5 {
+      padding-left: 5px;
+      padding-right: 5px;
+    }
+  }
+  .card-50-div
+  .card-title-search-field{
+    margin-left: 0;
+  }
+}
+@media (max-width: 767px) {
+.card-50-div {
+    .t-p-5 {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
 }
 </style>
