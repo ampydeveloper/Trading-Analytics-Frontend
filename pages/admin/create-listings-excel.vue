@@ -74,6 +74,7 @@ export default {
     }
   },
   mounted() {
+  
   },
   components: {},
   data() {
@@ -103,8 +104,8 @@ export default {
       var files = this.$refs.excel.files
 
       for (let i = 0; i < files.length; i++) {
-    formData.append("file[]", files[i])
-  }
+        formData.append('file[]', files[i])
+      }
 
       // const file = files.item(0)
       // formData.append('file', files)
@@ -113,34 +114,35 @@ export default {
       //   files.type ==
       //   'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
       // ) {
-        formData.append('for', this.uploadExcelType)
-        formData.append('card_id', 1)
-        if (!this.requestInProcess) {
-          try {
-            this.showLoader()
-            this.requestInProcess = true
-            this.$axios
-              .post('upload-slab-excel', formData)
-              .then((res) => {
-                this.requestInProcess = false
-                this.hideLoader()
-                this.uploadExcelType = null
-                if (res.status == 200) {
-                  this.$toast.success(res.data.message)
-                  this.$router.push('/admin/ebay-items-listings')
-                }
-              })
-              .catch((err) => {
-                this.requestInProcess = false
-                this.hideLoader()
-              })
-          } catch (err) {
-            this.hideLoader()
-            this.uploadExcelType = null
-            this.requestInProcess = false
-            console.log(err)
-          }
+      formData.append('for', this.uploadExcelType)
+      formData.append('card_id', 1)
+      if (!this.requestInProcess) {
+        try {
+          this.showLoader()
+          this.requestInProcess = true
+          this.$axios
+            .post('upload-slab-excel', formData)
+            .then((res) => {
+              this.requestInProcess = false
+              this.hideLoader()
+              this.uploadExcelType = null
+              if (res.status == 200) {
+                this.$toast.success(res.data.message)
+                this.$router.push('/admin/ebay-items-listings')
+              }
+            })
+            .catch((err) => {
+              this.requestInProcess = false
+              this.hideLoader()
+              this.$toast.error(err.response.data.message+'.', { timeOut: 50000 })
+            })
+        } catch (err) {
+          this.hideLoader()
+          this.uploadExcelType = null
+          this.requestInProcess = false
+          this.$toast.error(err.response.data.message+'.', { timeOut: 50000 })
         }
+      }
       // } else {
       //   this.$toast.error('Invalid File')
       // }
