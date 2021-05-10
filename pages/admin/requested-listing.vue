@@ -13,9 +13,9 @@
               <thead>
                 <tr>
                   <th>Card Id</th>
-                  <th>Card</th>
-                  <th>Link</th>
-                  <th>User</th>
+                  <th>Card Title</th>
+                  <th style="width: 57%">Link</th>
+                  <th style="width: 100px">User</th>
                   <th style="width: 15%">Action</th>
                 </tr>
               </thead>
@@ -26,9 +26,9 @@
                     <a
                       target="_blank"
                       style="color: #28a745"
-                      :href="currentOrigin+'/card-data/?id='+card.id"
-                      >
-                    {{ card.card.title }}
+                      :href="currentOrigin + '/card-data/?id=' + card.id"
+                    >
+                      {{ card.card.title }}
                     </a>
                   </td>
                   <td class="text-lowercase">
@@ -49,9 +49,10 @@
                     >
                   </td>
                   <td>
+                    <!-- @click="action(1, card.id)" -->
                     <button
                       class="card-btn btn btn-success btn-table-spec"
-                      @click="action(1, card.id)"
+                      @click="checkItem(card.id)"
                       style="margin-top: 4px"
                     >
                       Approve
@@ -211,6 +212,45 @@
         </div>
       </div>
     </div>
+
+    <b-modal id="checkSlabPopup" title="Change Card ID" hide-footer>
+      <section class="ap p-4">
+        <div class="form_column">
+          <label>Card Id</label>
+          <input
+            v-model="checkSlabOldId"
+            type="text"
+            class="form-control"
+            placeholder="Current Card ID"
+            readonly
+          />
+        </div>
+        <div class="form_column">
+          <label>New Card Id</label>
+          <input
+            v-model="checkSlabNewId"
+            type="text"
+            class="form-control"
+            placeholder="New Card ID"
+          />
+        </div>
+        <div class="form_column" style="margin-top: -15px;"><label></label><small>Enter new card ID if needed.</small></div>
+      </section>
+      <div class="ap clearfix text-right">
+        <a
+          href="javascript:void(0);"
+          @click="action(1, checkSlabOldId)"
+          class="btn btn-success btn-table-spec mr-2"
+          >Proceed</a
+        >
+        <a
+          href="javascript:void(0);"
+          @click="cancelRequest"
+          class="btn btn-outline-danger btn-table-spec mr-4"
+          >Cancel</a
+        >
+      </div>
+    </b-modal>
   </div>
 </template>
 
@@ -231,11 +271,21 @@ export default {
     return {
       cards: [],
       page: 1,
+      checkSlabNewId: null,
+      checkSlabOldId: null,
       requestInProcess: false,
       currentOrigin: location.origin,
     }
   },
   methods: {
+    cancelRequest() {
+      this.checkSlabOldId = null
+      this.$bvModal.hide('checkSlabPopup')
+    },
+    checkItem(card_id) {
+      this.checkSlabOldId = card_id
+      this.$bvModal.show('checkSlabPopup')
+    },
     getRequestedListing(page) {
       if (!this.requestInProcess) {
         try {
@@ -271,6 +321,7 @@ export default {
         .post('/card/requested-listing-action-for-admin', {
           rid: rid,
           sts: sts,
+          newSlabId: this.checkSlabNewId,
         })
         .then((res) => {
           if (res.status == 200) {
@@ -310,6 +361,7 @@ export default {
         .catch((err) => {
           this.requestInProcess = false
           this.hideLoader()
+          this.$toast.error(err.response.data.message)
         })
     },
     createItem(item) {
@@ -321,11 +373,14 @@ export default {
             this.requestInProcess = false
             this.$toast.success(res.data.data.message)
             this.getRequestedListing()
+            this.checkSlabOldId = null
+            this.$bvModal.hide('checkSlabPopup')
           })
         } catch (err) {
           this.hideLoader()
           this.requestInProcess = false
-          console.log(err)
+
+          this.$toast.error(err.response.data.message)
         }
       }
     },

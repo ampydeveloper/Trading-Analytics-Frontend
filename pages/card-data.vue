@@ -469,6 +469,7 @@
               <th>Type</th>
               <th>Quantity</th>
               <th>Price</th>
+               <th>Listing</th>
             </tr>
           </thead>
           <tbody v-if="cardHistory.length > 0">
@@ -480,6 +481,16 @@
               <td>{{ card.type }}</td>
               <td>{{ card.quantity }}</td>
               <td>${{ card.cost }}</td>
+              <td>
+                <nuxt-link
+      :class="'theme-green-outline-btn'"
+      :to="'/product?id=' + card.ebay_items_id"
+      v-if="card.ebay_items_id != null"
+    >
+     View Listing
+      <font-awesome-icon :icon="['fas', 'chevron-circle-right']" />
+    </nuxt-link>
+                </td>
             </tr>
           </tbody>
           <tbody v-if="cardHistory.length == 0">

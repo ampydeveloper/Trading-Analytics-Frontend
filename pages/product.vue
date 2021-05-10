@@ -23,11 +23,11 @@
               >
               <label class="trender" v-if="false">Trender</label> -->
 
-              <label v-if="data.card.rc == 'yes'" class="grey">Rookie</label>
-              <label v-if="data.card.brand != null" class="green">{{
+              <label v-if="data.card && data.card.rc == 'yes'" class="grey">Rookie</label>
+              <label v-if="data.card && data.card.brand != null" class="green">{{
                 data.card.brand
               }}</label>
-              <label v-if="data.card.grade != null" class="yellow">{{
+              <label v-if="data.card && data.card.grade != null" class="yellow">{{
                 data.card.grade
               }}</label>
             </div>
@@ -64,7 +64,7 @@
               <div class="card-body">
                 <h5 class="card-title sx-stats-all">
                   <button class="theme-cart-btn card-btn">Listing Info</button>
-                  <button class="theme-btn card-btn">
+                  <button class="theme-btn card-btn" v-if="sx != null">
                     SX Value ${{ sx != null ? sx : '0' }}
                   </button>
                   <button
@@ -88,6 +88,7 @@
                     {{ sx_value }}
                   </button>
                   <nuxt-link
+                  v-if="data.card_id != null"
                     class="theme-btn card-btn vsd-btn"
                     :to="'/card-data/?id=' + data.card_id"
                   >

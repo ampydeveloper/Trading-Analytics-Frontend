@@ -9,38 +9,48 @@
             </h5>
           </div>
           <div class="table_wrapper ap">
-            <table class="table table-striped">
+            <table class="table table-striped" id="search-cards-table">
               <thead>
                 <tr>
                   <th>Card Id</th>
                   <th>Search Term</th>
                   <th>User</th>
-                   <th>Timestamp</th>
+                  <th>Timestamp</th>
                 </tr>
               </thead>
               <tbody v-if="cards.length > 0">
                 <tr v-for="card of cards" :key="card.id">
-                  <td>{{ (card.card_details?card.card_details.id:'N/A') }}</td>
+                  <td>
+                    {{ card.card_details ? card.card_details.id : 'N/A' }}
+                  </td>
                   <td>
                     <nuxt-link
-                      style="color: #fff;"
+                      style="color: #fff"
                       v-if="card.card_details != null"
                       :to="`ebay-specific-listings?card=${card.id}`"
                       >{{ card.card_details.title }}</nuxt-link
                     >
-                    <span v-if="card.search!=null">
+                    <span v-if="card.search != null">
                       {{ card.search }}
                     </span>
                   </td>
                   <td>
                     <nuxt-link
-                    v-if="card.user_details != null"
-                      style="color:#28a745;"
+                      v-if="card.user_details != null"
+                      style="color: #28a745"
                       :to="`users?id=${card.user_details.id}`"
                       >{{ card.user_details.full_name }}</nuxt-link
                     >
                   </td>
-                    <td>{{ $moment(card.created_at).format('MMMM DD Y - hh:mm:ss') }}</td>
+                  <td
+                    :data-order="
+                      $moment(card.created_at).format('YYYY-MM-DD HH:mm:ss')
+                    "
+                  >
+                    {{
+                      $moment(card.created_at).format('MMMM DD Y - hh:mm:ss')
+                    }}
+                  </td>
                 </tr>
               </tbody>
               <tbody v-if="cards.length == 0 && requestInProcess">
@@ -50,129 +60,11 @@
               </tbody>
               <tbody v-if="cards.length == 0 && requestInProcess == false">
                 <tr>
-                  <td colspan="4" class="text-center">No search terms found.</td>
+                  <td colspan="4" class="text-center">
+                    No search terms found.
+                  </td>
                 </tr>
               </tbody>
-              <tfoot>
-                <tr v-if="page - 1 == 1 && cards.length >= 30">
-                  <td colspan="4">
-                    <button
-                      class="theme-btn card-btn active-pagination"
-                      @click="getRequestedSlab(1)"
-                    >
-                      1
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getRequestedSlab(2)"
-                    >
-                      2
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getRequestedSlab(3)"
-                    >
-                      Next
-                    </button>
-                  </td>
-                </tr>
-                <tr v-if="page - 1 == 2 && cards.length >= 30">
-                  <td colspan="4">
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getRequestedSlab(1)"
-                    >
-                      1
-                    </button>
-                    <button
-                      class="theme-btn card-btn active-pagination"
-                      @click="getRequestedSlab(2)"
-                    >
-                      2
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getRequestedSlab(3)"
-                    >
-                      3
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getRequestedSlab(4)"
-                    >
-                      Next
-                    </button>
-                  </td>
-                </tr>
-                <tr v-if="page - 1 == 3 && cards.length >= 30">
-                  <td colspan="4">
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getRequestedSlab(1)"
-                    >
-                      Previous
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getRequestedSlab(2)"
-                    >
-                      2
-                    </button>
-                    <button
-                      class="theme-btn card-btn active-pagination"
-                      @click="getRequestedSlab(3)"
-                    >
-                      3
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getRequestedSlab(4)"
-                    >
-                      4
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getRequestedSlab(5)"
-                    >
-                      Next
-                    </button>
-                  </td>
-                </tr>
-                <tr v-if="page - 1 > 3 && cards.length >= 30">
-                  <td colspan="4">
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getRequestedSlab(page - 2)"
-                    >
-                      Previous
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getRequestedSlab(page - 1)"
-                    >
-                      {{ page - 1 }}
-                    </button>
-                    <button
-                      class="theme-btn card-btn active-pagination"
-                      @click="getRequestedSlab(page)"
-                    >
-                      {{ page }}
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getRequestedSlab(page + 1)"
-                    >
-                      {{ page + 1 }}
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getRequestedSlab(page + 2)"
-                    >
-                      Next
-                    </button>
-                  </td>
-                </tr>
-              </tfoot>
             </table>
           </div>
         </div>
@@ -182,23 +74,43 @@
 </template>
 
 <script>
+import $ from 'jquery'
 export default {
   transition: 'fade',
   layout: 'admin',
   head() {
     return {
-      title: 'Admin Dashboard - Slabstox'
+      title: 'Admin Dashboard - Slabstox',
     }
   },
   mounted() {
-   this.getRequestedSlab(this.page)
+    this.getRequestedSlab(this.page)
+  },
+  updated() {
+    setTimeout(function () {
+      if (!$.fn.dataTable.isDataTable('#search-cards-table')) {
+        $('#search-cards-table').DataTable({
+          pageLength: 20,
+          dom: 'Bfrtip',
+          buttons: [{ extend: 'csv', text: 'Export as CSV' }],
+          oLanguage: { sSearch: '' },
+          aoColumnDefs: [
+            {
+              bSortable: false,
+              aTargets: [-2, -3, -4],
+            },
+          ],
+        })
+        $('.dataTables_filter input').attr('placeholder', 'Search Terms')
+      }
+    }, 1000)
   },
   components: {},
   data() {
     return {
       cards: [],
       page: 1,
-      requestInProcess: false
+      requestInProcess: false,
     }
   },
   methods: {
@@ -211,14 +123,16 @@ export default {
             .post('searched-cards', {
               page: page,
             })
-            .then(res => {
+            .then((res) => {
               if (res.status == 200) {
                 this.cards = res.data.data
-                this.page = res.data.next
+
+                // this.page = res.data.next
               }
               this.requestInProcess = false
-               this.hideLoader()
-            }).catch(err => {
+              this.hideLoader()
+            })
+            .catch((err) => {
               this.requestInProcess = false
               this.hideLoader()
             })
@@ -228,7 +142,7 @@ export default {
         }
       }
     },
-  }
+  },
 }
 </script>
 
@@ -244,8 +158,8 @@ ul.my-card-listing {
   line-height: 2;
   margin-top: 2px;
 }
-.active-pagination{
-      color: #1ce783;
-    background: #272d33;
+.active-pagination {
+  color: #1ce783;
+  background: #272d33;
 }
 </style>

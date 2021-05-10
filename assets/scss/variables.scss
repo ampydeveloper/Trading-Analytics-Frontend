@@ -37,6 +37,24 @@ $theme-nav-badge-color: #de3030;
   }
 }
 
+.theme-green-outline-btn {
+  font-family: 'CocogoosePro-Regular', Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  border-radius: 2px;
+  padding: 4px 10px 3px 10px;
+  font-size: 11px;
+  text-align: center;
+  color: #1ce783;
+  border: 1px solid #1ce783;
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+
+  &:focus {
+    outline: none;
+  }
+}
+
 .theme-red-btn {
   background: $theme-btn-red;
   border: none;
@@ -438,10 +456,106 @@ html body main .my-card-listing {
     padding: 11px 8px 8px 8px;
   }
 
+  tbody tr {
+    background: transparent;
+  }
+
   tbody tr td {
     font-size: 14px;
     padding: 11px 8px 8px 8px;
     text-transform: capitalize;
+
+    word-wrap: break-word;
+    -ms-word-break: break-all;
+    word-break: break-all;
+    word-break: break-word;
+    -ms-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  }
+
+  tfoot {
+    text-align: right;
+    .theme-btn {
+      padding: 7px 10px 5px 10px;
+      min-width: 30px;
+    }
+
+    .active-pagination {
+      padding: 8px 11px 6px 11px;
+    }
+  }
+
+  .dt-buttons {
+    .dt-button {
+      height: 35px;
+      background: transparent;
+      border-radius: 2px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #1ce783;
+      border: 1px solid #1ce783;
+      border-top-right-radius: 2px;
+      border-bottom-right-radius: 2px;
+      margin: 0;
+    }
+  }
+
+  .dataTables_filter {
+    input {
+      background: #272d33;
+      padding: 8px 12px;
+      height: 35px;
+      border-radius: 2px;
+      font-weight: 400;
+      color: #fff;
+      border: 0;
+    }
+  }
+
+  .dataTables_info, .dataTables_length {
+    display: none;
+  }
+
+  .dataTables_paginate {
+    padding-bottom: 30px;
+    padding-top: 20px;
+
+    .paginate_button {
+      min-width: 30px;
+      background: #edecec !important;
+      border: none !important;
+      padding-bottom: 30px;
+      padding-top: 20px;
+      border-radius: 2px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      line-height: 15px;
+      padding: 7px 10px 5px 10px;
+      text-align: center;
+      margin-left: 4px;
+
+      &:hover {
+        color: #1ce783 !important;
+      }
+
+      &.current {
+        color: #1ce783 !important;
+        background: #272d33 !important;
+        padding: 8px 11px 6px 11px;
+        width: 30px;
+        &:hover {
+          color: #1ce783 !important;
+        }
+      }
+
+      &.disabled {
+        background: transparent !important;
+        border: 1px solid #666 !important;
+      }
+    }
   }
 }
 
@@ -3755,6 +3869,7 @@ html body #__nuxt .b-profileImage .dropdown-menu {
     @media (max-width: 1200px) {
       width: 50%;
     }
+
     @media (max-width: 767px) {
       width: 100%;
     }
@@ -3766,14 +3881,17 @@ html body #__nuxt .b-profileImage .dropdown-menu {
     @media (max-width: 991px) {
       .image-container {
         height: 26vw;
+
         .card-image {
           max-height: 26vw;
         }
       }
     }
+
     @media (max-width: 991px) {
       .image-container {
         height: 340px;
+
         .card-image {
           max-height: 340px;
         }
@@ -4081,11 +4199,13 @@ html body #__nuxt .b-profileImage .dropdown-menu {
 
 #openSeeProblemPopup,
 #viewSalesHistory,
+#specsDetails,
 #loginTopPopup,
 #submitAListingPopup,
 #disconnectSocialAccount,
 #updatePopup,
-#csvDeletePopup {
+#csvDeletePopup,
+#checkSlabPopup {
   .modal-dialog {
     .modal-content {
       background: $theme-card-background-color;

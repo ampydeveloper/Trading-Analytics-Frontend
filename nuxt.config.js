@@ -77,6 +77,7 @@ export default {
     { src: '~/plugins/localStorage.js', ssr: false },
     { src: '~/plugins/vue-apexchart.js', ssr: false },
     { src: '~/plugins/fb-sdk.js', ssr: false },
+    { src: '~/plugins/datatable.js', ssr: false },
   ],
   /*
   ** Nuxt.js dev-modules

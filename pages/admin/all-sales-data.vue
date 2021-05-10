@@ -7,41 +7,14 @@
             <h5 class="card-title">
               <button class="theme-btn card-btn">All Sales Data</button>
               <nuxt-link
-              class="theme-green-btn card-btn pull-right"
-              :to="`create-sales-data?item=${card_id}`"
-              >Add Sales Data</nuxt-link
-            >
+                class="theme-green-btn card-btn pull-right"
+                :to="`create-sales-data?item=${card_id}`"
+                >Add Sales Data</nuxt-link
+              >
             </h5>
-            
           </div>
-          <!-- <div class="card-body search-form">
-            <div class="row">
-              <div class="col-3">
-                <div class="input-group mb-3">
-                  <input
-                    type="text"
-                    class="form-control"
-                    v-model="searchTerm"
-                    placeholder="Search Slabs"
-                    aria-label="Search term..."
-                    aria-describedby="button-addon2"
-                  />
-                  <div class="input-group-append">
-                    <button
-                      class="btn btn-outline-secondary"
-                      @click="getItems(currentPage)"
-                      type="button"
-                      id="button-addon2"
-                    >
-                      Search
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div> -->
           <div class="table_wrapper ap">
-            <table class="table table-striped">
+            <table class="table table-striped" id="all-sales-table">
               <thead>
                 <tr>
                   <th>Id</th>
@@ -50,13 +23,19 @@
                   <th>Source</th>
                   <th>Quantity</th>
                   <th>Price</th>
-                  <th>Action</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody v-if="items.length > 0">
                 <tr v-for="(item, key) of items" :key="item.id">
                   <td>{{ item.id }}</td>
-                  <td>{{ item.timestamp }}</td>
+                  <td
+                    :data-order="
+                      $moment(item.timestamp).format('YYYY-MM-DD HH:mm:ss')
+                    "
+                  >
+                    {{ $moment(item.timestamp).format('MMMM DD Y - hh:mm:ss') }}
+                  </td>
                   <td>{{ item.type }}</td>
                   <td>{{ item.source }}</td>
                   <td>{{ item.quantity }}</td>
@@ -67,7 +46,8 @@
                       :to="`edit-sales-data?sale_id=${item.id}`"
                       >Edit</nuxt-link
                     >
-                    <button v-if='isAdmin'
+                    <button
+                      v-if="isAdmin"
                       class="card-btn btn btn-primary btn-table-spec"
                       @click="statusChange(item.id)"
                       type="button"
@@ -87,16 +67,6 @@
                   <td colspan="7" class="text-center">No sales data found.</td>
                 </tr>
               </tbody>
-              <!-- <tfoot>
-                <tr>
-                  <td colspan="6">
-                    <button class="theme-btn card-btn" :disabled="page == 2" @click="getItems(page - 1)">
-                      Previous
-                    </button>
-                    <button class="theme-btn card-btn" @click="getItems(page)">Next</button>
-                  </td>
-                </tr>
-              </tfoot> -->
             </table>
           </div>
         </div>
@@ -106,6 +76,7 @@
 </template>
 
 <script>
+import $ from 'jquery'
 export default {
   transition: 'fade',
   layout: 'admin',
@@ -117,6 +88,23 @@ export default {
   mounted() {
     this.card_id = this.$route.query.card_id
     this.getItems(this.$route.query.card_id)
+  },
+  updated() {
+    setTimeout(function () {
+      if (!$.fn.dataTable.isDataTable('#all-sales-table')) {
+        $('#all-sales-table').DataTable({
+          pageLength: 20,
+          oLanguage: { sSearch: '' },
+          aoColumnDefs: [
+            {
+              bSortable: false,
+              aTargets: [-1, -7],
+            },
+          ],
+        })
+        $('.dataTables_filter input').attr('placeholder', 'Search')
+      }
+    }, 1000)
   },
   components: {},
   data() {
