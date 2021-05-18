@@ -136,7 +136,7 @@
                   class="form-control"
                   accept="image/jpg"
                   @change="assignFileObj"
-                  required
+                  
                 />
                 </div>
               </div>

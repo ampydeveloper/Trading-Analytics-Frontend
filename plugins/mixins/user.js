@@ -16,7 +16,7 @@ const User = {
                     showloader: true,
                     isAdmin: false,
                     isModerator: false,
-                    isDataEntry: false
+                    isDataEntry: false,
                 }
             },
             computed: {
@@ -29,12 +29,14 @@ const User = {
             mounted() {
                 this.appLoaded = true;
                 this.showloader = false;
+
+                // window.localStorage.setItem('OpenFirstTime', true);
                 if (this.user) {
                     this.user_fullname = this.user.first_name
-                    if(this.user.roles.length > 0){
-                        if((this.user.roles[0].name).toLowerCase() == 'administrator') this.isAdmin = true
-                        if((this.user.roles[0].name).toLowerCase() == 'moderator') this.isModerator = true
-                        if((this.user.roles[0].name).toLowerCase() == 'data entry') this.isDataEntry = true
+                    if (this.user.roles.length > 0) {
+                        if ((this.user.roles[0].name).toLowerCase() == 'administrator') this.isAdmin = true
+                        if ((this.user.roles[0].name).toLowerCase() == 'moderator') this.isModerator = true
+                        if ((this.user.roles[0].name).toLowerCase() == 'data entry') this.isDataEntry = true
                     }
                 }
             },
@@ -79,6 +81,18 @@ const User = {
                             this.$router.push(this.$route.path)
                         }
                     } else {
+               
+                        // console.log(window.localStorage.getItem('OpenFirstTime'));
+                        // var OpenFirstTime = window.localStorage.getItem('OpenFirstTime');
+                        // if (OpenFirstTime == true) {
+                        //     console.log('OpenFirstTime');
+                        //     window.localStorage.setItem('OpenFirstTime', false);
+                        //     this.$router.push('/dashboard')
+                        // } else {
+                        //     console.log('Not OpenFirstTime');
+                        //     this.$router.push(this.$route.path)
+                        // }
+                        
                         if (this.$route.path == '/') {
                         this.$router.push('/dashboard')
                         } else if (this.$route.path != '/register') {
@@ -86,6 +100,9 @@ const User = {
                         }
                         else if (this.$route.path != '/login') {
                             this.$router.push('/')
+                        }
+                        else if (this.$route.path != '/reset-password') {
+                            this.$router.push('/reset-password')
                         }
                     }
                 },

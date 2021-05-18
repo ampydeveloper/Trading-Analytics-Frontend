@@ -696,7 +696,7 @@ export default {
             },
           },
           type: 'datetime',
-          tickAmount: 24,
+          tickAmount: 6,
           categories: [],
         },
         tooltip: {
@@ -894,8 +894,7 @@ export default {
               this.chartOptions = {
                 xaxis: {
                   // type: days == 2 ? 'category' : 'datetime',
-                  // type: 'datetime',
-                  // tickAmount: days == 2 ? 24 : 6,
+                  tickAmount: days == 2 ? 24 : 6,
                   // tickAmount: 6,
                   categories: res.data.labels,
                   // labels: {
@@ -938,9 +937,9 @@ export default {
                 },
                 tooltip: {
                   enabled: true,
-                  // x: {
-                  //   format: days == 2 ? 'MM/dd/yy HH:mm' : 'MM/dd/yy',
-                  // },
+                  x: {
+                    format: days == 2 ? 'MM/dd/yy HH:mm' : 'MM/dd/yy',
+                  },
                   y: {
                     formatter: (value, ind) => {
                       let lblStr = `$${value}`

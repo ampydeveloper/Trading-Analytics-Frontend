@@ -8,7 +8,12 @@
           <div class="row">
             <div class="col-12">
               <h1>Sign Up</h1>
-              <p v-show="errorMessage != null" class="error-message">{{errorMessage}}</p>
+              <p v-show="errorMessage != null" class="error-message">
+                {{ errorMessage }}
+              </p>
+              <p v-show="successMessage != null" class="success-message">
+                {{ successMessage }}
+              </p>
             </div>
           </div>
           <div class="row">
@@ -29,9 +34,11 @@
                       placeholder="Name"
                       trim
                       required
-                      :class="{'is-invalid': (errors.first_name != null)}"
+                      :class="{ 'is-invalid': errors.first_name != null }"
                     ></b-form-input>
-                    <b-form-feedback v-if="(errors.first_name!=null)">{{errors.first_name}}</b-form-feedback>
+                    <b-form-feedback v-if="errors.first_name != null">{{
+                      errors.first_name
+                    }}</b-form-feedback>
                   </b-input-group>
                 </b-form-group>
                 <!-- Fullname group -->
@@ -51,9 +58,11 @@
                       type="email"
                       trim
                       required
-                      :class="{'is-invalid': (errors.email != null)}"
+                      :class="{ 'is-invalid': errors.email != null }"
                     ></b-form-input>
-                    <b-form-feedback v-if="(errors.email!=null)">{{errors.email}}</b-form-feedback>
+                    <b-form-feedback v-if="errors.email != null">{{
+                      errors.email
+                    }}</b-form-feedback>
                   </b-input-group>
                 </b-form-group>
                 <!-- email group -->
@@ -73,9 +82,11 @@
                       type="password"
                       trim
                       required
-                      :class="{'is-invalid': (errors.password != null)}"
+                      :class="{ 'is-invalid': errors.password != null }"
                     ></b-form-input>
-                    <b-form-feedback v-if="(errors.password!=null)">{{errors.password}}</b-form-feedback>
+                    <b-form-feedback v-if="errors.password != null">{{
+                      errors.password
+                    }}</b-form-feedback>
                   </b-input-group>
                 </b-form-group>
                 <!-- password group -->
@@ -95,11 +106,11 @@
                       type="password"
                       trim
                       required
-                      :class="{'is-invalid': (errors.confirmpassword != null)}"
+                      :class="{ 'is-invalid': errors.confirmpassword != null }"
                     ></b-form-input>
-                    <b-form-feedback
-                      v-if="(errors.confirmpassword != null)"
-                    >{{errors.confirmpassword}}</b-form-feedback>
+                    <b-form-feedback v-if="errors.confirmpassword != null">{{
+                      errors.confirmpassword
+                    }}</b-form-feedback>
                   </b-input-group>
                 </b-form-group>
                 <!-- password group -->
@@ -155,9 +166,9 @@ export default {
         {
           hid: 'register',
           name: 'Register - Slabstox',
-          content: 'Register - Slabstox'
-        }
-      ]
+          content: 'Register - Slabstox',
+        },
+      ],
     }
   },
   mounted() {
@@ -173,23 +184,24 @@ export default {
         email: '',
         password: '',
         confirmpassword: '',
-        agree: false
+        agree: false,
       },
       isSubmit: false,
       errors: {
         first_name: null,
         email: null,
         password: null,
-        confirmpassword: null
+        confirmpassword: null,
       },
       errorMessage: null,
+      successMessage: null,
     }
   },
   methods: {
     async register() {
       if (this.validation()) {
         try {
-          this.errorMessage = null;
+          this.errorMessage = null
           this.showLoader()
           this.resetErrors()
           this.$nuxt.$loading.start()
@@ -198,18 +210,29 @@ export default {
             'auth/register',
             this.form
           )
+          if (resgisterRes.status == 200) {
+            // document.getElementById('__nuxt').style.display = "none";
+            console.log(resgisterRes)
+            this.successMessage = resgisterRes.data.message
+            setTimeout(function () {
+              window.location.href = '/dashboard'
+              // this.$router.push('/login')
+            }, 3000)
+          } else {
+            this.errorMessage = resgisterRes.data.error.message
+          }
           // await this.$auth.loginWith('local', {
           //   data: { email: this.form.email, password: this.form.password }
           // })
-          const res = await this.$axios.post('auth/login', this.form)
-          if (res.status == 200) {
-            // this.processAuthLogin(res.data)
-            const a = await this.$auth.loginWith('local', {
-              data: { token: res.data.auth }
-            })
-            document.getElementById('__nuxt').style.display = "none";
-            window.location.href = '/dashboard'
-          }
+          // const res = await this.$axios.post('auth/login', this.form)
+          // if (res.status == 200) {
+          //   // this.processAuthLogin(res.data)
+          //   const a = await this.$auth.loginWith('local', {
+          //     data: { token: res.data.auth }
+          //   })
+          //   document.getElementById('__nuxt').style.display = "none";
+          //   window.location.href = '/dashboard'
+          // }
           this.hideLoader()
           this.$nuxt.$loading.finish()
           // this.$router.push('/')
@@ -220,19 +243,18 @@ export default {
           if (e) {
             this.handelError(e.response)
           }
-          
         }
       }
     },
     validation() {
       const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       if (!re.test(String(this.form.email).toLowerCase())) {
-        this.errors.email = 'Valid email required'
+        this.errors.email = 'Valid email is required.'
         return false
       }
 
       if (this.form.password != this.form.confirmpassword) {
-        this.errors.confirmpassword = 'Password not match.'
+        this.errors.confirmpassword = 'Password do not match.'
         return false
       }
       return true
@@ -248,9 +270,9 @@ export default {
         if (res.data.errors.hasOwnProperty('password')) {
           this.errors.password = res.data.errors.password[0]
         }
-        this.errorMessage = 'Registration failed.';
-      }else if(res.status == 500) {
-        this.errorMessage = 'Unable to process you request.';
+        this.errorMessage = 'Registration failed.'
+      } else if (res.status == 500) {
+        this.errorMessage = 'Unable to process you request.'
       }
     },
     resetErrors() {
@@ -258,18 +280,26 @@ export default {
         first_name: null,
         email: null,
         password: null,
-        confirmpassword: null
+        confirmpassword: null,
       }
-    }
-  }
+    },
+  },
 }
 </script>
 
 <style lang="scss" scoped>
 .register-container {
   font-family: 'CocogoosePro-SemiLightItalic', Helvetica, Arial, sans-serif;
-  background: -webkit-linear-gradient( left, rgba(5, 251, 98, 1) 0%, rgba(10, 178, 95, 1) 100%);
-    background: linear-gradient( to right, rgba(5, 251, 98, 1) 0%, rgba(10, 178, 95, 1) 100%);
+  background: -webkit-linear-gradient(
+    left,
+    rgba(5, 251, 98, 1) 0%,
+    rgba(10, 178, 95, 1) 100%
+  );
+  background: linear-gradient(
+    to right,
+    rgba(5, 251, 98, 1) 0%,
+    rgba(10, 178, 95, 1) 100%
+  );
   padding-top: 150px;
   padding-bottom: 150px;
   .signup-form {

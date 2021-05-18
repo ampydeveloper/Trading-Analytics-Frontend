@@ -6,7 +6,7 @@
           <div class="card-body">
             <h5 class="card-title">
               <button class="theme-btn card-btn">SX Featured Slabs</button>
-              <nuxt-link class="card-link float-right" to="/live-auctions">
+              <nuxt-link class="card-link float-right" to="/trenders">
                 View All
                 <font-awesome-icon :icon="['fas', 'chevron-right']" />
               </nuxt-link>
@@ -523,11 +523,11 @@ export default {
           tickAmount: 6,
           categories: [],
         },
-        // tooltip: {
-        //   x: {
-        //     format: 'MM/dd/yy',
-        //   },
-        // },
+        tooltip: {
+          x: {
+            format: 'MM/dd/yy',
+          },
+        },
       },
     }
   },
@@ -721,7 +721,7 @@ export default {
                   this.chartOptions = {
                     xaxis: {
                       // type: res.data.ctype,
-                      type: days == 2 ? 'category' : 'datetime',
+                      type: 'datetime',
                       tickAmount: days == 2 ? 24 : 6,
                       categories: res.data.labels,
                     },
@@ -732,10 +732,6 @@ export default {
                           fontSize: '10px',
                           fontFamily: 'NexaBold',
                         },
-                        // formatter: (value, ind) => {
-                        //   let lblStr = `$${value}`
-                        //   return lblStr
-                        // },
                         formatter: (value, ind) => {
                           let valCheck = value
                           if (Number(value) === value && value % 1 !== 0) {
@@ -750,7 +746,7 @@ export default {
                     tooltip: {
                       enabled: true,
                       x: {
-                        format: 'MM/dd/yy',
+                        format: days == 2 ? 'MM/dd/yy HH:mm' : 'MM/dd/yy',
                       },
                       y: {
                         formatter: (value, ind) => {
@@ -814,7 +810,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .t-p-5 {
   padding: 5px;
 }

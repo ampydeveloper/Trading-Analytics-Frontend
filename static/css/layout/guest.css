@@ -127,7 +127,13 @@ border: 0;
     text-align: center;
     font-size: 12px;
   }
+  .success-message{
+    color: #28a745;
+    text-align: center;
+    font-size: 12px;
+  }
   
+
 @media (max-width: 768px) {
     .login-container {
         padding-top: 50px;

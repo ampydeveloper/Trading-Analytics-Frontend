@@ -211,6 +211,7 @@
                       >All Sales Data</nuxt-link
                     >
                     <nuxt-link
+                    v-if='!isModerator'
                       class="card-btn btn btn-primary btn-table-spec"
                       style="margin-top: 4px"
                       :to="`edit-card?card_id=${card.id}`"

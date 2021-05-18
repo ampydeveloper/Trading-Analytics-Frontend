@@ -121,14 +121,9 @@ export default {
   data() {
     return {
       timeLeft: {
-        days: 0,
-        hours: 0,
-        mins: 0,
-        secs: 0,
         value: 'N/A',
-        datetime: null,
-        intervalObject: null,
       },
+      timeLeftFromBack:null,
       viewItemURL: '',
       timeEndClass: '',
       viewListingText: 'View Listing',
@@ -173,44 +168,42 @@ export default {
     },
     getTimeLeft() {
       // && this.itemdata.data.listing_info.listingType == 'Auction'
-      if (this.itemdata.listing_ending_at != null) {
-        this.timeLeft.intervalObject = setInterval(() => {
-          var date1 = this.$(this.itemdata.listing_ending_at)
-          var a = date1.format('YYYY-MM-DD HH:mm:ss')
-          var date2 = this.$moment()
-          var b = date2.format('YYYY-MM-DD HH:mm:ss')
-          var x = this.$moment(a)
-          var y = this.$moment(b)
-          var final = x.diff(y)
-
-          if (final > 0) {
-            const d = this.$moment(final).format('D') - 1
-            const h = this.$moment(final).format('H')
-            const m = this.$moment(final).format('mm')
-            const s = this.$moment(final).format('ss')
-            if (d > 0) {
-              this.timeLeft.value = d + 'd ' + h + 'h'
-            } else if (h > 1) {
-              this.timeLeft.value = h + 'h ' + m + 'm'
-            } else if (m > 1) {
-              this.timeLeft.value = m + 'm ' + s + 's'
-            } else {
-              this.timeLeft.value = s + 's'
-            }
-
-            // this.viewListingText = 'View Listing'
-          }
-          // else {
-          //   this.timeLeft.value = '00:00'
-          //   clearInterval(this.timeLeft.intervalObject)
-          //   this.timeEndClass= 'time-end-grey';
-          //   this.viewListingText= 'Sold Listing';
-          // }
-        }, 1000)
-      } else {
-        this.timeLeft.value = 'N/A'
-        // this.viewListingText = 'View Listing'
+   if(this.itemdata.timeleft && this.itemdata.timeleft != '0s'){
+        this.timeLeft.value = this.itemdata.timeleft
+      }else{
+        this.timeLeft.value = '00:00'
       }
+      // if (this.itemdata.listing_ending_at) {
+      //   this.timeLeft.intervalObject = setInterval(() => {
+      //     var date1 = this.$moment(this.itemdata.listing_ending_at)
+      //     var a = date1.format('YYYY-MM-DD HH:mm:ss')
+      //     var date2 = this.$moment()
+      //     var b = date2.format('YYYY-MM-DD HH:mm:ss')
+      //     var x = this.$moment(a)
+      //     var y = this.$moment(b)
+      //     var final = x.diff(y)
+
+      //     if (final > 0) {
+      //       const d = this.$moment(final).format('D') - 1
+      //       const h = this.$moment(final).format('H')
+      //       const m = this.$moment(final).format('mm')
+      //       const s = this.$moment(final).format('ss')
+      //       if (d > 0) {
+      //         this.timeLeft.value = d + 'd ' + h + 'h'
+      //       } else if (h > 1) {
+      //         this.timeLeft.value = h + 'h ' + m + 'm'
+      //       } else if (m > 1) {
+      //         this.timeLeft.value = m + 'm ' + s + 's'
+      //       } else {
+      //         this.timeLeft.value = s + 's'
+      //       }
+            
+      //     }
+        
+      //   }, 1000)
+      // } else {
+      //   this.timeLeft.value = 'N/A'
+      // }
     },
     calculateValueDifference() {
       if (this.itemdata.data.card != null) {

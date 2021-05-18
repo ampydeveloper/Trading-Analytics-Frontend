@@ -380,14 +380,10 @@ export default {
       seeProblemMessage: null,
       sx: null,
       timeLeft: {
-        days: 0,
-        hours: 0,
-        mins: 0,
-        secs: 0,
         value: null,
-        datetime: null,
-        intervalObject: null,
+        
       },
+      timeLeftFromBack: null,
     }
   },
   methods: {
@@ -437,6 +433,7 @@ export default {
           this.sx = res.data.sx
           this.sx_value = res.data.sx_value
           this.sx_icon = res.data.sx_icon
+          this.timeLeftFromBack = res.data.timeleft
 
           // window.mobileAndTabletCheck = function () {
           //   let check = false
@@ -474,33 +471,38 @@ export default {
       }
     },
     getTimeLeft() {
-      this.timeLeft.intervalObject = setInterval(() => {
-        var date1 = this.$moment(this.data.listing_ending_at)
-        var a = date1.format('YYYY-MM-DD HH:mm:ss')
-        var date2 = this.$moment()
-        var b = date2.format('YYYY-MM-DD HH:mm:ss')
-        var x = this.$moment(a)
-        var y = this.$moment(b)
-        var final = x.diff(y)
-        if (final > 0) {
-          const d = this.$moment(final).format('D')
-          const h = this.$moment(final).format('H')
-          const m = this.$moment(final).format('mm')
-          const s = this.$moment(final).format('ss')
-          if (d > 0) {
-            this.timeLeft.value = d + 'd ' + h + 'h'
-          } else if (h > 1) {
-            this.timeLeft.value = h + 'h ' + m + 'm'
-          } else if (m > 1) {
-            this.timeLeft.value = m + 'm ' + s + 's'
-          } else {
-            this.timeLeft.value = s + 's'
-          }
-        } else {
-          this.timeLeft.value = '00:00'
-          clearInterval(this.timeLeft.intervalObject)
-        }
-      }, 1000)
+      // this.timeLeft.intervalObject = setInterval(() => {
+      //   var date1 = this.$moment(this.data.listing_ending_at)
+      //   var a = date1.format('YYYY-MM-DD HH:mm:ss')
+      //   var date2 = this.$moment()
+      //   var b = date2.format('YYYY-MM-DD HH:mm:ss')
+      //   var x = this.$moment(a)
+      //   var y = this.$moment(b)
+      //   var final = x.diff(y)
+      //   if (final > 0) {
+      //     const d = this.$moment(final).format('D') - 1
+      //     const h = this.$moment(final).format('H')
+      //     const m = this.$moment(final).format('mm')
+      //     const s = this.$moment(final).format('ss')
+      //     if (d > 0) {
+      //       this.timeLeft.value = d + 'd ' + h + 'h'
+      //     } else if (h > 1) {
+      //       this.timeLeft.value = h + 'h ' + m + 'm'
+      //     } else if (m > 1) {
+      //       this.timeLeft.value = m + 'm ' + s + 's'
+      //     } else {
+      //       this.timeLeft.value = s + 's'
+      //     }
+      //   } else {
+      //     this.timeLeft.value = '00:00'
+      //     clearInterval(this.timeLeft.intervalObject)
+      //   }
+      // }, 1000)
+      if(this.timeLeftFromBack && this.timeLeftFromBack != '0s'){
+        this.timeLeft.value = this.timeLeftFromBack
+      }else{
+        this.timeLeft.value = '00:00'
+      }
     },
     getImage() {
       if (this.data.pictureURLSuperSize != null) {

@@ -973,7 +973,7 @@ export default {
               this.salesQty = [{ data: res.data.qty1 }, { data: res.data.qty2 }]
               this.chartOptions = {
                 xaxis: {
-                  type: days == 2 ? 'category' : 'datetime',
+                  type:'datetime',
                   tickAmount: days == 2 ? 24 : 6,
                   categories: res.data.lable1,
                 },
@@ -999,6 +999,9 @@ export default {
                 },
                 tooltip: {
                   enabled: true,
+                  x: {
+                    format: days == 2 ? 'MM/dd/yy HH:mm' : 'MM/dd/yy',
+                  },
                   y: {
                     formatter: (value, ind) => {
                       if (value == 'undefined') {

@@ -1267,7 +1267,7 @@ export default {
                           },
                         },
                         // type: 'category',
-                        type: days == 2 ? 'category' : 'datetime',
+                        type: 'datetime',
                         tickAmount: days == 2 ? 24 : 6,
                         categories: item.sales_graph.labels,
                       },
@@ -1278,10 +1278,6 @@ export default {
                             fontSize: '10px',
                             fontFamily: 'NexaBold',
                           },
-                          // formatter: (value, ind) => {
-                          //   let lblStr = `$${value}`
-                          //   return lblStr
-                          // },
                           formatter: (value, ind) => {
                             let valCheck = value
                             if (Number(value) === value && value % 1 !== 0) {
@@ -1295,9 +1291,9 @@ export default {
                       },
                       tooltip: {
                         enabled: true,
-                        x: {
-                          format: 'MM/dd/yy',
-                        },
+                       x: {
+                    format: days == 2 ? 'MM/dd/yy HH:mm' : 'MM/dd/yy',
+                  },
                         y: {
                           formatter: (value, ind) => {
                             let lblStr = `$${value}`
@@ -1529,7 +1525,7 @@ export default {
             this.sxSalesQty = res.data.qty
             this.sxChartOptions = {
               xaxis: {
-                type: days == 2 ? 'category' : 'datetime',
+                type: 'datetime',
                 tickAmount: days == 2 ? 24 : 6,
                 categories: res.data.labels,
               },
@@ -1548,9 +1544,9 @@ export default {
               },
               tooltip: {
                 enabled: true,
-                x: {
-                  format: 'MM/dd/yy',
-                },
+              x: {
+                    format: days == 2 ? 'MM/dd/yy HH:mm' : 'MM/dd/yy',
+                  },
                 y: {
                   formatter: (value, ind) => {
                     let lblStr = `$${value}`
@@ -1629,7 +1625,8 @@ export default {
                           fontFamily: 'NexaBold',
                         },
                       },
-                      type: 'category',
+                      type: 'datetime',
+                       tickAmount: days == 2 ? 24 : 6,
                       categories: item.sales_graph.labels,
                     },
                     yaxis: {
@@ -1652,9 +1649,9 @@ export default {
                     },
                     tooltip: {
                       enabled: true,
-                      x: {
-                        format: 'MM/dd/yy',
-                      },
+                     x: {
+                    format: days == 2 ? 'MM/dd/yy HH:mm' : 'MM/dd/yy',
+                  },
                       y: {
                         formatter: (value, ind) => {
                           let lblStr = `$${value}`
@@ -1730,7 +1727,8 @@ export default {
                       fontFamily: 'NexaBold',
                     },
                   },
-                  type: 'category',
+                  type: 'datetime',
+                  tickAmount: days == 2 ? 24 : 6,
                   categories: res.data.sales_graph.labels,
                 },
                 yaxis: {
@@ -1753,8 +1751,8 @@ export default {
                 },
                 tooltip: {
                   enabled: true,
-                  x: {
-                    format: 'MM/dd/yy',
+                 x: {
+                    format: days == 2 ? 'MM/dd/yy HH:mm' : 'MM/dd/yy',
                   },
                   y: {
                     formatter: (value, ind) => {

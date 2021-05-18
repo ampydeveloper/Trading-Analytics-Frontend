@@ -7,9 +7,13 @@
           <div class="row">
             <div class="col-sm-12 login-form">
               <h2>Reset password</h2>
-              <p v-show="errorMessage != null" class="error-message">{{errorMessage}}</p>
-              <b-form v-if="!emailSent" @submit.prevent="forgotpassword">
-                
+              <p v-show="errorMessage != null" class="error-message">
+                {{ errorMessage }}
+              </p>
+              <p v-show="successMessage != null" class="success-message">
+                {{ successMessage }}
+              </p>
+              <b-form @submit.prevent="forgotpassword">
                 <b-form-group
                   id="input-group-new-password"
                   label
@@ -24,11 +28,14 @@
                       type="password"
                       trim
                       required
+                          :class="{ 'is-invalid': errors.password != null }"
                     ></b-form-input>
-                    <b-form-feedback v-if="errors.password !== null">{{errors.password}}</b-form-feedback>
+                    <b-form-feedback v-if="errors.password !== null">{{
+                      errors.password
+                    }}</b-form-feedback>
                   </b-input-group>
                 </b-form-group>
-         
+
                 <b-form-group
                   id="input-group-confirm-password"
                   label
@@ -43,11 +50,14 @@
                       type="password"
                       trim
                       required
+                       :class="{ 'is-invalid': errors.confirmpassword != null }"
                     ></b-form-input>
-                    <b-form-feedback v-if="errors.confirmPassword !== null">{{errors.confirmPassword}}</b-form-feedback>
+                    <b-form-feedback v-if="errors.confirmPassword !== null">{{
+                      errors.confirmPassword
+                    }}</b-form-feedback>
                   </b-input-group>
                 </b-form-group>
-              
+
                 <b-form-group class="text-center">
                   <button
                     :disabled="isSubmit"
@@ -59,15 +69,10 @@
                   </button>
                 </b-form-group>
               </b-form>
-              <p
-                v-if="emailSent"
-                class="email-sent-message"
-              >Password has been reset successfully. You can login now.</p>
             </div>
-            
           </div>
         </div>
-        <div class="col"></div>
+  
       </div>
     </div>
   </div>
@@ -77,6 +82,7 @@
 export default {
   transition: 'fade',
   layout: 'guest',
+  auth: 'guest',
   head() {
     return {
       title: 'Reset Password - Slabstox',
@@ -84,9 +90,9 @@ export default {
         {
           hid: 'reset-password',
           name: 'Reset Password - Slabstox',
-          content: 'Reset Password - Slabstox'
-        }
-      ]
+          content: 'Reset Password - Slabstox',
+        },
+      ],
     }
   },
   loading: '~/components/loading.vue',
@@ -100,20 +106,23 @@ export default {
     return {
       form: {
         password: '',
-        confirmPassword: ''
+        confirmPassword: '',
+        token: this.$route.query.token,
       },
       isSubmit: false,
-      emailSent: false,
       errors: {
         password: null,
-        confirmPassword: null
+        confirmPassword: null,
       },
-      errorMessage: null
+      errorMessage: null,
+      successMessage: null,
     }
   },
   methods: {
     async forgotpassword() {
       try {
+        this.errorMessage = null
+         this.resetErrors()
         this.$nuxt.$loading.start()
         this.showLoader()
         this.isSubmit = true
@@ -128,18 +137,41 @@ export default {
           if (res.data.hasOwnProperty('error')) {
             this.errorMessage = res.data.error
           } else {
-            this.emailSent = true
+            this.successMessage = res.data.message
+             setTimeout(function () {
+              window.location.href = '/dashboard'
+            }, 3000)
           }
         } else {
-          this.errorMessage = 'Unable to process you request.'
+          this.errorMessage = 'Unable to process you request. Please try again.'
         }
       } catch (e) {
         this.hideLoader()
         this.isSubmit = false
-        this.errorMessage = e.response.data.message
+          if (e) {
+            this.handelError(e.response)
+          }
       }
-    }
-  }
+    },
+    handelError(res) {
+      if (res.status == 422) {
+        if (res.data.hasOwnProperty('password')) {
+          this.errors.password = res.data.password[0]
+        }
+        if (res.data.hasOwnProperty('confirmPassword')) {
+          this.errors.confirmPassword = res.data.confirmPassword[0]
+        }
+      } else if (res.status == 500) {
+        this.errorMessage = 'Unable to process you request. Please try again.'
+      }
+    },
+    resetErrors() {
+      this.errors = {
+        password: null,
+        confirmpassword: null,
+      }
+    },
+  },
 }
 </script>
 

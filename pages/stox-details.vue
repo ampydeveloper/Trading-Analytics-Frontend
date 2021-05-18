@@ -480,7 +480,7 @@ export default {
               this.salesQty = res.card_data.sales_graph.qty
               this.chartOptions = {
                 xaxis: {
-                  type: days == 2 ? 'category' : 'datetime',
+                  type: 'datetime',
                   tickAmount: days == 2 ? 24 : 6,
                   categories: res.card_data.sales_graph.labels,
                 },
@@ -491,10 +491,6 @@ export default {
                       fontSize: '10px',
                       fontFamily: 'NexaBold',
                     },
-                    // formatter: (value, ind) => {
-                    //   let lblStr = `$${value}`
-                    //   return lblStr
-                    // },
                     formatter: (value, ind) => {
                       let valCheck = value
                       if (Number(value) === value && value % 1 !== 0) {
@@ -509,6 +505,9 @@ export default {
                 colors: ['#14f078'],
                 tooltip: {
                   enabled: true,
+                    x: {
+                    format: days == 2 ? 'MM/dd/yy HH:mm' : 'MM/dd/yy',
+                  },
                   y: {
                     formatter: (value, ind) => {
                       let lblStr = `$${value}`
