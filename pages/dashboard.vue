@@ -251,7 +251,7 @@
               </nuxt-link>
             </h5>
             <p class="card-text dash-no-cards" v-if="liveAuction.length == 0">
-              <span>There are no cards here.</span>
+              <span>There are no slabs here.</span>
             </p>
             <span
               class="card-text-link dash-list"
@@ -278,13 +278,13 @@
           <div class="card-body">
             <h5 class="card-title">
               <button class="theme-btn card-btn">Wishlist</button>
-              <nuxt-link class="card-link float-right" to="/watch-list">
+              <nuxt-link class="card-link float-right" to="/my-portfolio">
                 View All
                 <font-awesome-icon :icon="['fas', 'chevron-right']" />
               </nuxt-link>
             </h5>
             <p class="card-text dash-no-cards" v-if="watchlist.length == 0">
-              <span>There are no cards here.</span>
+              <span>There are no slabs here.</span>
             </p>
             <span
               class="card-text-link dash-list"
@@ -295,7 +295,7 @@
 
               <nuxt-link
                 class=""
-                :to="'/product?id=' + item.id + '&slag=' + item.title"
+                :to="'/card-data?id=' + item.id"
                 :title="item.title"
                 >${{ item.price > 0 ? trimString(item.price) : 0 }}
               </nuxt-link>
@@ -315,7 +315,7 @@
               </nuxt-link>
             </h5>
             <p class="card-text dash-no-cards" v-if="ternder.length == 0">
-              <span>There are no cards here.</span>
+              <span>There are no slabs here.</span>
             </p>
             <span
               class="card-text-link dash-list"
@@ -328,7 +328,7 @@
 
               <nuxt-link
                 class=""
-                :to="'/product?id=' + item.id + '&slag=' + item.title"
+                :to="'/card-data?id=' + item.id"
                 :title="item.title"
               >
                 ${{ item.price > 0 ? trimString(item.price) : 0 }}

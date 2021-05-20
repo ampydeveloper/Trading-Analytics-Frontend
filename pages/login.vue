@@ -7,8 +7,12 @@
           <div class="row">
             <div class="col-md-6 col-sm-6 login-form">
               <h1 v-if="showLoginForm">Sign In</h1>
-              <h1 class="two-setp-verification" v-else>Two step verification</h1>
-              <p v-show="errorMessage != null" class="error-message">{{errorMessage}}</p>
+              <h1 class="two-setp-verification" v-else>
+                Two step verification
+              </h1>
+              <p v-show="errorMessage != null" class="error-message">
+                {{ errorMessage }}
+              </p>
               <div class="row" v-if="showLoginForm">
                 <div class="col">
                   <b-form @submit.prevent="login">
@@ -26,12 +30,13 @@
                           placeholder="Email"
                           trim
                           required
-                          :class="{'is-invalid': (errors.email != null)}"
+                          :class="{ 'is-invalid': errors.email != null }"
                         ></b-form-input>
                         <span
                           class="invalid-feedback"
-                          v-if="(errors.email != null)"
-                        >{{errors.email}}</span>
+                          v-if="errors.email != null"
+                          >{{ errors.email }}</span
+                        >
                       </b-input-group>
                     </b-form-group>
                     <!-- email group -->
@@ -51,18 +56,30 @@
                           type="password"
                           trim
                           required
-                          :class="{'is-invalid': (errors.password != null)}"
+                          :class="{ 'is-invalid': errors.password != null }"
                         ></b-form-input>
-                        <b-form-feedback v-if="(errors.password != null)">{{errors.password}}</b-form-feedback>
+                        <b-form-feedback v-if="errors.password != null">{{
+                          errors.password
+                        }}</b-form-feedback>
                       </b-input-group>
                     </b-form-group>
                     <!-- password group -->
 
                     <b-form-group class="text-center">
                       <p class="fogot-password">
-                        <nuxt-link to="/forgot-password">Forgot Your Password ?</nuxt-link>
+                        <nuxt-link to="/forgot-password"
+                          >Forgot Your Password ?</nuxt-link
+                        >
+
+                        <!-- <nuxt-link to="/reset-password?token=c785d5928d7223168dbf9e91cb5c7880"
+                          >Forssr Password ?</nuxt-link
+                        > -->
                       </p>
-                      <button :disabled="isSubmit" type="submit" class="btn-login">
+                      <button
+                        :disabled="isSubmit"
+                        type="submit"
+                        class="btn-login"
+                      >
                         Login Now
                         <font-awesome-icon :icon="['fas', 'chevron-right']" />
                       </button>
@@ -73,7 +90,7 @@
               <div class="row" v-else>
                 <div class="col">
                   <b-form @submit.prevent="googleAuth">
-                    <div v-if="twoFactor.qr !=null" class="google-auth-qr">
+                    <div v-if="twoFactor.qr != null" class="google-auth-qr">
                       <img :src="twoFactor.qr" alt />
                     </div>
                     <b-form-group
@@ -111,14 +128,22 @@
                   </div>
                 </div>
               </div>
-              <SocialLoginButtons v-if="showLoginForm" v-on:onSocialLogin="processAuthLogin"></SocialLoginButtons>
+              <SocialLoginButtons
+                v-if="showLoginForm"
+                v-on:onSocialLogin="processAuthLogin"
+              ></SocialLoginButtons>
             </div>
             <div
               class="col-md-6 col-sm-6 login-page-signup-section"
-              v-bind:class="{'no-qr-image': (showLoginForm==false && twoFactor.qr==null), 'with-qr-image': (showLoginForm==false && twoFactor.qr!=null) }"
+              v-bind:class="{
+                'no-qr-image': showLoginForm == false && twoFactor.qr == null,
+                'with-qr-image': showLoginForm == false && twoFactor.qr != null,
+              }"
             >
               <p class="dont-have-account">Don't Have an Account ?</p>
-              <nuxt-link to="/register" class="login-page-signup-btn">Sign up</nuxt-link>
+              <nuxt-link to="/register" class="login-page-signup-btn"
+                >Sign up</nuxt-link
+              >
             </div>
           </div>
         </div>
@@ -130,6 +155,8 @@
 
 <script>
 import SocialLoginButtons from '~/components/guest/SocialLoginButtons'
+import { BASE_URL } from '../constants/keys'
+import $ from 'jquery'
 
 export default {
   transition: 'fade',
@@ -138,13 +165,17 @@ export default {
     return {
       title: 'Login - Slabstox',
       meta: [
-        // hid is used as unique identifier. Do not use `vmid` for it as it will not work
+        {hid: 'login', name: 'Login - Slabstox', content: 'Buy & Sell Slabs' },
+        { property: 'og:title', content: 'Buy & Sell Slabs' },
+        { property: 'og:image', content: $('.header-logo').attr('src') },
         {
-          hid: 'login',
-          name: 'Login - Slabstox',
-          content: 'Login - Slabstox'
-        }
-      ]
+          property: 'og:description',
+          content: 'Buy & Sell Slabs',
+        },
+        { property: 'og:url', content: this.baseUrl },
+        { property: 'og:site_name', content: 'Slabstox' },
+        { property: 'og:type', content: 'website' },
+      ],
     }
   },
   mounted() {
@@ -154,18 +185,19 @@ export default {
     })
   },
   components: {
-    SocialLoginButtons
+    SocialLoginButtons,
   },
   data() {
     return {
+      baseUrl: BASE_URL,
       form: {
         email: '',
-        password: ''
+        password: '',
       },
       isSubmit: false,
       errors: {
         email: null,
-        password: null
+        password: null,
       },
       errorMessage: null,
       showLoginForm: true,
@@ -173,8 +205,8 @@ export default {
         token: null,
         qr: null,
         code: null,
-        id: null
-      }
+        id: null,
+      },
     }
   },
   methods: {
@@ -196,9 +228,9 @@ export default {
           if (res.status == 200) {
             // this.processAuthLogin(res.data)
             const a = await this.$auth.loginWith('local', {
-              data: { token: res.data.auth }
+              data: { token: res.data.auth },
             })
-            document.getElementById('__nuxt').style.display = "none";
+            document.getElementById('__nuxt').style.display = 'none'
             window.location.href = '/dashboard'
           }
           this.isSubmit = false
@@ -222,7 +254,7 @@ export default {
         if (res.status == 200) {
           if (res.data.hasOwnProperty('token')) {
             const res = await this.$auth.loginWith('local', {
-              data: { token: this.twoFactor.token }
+              data: { token: this.twoFactor.token },
             })
             window.location.href = '/dashboard'
             this.$router.push('/redirect')
@@ -265,10 +297,10 @@ export default {
     resetErrors() {
       this.errors = {
         email: null,
-        password: null
+        password: null,
       }
-    }
-  }
+    },
+  },
 }
 </script>
 

@@ -233,7 +233,7 @@
     </b-navbar-nav>
     <ul class="upper-links list-inline clearfix" v-if="user == null || user.full_name == null">
       <li>
-      <nuxt-link to="/register">
+      <nuxt-link to="/login">
                 <i>Sign In</i>
               </nuxt-link>
       </li>

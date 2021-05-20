@@ -15,7 +15,7 @@
               <li v-if="card.grade != null" class="yellow">{{ card.grade }}</li>
               <!-- <li class="orange">trender</li> -->
             </ul>
-            <div class="icons-container" v-if="user.full_name != null">
+            <div class="icons-container" v-if="user != null && user.full_name != null">
               <img
                 v-if="!isInWatchList(id)"
                 @click="addToWatchList()"
@@ -39,7 +39,7 @@
             <a
               class="theme-green-btn card-btn add-my-port2"
               target="_blank"
-              v-if="user.full_name != null"
+              v-if="user != null && user.full_name != null"
               href="https://www.ebay.com/sl/sell"
               >Sell This Card
               <font-awesome-icon :icon="['fas', 'chevron-right']"
@@ -54,7 +54,7 @@
             </span>
             <button
               class="theme-green-btn card-btn add-my-port1"
-              v-if="user.full_name != null"
+              v-if="user != null && user.full_name != null"
               v-b-modal.submitAListingPopup
             >
               Submit a Listing
@@ -69,7 +69,7 @@
             </span>
             <button
               class="theme-green-btn card-btn add-my-port"
-              v-if="user.full_name != null"
+              v-if="user != null && user.full_name != null"
               @click="addToMyPortfolio()"
             >
               Add to My Portfolio
@@ -588,7 +588,7 @@ export default {
     if (this.$route.query.hasOwnProperty('id')) {
       this.id = this.$route.query.id
     } else {
-      this.$router.push('/404')
+      this.$router.push('/dashboard')
     }
     this.getData()
     this.updateGraph(90)
@@ -894,7 +894,7 @@ export default {
               this.chartOptions = {
                 xaxis: {
                   // type: days == 2 ? 'category' : 'datetime',
-                  tickAmount: days == 2 ? 24 : 6,
+                  tickAmount: 24,
                   // tickAmount: 6,
                   categories: res.data.labels,
                   // labels: {
@@ -1047,6 +1047,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.listing-lebron{
+      padding: 0 25px;
+}
 .share-lk-top {
   position: relative;
   &:hover {
@@ -1572,6 +1575,9 @@ ul.my-card-listing {
   }
 }
 @media (max-width: 991px) {
+  .listing-lebron{
+        padding: 0 15px
+  }
   .headwrapper .card-body .image-conatiner {
     text-align: center;
     padding: 20px 0 113px 0;

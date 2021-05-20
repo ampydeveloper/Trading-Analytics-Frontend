@@ -74,6 +74,7 @@ const User = {
                     }
                 },
                 guestMiddleware() {
+                    // console.log(window.localStorage.getItem('OpenFirstTime'));
                     if (this.user) {
                         if (this.user.roles && this.user.roles[0].name != 'user') {
                             this.$router.push('/admin')
@@ -81,29 +82,35 @@ const User = {
                             this.$router.push(this.$route.path)
                         }
                     } else {
-               
+// console.log(this.$route.path);
+this.$router.push(this.$route.path)
                         // console.log(window.localStorage.getItem('OpenFirstTime'));
-                        // var OpenFirstTime = window.localStorage.getItem('OpenFirstTime');
-                        // if (OpenFirstTime == true) {
+                        // var openFirstTime = window.localStorage.getItem('OpenFirstTime');
+                        // if (openFirstTime == 'First' || openFirstTime == null) {
                         //     console.log('OpenFirstTime');
-                        //     window.localStorage.setItem('OpenFirstTime', false);
-                        //     this.$router.push('/dashboard')
+                        //     window.localStorage.setItem('OpenFirstTime', 'Not First');
+                        //     // this.$router.push('/dashboard')
+                        //     if (this.$route.path == '/') {
+                        //         this.$router.push('/dashboard')
+                        //     } else {
+                        //         this.$router.push(this.$route.path)
+                        //     }
                         // } else {
                         //     console.log('Not OpenFirstTime');
                         //     this.$router.push(this.$route.path)
                         // }
-                        
-                        if (this.$route.path == '/') {
-                        this.$router.push('/dashboard')
-                        } else if (this.$route.path != '/register') {
-                            this.$router.push('/dashboard')
-                        }
-                        else if (this.$route.path != '/login') {
-                            this.$router.push('/')
-                        }
-                        else if (this.$route.path != '/reset-password') {
-                            this.$router.push('/reset-password')
-                        }
+
+                        // if (this.$route.path == '/') {
+                        //     this.$router.push('/dashboard')
+                        // } else if (this.$route.path != '/register') {
+                        //     this.$router.push('/dashboard')
+                        // }
+                        // else if (this.$route.path != '/login') {
+                        //     this.$router.push('/')
+                        // }
+                        // else if (this.$route.path != '/reset-password') {
+                        //     this.$router.push('/reset-password')
+                        // }
                     }
                 },
                 addToCart(data) {

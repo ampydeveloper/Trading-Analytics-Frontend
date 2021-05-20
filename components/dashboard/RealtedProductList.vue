@@ -65,4 +65,7 @@ export default {
   padding: 0px;
   margin: 0px;
 }
+.t-p-5{
+  padding: 5px;
+}
 </style>

@@ -32,8 +32,7 @@
             <em>{{ user.full_name }}</em>
           </template>
           <b-dropdown-item to="/profile"
-            ><img class="icon" src="~/assets/img/icons/profile_icon.png" />My
-            Profile</b-dropdown-item
+            ><img class="icon" src="~/assets/img/icons/profile_icon.png" />Profile</b-dropdown-item
           >
           <b-dropdown-item @click="logout" href="javascript:;"
             ><img
@@ -226,7 +225,7 @@
           <span class="bg"></span>
         </template>
         <b-dropdown-item to="/profile">
-          <img class="icon" src="~/assets/img/icons/profile_icon.png" />My
+          <img class="icon" src="~/assets/img/icons/profile_icon.png" />
           Profile
         </b-dropdown-item>
         <b-dropdown-item @click="logout" href="javascript:;">

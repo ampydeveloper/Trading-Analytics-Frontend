@@ -15,5 +15,6 @@ export default ({store}) => {
             removeItem: (key) => ls.remove(key),
           },
     })(store)
+    // window.localStorage.setItem('OpenFirstTime', 'First')
   })
 }

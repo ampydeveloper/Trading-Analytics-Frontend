@@ -1,5 +1,5 @@
 <template>
-  <div class="col-md-12 col-sm-12 col-lg-11 dashboard_page">
+  <div class="col-md-12 col-sm-12 col-lg-11 dashboard_page stox-details-page">
     <div class="row">
       <div class="col-md-12 pl-1 mb-4 mt-2">
         <div class="top-btn">
@@ -582,6 +582,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.stox-details-page{
+  padding: 0 25px;
+}
 .dashboard-graph {
   .share-lk-top {
     position: relative;
@@ -700,13 +703,19 @@ ul.featured-listing {
   html body main .my-card-listing .my-card {
     width: 100% !important;
   }
-  .top-btn {
-    margin-left: 15px;
-  }
+  // .top-btn {
+  //   margin-left: 15px;
+  // }
 }
 .slabs-ticker {
   .my-card-listing .my-card {
     width: 20% !important;
+     @media (max-width: 991px) {
+           width: 33.333% !important;
+    }
+    @media (max-width: 767px) {
+      width: 50% !important;
+    }
   }
 }
 html body main .my-card-listing .my-card[data-v-672220c2]:nth-child(6n + 7) {

@@ -337,6 +337,7 @@
           </div>
         </div>
       </div>
+      <div class="col-md-12 col-sm-12">
       <div class="social_share ss-h4">
         <h4>
               <a class="embed-link" href="javascript:;"
@@ -344,6 +345,7 @@
               </a>
             </h4>
         </div>
+          </div>
     </div>
     <b-modal id="embedStoxtickerCode" title="" size="xl" hide-footer>
           <h5>Copy code and paste to your website.</h5>
@@ -641,6 +643,10 @@ slabstox.com
           <div class="dataloader" v-if="requestInProcess">
             <b-spinner variant="success" label="Spinning"></b-spinner>
           </div>
+           <ul
+              class="my-card-listing my-card-active-listing"
+            >
+            </ul>
                     <ul
               class="my-card-listing"
             >
@@ -666,6 +672,9 @@ slabstox.com
                   Add to Board
                   <font-awesome-icon :icon="['fas', 'chevron-circle-right']" />
                 </button>
+              </li>
+              <li class="my-card-no-slab" v-if="searchSlabs.length == 0">
+                No slab found.
               </li>
             </ul>
 
@@ -803,8 +812,10 @@ slabstox.com
 
                 </div>
             </div>
-        
-         
+      
+      </div>
+      <div class="my-card-no-slab no-card-no-board" v-if="boardSearch.length ==0">
+        No board found.
       </div>
 
           <div class="create-board-out my-card text-center" style="display:none">
@@ -1041,6 +1052,9 @@ export default {
 
     $(document).on('click', '.add-to-board', function (e) {
       $(this).parent().addClass('active')
+      // var activeSlab = $(this).parent().clone();
+      $('.search-slabs-out .my-card-active-listing').append($(this).parent().clone());
+      $(this).parent().remove();
       e.preventDefault()
     })
   },
@@ -1291,9 +1305,9 @@ export default {
                       },
                       tooltip: {
                         enabled: true,
-                       x: {
-                    format: days == 2 ? 'MM/dd/yy HH:mm' : 'MM/dd/yy',
-                  },
+                        x: {
+                          format: days == 2 ? 'MM/dd/yy HH:mm' : 'MM/dd/yy',
+                        },
                         y: {
                           formatter: (value, ind) => {
                             let lblStr = `$${value}`
@@ -1544,9 +1558,9 @@ export default {
               },
               tooltip: {
                 enabled: true,
-              x: {
-                    format: days == 2 ? 'MM/dd/yy HH:mm' : 'MM/dd/yy',
-                  },
+                x: {
+                  format: days == 2 ? 'MM/dd/yy HH:mm' : 'MM/dd/yy',
+                },
                 y: {
                   formatter: (value, ind) => {
                     let lblStr = `$${value}`
@@ -1626,7 +1640,7 @@ export default {
                         },
                       },
                       type: 'datetime',
-                       tickAmount: days == 2 ? 24 : 6,
+                      tickAmount: days == 2 ? 24 : 6,
                       categories: item.sales_graph.labels,
                     },
                     yaxis: {
@@ -1649,9 +1663,9 @@ export default {
                     },
                     tooltip: {
                       enabled: true,
-                     x: {
-                    format: days == 2 ? 'MM/dd/yy HH:mm' : 'MM/dd/yy',
-                  },
+                      x: {
+                        format: days == 2 ? 'MM/dd/yy HH:mm' : 'MM/dd/yy',
+                      },
                       y: {
                         formatter: (value, ind) => {
                           let lblStr = `$${value}`
@@ -1751,7 +1765,7 @@ export default {
                 },
                 tooltip: {
                   enabled: true,
-                 x: {
+                  x: {
                     format: days == 2 ? 'MM/dd/yy HH:mm' : 'MM/dd/yy',
                   },
                   y: {
@@ -1779,8 +1793,8 @@ export default {
 
 <style lang="scss" scoped>
 .dashboard-main {
-    padding: 0 10px !important;
-  }
+  padding: 0 10px !important;
+}
 .t-p-5 {
   padding: 5px;
 }
@@ -2155,6 +2169,13 @@ ul.my-card-listing {
     margin-right: 0;
     width: 100%;
   }
+   .search-wrap {
+     padding: 0;
+     .search{
+ padding: 0 12px;
+     }
+    
+  }
 }
 .analytics_page .card-single-row-outer {
   height: auto;
@@ -2166,6 +2187,58 @@ ul.my-card-listing {
 }
 html body main .card.search-slabs-out .my-card-listing .my-card {
   width: 16.66%;
+  @media (max-width: 1200px) {
+    width: 20%;
+    &:nth-child(6n+7) {
+    clear: none;
+}
+    .image-container {
+      height: 15vw;
+      .card-image {
+        max-height: 15vw;
+      }
+    }
+  }
+  @media (max-width: 991px) {
+    width: 33.333333%;
+    .image-container {
+      height: 21vw;
+      .card-image {
+        max-height: 21vw;
+      }
+    }
+  }
+  @media (max-width: 768px) {
+    width: 50%;
+    .image-container {
+      height: 220px;
+      .card-image {
+        max-height: 200px;
+      }
+    }
+  }
+}
+.my-card-no-slab{
+  text-align: center;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 2px;
+    font-style: italic;
+    padding: 30px 0 25px 0;
+    border: 1px solid #fff;
+    margin: 0 15px;
+    border-radius: 2px;
+}
+.no-card-no-board{
+  width: 100%;
+    margin: 50px 20px;
+}
+.card.search-slabs-out{
+  .my-card-active-listing, .my-card-listing{
+float: left;
+    width: calc(100% + 30px);
+  }
 }
 .my-card {
   &.active {

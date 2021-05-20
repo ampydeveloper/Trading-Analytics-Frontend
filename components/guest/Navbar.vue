@@ -13,7 +13,7 @@
               <img class="nav-logo" src="~/assets/prostox-black-logo.png" alt="Slabstox" />
             </li>
             <li>
-              <nuxt-link to="/">
+              <nuxt-link to="/login">
                 <i>Sign In</i>
               </nuxt-link>
             </li>
@@ -28,7 +28,7 @@
             <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
             <b-collapse id="nav-collapse" is-nav>
               <b-navbar-nav v-if="!authenticated" class="ml-auto">
-                <b-nav-item class="show-only-on-mobile" to="/">
+                <b-nav-item class="show-only-on-mobile" to="/login">
                   <i>Sign In</i>
                 </b-nav-item>
                 <b-nav-item class="show-only-on-mobile" to="/register">
