@@ -255,6 +255,16 @@
               </span> 
             </h5>
             <div class="dashboard-apex-top" ref="dashboardApexChart">
+               <div class="dashboard-apex-top-1d">
+               <VueApexCharts
+                ref="sxDashChart"
+                type="area"
+                height="350"
+                :options="sxChartOptions1d"
+                :series="sxSeries1d"
+              ></VueApexCharts>
+                 </div>
+                  <div class="dashboard-apex-top-alld">
               <VueApexCharts
                 ref="sxDashChart"
                 type="area"
@@ -262,6 +272,7 @@
                 :options="sxChartOptions"
                 :series="sxSeries"
               ></VueApexCharts>
+                 </div>
             </div>
             <div class="dashboard-graph-footer">
               <ul class="dashboard-graph-footer-month-filter">
@@ -761,44 +772,44 @@ slabstox.com
                 </div>
                 <div class="dashboard-graph-footer">
                   <ul class="dashboard-graph-footer-month-filter">
-                    <li
-                      :class="[{'active': boardActiveDay == 2}, 'dashboard-graph-footer-month-filter-item']"
+                    <!-- <li
+                      :class="[{'active': boardActiveDay[key] == 2}, 'dashboard-graph-footer-month-filter-item']"
                       @click="searchBoard(2)"
                     >
                       1D
-                    </li>
+                    </li> -->
                     <!-- <li
-                      :class="[{'active': boardActiveDay == 7}, 'dashboard-graph-footer-month-filter-item']"
+                      :class="[{'active': boardActiveDay[key] == 7}, 'dashboard-graph-footer-month-filter-item']"
                       @click="searchBoard(7)"
                     >
                       1W
                     </li>
                     <li
-                      :class="[{'active': boardActiveDay == 30}, 'dashboard-graph-footer-month-filter-item']"
+                      :class="[{'active': boardActiveDay[key] == 30}, 'dashboard-graph-footer-month-filter-item']"
                       @click="searchBoard(30)"
                     >
                       1M
-                    </li>
+                    </li> -->
                     <li
-                      :class="[{'active': boardActiveDay == 90}, 'dashboard-graph-footer-month-filter-item']"
+                      :class="[{'active': boardActiveDay[key] == 90}, 'dashboard-graph-footer-month-filter-item']"
                       @click="searchBoard(90)"
                     >
                       3M
                     </li>
-                    <li
-                      :class="[{'active': boardActiveDay == 180}, 'dashboard-graph-footer-month-filter-item']"
+                    <!-- <li
+                      :class="[{'active': boardActiveDay[key] == 180}, 'dashboard-graph-footer-month-filter-item']"
                       @click="searchBoard(180)"
                     >
                       6M
                     </li>
                     <li
-                      :class="[{'active': boardActiveDay == 365}, 'dashboard-graph-footer-month-filter-item']"
+                      :class="[{'active': boardActiveDay[key] == 365}, 'dashboard-graph-footer-month-filter-item']"
                       @click="searchBoard(365)"
                     >
                       1Y
                     </li>
                     <li
-                      :class="[{'active': boardActiveDay == 1825}, 'dashboard-graph-footer-month-filter-item']"
+                      :class="[{'active': boardActiveDay[key] == 1825}, 'dashboard-graph-footer-month-filter-item']"
                       @click="searchBoard(1825)"
                     >
                       5Y
@@ -896,12 +907,12 @@ slabstox.com
             </div>
             <div class="dashboard-graph-footer" id='`boardGraphs-${key}`'>
               <ul class="dashboard-graph-footer-month-filter" :id='`dc-${key}-ul`' :key='`dc-${key}-ul`'>
-                <li
+                <!-- <li
                   :class="[{'active': boardDaysGraph[key] == 2}, 'dashboard-graph-footer-month-filter-item']"
                   @click="allBoardGraphSingleFunc(2,allBoardGraph[key].id,key)"
                 >
                   1D
-                </li>
+                </li> -->
                 <li
                   :class="[{'active': boardDaysGraph[key] == 7}, 'dashboard-graph-footer-month-filter-item']"
                   @click="allBoardGraphSingleFunc(7,allBoardGraph[key].id,key)"
@@ -1001,7 +1012,10 @@ export default {
     this.sxStoxtickerUrl = currentHref.replace('stoxticker', 'stox-sells')
 
     this.getData()
-    this.slabstoxGraph(90)
+    this.slabstoxGraph(90, 1)
+    setTimeout(() => {
+      this.slabstoxGraph(2, 1)
+    }, 5000)
     this.getSoldListing()
     // this.getAllBoards()
     this.allBoardGraphFunc(90)
@@ -1053,8 +1067,10 @@ export default {
     $(document).on('click', '.add-to-board', function (e) {
       $(this).parent().addClass('active')
       // var activeSlab = $(this).parent().clone();
-      $('.search-slabs-out .my-card-active-listing').append($(this).parent().clone());
-      $(this).parent().remove();
+      $('.search-slabs-out .my-card-active-listing').append(
+        $(this).parent().clone()
+      )
+      $(this).parent().remove()
       e.preventDefault()
     })
   },
@@ -1072,7 +1088,7 @@ export default {
       requestInProcess: false,
       searchSlabs: [],
       boardSearch: [],
-      boardActiveDay: 2,
+      boardActiveDay: [],
       boardPage: 1,
       stoxtickerData: [],
       sxActiveDaysGraph: '',
@@ -1185,9 +1201,6 @@ export default {
               fontSize: '10px',
               fontFamily: 'NexaBold',
             },
-            formatter: (value, ind) => {
-              return `$${value}`
-            },
           },
         },
         xaxis: {
@@ -1200,13 +1213,63 @@ export default {
           },
           type: 'datetime',
           tickAmount: 6,
+          tickPlacement: 'on',
+          categories: [],
+        },
+      },
+      sxSeries1d: [
+        {
+          name: 'SX',
+          data: [0],
+        },
+      ],
+      sxSalesQty1d: [],
+      sxChartOptions1d: {
+        chart: {
+          toolbar: {
+            show: false,
+          },
+          height: 350,
+          type: 'area',
+          background: 'transparent',
+          zoom: {
+            enabled: false,
+          },
+        },
+        colors: ['#14f078'],
+        dataLabels: {
+          enabled: false,
+        },
+        stroke: {
+          curve: 'smooth',
+        },
+        yaxis: {
+          labels: {
+            style: {
+              colors: '#edecec',
+              fontSize: '10px',
+              fontFamily: 'NexaBold',
+            },
+          },
+        },
+        xaxis: {
+          labels: {
+            style: {
+              colors: '#edecec',
+              fontSize: '10px',
+              fontFamily: 'NexaBold',
+            },
+          },
+          type: 'category',
+          tickAmount: 24,
+          tickPlacement: 'on',
           categories: [],
         },
       },
     }
   },
   methods: {
-    searchBoard(days = 2) {
+    searchBoard(days = 90) {
       var sportList = []
       $('.cat-btn li.active').each(function () {
         var $this = $(this)
@@ -1244,8 +1307,8 @@ export default {
               if (res.data != null && res.data.length > 0) {
                 res.data.map((item, key) => {
                   if (typeof item != 'undefined') {
-                    this.boardActiveDay = days
-                    this.boardSearch[key] = item
+                    this.boardActiveDay[key] = days
+                    // this.boardSearch[key] = item
                     this.searchSeries[key] = [
                       {
                         name: 'SX',
@@ -1280,9 +1343,9 @@ export default {
                             fontFamily: 'NexaBold',
                           },
                         },
-                        // type: 'category',
                         type: 'datetime',
-                        tickAmount: days == 2 ? 24 : 6,
+                        tickAmount: 6,
+                         tickPlacement: 'on',
                         categories: item.sales_graph.labels,
                       },
                       yaxis: {
@@ -1306,7 +1369,7 @@ export default {
                       tooltip: {
                         enabled: true,
                         x: {
-                          format: days == 2 ? 'MM/dd/yy HH:mm' : 'MM/dd/yy',
+                          format: 'MM/dd/yy',
                         },
                         y: {
                           formatter: (value, ind) => {
@@ -1520,12 +1583,12 @@ export default {
           })
       })
     },
-    slabstoxGraph(days = 90) {
+    slabstoxGraph(days = 90, intialTime = 0) {
       try {
         // this.graphDataEmpty = false;
         this.$axios.$get(`get-sx-dashboard-graph/${days}`).then((res) => {
           if (res.status == 200) {
-            this.sxActiveDaysGraph = days
+            
             // if: days == 2 ? 24: 6, (this.initGraphLabelLength != res.data.labels.length) {
             // this.graphDataEmpty = false;
             this.stoxtickerData.total = res.data.total_sales
@@ -1535,52 +1598,124 @@ export default {
             this.stoxtickerData.change_arrow = res.data.change_arrow
             this.stoxtickerData.last_timestamp = res.data.last_timestamp
 
-            this.sxSeries = [{ name: 'SX', data: res.data.values }]
-            this.sxSalesQty = res.data.qty
-            this.sxChartOptions = {
-              xaxis: {
-                type: 'datetime',
-                tickAmount: days == 2 ? 24 : 6,
-                categories: res.data.labels,
-              },
-              yaxis: {
-                labels: {
-                  formatter: (value, ind) => {
-                    let valCheck = value
-                    if (Number(value) === value && value % 1 !== 0) {
-                      let valCheck = Number(value).toFixed(2)
-                    }
-
-                    let lblStr = `$${valCheck}`
-                    return lblStr
-                  },
-                },
-              },
-              tooltip: {
-                enabled: true,
-                x: {
-                  format: days == 2 ? 'MM/dd/yy HH:mm' : 'MM/dd/yy',
-                },
-                y: {
-                  formatter: (value, ind) => {
-                    let lblStr = `$${value}`
-                    if (typeof ind == 'object')
-                      lblStr = `$${value} (${
-                        this.sxSalesQty[ind.dataPointIndex]
-                      })`
-                    else lblStr = `$${value} (${this.sxSalesQty[ind]})`
-                    return lblStr
-                  },
-                },
-              },
+            if (intialTime == 1) {
+              this.sxActiveDaysGraph = 90
+              $('.dashboard-apex-top-alld').show()
+              $('.dashboard-apex-top-1d').hide()
+            } else {
+              if (days == 2) {
+                $('.dashboard-apex-top-1d').show()
+                $('.dashboard-apex-top-alld').hide()
+              } else {
+                $('.dashboard-apex-top-alld').show()
+                $('.dashboard-apex-top-1d').hide()
+              }
+              this.sxActiveDaysGraph = days
             }
+            if (days != 2) {
+              this.sxSeries = [{ name: 'SX', data: res.data.values }]
+              this.sxSalesQty = res.data.qty
+              this.sxChartOptions = {
+                xaxis: {
+                  type: 'datetime',
+                  tickAmount: days == 2 ? 24 : 6,
+                  categories: res.data.labels,
+                },
+                yaxis: {
+                  labels: {
+                    formatter: (value, ind) => {
+                      let valCheck = value
+                      if (Number(value) === value && value % 1 !== 0) {
+                        let valCheck = Number(value).toFixed(2)
+                      }
+
+                      let lblStr = `$${valCheck}`
+                      return lblStr
+                    },
+                  },
+                },
+                tooltip: {
+                  enabled: true,
+                  x: {
+                    format: days == 2 ? 'MM/dd/yy HH:mm' : 'MM/dd/yy',
+                  },
+                  y: {
+                    formatter: (value, ind) => {
+                      let lblStr = `$${value}`
+                      if (typeof ind == 'object')
+                        lblStr = `$${value} (${
+                          this.sxSalesQty[ind.dataPointIndex]
+                        })`
+                      else lblStr = `$${value} (${this.sxSalesQty[ind]})`
+                      return lblStr
+                    },
+                  },
+                },
+              }
+            }
+
+            if (days == 2) {
+              this.sxSeries1d = [{ name: 'SX', data: res.data.values }]
+              this.sxSalesQty1d = res.data.qty
+              this.sxChartOptions1d = {
+                xaxis: {
+                  type: 'datetime',
+                  tickAmount: days == 2 ? 24 : 6,
+                  categories: res.data.labels,
+                  labels: {
+                    formatter: function (value) {
+                      if (value !== undefined) {
+                        var splittedCategories = value.split(':')
+                        var mins = splittedCategories[1]
+                        if (mins == '00') {
+                          return value
+                        } else {
+                          return ''
+                        }
+                      }
+                      return ''
+                    },
+                  },
+                },
+                yaxis: {
+                  labels: {
+                    formatter: (value, ind) => {
+                      let valCheck = value
+                      if (Number(value) === value && value % 1 !== 0) {
+                        let valCheck = Number(value).toFixed(2)
+                      }
+
+                      let lblStr = `$${valCheck}`
+                      return lblStr
+                    },
+                  },
+                },
+                tooltip: {
+                  enabled: true,
+                  x: {
+                    formatter: (value, ind) => {
+                      return res.data.labels[ind.dataPointIndex]
+                    },
+                  },
+                  y: {
+                    formatter: (value, ind) => {
+                      let lblStr = `$${value}`
+                      if (typeof ind == 'object')
+                        lblStr = `$${value} (${
+                          this.sxSalesQty1d[ind.dataPointIndex]
+                        })`
+                      else lblStr = `$${value} (${this.sxSalesQty1d[ind]})`
+                      return lblStr
+                    },
+                  },
+                },
+              }
+            }
+
             setTimeout(() => {
               this.generateImageOfGraph(this.$refs.sxDashChart.chart.dataURI())
               // console.log(this.generateImageOfGraph(this.$refs.dashChart.chart.dataURI()));
             }, 1000)
-            // }else{
-            //   this.graphDataEmpty = true;
-            // }
           }
         })
       } catch (error) {
@@ -1592,7 +1727,7 @@ export default {
         // this.graphDataEmpty = false;
         this.$axios.$get(`stoxticker/all-boards/${days}`).then((res) => {
           if (res.status == 200) {
-            this.sxActiveDaysGraph = days
+           
             // if (this.initGraphLabelLength != res.data.labels.length) {
             // this.graphDataEmpty = false;
             // this.stoxtickerData.sale = res.data.sale
@@ -1602,6 +1737,7 @@ export default {
             // this.stoxtickerData.last_timestamp = res.data.last_timestamp
             if (res.data != null && res.data.length > 0) {
               res.data.map((item, key) => {
+                 this.boardDaysGraph[key] = days
                 if (typeof item != 'undefined') {
                   this.allBoardGraph[key] = item
                   this.boardSeries[key] = [
@@ -2169,12 +2305,11 @@ ul.my-card-listing {
     margin-right: 0;
     width: 100%;
   }
-   .search-wrap {
-     padding: 0;
-     .search{
- padding: 0 12px;
-     }
-    
+  .search-wrap {
+    padding: 0;
+    .search {
+      padding: 0 12px;
+    }
   }
 }
 .analytics_page .card-single-row-outer {
@@ -2189,9 +2324,9 @@ html body main .card.search-slabs-out .my-card-listing .my-card {
   width: 16.66%;
   @media (max-width: 1200px) {
     width: 20%;
-    &:nth-child(6n+7) {
-    clear: none;
-}
+    &:nth-child(6n + 7) {
+      clear: none;
+    }
     .image-container {
       height: 15vw;
       .card-image {
@@ -2218,25 +2353,26 @@ html body main .card.search-slabs-out .my-card-listing .my-card {
     }
   }
 }
-.my-card-no-slab{
+.my-card-no-slab {
   text-align: center;
-    color: #fff;
-    text-transform: uppercase;
-    font-size: 11px;
-    letter-spacing: 2px;
-    font-style: italic;
-    padding: 30px 0 25px 0;
-    border: 1px solid #fff;
-    margin: 0 15px;
-    border-radius: 2px;
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 2px;
+  font-style: italic;
+  padding: 30px 0 25px 0;
+  border: 1px solid #fff;
+  margin: 0 15px;
+  border-radius: 2px;
 }
-.no-card-no-board{
+.no-card-no-board {
   width: 100%;
-    margin: 50px 20px;
+  margin: 50px 20px;
 }
-.card.search-slabs-out{
-  .my-card-active-listing, .my-card-listing{
-float: left;
+.card.search-slabs-out {
+  .my-card-active-listing,
+  .my-card-listing {
+    float: left;
     width: calc(100% + 30px);
   }
 }
@@ -2365,7 +2501,7 @@ float: left;
   }
   .dashboard-graph {
     .dashboard-graph-footer {
-      margin-top: -25px;
+      // margin-top: -25px;
       .dashboard-graph-footer-update-at {
         margin-top: 18px;
       }

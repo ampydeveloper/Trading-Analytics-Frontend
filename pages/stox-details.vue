@@ -183,13 +183,24 @@
               </b-modal>
             </h5>
             <div class="dashboard-apex-top" ref="dashboardApexChart">
-              <VueApexCharts
-                ref="dashChart"
-                type="area"
-                height="350"
-                :options="chartOptions"
-                :series="series"
-              ></VueApexCharts>
+              <div class="dashboard-apex-top-1d">
+                <VueApexCharts
+                  ref="dashChart"
+                  type="area"
+                  height="350"
+                  :options="chartOptions1d"
+                  :series="series1d"
+                ></VueApexCharts>
+              </div>
+              <div class="dashboard-apex-top-alld">
+                <VueApexCharts
+                  ref="dashChart"
+                  type="area"
+                  height="350"
+                  :options="chartOptions"
+                  :series="series"
+                ></VueApexCharts>
+              </div>
             </div>
             <div class="dashboard-graph-footer">
               <ul class="dashboard-graph-footer-month-filter">
@@ -356,7 +367,8 @@ export default {
   },
   mounted() {
     if (this.$route.query.board != null) {
-      this.getStoxtickerData(90)
+      this.getStoxtickerData(90, 1)
+      this.getStoxtickerData(2, 1)
     }
   },
   components: {
@@ -432,9 +444,9 @@ export default {
               fontFamily: 'NexaBold',
             },
           },
-          // type: 'category',
           type: 'datetime',
           tickAmount: 6,
+          tickPlacement: 'on',
           categories: [],
         },
         tooltip: {
@@ -442,6 +454,55 @@ export default {
             format: 'MM/dd/yy',
           },
         },
+      },
+      salesQty1d: [],
+      series1d: [
+        {
+          name: 'SX',
+          data: [],
+        },
+      ],
+      chartOptions1d: {
+        chart: {
+          toolbar: {
+            show: true,
+          },
+          height: 350,
+          type: 'area',
+          background: '#39414a',
+          zoom: {
+            enabled: false,
+          },
+        },
+        colors: ['#14f078'],
+        dataLabels: {
+          enabled: false,
+        },
+        stroke: {
+          curve: 'smooth',
+        },
+        yaxis: {
+          labels: {
+            style: {
+              colors: '#edecec',
+              fontSize: '10px',
+              fontFamily: 'NexaBold',
+            },
+          },
+        },
+        xaxis: {
+          labels: {
+            style: {
+              colors: '#edecec',
+              fontSize: '10px',
+              fontFamily: 'NexaBold',
+            },
+          },
+          type: 'category',
+          tickAmount: 24,
+          tickPlacement: 'on',
+          categories: [],
+        }
       },
     }
   },
@@ -460,7 +521,7 @@ export default {
     embedStatsCode() {
       this.$bvModal.show('embedStatsCode')
     },
-    getStoxtickerData(days = 90) {
+    getStoxtickerData(days = 90, intialTime = 0) {
       try {
         this.$axios
           .$get(`stoxticker/board-details/${this.$route.query.board}/${days}`)
@@ -473,53 +534,134 @@ export default {
               this.stoxtickerDetails.last_timestamp =
                 res.card_data.sales_graph.last_timestamp
               this.boardFollow = res.follow != null ? true : false
+//  this.activeDaysGraph = 90
+              if (intialTime == 1) {
+                this.activeDaysGraph = 90
+                $('.dashboard-apex-top-alld').show()
+                $('.dashboard-apex-top-1d').hide()
+              } else {
+                if (days == 2) {
+                  $('.dashboard-apex-top-1d').show()
+                  $('.dashboard-apex-top-alld').hide()
+                } else {
+                  $('.dashboard-apex-top-alld').show()
+                  $('.dashboard-apex-top-1d').hide()
+                }
+                this.activeDaysGraph = days
+              }
 
-              this.series = [
-                { name: 'SX', data: res.card_data.sales_graph.values },
-              ]
-              this.salesQty = res.card_data.sales_graph.qty
-              this.chartOptions = {
-                xaxis: {
-                  type: 'datetime',
-                  tickAmount: days == 2 ? 24 : 6,
-                  categories: res.card_data.sales_graph.labels,
-                },
-                yaxis: {
-                  labels: {
-                    style: {
-                      colors: '#edecec',
-                      fontSize: '10px',
-                      fontFamily: 'NexaBold',
-                    },
-                    formatter: (value, ind) => {
-                      let valCheck = value
-                      if (Number(value) === value && value % 1 !== 0) {
-                        let valCheck = Number(value).toFixed(2)
-                      }
+              if (days != 2) {
+                this.series = [
+                  { name: 'SX', data: res.card_data.sales_graph.values },
+                ]
+                this.salesQty = res.card_data.sales_graph.qty
+                this.chartOptions = {
+                  xaxis: {
+                    categories: res.card_data.sales_graph.labels,
+                  },
+                  yaxis: {
+                    labels: {
+                      style: {
+                        colors: '#edecec',
+                        fontSize: '10px',
+                        fontFamily: 'NexaBold',
+                      },
+                      formatter: (value, ind) => {
+                        let valCheck = value
+                        if (Number(value) === value && value % 1 !== 0) {
+                          let valCheck = Number(value).toFixed(2)
+                        }
 
-                      let lblStr = `$${valCheck}`
-                      return lblStr
+                        let lblStr = `$${valCheck}`
+                        return lblStr
+                      },
                     },
                   },
-                },
-                colors: ['#14f078'],
-                tooltip: {
-                  enabled: true,
+                  colors: ['#14f078'],
+                  tooltip: {
+                    enabled: true,
                     x: {
-                    format: days == 2 ? 'MM/dd/yy HH:mm' : 'MM/dd/yy',
-                  },
-                  y: {
-                    formatter: (value, ind) => {
-                      let lblStr = `$${value}`
-                      if (typeof ind == 'object')
-                        lblStr = `$${value} (${
-                          this.salesQty[ind.dataPointIndex]
-                        })`
-                      else lblStr = `$${value} (${this.salesQty[ind]})`
-                      return lblStr
+                      format: days == 2 ? 'MM/dd/yy HH:mm' : 'MM/dd/yy',
+                    },
+                    y: {
+                      formatter: (value, ind) => {
+                        let lblStr = `$${value}`
+                        if (typeof ind == 'object')
+                          lblStr = `$${value} (${
+                            this.salesQty[ind.dataPointIndex]
+                          })`
+                        else lblStr = `$${value} (${this.salesQty[ind]})`
+                        return lblStr
+                      },
                     },
                   },
-                },
+                }
+              }
+              if (days == 2) {
+                this.series1d = [
+                  { name: 'SX', data: res.card_data.sales_graph.values },
+                ]
+                this.salesQty1d = res.card_data.sales_graph.qty
+                this.chartOptions1d = {
+                  xaxis: {
+                     tickAmount: 24,
+                    tickPlacement: 'on',
+                    categories: res.card_data.sales_graph.labels,
+                    labels: {
+                      formatter: function (value) {
+                        if (value !== undefined) {
+                          var splittedCategories = value.split(':')
+                          var mins = splittedCategories[1]
+                          if (mins == '00') {
+                            return value
+                          } else {
+                            return ''
+                          }
+                        }
+                        return ''
+                      },
+                    },
+                  },
+                  yaxis: {
+                    labels: {
+                      style: {
+                        colors: '#edecec',
+                        fontSize: '10px',
+                        fontFamily: 'NexaBold',
+                      },
+                      formatter: (value, ind) => {
+                        let valCheck = value
+                        if (Number(value) === value && value % 1 !== 0) {
+                          let valCheck = Number(value).toFixed(2)
+                        }
+
+                        let lblStr = `$${valCheck}`
+                        return lblStr
+                      },
+                    },
+                  },
+                  colors: ['#14f078'],
+                  tooltip: {
+                    x: {
+                      formatter: (value, ind) => {
+                        return res.card_data.sales_graph.labels[
+                          ind.dataPointIndex
+                        ]
+                      },
+                    },
+                    y: {
+                      formatter: (value, ind) => {
+                        let lblStr = `$${value}`
+                        if (typeof ind == 'object')
+                          lblStr = `$${value} (${
+                            this.salesQty1d[ind.dataPointIndex]
+                          })`
+                        else lblStr = `$${value} (${this.salesQty1d[ind]})`
+                        return lblStr
+                      },
+                    },
+                  },
+                }
               }
 
               setTimeout(() => {
@@ -582,7 +724,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.stox-details-page{
+.stox-details-page {
   padding: 0 25px;
 }
 .dashboard-graph {
@@ -710,8 +852,8 @@ ul.featured-listing {
 .slabs-ticker {
   .my-card-listing .my-card {
     width: 20% !important;
-     @media (max-width: 991px) {
-           width: 33.333% !important;
+    @media (max-width: 991px) {
+      width: 33.333% !important;
     }
     @media (max-width: 767px) {
       width: 50% !important;

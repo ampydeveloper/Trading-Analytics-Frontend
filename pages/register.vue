@@ -139,7 +139,7 @@
                   </button>
                 </b-form-group>
                 <b-form-group class="text-center have-an-account">
-                  <nuxt-link to="/">
+                  <nuxt-link to="/login">
                     Have an account? log in
                     <font-awesome-icon :icon="['fas', 'chevron-right']" />
                   </nuxt-link>
@@ -215,7 +215,7 @@ export default {
             console.log(resgisterRes)
             this.successMessage = resgisterRes.data.message
             setTimeout(function () {
-              window.location.href = '/dashboard'
+              window.location.href = '/login'
               // this.$router.push('/login')
             }, 3000)
           } else {

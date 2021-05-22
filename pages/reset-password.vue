@@ -139,7 +139,7 @@ export default {
           } else {
             this.successMessage = res.data.message
              setTimeout(function () {
-              window.location.href = '/dashboard'
+              window.location.href = '/login'
             }, 3000)
           }
         } else {

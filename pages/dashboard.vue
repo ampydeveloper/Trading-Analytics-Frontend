@@ -157,13 +157,24 @@
               </span> -->
             </h5>
             <div class="dashboard-apex-top" ref="dashboardApexChart">
-              <VueApexCharts
-                ref="dashChart"
-                type="area"
-                height="350"
-                :options="chartOptions"
-                :series="series"
-              ></VueApexCharts>
+              <div class="dashboard-apex-top-1d">
+                <VueApexCharts
+                  ref="dashChart"
+                  type="area"
+                  height="350"
+                  :options="chartOptions1d"
+                  :series="series1d"
+                ></VueApexCharts>
+              </div>
+              <div class="dashboard-apex-top-alld">
+                <VueApexCharts
+                  ref="dashChart"
+                  type="area"
+                  height="350"
+                  :options="chartOptions"
+                  :series="series"
+                ></VueApexCharts>
+              </div>
             </div>
             <div class="dashboard-graph-footer">
               <ul class="dashboard-graph-footer-month-filter">
@@ -507,7 +518,13 @@ export default {
               fontFamily: 'NexaBold',
             },
             formatter: (value, ind) => {
-              return `$${value}`
+              let valCheck = value
+              if (Number(value) === value && value % 1 !== 0) {
+                let valCheck = Number(value).toFixed(2)
+              }
+
+              let lblStr = `$${valCheck}`
+              return lblStr
             },
           },
         },
@@ -521,12 +538,84 @@ export default {
           },
           type: 'datetime',
           tickAmount: 6,
+          tickPlacement: 'on',
           categories: [],
         },
         tooltip: {
           x: {
             format: 'MM/dd/yy',
           },
+        },
+      },
+      salesQty1d: [],
+      series1d: [
+        {
+          name: 'SX',
+          data: [],
+        },
+      ],
+      chartOptions1d: {
+        chart: {
+          toolbar: {
+            show: true,
+          },
+          height: 350,
+          type: 'area',
+          background: '#39414a',
+          zoom: {
+            enabled: false,
+          },
+        },
+        colors: ['#14f078'],
+        dataLabels: {
+          enabled: false,
+        },
+        stroke: {
+          curve: 'smooth',
+        },
+        yaxis: {
+          labels: {
+            style: {
+              colors: '#edecec',
+              fontSize: '10px',
+              fontFamily: 'NexaBold',
+            },
+            formatter: (value, ind) => {
+              let valCheck = value
+              if (Number(value) === value && value % 1 !== 0) {
+                let valCheck = Number(value).toFixed(2)
+              }
+
+              let lblStr = `$${valCheck}`
+              return lblStr
+            },
+          },
+        },
+        xaxis: {
+          labels: {
+            style: {
+              colors: '#edecec',
+              fontSize: '10px',
+              fontFamily: 'NexaBold',
+            },
+            // formatter: function (value, ind) {
+            //                 console.log(value)
+            //                 if (value !== undefined) {
+            //                   var splittedCategories = value.split(':')
+            //                   var mins = splittedCategories[1]
+            //                   if (mins == '00') {
+            //                     return value
+            //                   } else {
+            //                     return ''
+            //                   }
+            //                 }
+            //                 return ''
+            //               },
+          },
+          type: 'category',
+          tickAmount: 24,
+          tickPlacement: 'on',
+          categories: [],
         },
       },
     }
@@ -631,7 +720,10 @@ export default {
               this.featuredListingItems = res.data
               if (this.featuredListingItems.length > 0) {
                 this.toggleCardActive(this.featuredListingItems[0])
-                this.updateGraph(90)
+// setTimeout(() => {
+                this.updateGraph(2, 1)
+                  //  }, 1000)
+                this.updateGraph(90, 1)
               }
             }
           })
@@ -698,78 +790,159 @@ export default {
         console.log(error)
       }
     },
-    updateGraph(days = 90) {
+    updateGraph(days = 90, intialTime = 0) {
       try {
         this.graphDataEmpty = false
         this.$axios
           .$get(`get-dashboard-graph/${days}/${this.cardActiveId}`)
           .then((res) => {
             if (res.status == 200) {
-              this.activeDaysGraph = days
               this.perc_diff = res.data.perc_diff
               this.doller_diff = String(res.data.doller_diff)
               this.sxIcon = res.data.sx_icon
               this.total_sales = res.data.total_sales
               this.last_timestamp = res.data.last_timestamp
+              this.activeDaysGraph = 90
+              if (intialTime == 1) {
+                this.activeDaysGraph = 90
+                $('.dashboard-apex-top-alld').show()
+                $('.dashboard-apex-top-1d').hide()
+              } else {
+                if (days == 2) {
+                  $('.dashboard-apex-top-1d').show()
+                  $('.dashboard-apex-top-alld').hide()
+                } else {
+                  $('.dashboard-apex-top-alld').show()
+                  $('.dashboard-apex-top-1d').hide()
+                }
+                this.activeDaysGraph = days
+              }
 
               if (this.initGraphLabelLength != res.data.labels.length) {
                 this.graphDataEmpty = false
-                this.series = [{ name: 'SX', data: res.data.values }]
-                this.salesQty = res.data.qty
-                this.chartOptions = {}
-                window.setTimeout(function () {
-                  this.chartOptions = {
-                    xaxis: {
-                      // type: res.data.ctype,
-                      type: 'datetime',
-                      tickAmount: days == 2 ? 24 : 6,
-                      categories: res.data.labels,
-                    },
-                    yaxis: {
-                      labels: {
-                        style: {
-                          colors: '#edecec',
-                          fontSize: '10px',
-                          fontFamily: 'NexaBold',
-                        },
-                        formatter: (value, ind) => {
-                          let valCheck = value
-                          if (Number(value) === value && value % 1 !== 0) {
-                            let valCheck = Number(value).toFixed(2)
-                          }
+                if (days != 2) {
+                  this.series = [{ name: 'SX', data: res.data.values }]
+                  this.salesQty = res.data.qty
+                  // this.chartOptions = {}
+                  // window.setTimeout(function () {
+                    this.chartOptions = {
+                      xaxis: {
+                        categories: res.data.labels,
+                      },
+                      yaxis: {
+                        labels: {
+                          style: {
+                            colors: '#edecec',
+                            fontSize: '10px',
+                            fontFamily: 'NexaBold',
+                          },
+                          formatter: (value, ind) => {
+                            let valCheck = value
+                            if (Number(value) === value && value % 1 !== 0) {
+                              let valCheck = Number(value).toFixed(2)
+                            }
 
-                          let lblStr = `$${valCheck}`
-                          return lblStr
+                            let lblStr = `$${valCheck}`
+                            return lblStr
+                          },
                         },
                       },
-                    },
-                    tooltip: {
-                      enabled: true,
-                      x: {
-                        format: days == 2 ? 'MM/dd/yy HH:mm' : 'MM/dd/yy',
-                      },
-                      y: {
-                        formatter: (value, ind) => {
-                          let lblStr = `$${value}`
-                          if (typeof ind == 'object')
-                            lblStr = `$${value} (${
-                              this.salesQty[ind.dataPointIndex]
-                            })`
-                          else lblStr = `$${value} (${this.salesQty[ind]})`
-                          return lblStr
+                      tooltip: {
+                        enabled: true,
+                        x: {
+                          format: 'MM/dd/yy',
+                        },
+                        y: {
+                          formatter: (value, ind) => {
+                            let lblStr = `$${value}`
+                            if (typeof ind == 'object')
+                              lblStr = `$${value} (${
+                                this.salesQty[ind.dataPointIndex]
+                              })`
+                            else lblStr = `$${value} (${this.salesQty[ind]})`
+                            return lblStr
+                          },
                         },
                       },
-                    },
-                  }
-                }, 1000)
+                    }
+                  // }, 1000)
+                }
+                if (days == 2) {
+                  this.series1d = [{ name: 'SX', data: res.data.values }]
+                  this.salesQty1d = res.data.qty
+                  // this.chartOptions1d = {}
+                  // window.setTimeout(function () {
+                    this.chartOptions1d = {
+                      xaxis: {
+                        tickAmount: 24,
+                        categories: res.data.labels,
+                        type: 'category',
+                        tickPlacement: 'on',
+                        labels: {
+                          style: {
+                            colors: '#edecec',
+                            fontSize: '10px',
+                            fontFamily: 'NexaBold',
+                          },
+                          formatter: function (value, ind) {
+                            if (value !== undefined) {
+                              var splittedCategories = value.split(':')
+                              var mins = splittedCategories[1]
+                              if (mins == '00') {
+                                return value
+                              } else {
+                                return ''
+                              }
+                            }
+                            return ''
+                          },
+                        },
+                      },
+                      yaxis: {
+                        labels: {
+                          style: {
+                            colors: '#edecec',
+                            fontSize: '10px',
+                            fontFamily: 'NexaBold',
+                          },
+                          formatter: (value, ind) => {
+                            let valCheck = value
+                            if (Number(value) === value && value % 1 !== 0) {
+                              let valCheck = Number(value).toFixed(2)
+                            }
+
+                            let lblStr = `$${valCheck}`
+                            return lblStr
+                          },
+                        },
+                      },
+                      tooltip: {
+                        enabled: true,
+                        x: {
+                          formatter: (value, ind) => {
+                            return res.data.labels[ind.dataPointIndex]
+                          },
+                        },
+                        y: {
+                          formatter: (value, ind) => {
+                            let lblStr = `$${value}`
+                            if (typeof ind == 'object')
+                              lblStr = `$${value} (${
+                                this.salesQty1d[ind.dataPointIndex]
+                              })`
+                            else lblStr = `$${value} (${this.salesQty1d[ind]})`
+                            return lblStr
+                          },
+                        },
+                      },
+                    }
+                  // }, 1000)
+                }
+
                 this.initGraphLabelLength = res.data.labels.length
-                // this.doller_diff = dollerDiff
-                // this.perc_diff = percDiff
-                // this.total_sales = res.data.total_sales
-                // this.last_timestamp = res.data.last_timestamp
                 setTimeout(() => {
                   this.generateImageOfGraph()
-                }, 1000)
+                }, 2000)
               } else {
                 this.graphDataEmpty = true
               }

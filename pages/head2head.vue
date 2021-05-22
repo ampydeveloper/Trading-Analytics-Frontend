@@ -353,12 +353,22 @@
                   <div class="card">
                     <div class="card-body dashboard-graph pt-0 pb-0">
                       <div class="dashboard-apex-top">
-                        <VueApexCharts
-                          type="area"
-                          height="350"
-                          :options="chartOptions"
-                          :series="series"
-                        ></VueApexCharts>
+                        <div class="dashboard-apex-top-1d">
+                          <VueApexCharts
+                            type="area"
+                            height="350"
+                            :options="chartOptions1d"
+                            :series="series1d"
+                          ></VueApexCharts>
+                        </div>
+                        <div class="dashboard-apex-top-alld">
+                          <VueApexCharts
+                            type="area"
+                            height="350"
+                            :options="chartOptions"
+                            :series="series"
+                          ></VueApexCharts>
+                        </div>
                       </div>
                       <div class="dashboard-graph-footer clearfix">
                         <ul class="dashboard-graph-footer-month-filter">
@@ -758,12 +768,65 @@ export default {
           // type: 'category',
           type: 'datetime',
           tickAmount: 6,
+          tickPlacement: 'on',
           categories: [],
         },
         tooltip: {
           x: {
             format: 'MM/dd/yy',
           },
+        },
+      },
+      series1d: [
+        {
+          name: 'SX',
+          data: [],
+        },
+        {
+          name: 'SX',
+          data: [],
+        },
+      ],
+      chartOptions1d: {
+        chart: {
+          toolbar: {
+            show: true,
+          },
+          height: 350,
+          type: 'area',
+          background: ['#e57c13', '#14f078'],
+          zoom: {
+            enabled: false,
+          },
+        },
+        colors: ['#e57c13', '#14f078'],
+        dataLabels: {
+          enabled: false,
+        },
+        stroke: {
+          curve: 'smooth',
+        },
+        yaxis: {
+          labels: {
+            style: {
+              colors: '#edecec',
+              fontSize: '10px',
+              fontFamily: 'NexaBold',
+            },
+          },
+        },
+        xaxis: {
+          labels: {
+            style: {
+              colors: '#edecec',
+              fontSize: '10px',
+              fontFamily: 'NexaBold',
+            },
+          },
+          type: 'category',
+          tickAmount: 24,
+          tickPlacement: 'on',
+          categories: [],
         },
       },
       selectedAdvanceSearchModel: null,
@@ -806,8 +869,9 @@ export default {
       ) {
         this.selectedCardOne = this.card_one.selectedCard
         this.selectedCardTwo = this.card_two.selectedCard
-        this.getGraphData(this.activeDaysGraph)
-        $('.sec-h2h-out').show()
+        this.getGraphData(this.activeDaysGraph, 1)
+        this.getGraphData(2, 1)
+$('.sec-h2h-out').show()
         $('.first-h2h-out').hide()
         this.showSelectedCards = true
       } else {
@@ -948,7 +1012,7 @@ export default {
         this.autoselected.two.open = false
       }
     },
-    getGraphData(days = 90) {
+    getGraphData(days = 90, intialTime = 0) {
       try {
         let cardIds =
           this.card_one.selectedCard.id + '|' + this.card_two.selectedCard.id
@@ -958,70 +1022,170 @@ export default {
             if (res.status == 200) {
               // $('.sec-h2h-out').show();
               //     $('.first-h2h-out').hide();
-              this.activeDaysGraph = days
-              // if(this.initGraphLabelLength != res.data.labels.length){
-              this.series = [
-                {
-                  name: '<span class="sales-t1">SX</span>',
-                  data: res.data.values1,
-                },
-                {
-                  name: '<span class="sales-t2">SX</span>',
-                  data: res.data.values2,
-                },
-              ]
-              this.salesQty = [{ data: res.data.qty1 }, { data: res.data.qty2 }]
-              this.chartOptions = {
-                xaxis: {
-                  type:'datetime',
-                  tickAmount: days == 2 ? 24 : 6,
-                  categories: res.data.lable1,
-                },
-                yaxis: {
-                  labels: {
-                    style: {
-                      colors: '#edecec',
-                      fontSize: '10px',
-                      fontFamily: 'NexaBold',
-                    },
-                    formatter: (value, ind) => {
-                      if (value == 'undefined') {
-                        return 0
-                      }
-                      let valCheck = value
-                      if (Number(value) === value && value % 1 !== 0) {
-                        let valCheck = Number(value).toFixed(2)
-                      }
-
-                      return `$${valCheck}`
-                    },
-                  },
-                },
-                tooltip: {
-                  enabled: true,
-                  x: {
-                    format: days == 2 ? 'MM/dd/yy HH:mm' : 'MM/dd/yy',
-                  },
-                  y: {
-                    formatter: (value, ind) => {
-                      if (value == 'undefined') {
-                        return 0
-                      }
-                      let lblStr = `$${value}`
-                      if (typeof ind == 'object')
-                        var salesQtyVal = this.salesQty[ind.seriesIndex]
-
-                      let quantity = salesQtyVal.data[ind.dataPointIndex]
-                      // console.log(quantity);
-                      // if (quantity == "undefined"){
-                      //    quantity = 0
-                      // }
-                      lblStr = `$${value} (${quantity})`
-                      return lblStr
-                    },
-                  },
-                },
+              // this.activeDaysGraph = days
+              if (intialTime == 1) {
+                this.activeDaysGraph = 90
+                $('.dashboard-apex-top-alld').show()
+                $('.dashboard-apex-top-1d').hide()
+              } else {
+                if (days == 2) {
+                  $('.dashboard-apex-top-1d').show()
+                  $('.dashboard-apex-top-alld').hide()
+                } else {
+                  $('.dashboard-apex-top-alld').show()
+                  $('.dashboard-apex-top-1d').hide()
+                }
+                this.activeDaysGraph = days
               }
+              // if(this.initGraphLabelLength != res.data.labels.length){
+              if (days != 2) {
+                this.series = [
+                  {
+                    name: '<span class="sales-t1">SX</span>',
+                    data: res.data.values1,
+                  },
+                  {
+                    name: '<span class="sales-t2">SX</span>',
+                    data: res.data.values2,
+                  },
+                ]
+                this.salesQty = [
+                  { data: res.data.qty1 },
+                  { data: res.data.qty2 },
+                ]
+                this.chartOptions = {
+                  xaxis: {
+                    type: 'datetime',
+                    tickAmount: days == 2 ? 24 : 6,
+                    categories: res.data.lable1,
+                  },
+                  yaxis: {
+                    labels: {
+                      style: {
+                        colors: '#edecec',
+                        fontSize: '10px',
+                        fontFamily: 'NexaBold',
+                      },
+                      formatter: (value, ind) => {
+                        if (value == 'undefined') {
+                          return 0
+                        }
+                        let valCheck = value
+                        if (Number(value) === value && value % 1 !== 0) {
+                          let valCheck = Number(value).toFixed(2)
+                        }
+
+                        return `$${valCheck}`
+                      },
+                    },
+                  },
+                  tooltip: {
+                    enabled: true,
+                    x: {
+                      format: days == 2 ? 'MM/dd/yy HH:mm' : 'MM/dd/yy',
+                    },
+                    y: {
+                      formatter: (value, ind) => {
+                        if (value == 'undefined') {
+                          return 0
+                        }
+                        let lblStr = `$${value}`
+                        if (typeof ind == 'object')
+                          var salesQtyVal = this.salesQty[ind.seriesIndex]
+
+                        let quantity = salesQtyVal.data[ind.dataPointIndex]
+                        // console.log(quantity);
+                        // if (quantity == "undefined"){
+                        //    quantity = 0
+                        // }
+                        lblStr = `$${value} (${quantity})`
+                        return lblStr
+                      },
+                    },
+                  },
+                }
+              }
+
+              if (days == 2) {
+                this.series1d = [
+                  {
+                    name: '<span class="sales-t1">SX</span>',
+                    data: res.data.values1,
+                  },
+                  {
+                    name: '<span class="sales-t2">SX</span>',
+                    data: res.data.values2,
+                  },
+                ]
+                this.salesQty1d = [
+                  { data: res.data.qty1 },
+                  { data: res.data.qty2 },
+                ]
+                this.chartOptions1d = {
+                  xaxis: {
+                    // type:'category',
+                    // tickAmount: days == 2 ? 24 : 6,
+                    categories: res.data.lable1,
+                    labels: {
+                      formatter: function (value) {
+                        if (value !== undefined) {
+                          var splittedCategories = value.split(':')
+                          var mins = splittedCategories[1]
+                          if (mins == '00') {
+                            return value
+                          } else {
+                            return ''
+                          }
+                        }
+                        return ''
+                      },
+                    },
+                  },
+                  yaxis: {
+                    labels: {
+                      style: {
+                        colors: '#edecec',
+                        fontSize: '10px',
+                        fontFamily: 'NexaBold',
+                      },
+                      formatter: (value, ind) => {
+                        if (value == 'undefined') {
+                          return 0
+                        }
+                        let valCheck = value
+                        if (Number(value) === value && value % 1 !== 0) {
+                          let valCheck = Number(value).toFixed(2)
+                        }
+
+                        return `$${valCheck}`
+                      },
+                    },
+                  },
+                  tooltip: {
+                    enabled: true,
+                      x: {
+                      formatter: (value, ind) => {
+                        return res.data.lable1[ind.dataPointIndex]
+                      },
+                    },
+                    y: {
+                      formatter: (value, ind) => {
+                        if (value == 'undefined') {
+                          return 0
+                        }
+                        let lblStr = `$${value}`
+                        if (typeof ind == 'object')
+                          var salesQtyVal = this.salesQty1d[ind.seriesIndex]
+
+                        let quantity = salesQtyVal.data[ind.dataPointIndex]
+                        lblStr = `$${value} (${quantity})`
+                        return lblStr
+                      },
+                    },
+                  },
+                }
+              }
+
               this.initGraphLabel1Length = res.data.lable1.length
               // }
               this.card_one.slabstoxvalue1 = res.data.slabstoxvalue1
@@ -1801,7 +1965,6 @@ ul.my-card-listing {
       }
     }
   }
-  
 }
 @media (max-width: 575px) {
   .t-p-5 {
