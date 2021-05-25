@@ -545,7 +545,7 @@ html body main .my-card-listing {
         color: #1ce783 !important;
         background: #272d33 !important;
         padding: 8px 11px 6px 11px;
-        width: 30px;
+        min-width: 30px;
         &:hover {
           color: #1ce783 !important;
         }

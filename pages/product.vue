@@ -23,13 +23,19 @@
               >
               <label class="trender" v-if="false">Trender</label> -->
 
-              <label v-if="data.card && data.card.rc == 'yes'" class="grey">Rookie</label>
-              <label v-if="data.card && data.card.brand != null" class="green">{{
-                data.card.brand
-              }}</label>
-              <label v-if="data.card && data.card.grade != null" class="yellow">{{
-                data.card.grade
-              }}</label>
+              <label v-if="data.card && data.card.rc == 'yes'" class="grey"
+                >Rookie</label
+              >
+              <label
+                v-if="data.card && data.card.brand != null"
+                class="green"
+                >{{ data.card.brand }}</label
+              >
+              <label
+                v-if="data.card && data.card.grade != null"
+                class="yellow"
+                >{{ data.card.grade }}</label
+              >
             </div>
             <!-- <div class="icons-container">
               <img
@@ -88,7 +94,7 @@
                     {{ sx_value }}
                   </button>
                   <nuxt-link
-                  v-if="data.card_id != null"
+                    v-if="data.card_id != null"
                     class="theme-btn card-btn vsd-btn"
                     :to="'/card-data/?id=' + data.card_id"
                   >
@@ -98,10 +104,14 @@
                 </h5>
                 <div class="listing-info-container">
                   <ul>
-                    <li>
-                      Buy it Now: ${{
-                        data.selling_status ? data.selling_status.price : 0
-                      }}
+                    <li
+                      v-if="
+                        data.listing_info != null &&
+                        data.listing_info.listingType != 'Auction'
+                      "
+                    >
+                      Buy it Now:
+                      {{ sellingPrice }}
                     </li>
                     <li
                       v-if="
@@ -211,7 +221,7 @@
               </div>
             </div>
             <div class="slab-specs-btn-group">
-               <a
+              <a
                 class="slab-specs-btn theme-green-btn"
                 target="_blank"
                 v-if="
@@ -231,7 +241,7 @@
                 "
                 >Buy Now</a
               >
-              <a
+              <!-- <a
                 class="slab-specs-btn theme-btn"
                 v-if="
                   data.listing_info != null &&
@@ -240,7 +250,7 @@
                 target="_blank"
                 :href="viewItemURL"
                 >Make Offer</a
-              >
+              > -->
             </div>
           </div>
           <div class="col-md-5 col-sm-5 purchase-info">
@@ -379,9 +389,9 @@ export default {
       valueDifference: 0,
       seeProblemMessage: null,
       sx: null,
+      sellingPrice: 0,
       timeLeft: {
         value: null,
-        
       },
       timeLeftFromBack: null,
     }
@@ -464,44 +474,34 @@ export default {
           this.getTimeLeft()
           this.loaded = true
         } else {
-          this.$router.push('/404')
+          this.$router.push('/dashboard')
         }
       } catch (err) {
-        console.log(err)
+        this.$router.push('/dashboard')
       }
     },
     getTimeLeft() {
-      // this.timeLeft.intervalObject = setInterval(() => {
-      //   var date1 = this.$moment(this.data.listing_ending_at)
-      //   var a = date1.format('YYYY-MM-DD HH:mm:ss')
-      //   var date2 = this.$moment()
-      //   var b = date2.format('YYYY-MM-DD HH:mm:ss')
-      //   var x = this.$moment(a)
-      //   var y = this.$moment(b)
-      //   var final = x.diff(y)
-      //   if (final > 0) {
-      //     const d = this.$moment(final).format('D') - 1
-      //     const h = this.$moment(final).format('H')
-      //     const m = this.$moment(final).format('mm')
-      //     const s = this.$moment(final).format('ss')
-      //     if (d > 0) {
-      //       this.timeLeft.value = d + 'd ' + h + 'h'
-      //     } else if (h > 1) {
-      //       this.timeLeft.value = h + 'h ' + m + 'm'
-      //     } else if (m > 1) {
-      //       this.timeLeft.value = m + 'm ' + s + 's'
-      //     } else {
-      //       this.timeLeft.value = s + 's'
-      //     }
-      //   } else {
-      //     this.timeLeft.value = '00:00'
-      //     clearInterval(this.timeLeft.intervalObject)
-      //   }
-      // }, 1000)
-      if(this.timeLeftFromBack && this.timeLeftFromBack != '0s'){
+      if (this.timeLeftFromBack && this.timeLeftFromBack != '0s') {
         this.timeLeft.value = this.timeLeftFromBack
-      }else{
+      } else {
         this.timeLeft.value = '00:00'
+      }
+      //correcting price
+      function isNumeric(str) {
+        if (typeof str != 'string') return false // we only process strings!
+        return (
+          !isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
+          !isNaN(parseFloat(str))
+        ) // ...and ensure strings of whitespace fail
+      }
+
+      var sellingPrice = this.data.selling_status
+        ? this.data.selling_status.price
+        : 0
+      if (isNumeric(sellingPrice)) {
+        this.sellingPrice = '$' + sellingPrice
+      } else {
+        this.sellingPrice = sellingPrice
       }
     },
     getImage() {
@@ -629,7 +629,7 @@ export default {
       width: 100%;
       height: calc(100% - 112px);
       display: block;
-
+      min-height: 350px;
       img {
         width: auto;
         display: block;
@@ -805,7 +805,6 @@ export default {
   }
 }
 @media (min-width: 1921px) {
-
   .product-details-col-md-4 {
     flex: 0 0 22.333333%;
     max-width: 22.333333%;
@@ -816,7 +815,7 @@ export default {
   }
 }
 
-    @media (max-width: 767px) {
+@media (max-width: 767px) {
   .pr-0 {
     padding-right: 15px !important;
   }
@@ -879,15 +878,15 @@ export default {
     color: #212529;
   }
 }
-   @media (max-width: 767px) {
-     #specsDetails .modal-dialog {
+@media (max-width: 767px) {
+  #specsDetails .modal-dialog {
     .modal-content {
       .modal-body {
         ul li {
-              width: calc(100% - 20px);
+          width: calc(100% - 20px);
         }
       }
     }
-   }
-   }
+  }
+}
 </style>

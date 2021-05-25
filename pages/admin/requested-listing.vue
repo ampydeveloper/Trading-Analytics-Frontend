@@ -9,19 +9,19 @@
             </h5>
           </div>
           <div class="table_wrapper ap">
-            <table class="table table-striped">
+            <table class="table table-striped" id="all-request-listing-table">
               <thead>
                 <tr>
-                  <th>Card Id</th>
+                  <th style="width: 65px">Card Id</th>
                   <th>Card Title</th>
-                  <th style="width: 57%">Link</th>
+                  <th style="width: 51%">Link</th>
                   <th style="width: 100px">User</th>
                   <th style="width: 15%">Action</th>
                 </tr>
               </thead>
               <tbody v-if="cards.length > 0">
                 <tr v-for="card of cards" :key="card.id">
-                  <td>{{ card.id }}</td>
+                  <td>{{ card.card_id }}</td>
                   <td>
                     <a
                       target="_blank"
@@ -52,14 +52,14 @@
                     <!-- @click="action(1, card.id)" -->
                     <button
                       class="card-btn btn btn-success btn-table-spec"
-                      @click="checkItem(card.id)"
+                      @click="checkItem(card)"
                       style="margin-top: 4px"
                     >
                       Approve
                     </button>
                     <button
                       class="card-btn btn btn-danger btn-table-spec"
-                      @click="action(-1, card.id)"
+                      @click="action(-1, card)"
                       style="margin-top: 4px"
                     >
                       Reject
@@ -79,134 +79,6 @@
                   </td>
                 </tr>
               </tbody>
-              <tfoot>
-                <!-- <tr>
-                  <td colspan="6">
-                    <button class="theme-btn card-btn" :disabled="page == 2" @click="getRequestedListing(page - 1)">
-                      Previous
-                    </button>
-                    <button class="theme-btn card-btn" @click="getRequestedListing(page)">Next</button>
-                  </td>
-                </tr> -->
-                <tr v-if="page - 1 == 1 && cards.length >= 30">
-                  <td colspan="5">
-                    <button
-                      class="theme-btn card-btn active-pagination"
-                      @click="getRequestedListing(1)"
-                    >
-                      1
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getRequestedListing(2)"
-                    >
-                      2
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getRequestedListing(3)"
-                    >
-                      Next
-                    </button>
-                  </td>
-                </tr>
-                <tr v-if="page - 1 == 2 && cards.length >= 30">
-                  <td colspan="5">
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getRequestedListing(1)"
-                    >
-                      1
-                    </button>
-                    <button
-                      class="theme-btn card-btn active-pagination"
-                      @click="getRequestedListing(2)"
-                    >
-                      2
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getRequestedListing(3)"
-                    >
-                      3
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getRequestedListing(4)"
-                    >
-                      Next
-                    </button>
-                  </td>
-                </tr>
-                <tr v-if="page - 1 == 3 && cards.length >= 30">
-                  <td colspan="5">
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getRequestedListing(1)"
-                    >
-                      Previous
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getRequestedListing(2)"
-                    >
-                      2
-                    </button>
-                    <button
-                      class="theme-btn card-btn active-pagination"
-                      @click="getRequestedListing(3)"
-                    >
-                      3
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getRequestedListing(4)"
-                    >
-                      4
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getRequestedListing(5)"
-                    >
-                      Next
-                    </button>
-                  </td>
-                </tr>
-                <tr v-if="page - 1 > 3 && cards.length >= 30">
-                  <td colspan="5">
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getRequestedListing(page - 2)"
-                    >
-                      Previous
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getRequestedListing(page - 1)"
-                    >
-                      {{ page - 1 }}
-                    </button>
-                    <button
-                      class="theme-btn card-btn active-pagination"
-                      @click="getRequestedListing(page)"
-                    >
-                      {{ page }}
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getRequestedListing(page + 1)"
-                    >
-                      {{ page + 1 }}
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getRequestedListing(page + 2)"
-                    >
-                      Next
-                    </button>
-                  </td>
-                </tr>
-              </tfoot>
             </table>
           </div>
         </div>
@@ -218,7 +90,7 @@
         <div class="form_column">
           <label>Card Id</label>
           <input
-            v-model="checkSlabOldId"
+            v-model="checkCard.card_id"
             type="text"
             class="form-control"
             placeholder="Current Card ID"
@@ -239,7 +111,7 @@
       <div class="ap clearfix text-right">
         <a
           href="javascript:void(0);"
-          @click="action(1, checkSlabOldId)"
+          @click="action(1, checkCard)"
           class="btn btn-success btn-table-spec mr-2"
           >Proceed</a
         >
@@ -255,6 +127,7 @@
 </template>
 
 <script>
+import $ from 'jquery'
 export default {
   transition: 'fade',
   layout: 'admin',
@@ -263,27 +136,45 @@ export default {
       title: 'Admin Dashboard - Slabstox',
     }
   },
-  mounted() {
-    this.getRequestedListing(this.page)
-  },
-  components: {},
+   components: {},
   data() {
     return {
       cards: [],
       page: 1,
       checkSlabNewId: null,
-      checkSlabOldId: null,
+      checkCard: [],
       requestInProcess: false,
       currentOrigin: location.origin,
     }
   },
+  mounted() {
+    this.getRequestedListing(this.page)
+  },
+  updated() {
+    setTimeout(function () {
+      if (!$.fn.dataTable.isDataTable('#all-request-listing-table')) {
+        $('#all-request-listing-table').DataTable({
+          pageLength: 20,
+          oLanguage: { sSearch: '' },
+          aoColumnDefs: [
+            {
+              bSortable: false,
+              aTargets: [-1,-2,-3,-4],
+            },
+          ],
+        })
+        $('.dataTables_filter input').attr('placeholder', 'Search')
+      }
+    }, 1000)
+  },
+ 
   methods: {
     cancelRequest() {
       this.checkSlabOldId = null
       this.$bvModal.hide('checkSlabPopup')
     },
-    checkItem(card_id) {
-      this.checkSlabOldId = card_id
+    checkItem(card) {
+      this.checkCard = card
       this.$bvModal.show('checkSlabPopup')
     },
     getRequestedListing(page) {
@@ -298,7 +189,7 @@ export default {
             .then((res) => {
               if (res.status == 200) {
                 this.cards = res.data.data
-                this.page = res.data.next
+                // this.page = res.data.next
               }
               this.requestInProcess = false
               this.hideLoader()
@@ -314,12 +205,12 @@ export default {
         }
       }
     },
-    action(sts, rid) {
+    action(sts, cardDetails) {
       this.showLoader()
       this.requestInProcess = true
       this.$axios
         .post('/card/requested-listing-action-for-admin', {
-          rid: rid,
+          rid: cardDetails.id,
           sts: sts,
           newSlabId: this.checkSlabNewId,
         })
@@ -342,7 +233,7 @@ export default {
               item.image = data.image
               item.location = data.location
               item.auction_start = ''
-              item.auction_end = ''
+              item.auction_end = data.timeLeft
               item.shipToLocations = data.shipToLocations
               item.ReturnPolicy = data.returns
               item.web_link = data.item_link

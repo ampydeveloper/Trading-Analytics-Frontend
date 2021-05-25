@@ -145,7 +145,7 @@
                   <button @click="back()" class="theme-green-btn card-btn btn-cancel">Cancel</button>
                 </div>
                 <div class="right_btn">
-                  <button type="submit" class="theme-green-btn card-btn btn-save" :disabled="requestInProcess">Create</button>
+                  <button type="submit" class="theme-green-btn card-btn btn-save" :disabled="requestInProcess">Update</button>
                 </div>
               </div>
             </form>
@@ -169,7 +169,6 @@ export default {
     }
   },
   mounted() {
-      console.log(this.$route.query.card_id);
       this.getData(this.$route.query.card_id);
       this.card.id = this.$route.query.card_id;
   },

@@ -605,7 +605,7 @@ export default {
     submitAListing(){
       try {
         if(this.reqAList.link.trim().length == 0){
-          this.$toast.error('Please enter a valid link')
+          this.$toast.error('Please enter a valid link.')
           return false
         }
         if(this.reqAList.card_id == 0) return false
@@ -617,15 +617,15 @@ export default {
           .then((res) => {
             this.$bvModal.hide('submitAListingPopup')
             this.reqAList = {'card_id': 0, 'link': ''}
-            this.$toast.success('Listing request submitted successfully.')
+            this.$toast.success(res.data.message)
           })
           .catch((err) => {
             console.log(err)
-            this.$toast.error('Invalid link - Please copy exact url from your browser address bar!')
+            this.$toast.error('Invalid link. Please copy exact url from your browser address bar.')
           })
       } catch (err) {
         console.log(err)
-        this.$toast.error('Invalid link - Please copy exact url from your browser address bar!')
+        this.$toast.error('Invalid link. Please copy exact url from your browser address bar.')
       }
     }
   },

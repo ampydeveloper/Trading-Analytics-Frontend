@@ -86,14 +86,14 @@
               <thead>
                 <tr>
                   <th><input type="checkbox" class="main-checkbox" /></th>
-                  <th>Id</th>
+                  <th style="width: 75px">Id</th>
                   <th>Title</th>
-                  <th>Price</th>
-                  <th>Sold Price</th>
-                  <th>Listing Id</th>
-                  <th>Slab Id</th>
-                  <th>Status</th>
-                  <th v-if='!isDataEntry'>Actions</th>
+                  <th style="width: 80px">Price</th>
+                  <th style="width: 120px">Sold Price</th>
+                  <th style="width: 130px">Listing Id</th>
+                  <th style="width: 75px">Slab Id</th>
+                  <th style="width: 70px">Status</th>
+                  <th style="width: 160px" v-if='!isDataEntry'>Actions</th>
                 </tr>
               </thead>
               <tbody v-if="items.length > 0">
@@ -138,6 +138,7 @@
                     </select>
                     <nuxt-link
                       class="card-btn btn btn-primary btn-table-spec"
+                       style="margin-top: 4px"
                       :to="`edit-listing?listing_id=${item.id}`"
                       >Edit Listing</nuxt-link
                     >

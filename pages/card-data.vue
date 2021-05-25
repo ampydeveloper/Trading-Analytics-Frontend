@@ -911,18 +911,16 @@ export default {
           .then((res) => {
             this.$bvModal.hide('submitAListingPopup')
             this.reqAListLink = ''
-            this.$toast.success('Listing request submitted successfully.')
+            this.$toast.success(res.data.message)
           })
           .catch((err) => {
-            console.log(err)
             this.$toast.error(
-              'Invalid link - Please copy exact url from your browser address bar!'
+              'Invalid link. Please copy exact url from your browser address bar.'
             )
           })
       } catch (err) {
-        console.log(err)
         this.$toast.error(
-          'Invalid link - Please copy exact url from your browser address bar!'
+          'Invalid link. Please copy exact url from your browser address bar.'
         )
       }
     },
@@ -1418,6 +1416,7 @@ ul.my-card-listing {
     position: relative;
     margin: 15px;
     padding: 0;
+        min-height: 660px;
     .add-my-port,
     .add-my-port1,
     .add-my-port2 {
