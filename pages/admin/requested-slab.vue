@@ -9,7 +9,7 @@
             </h5>
           </div>
           <div class="table_wrapper ap">
-            <table class="table table-striped">
+            <table class="table table-striped" id="requested-slabs-table">
               <thead>
                 <tr>
                   <!-- <th>Id</th> -->
@@ -31,7 +31,7 @@
                   <!-- <td>{{ key }}</td> -->
                   <td>
                     <nuxt-link
-                   style="color:#28a745;"
+                      style="color: #28a745"
                       :to="`users?id=${card.user.id}`"
                       >{{ card.user.full_name }}</nuxt-link
                     >
@@ -52,7 +52,7 @@
                       @click="openImg(card.cardImage)"
                       v-if="card.image != null"
                       alt="Slab-image"
-                      width="200"
+                      width="100"
                     /><span v-else>N/A</span>
                   </td>
                   <td>
@@ -65,7 +65,7 @@
                     <button
                       class="card-btn btn btn-danger btn-table-spec"
                       @click="action(card.id)"
-                      style="margin-top: 4px"
+                      style="margin-top: 4px;display: block;"
                     >
                       Reject
                     </button>
@@ -84,15 +84,8 @@
                   </td>
                 </tr>
               </tbody>
-              <tfoot>
-                <!-- <tr>
-                  <td colspan="6">
-                    <button class="theme-btn card-btn" :disabled="page == 2" @click="getRequestedSlab(page - 1)">
-                      Previous
-                    </button>
-                    <button class="theme-btn card-btn" @click="getRequestedSlab(page)">Next</button>
-                  </td>
-                </tr> -->
+              <!-- <tfoot>
+            
                 <tr v-if="page - 1 == 1 && cards.length >= 30">
                   <td colspan="9">
                     <button
@@ -211,7 +204,7 @@
                     </button>
                   </td>
                 </tr>
-              </tfoot>
+              </tfoot> -->
             </table>
           </div>
         </div>
@@ -221,6 +214,7 @@
 </template>
 
 <script>
+import $ from 'jquery'
 export default {
   transition: 'fade',
   layout: 'admin',
@@ -240,6 +234,27 @@ export default {
       requestInProcess: false,
     }
   },
+  watch: {
+    cards(val) {
+      if (val.length > 0) {
+        setTimeout(function () {
+          if (!$.fn.dataTable.isDataTable('#requested-slabs-table')) {
+            $('#requested-slabs-table').DataTable({
+              pageLength: 20,
+              oLanguage: { sSearch: '' },
+              aoColumnDefs: [
+                {
+                  bSortable: false,
+                  aTargets: [-1, -2],
+                },
+              ],
+            })
+            $('.dataTables_filter input').attr('placeholder', 'Search')
+          }
+        }, 500)
+      }
+    },
+  },
   methods: {
     openImg(img) {
       window.open(img, '_blank')
@@ -256,7 +271,7 @@ export default {
             .then((res) => {
               if (res.status == 200) {
                 this.cards = res.data.data
-                this.page = res.data.next
+                // this.page = res.data.next
               }
               this.requestInProcess = false
               this.hideLoader()
@@ -277,7 +292,7 @@ export default {
       this.requestInProcess = true
       this.$axios
         .post('/card/requested-slab-action-reject', {
-          id: id
+          id: id,
         })
         .then((res) => {
           if (res.status == 200) {
@@ -310,5 +325,9 @@ ul.my-card-listing {
 }
 .cardImg {
   cursor: zoom-in;
+}
+.active-pagination {
+  color: #1ce783;
+  background: #272d33;
 }
 </style>

@@ -9,13 +9,13 @@
             </h5>
           </div>
           <div class="table_wrapper ap">
-            <table class="table table-striped">
+            <table class="table table-striped" id="csv-uploads-table">
               <thead>
                 <tr>
                   <th>Import date</th>
                   <th>CSV Uploads</th>
                   <th>Status</th>
-                  <th v-if="isAdmin">Actions</th>
+                  <th v-if="isAdmin">Action</th>
                 </tr>
               </thead>
               <tbody v-if="cards.length > 0">
@@ -52,7 +52,7 @@
                   <td colspan="4" class="text-center">No CSV uploads found.</td>
                 </tr>
               </tbody>
-              <tfoot>
+              <!-- <tfoot>
                 <tr v-if="page - 1 == 1 && cards.length >= 30">
                   <td colspan="4">
                     <button
@@ -171,7 +171,7 @@
                     </button>
                   </td>
                 </tr>
-              </tfoot>
+              </tfoot> -->
             </table>
           </div>
         </div>
@@ -225,6 +225,27 @@ export default {
       requestInProcess: false,
     }
   },
+   watch: {
+    cards(val) {
+      if (val.length > 0) {
+        setTimeout(function () {
+          if (!$.fn.dataTable.isDataTable('#csv-uploads-table')) {
+            $('#csv-uploads-table').DataTable({
+              pageLength: 20,
+              oLanguage: { sSearch: '' },
+              aoColumnDefs: [
+                {
+                  bSortable: false,
+                  aTargets: [-1],
+                },
+              ],
+            })
+            $('.dataTables_filter input').attr('placeholder', 'Search')
+          }
+        }, 500)
+      }
+    },
+  },
   methods: {
     getRequestedSlab(page) {
       if (!this.requestInProcess) {
@@ -238,7 +259,7 @@ export default {
             .then((res) => {
               if (res.status == 200) {
                 this.cards = res.data.data
-                this.page = res.data.next
+                // this.page = res.data.next
               }
               this.requestInProcess = false
               this.hideLoader()

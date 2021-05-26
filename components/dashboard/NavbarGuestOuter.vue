@@ -7,6 +7,28 @@
       alt
     />
     <span class="toggle_topnav">+</span>
+    <div class="header-top-mobile d-none clearfix">
+      <div class="sibar-logo-top">
+        <img src="~/assets/img/dashboard-sidebar-top-logo.png" alt="Slabstox" />
+      </div>
+
+      <ul
+        class="upper-links list-inline clearfix"
+        v-if="user == null || user.full_name == null"
+      >
+        <li>
+          <nuxt-link to="/login">
+            <i>Sign In</i>
+          </nuxt-link>
+        </li>
+        <li>/</li>
+        <li>
+          <nuxt-link to="/register">
+            <i>Sign Up</i>
+          </nuxt-link>
+        </li>
+      </ul>
+    </div>
     <div class="profile_wrap b-profileImage">
       <b-navbar-nav class="top-nav-navbar">
         <b-nav-item
@@ -42,7 +64,7 @@
       </b-navbar-nav>
     </div>
 
-   <div class="mobile_navbar sidebar">
+    <div class="mobile_navbar sidebar">
       <!-- <span class="toggle_mainnav" @click="mobileNavShow != mobileNavShow">+</span>-->
       <ul
         class="nav flex-column nav-list-first"
@@ -231,11 +253,14 @@
         </b-dropdown-item>
       </b-nav-item-dropdown>
     </b-navbar-nav>
-    <ul class="upper-links list-inline clearfix" v-if="user == null || user.full_name == null">
+    <ul
+      class="upper-links list-inline clearfix"
+      v-if="user == null || user.full_name == null"
+    >
       <li>
-      <nuxt-link to="/login">
-                <i>Sign In</i>
-              </nuxt-link>
+        <nuxt-link to="/login">
+          <i>Sign In</i>
+        </nuxt-link>
       </li>
       <li>/</li>
       <li>
@@ -351,6 +376,9 @@ export default {
     width: 10%;
     margin: 0px 25px;
     margin-top: 20px;
+    @media (max-width: 991px) {
+      display: none;
+    }
   }
   .custom-smart-search {
     .display_keyword {
@@ -377,8 +405,13 @@ export default {
     }
   }
   .nav-bar-form {
-    width: 100%;
+    width: calc(100% - 150px);
     margin-top: 25px;
+    @media (max-width: 991px) {
+      padding-left: 17px;
+    }
+    @media (max-width: 767px) {
+    }
     .advance-search-label {
       position: relative;
       text-decoration: underline;
@@ -806,10 +839,10 @@ export default {
   .dashboard-nav-bar .navbar-brand {
     display: none !important;
   }
-  .dashboard-nav-bar .top-nav-bar-search-logo {
-    width: 200px !important;
-    margin: 20px 20px !important;
-  }
+  // .dashboard-nav-bar .top-nav-bar-search-logo {
+  //   width: 200px !important;
+  //   margin: 20px 20px !important;
+  // }
   html body #__nuxt .dashboard-nav-bar {
     display: block;
     padding-right: 0 !important;
@@ -870,7 +903,10 @@ export default {
 .upper-links {
   margin-top: 25px;
   width: 232px;
-    margin-bottom: 0;
+  margin-bottom: 0;
+  @media (max-width: 767px) {
+    display: none;
+  }
 
   li {
     display: inline;
@@ -887,6 +923,27 @@ export default {
       text-transform: uppercase;
       font-size: 10px !important;
       vertical-align: middle;
+    }
+  }
+}
+@media (max-width: 767px) {
+  .header-top-mobile {
+    display: block !important;
+    .sibar-logo-top {
+      display: inline-block;
+      padding: 15px 15px;
+      img {
+        width: 100%;
+        max-width: 180px;
+      }
+    }
+    .upper-links {
+      display: inline-block;
+      float: right;
+      text-align: right;
+      width: auto;
+      padding-right: 13px;
+      margin-top: 33px;
     }
   }
 }

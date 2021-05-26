@@ -7,9 +7,9 @@
             <h5 class="card-title">
               <button class="theme-btn card-btn">All Listings</button>
               <nuxt-link
-                v-if='isAdmin'
+                v-if="isAdmin"
                 class="theme-green-btn card-btn pull-right"
-                :to='`/admin/create-listings-excel`'
+                :to="`/admin/create-listings-excel`"
                 style="margin-right: 5px"
               >
                 Import Listing via CSV
@@ -31,7 +31,7 @@
               <div class="col-2">
                 <select
                   id="sportFilter"
-                  @change="getSportItems(currentPage, $event)"
+                  @change="getItems(1, $event)"
                   class="form-control text-capitalize"
                 >
                   <option selected>Select Sport</option>
@@ -48,7 +48,7 @@
               <div class="col-2">
                 <select
                   id="simpleFilter"
-                  @change="getItems(currentPage, $event)"
+                  @change="getItems(1,null,$event)"
                   class="form-control text-capitalize"
                 >
                   <option selected>Filter By</option>
@@ -70,7 +70,7 @@
                   <div class="input-group-append">
                     <button
                       class="btn btn-outline-secondary"
-                      @click="getItems(currentPage)"
+                      @click="getItems(1)"
                       type="button"
                       id="button-addon2"
                     >
@@ -93,7 +93,7 @@
                   <th style="width: 130px">Listing Id</th>
                   <th style="width: 75px">Slab Id</th>
                   <th style="width: 70px">Status</th>
-                  <th style="width: 160px" v-if='!isDataEntry'>Actions</th>
+                  <th style="width: 160px" v-if="!isDataEntry">Actions</th>
                 </tr>
               </thead>
               <tbody v-if="items.length > 0">
@@ -125,9 +125,9 @@
                     </button>
                   </td>
                   <td>{{ item.itemId }}</td>
-                    <td>{{ item.card_id }}</td>
+                  <td>{{ item.card_id }}</td>
                   <td>{{ item.status == 0 ? 'Active' : 'Inactive' }}</td>
-                  <td v-if='!isDataEntry'>
+                  <td v-if="!isDataEntry">
                     <select
                       @change="statusChange($event, item.id, key)"
                       class="form-control text-capitalize"
@@ -138,7 +138,7 @@
                     </select>
                     <nuxt-link
                       class="card-btn btn btn-primary btn-table-spec"
-                       style="margin-top: 4px"
+                      style="margin-top: 4px"
                       :to="`edit-listing?listing_id=${item.id}`"
                       >Edit Listing</nuxt-link
                     >
@@ -156,91 +156,189 @@
                 </tr>
               </tbody>
               <tfoot>
-                <tr v-if="page-1 == 1 && items.length >= 30">
+                <tr v-if="page - 1 == 1 && items.length >= 30">
                   <td colspan="9">
-                    <button class="theme-btn card-btn active-pagination" @click="getItems(1)">
+                    <button class="theme-btn card-btn disable-pagination">
+                      First
+                    </button>
+                    <button class="theme-btn card-btn disable-pagination">
+                      Previous
+                    </button>
+                    <button class="theme-btn card-btn active-pagination">
                       1
                     </button>
-                    <button class="theme-btn card-btn" @click="getItems(2)">
+                    <button class="theme-btn card-btn" @click="getItems(2)" v-if="allPages>=2">
                       2
                     </button>
-                    <button class="theme-btn card-btn" @click="getItems(3)">
-                      Next
-                    </button>
-                  </td>
-                </tr>
-                <tr v-if="page-1 == 2 && items.length >= 30">
-                  <td colspan="9">
-                    <button class="theme-btn card-btn" @click="getItems(1)">
-                      1
-                    </button>
-                    <button class="theme-btn card-btn active-pagination" @click="getItems(2)">
-                      2
-                    </button>
-                    <button class="theme-btn card-btn" @click="getItems(3)">
+                    <button class="theme-btn card-btn" @click="getItems(3)" v-if="allPages>=3">
                       3
                     </button>
-                    <button class="theme-btn card-btn" @click="getItems(4)">
+                    <button class="theme-btn card-btn" @click="getItems(4)" v-if="allPages>=4">
+                      4
+                    </button>
+                    <button class="theme-btn card-btn" @click="getItems(5)" v-if="allPages>=5">
+                      5
+                    </button>
+                    <button class="theme-btn card-btn" @click="getItems(2)" v-if="allPages>=2">
                       Next
+                    </button>
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getItems(allPages)"
+                    >
+                      Last
                     </button>
                   </td>
                 </tr>
-                <tr v-if="page-1 == 3 && items.length >= 30">
+                <tr v-if="page - 1 == 2 && items.length >= 30">
                   <td colspan="9">
+                    <button class="theme-btn card-btn disable-pagination">
+                      First
+                    </button>
+                    <button class="theme-btn card-btn" @click="getItems(1)">
+                      Previous
+                    </button>
+                    <button class="theme-btn card-btn active-pagination">
+                      2
+                    </button>
+                    <button class="theme-btn card-btn" @click="getItems(3)" v-if="allPages>=3">
+                      3
+                    </button>
+                    <button class="theme-btn card-btn" @click="getItems(4)" v-if="allPages>=4">
+                      4
+                    </button>
+                    <button class="theme-btn card-btn" @click="getItems(5)" v-if="allPages>=5">
+                      5
+                    </button>
+                    <button class="theme-btn card-btn" @click="getItems(6)" v-if="allPages>=6">
+                      6
+                    </button>
+                    <button class="theme-btn card-btn" @click="getItems(3)" v-if="allPages>=3">
+                      Next
+                    </button>
                     <button
                       class="theme-btn card-btn"
-                     
-                      @click="getItems(1)"
+                      @click="getItems(allPages)"
                     >
+                      Last
+                    </button>
+                  </td>
+                </tr>
+                <tr v-if="page - 1 == 3 && items.length >= 30">
+                  <td colspan="9">
+                    <button class="theme-btn card-btn disable-pagination">
+                      First
+                    </button>
+                    <button class="theme-btn card-btn" @click="getItems(2)">
                       Previous
                     </button>
                     <button class="theme-btn card-btn" @click="getItems(2)">
                       2
                     </button>
-                    <button class="theme-btn card-btn active-pagination" @click="getItems(3)">
+                    <button class="theme-btn card-btn active-pagination">
                       3
                     </button>
-                    <button class="theme-btn card-btn" @click="getItems(4)">
+                    <button class="theme-btn card-btn" @click="getItems(4)" v-if="allPages>=4">
                       4
                     </button>
-                    <button class="theme-btn card-btn" @click="getItems(5)">
+                    <button class="theme-btn card-btn" @click="getItems(5)" v-if="allPages>=5">
+                      5
+                    </button>
+                    <button class="theme-btn card-btn" @click="getItems(6)" v-if="allPages>=6">
+                      6
+                    </button>
+                    <button class="theme-btn card-btn" @click="getItems(4)" v-if="allPages>=4">
                       Next
+                    </button>
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getItems(allPages)"
+                    >
+                      Last
                     </button>
                   </td>
                 </tr>
-                <tr v-if="(page-1) > 3 && items.length >= 30">
+                <tr v-if="page - 1 > 3 && items.length >= 30">
                   <td colspan="9">
+                    <button class="theme-btn card-btn" @click="getItems(1)">
+                      First
+                    </button>
                     <button
                       class="theme-btn card-btn"
-                      
                       @click="getItems(page - 2)"
                     >
                       Previous
                     </button>
                     <button
                       class="theme-btn card-btn"
-                      @click="getItems(page - 1)"
+                      @click="getItems(page - 3)"
                     >
+                      {{ page - 3 }}
+                    </button>
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getItems(page - 2)"
+                    >
+                      {{ page - 2 }}
+                    </button>
+                    <button class="theme-btn card-btn active-pagination">
                       {{ page - 1 }}
                     </button>
-                    <button class="theme-btn card-btn active-pagination" @click="getItems(page)">
+                    <button class="theme-btn card-btn" @click="getItems(page)">
                       {{ page }}
                     </button>
                     <button
                       class="theme-btn card-btn"
-                      @click="getItems(page + 1)"
+                      @click="getItems(page + 1)" v-if="allPages>= (page + 1)"
                     >
                       {{ page + 1 }}
                     </button>
+                    <button class="theme-btn card-btn" @click="getItems(page)" v-if="allPages>= page" >
+                      Next
+                    </button>
                     <button
                       class="theme-btn card-btn"
-                      @click="getItems(page + 2)"
+                      @click="getItems(allPages)"
                     >
-                      Next
+                      Last
                     </button>
                   </td>
                 </tr>
+                <tr v-if="page - 1 == allPages">
+                  <td colspan="14">
+                     <button class="theme-btn card-btn disable-pagination"  v-if="(page-1) == 1">
+                      First
+                    </button>
+                      <button class="theme-btn card-btn disable-pagination"  v-if="(page-1) == 1">
+                      Previous
+                    </button>
+                    <button class="theme-btn card-btn" @click="getItems(1)" v-if="(page-1) != 1">
+                      First
+                    </button>
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getItems(page - 2)" v-if="(page - 2) > 0"
+                    >
+                      Previous
+                    </button>
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getItems(page - 2)" v-if="(page - 2) > 0"
+                    >
+                      {{ page - 2 }}
+                    </button>
+                    <button class="theme-btn card-btn active-pagination">
+                      {{ page - 1 }}
+                    </button>
 
+                    <button class="theme-btn card-btn disable-pagination">
+                      Next
+                    </button>
+                    <button class="theme-btn card-btn disable-pagination">
+                      Last
+                    </button>
+                  </td>
+                </tr>
               </tfoot>
             </table>
           </div>
@@ -262,15 +360,13 @@ export default {
     }
   },
   mounted() {
-    if(this.$route.query.item != null){
-    this.searchItem(this.$route.query.item)
-    }else{
-this.getItems(this.page)
+    if (this.$route.query.item != null) {
+      this.searchItem(this.$route.query.item)
+    } else {
+      this.getItems(this.page)
     }
   },
-  watch() {
-  
-  },
+  watch() {},
   updated() {
     $('.main-checkbox').change(function () {
       if ($('.main-checkbox').is(':checked')) {
@@ -290,8 +386,10 @@ this.getItems(this.page)
       currentPage: 1,
       noMoreData: false,
       sportsList: [],
-      sportFilter: '',
+      sportFilter: null,
+      otherFilter: null,
       filter: null,
+      allPages: 0,
       // card: {
       //   soldPrice: '',
       // },
@@ -320,13 +418,12 @@ this.getItems(this.page)
           this.$axios
             .post('get-ebay-list', payload)
             .then((res) => {
-              console.log(res);
               if (res.status == 200) {
                 this.currentPage = 1
                 this.items = res.data.data
                 this.page = res.data.next
                 this.sportsList = res.data.sportsList
-                console.log(res.data.data);
+                 this.allPages = res.data.all_pages
               }
               this.requestInProcess = false
               this.hideLoader()
@@ -342,13 +439,27 @@ this.getItems(this.page)
         }
       }
     },
-    getItems(page, filter = null) {
+    getItems(page, filter = null, filter2 = null) {
       if (!this.requestInProcess) {
         try {
           this.showLoader()
           this.requestInProcess = true
           let payload = { page: page, search: this.searchTerm }
-          if (filter != null) payload['sport'] = filter.target.value
+          // if (filter != null) payload['sport'] = filter.target.value
+
+          if (filter != null) {
+            payload['sport'] = filter.target.value
+            this.sportFilter = filter
+          } else if (this.sportFilter != null) {
+            payload['sport'] = this.sportFilter.target.value
+          }
+          if (filter2 != null) {
+            payload['filter_by'] = filter2.target.value
+            this.otherFilter = filter2
+          } else if (this.otherFilter != null) {
+            payload['filter_by'] = this.otherFilter.target.value
+          }
+          
           this.$axios
             .post('get-ebay-list', payload)
             .then((res) => {
@@ -357,6 +468,7 @@ this.getItems(this.page)
                 this.items = res.data.data
                 this.page = res.data.next
                 this.sportsList = res.data.sportsList
+                this.allPages = res.data.all_pages
               }
               this.requestInProcess = false
               this.hideLoader()
@@ -372,36 +484,36 @@ this.getItems(this.page)
         }
       }
     },
-    getSportItems(page, filter = null) {
-      if (!this.requestInProcess) {
-        try {
-          this.showLoader()
-          this.requestInProcess = true
-          let payload = { page: page, search: this.searchTerm }
-          if (filter != null) payload['sport'] = filter.target.value
-          this.$axios
-            .post('get-ebay-list-for-sport', payload)
-            .then((res) => {
-              if (res.status == 200) {
-                this.currentPage = page
-                this.items = res.data.data
-                this.page = res.data.next
-                this.sportsList = res.data.sportsList
-              }
-              this.requestInProcess = false
-              this.hideLoader()
-            })
-            .catch((err) => {
-              this.requestInProcess = false
-              this.hideLoader()
-            })
-        } catch (err) {
-          this.hideLoader()
-          this.requestInProcess = false
-          console.log(err)
-        }
-      }
-    },
+    // getSportItems(page, filter = null) {
+    //   if (!this.requestInProcess) {
+    //     try {
+    //       this.showLoader()
+    //       this.requestInProcess = true
+    //       let payload = { page: page, search: this.searchTerm }
+    //       if (filter != null) payload['sport'] = filter.target.value
+    //       this.$axios
+    //         .post('get-ebay-list-for-sport', payload)
+    //         .then((res) => {
+    //           if (res.status == 200) {
+    //             this.currentPage = page
+    //             this.items = res.data.data
+    //             this.page = res.data.next
+    //             this.sportsList = res.data.sportsList
+    //           }
+    //           this.requestInProcess = false
+    //           this.hideLoader()
+    //         })
+    //         .catch((err) => {
+    //           this.requestInProcess = false
+    //           this.hideLoader()
+    //         })
+    //     } catch (err) {
+    //       this.hideLoader()
+    //       this.requestInProcess = false
+    //       console.log(err)
+    //     }
+    //   }
+    // },
     getStatus(status) {
       if (status == 0) {
         return 'Active'
@@ -413,7 +525,7 @@ this.getItems(this.page)
     },
     statusChange(event, id, key) {
       if (!this.requestInProcess) {
-        if (typeof key == "boolean" &&  key == false) {
+        if (typeof key == 'boolean' && key == false) {
           var statusVal = event
         } else {
           var statusVal = event.target.value
@@ -431,8 +543,8 @@ this.getItems(this.page)
               this.hideLoader()
               if (key != false) {
                 this.items[key].status = event.target.value
-              } 
-              this.getItems(this.page - 1)
+              }
+              this.getItems(this.currentPage)
               // else {
               //   location.reload()
               // }
@@ -457,7 +569,7 @@ this.getItems(this.page)
             .then((res) => {
               this.requestInProcess = false
               this.hideLoader()
-              this.getItems(this.page-1)
+              this.getItems(this.currentPage)
             })
         } catch (err) {
           this.hideLoader()
@@ -482,9 +594,9 @@ ul.my-card-listing {
   line-height: 2;
   margin-top: 2px;
 }
-.active-pagination{
-      color: #1ce783;
-    background: #272d33;
+.active-pagination {
+  color: #1ce783;
+  background: #272d33;
 }
 .search-form.tabel-in {
   .form-control {

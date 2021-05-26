@@ -13,9 +13,15 @@
           <div class="dataloader" v-if="requestInProcess">
               <b-spinner variant="success" label="Spinning"></b-spinner>
             </div>
-          <ul class="my-card-listing">
+          <ul class="my-card-listing" v-if="data.length > 0">
             <CardListItem v-for="item in data" :key="'realted-item-'+item.id" :itemdata="item" />
           </ul>
+           <div
+            class="empty-result"
+            v-if="data.length == 0 && !requestInProcess"
+          >
+            <p>There are no listings here. Check again soon.</p>
+          </div>
         </div>
       </div>
     </div>

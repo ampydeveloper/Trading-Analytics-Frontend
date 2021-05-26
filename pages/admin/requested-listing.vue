@@ -150,7 +150,9 @@ export default {
   mounted() {
     this.getRequestedListing(this.page)
   },
-  updated() {
+   watch: {
+    cards(val) {
+          if (val.length > 0) {
     setTimeout(function () {
       if (!$.fn.dataTable.isDataTable('#all-request-listing-table')) {
         $('#all-request-listing-table').DataTable({
@@ -165,8 +167,27 @@ export default {
         })
         $('.dataTables_filter input').attr('placeholder', 'Search')
       }
-    }, 1000)
+    }, 100)
+          }
+    }
   },
+  // updated() {
+  //   setTimeout(function () {
+  //     if (!$.fn.dataTable.isDataTable('#all-request-listing-table')) {
+  //       $('#all-request-listing-table').DataTable({
+  //         pageLength: 20,
+  //         oLanguage: { sSearch: '' },
+  //         aoColumnDefs: [
+  //           {
+  //             bSortable: false,
+  //             aTargets: [-1,-2,-3,-4],
+  //           },
+  //         ],
+  //       })
+  //       $('.dataTables_filter input').attr('placeholder', 'Search')
+  //     }
+  //   }, 1000)
+  // },
  
   methods: {
     cancelRequest() {

@@ -54,12 +54,12 @@
                 />
               </div>
               <div class="form_column">
-                <label>Card</label>
+                <label>Card #</label>
                 <input
                   v-model="requestSlab.card"
                   type="text"
                   class="form-control"
-                  placeholder="Enter card"
+                  placeholder="Enter Card #"
                 />
               </div>
               <div class="form_column">
@@ -90,7 +90,7 @@
                 />
               </div>
               <div class="form_column">
-                <label>Image                  
+                <label>Slab Image                  
                 </label>
                 <div class="input-file">
                 <img :src='imgSrc' alt='Card-image' v-if='imgSrc.length > 0' width="200px"/>

@@ -9,14 +9,14 @@
             </h5>
           </div>
           <div class="table_wrapper ap">
-            <table class="table table-striped">
+            <table class="table table-striped" id="see-problem-table">
               <thead>
                 <tr>
                   <!-- <th>Id</th> -->
                   <th>User</th>
                   <th>Ebay Listing</th>
                   <th>Message</th>
-                  <th>Actions</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody v-if="problems.length > 0">
@@ -59,7 +59,7 @@
                   <td colspan="4" class="text-center">No listings flags.</td>
                 </tr>
               </tbody>
-              <tfoot>
+              <!-- <tfoot>
                 <tr v-if="page - 1 == 1 && problems.length >= 30">
                   <td colspan="4">
                     <button
@@ -178,7 +178,7 @@
                     </button>
                   </td>
                 </tr>
-              </tfoot>
+              </tfoot> -->
             </table>
           </div>
         </div>
@@ -188,6 +188,7 @@
 </template>
 
 <script>
+import $ from 'jquery'
 export default {
   transition: 'fade',
   layout: 'admin',
@@ -207,6 +208,27 @@ export default {
       requestInProcess: false,
     }
   },
+  watch: {
+    problems(val) {
+      if (val.length > 0) {
+        setTimeout(function () {
+          if (!$.fn.dataTable.isDataTable('#see-problem-table')) {
+            $('#see-problem-table').DataTable({
+              pageLength: 20,
+              oLanguage: { sSearch: '' },
+              aoColumnDefs: [
+                {
+                  bSortable: false,
+                  aTargets: [-1, -2, -3],
+                },
+              ],
+            })
+            $('.dataTables_filter input').attr('placeholder', 'Search')
+          }
+        }, 500)
+      }
+    },
+  },
   methods: {
     getSeeProblems(page) {
       if (!this.requestInProcess) {
@@ -220,7 +242,7 @@ export default {
             .then((res) => {
               if (res.status == 200) {
                 this.problems = res.data.data
-                this.page = res.data.next
+                // this.page = res.data.next
               }
               this.requestInProcess = false
               this.hideLoader()

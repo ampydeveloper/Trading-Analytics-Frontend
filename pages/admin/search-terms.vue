@@ -30,8 +30,11 @@
                       :to="`ebay-specific-listings?card=${card.id}`"
                       >{{ card.card_details.title }}</nuxt-link
                     >
-                    <span v-if="card.search != null">
+                    <span >
                       {{ card.search }}
+                    </span>
+                    <span v-if="card.card_details == null && card.search == null">
+                      N/A
                     </span>
                   </td>
                   <td>
@@ -41,6 +44,9 @@
                       :to="`users?id=${card.user_details.id}`"
                       >{{ card.user_details.full_name }}</nuxt-link
                     >
+                     <span v-if="card.user_details == null">
+                      N/A
+                    </span>
                   </td>
                   <td
                     :data-order="
@@ -86,8 +92,10 @@ export default {
   mounted() {
     this.getRequestedSlab(this.page)
   },
-  updated() {
-    setTimeout(function () {
+  watch: {
+    cards(val) {
+          if (val.length > 0) {
+     setTimeout(function () {
       if (!$.fn.dataTable.isDataTable('#search-cards-table')) {
         $('#search-cards-table').DataTable({
           pageLength: 20,
@@ -103,8 +111,29 @@ export default {
         })
         $('.dataTables_filter input').attr('placeholder', 'Search Terms')
       }
-    }, 1000)
+    }, 100)
+          }
+    },
   },
+  // updated() {
+  //   setTimeout(function () {
+  //     if (!$.fn.dataTable.isDataTable('#search-cards-table')) {
+  //       $('#search-cards-table').DataTable({
+  //         pageLength: 20,
+  //         dom: 'Bfrtip',
+  //         buttons: [{ extend: 'csv', text: 'Export as CSV' }],
+  //         oLanguage: { sSearch: '' },
+  //         aoColumnDefs: [
+  //           {
+  //             bSortable: false,
+  //             aTargets: [-2, -3, -4],
+  //           },
+  //         ],
+  //       })
+  //       $('.dataTables_filter input').attr('placeholder', 'Search Terms')
+  //     }
+  //   }, 1000)
+  // },
   components: {},
   data() {
     return {

@@ -484,6 +484,12 @@ html body main .my-card-listing {
     .active-pagination {
       padding: 8px 11px 6px 11px;
     }
+    .disable-pagination {
+      background: transparent !important;
+      border: 1px solid #666 !important;
+      cursor: default;
+      color: #666 !important;
+    }
   }
 
   .dt-buttons {
@@ -522,7 +528,7 @@ html body main .my-card-listing {
     padding-bottom: 30px;
     padding-top: 20px;
 
-    .paginate_button {
+    .paginate_button, .ellipsis {
       min-width: 30px;
       background: #edecec !important;
       border: none !important;
@@ -555,6 +561,9 @@ html body main .my-card-listing {
         background: transparent !important;
         border: 1px solid #666 !important;
       }
+    }
+    .ellipsis{
+      cursor: not-allowed;
     }
   }
 }
