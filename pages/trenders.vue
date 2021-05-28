@@ -13,7 +13,6 @@
 
               <div
               class="trender-cards-footer"
-              v-if="recentListingItems.length >= 0 && !requestInProcess"
             >
               <ul class="trender-cards-footer-month-filter">
                 <li

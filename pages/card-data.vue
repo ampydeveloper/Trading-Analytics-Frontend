@@ -681,7 +681,7 @@ export default {
     this.updateGraph1d(2, 1)
     setTimeout(() => {
       this.updateGraph(90, 1)
-    }, 200)
+    }, 1000)
 
     this.getSalesGraph()
   },
