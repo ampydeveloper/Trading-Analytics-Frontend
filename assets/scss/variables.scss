@@ -419,6 +419,14 @@ html body main .my-card-listing {
     padding-left: 15px;
     padding-right: 15px;
     float: left;
+    @media (max-width: 1330px) {
+      padding-left: 12px;
+      padding-right: 12px;
+       }
+       @media (max-width: 1200px) {
+        padding-left: 15px;
+        padding-right: 15px;
+         }
   }
 
   .my-card:nth-child(6n+7) {
@@ -1015,7 +1023,8 @@ html body main .my-card-listing {
 
     .my-card {
       width: 33%;
-      height: calc(100%);
+      // height: calc(100%);
+      height: 100%;
     }
   }
 
@@ -1488,6 +1497,9 @@ html body #__nuxt .b-profileImage .dropdown-menu {
     top: auto;
     height: 1px;
     background-color: #272d33;
+    @media (max-width: 767px) {
+      background-color: #fff;
+        }
   }
 }
 
@@ -3177,11 +3189,14 @@ html body #__nuxt .b-profileImage .dropdown-menu {
   .dashboard-nav-bar .top-nav-navbar {
     display: none;
   }
-
+  html body #__nuxt .b-profileImage .dropdown-menu {
+    top: 44px !important;
+  }
   .profile_wrap {
     position: absolute;
     top: 0;
     display: block;
+    // right: 15px;
 
     .navbar-nav {
       display: flex;
@@ -3517,12 +3532,13 @@ html body #__nuxt .b-profileImage .dropdown-menu {
   }
 
   .profile_wrap .navbar-nav {
-    margin-top: 6px !important;
+    margin-top: 13px !important;
   }
 
   .top-nav-navbar .nav-item .nav-link em {
     padding: 0px 5px 0px 5px;
     width: 87px;
+    text-align: right;
   }
 
   .top-nav-navbar .nav-item .nav-link {

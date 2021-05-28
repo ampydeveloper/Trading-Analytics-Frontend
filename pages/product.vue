@@ -359,7 +359,7 @@ export default {
   layout: 'dashboard',
   head() {
     return {
-      title: 'Product Details - Slabstox',
+      title: 'Product Details - SlabStox',
     }
   },
   async mounted() {
@@ -627,9 +627,13 @@ export default {
       // width: 359px;
       // height: 505px;
       width: 100%;
-      height: calc(100% - 112px);
+      // height: calc(100% - 112px);
+      height: 83%;
       display: block;
       min-height: 350px;
+       @media (max-width: 991px) {
+     height: 76%;
+  }
       img {
         width: auto;
         display: block;

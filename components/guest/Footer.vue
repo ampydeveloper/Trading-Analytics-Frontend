@@ -2,12 +2,12 @@
   <footer class="guestFooter">
     <div class="container">
       <div class="row">
-        <div class="col-md-3 col-sm-3">
+        <div class="col-md-3 col-sm-12">
           <a class="footer-link" href>
             <img class="footer-logo" src="~/assets/logo-3.png" alt="Slabstox" />
           </a>
         </div>
-        <div class="col-lg-offset-1 col-md-2 col-sm-2">
+        <div class="col-lg-offset-1 col-md-2 col-sm-12">
           <div class>
             <p>
               <span class="title">
@@ -16,35 +16,35 @@
             </p>
             <p>
               <span class="sub-title">
-                <a class="footer-link" href="#">
+                <a class="footer-link" href="https://www.slabstox.com/explore">
                   <span>COMPANY</span>
                 </a>
               </span>
             </p>
             <p>
               <span class="sub-title">
-                <a class="footer-link" href="#">
+                <a class="footer-link" href="https://www.slabstox.com/podcast/">
                   <span>PODCASTS</span>
                 </a>
               </span>
             </p>
             <p>
               <span class="sub-title">
-                <a class="footer-link" href="#">
+                <a class="footer-link" href="https://www.slabstox.com/blog/">
                   <span>BLOG</span>
                 </a>
               </span>
             </p>
-            <p>
+            <!-- <p>
               <span class="sub-title">
                 <a class="footer-link" href="#">
                   <span>SHOP</span>
                 </a>
               </span>
-            </p>
+            </p> -->
           </div>
         </div>
-        <div class="col-md-2 col-sm-2">
+        <div class="col-md-2 col-sm-12">
           <div class>
             <p>
               <span class="title">
@@ -53,26 +53,32 @@
             </p>
             <p>
               <span class="sub-title">
-                <a class="footer-link" href="#">
-                  <span>SLABSTOX</span>
-                </a>
+                <!-- <a class="footer-link" href=""> -->
+                    <nuxt-link class="footer-link" to="/dashboard">
+                  <span>SLABSTOXPRO</span>
+                   </nuxt-link>
+                <!-- </a> -->
               </span>
             </p>
             <p>
               <span class="sub-title">
-                <a class="footer-link" href="#">
-                  <span>Live Auctions</span>
-                </a>
+                <!-- <a class="footer-link" href="#"> -->
+                    <nuxt-link class="footer-link" to="/register">
+                  <span>Signup</span>
+                   </nuxt-link>
+                <!-- </a> -->
               </span>
             </p>
             <p>
               <span class="sub-title">
-                <a class="footer-link" href="#">
-                  <span>Trenders</span>
-                </a>
+                <!-- <a class="footer-link" href="#"> -->
+                    <nuxt-link class="footer-link" to="/login">
+                  <span>Login</span>
+                   </nuxt-link>
+                <!-- </a> -->
               </span>
             </p>
-            <p>
+            <!-- <p>
               <span class="sub-title">
                 <a class="footer-link" href="#">
                   <span>Top Picks</span>
@@ -99,10 +105,10 @@
                   <span>Prostox</span>
                 </a>
               </span>
-            </p>
+            </p> -->
           </div>
         </div>
-        <div class="col-md-2 col-sm-2">
+        <div class="col-md-2 col-sm-12">
           <div class>
             <p>
               <span class="title">
@@ -149,7 +155,7 @@
             </p>
           </div>
         </div>
-        <div class="col-md-2 col-sm-2">
+        <div class="col-md-2 col-sm-12">
           <div class>
             <p>
               <span class="title">
@@ -159,19 +165,26 @@
               </span>
             </p>
             <p>
+              <span class="sub-title">
+                <a class="footer-link" href="https://www.slabstox.com/connect/">
+                  <span>Contact Us</span>
+                </a>
+              </span>
+            </p>
+            <!-- <p>
               <span class="sub-title">1-800-555-5555</span>
             </p>
             <p>
               <span class="sub-title">Info@slabstox.com</span>
-            </p>
+            </p> -->
           </div>
         </div>
         <div class="col-md-12 col-sm-12">
           <ul class="footer-all-rights-ul">
-            <li>©2020 Slabstox All rights reserved.</li>
+            <li>©2021 Slabstox All rights reserved.</li>
             <li>/</li>
             <li>
-              <a class="footer-link" href="#">Terms &amp; Conditions</a>
+              <a class="footer-link" href="https://www.slabstox.com/terms-conditions">Terms &amp; Conditions</a>
             </li>
             <li>/</li>
             <li>
@@ -197,6 +210,7 @@ export default {}
   background: #ffffff;
   .footer-logo {
     width: 200px;
+    max-width: 100%;
   }
   .footer-link {
     color: #000;

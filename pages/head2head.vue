@@ -515,7 +515,7 @@
                   Last Sale Date:
                   {{
                     card_two.last_sale
-                      ? this.$moment(card_two.last_sale.timestamp).format('M/D')
+                      ? this.$moment(card_two.last_sale.timestamp).format('M/D/Y')
                       : 'N/A'
                   }}
                 </li>
@@ -677,7 +677,7 @@ export default {
   layout: 'dashboard',
   head() {
     return {
-      title: 'Head 2 Head - Slabstox',
+      title: 'Head 2 Head - SlabStox',
     }
   },
   mounted() {

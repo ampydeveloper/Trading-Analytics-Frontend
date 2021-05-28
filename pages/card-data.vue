@@ -95,10 +95,12 @@
             <div class="card">
               <div class="card-body dashboard-graph">
                 <h5 class="card-title_new">
-                  <button class="theme-btn card-btn">
+                  <button class="theme-btn card-btn dashboard-apex-top-alld">
                     *SX Value ${{ cardGraph.sx_value ? cardGraph.sx_value : 0 }}
                   </button>
-                  <button :class="sx_icon_class + ' card-btn'">
+                  <button
+                    :class="sx_icon_class + ' card-btn dashboard-apex-top-alld'"
+                  >
                     <font-awesome-icon
                       v-if="
                         cardGraph.sx_icon == 'up' || cardGraph.sx_icon == 'down'
@@ -109,7 +111,9 @@
                       cardGraph.dollar_diff ? cardGraph.dollar_diff : 0
                     }}
                   </button>
-                  <button :class="sx_icon_class + ' card-btn'">
+                  <button
+                    :class="sx_icon_class + ' card-btn dashboard-apex-top-alld'"
+                  >
                     <font-awesome-icon
                       v-if="
                         cardGraph.sx_icon == 'up' || cardGraph.sx_icon == 'down'
@@ -118,6 +122,41 @@
                     />
                     &nbsp;{{ cardGraph.pert_diff ? cardGraph.pert_diff : 0 }}%
                   </button>
+
+                  <button class="theme-btn card-btn dashboard-apex-top-1d">
+                    *SX Value ${{
+                      card1dGraph.sx_value ? card1dGraph.sx_value : 0
+                    }}
+                  </button>
+                  <button
+                    :class="sx_icon1d_class + ' card-btn dashboard-apex-top-1d'"
+                  >
+                    <font-awesome-icon
+                      v-if="
+                        card1dGraph.sx_icon == 'up' ||
+                        card1dGraph.sx_icon == 'down'
+                      "
+                      :icon="['fas', 'long-arrow-alt-' + card1dGraph.sx_icon]"
+                    />
+                    &nbsp;${{
+                      card1dGraph.dollar_diff ? card1dGraph.dollar_diff : 0
+                    }}
+                  </button>
+                  <button
+                    :class="sx_icon1d_class + ' card-btn dashboard-apex-top-1d'"
+                  >
+                    <font-awesome-icon
+                      v-if="
+                        card1dGraph.sx_icon == 'up' ||
+                        card1dGraph.sx_icon == 'down'
+                      "
+                      :icon="['fas', 'long-arrow-alt-' + card1dGraph.sx_icon]"
+                    />
+                    &nbsp;{{
+                      card1dGraph.pert_diff ? card1dGraph.pert_diff : 0
+                    }}%
+                  </button>
+
                   <span
                     class="card-link"
                     v-b-modal.openSeeProblemPopup
@@ -191,7 +230,7 @@
                 <div class="dashboard-apex-top">
                   <div class="dashboard-apex-top-1d">
                     <VueApexCharts
-                      ref="cardDataChart"
+                      ref="cardDataChart1d"
                       type="area"
                       height="350"
                       :options="chartOptions1d"
@@ -220,7 +259,7 @@
                           ? 'nodata'
                           : '')
                       "
-                      @click="updateGraph(2)"
+                      @click="updateGraph1d(2)"
                     >
                       1D
                     </li>
@@ -309,11 +348,26 @@
                       5Y
                     </li>
                   </ul>
-                  <p class="dashboard-graph-footer-update-at float-right">
+                  <p
+                    class="dashboard-graph-footer-update-at float-right dashboard-apex-top-alld"
+                  >
                     Last Updated -
                     {{
                       lastSaleDate
                         ? this.$moment(lastSaleDate).format(
+                            'MMMM DD Y - hh:mm:ss A'
+                          )
+                        : 'N/A'
+                    }}
+                  </p>
+
+                  <p
+                    class="dashboard-graph-footer-update-at float-right dashboard-apex-top-1d"
+                  >
+                    Last Updated -
+                    {{
+                      lastSale1dDate
+                        ? this.$moment(lastSale1dDate).format(
                             'MMMM DD Y - hh:mm:ss A'
                           )
                         : 'N/A'
@@ -373,7 +427,7 @@
                 <li>
                   High Sale: {{ highestSale ? '$' + highestSale.cost : 'N/A' }}
                   {{
-                    lastSaleDate
+                    highestSale
                       ? '(' +
                         this.$moment(highestSale.timestamp).format('M/D/Y') +
                         ')'
@@ -383,7 +437,7 @@
                 <li>
                   Low Sale: {{ lowestSale ? '$' + lowestSale.cost : 'N/A' }}
                   {{
-                    lastSaleDate
+                    lowestSale
                       ? '(' +
                         this.$moment(lowestSale.timestamp).format('M/D/Y') +
                         ')'
@@ -408,12 +462,19 @@
             &nbsp;&nbsp;
             <span class="g-sx">*SX Value ${{ slabstoxValue }}</span>
             &nbsp;&nbsp;
-            <span class="g-to-sales">
+            <span class="g-to-sales" v-if="this.showalldGraph == true">
               Price Change ${{
                 cardGraph.dollar_diff ? cardGraph.dollar_diff : 0
               }}
               Percentage Change
               {{ cardGraph.pert_diff ? cardGraph.pert_diff : 0 }}%
+            </span>
+            <span class="g-to-sales" v-if="this.show1dGraph == true">
+              Price Change ${{
+                card1dGraph.dollar_diff ? card1dGraph.dollar_diff : 0
+              }}
+              Percentage Change
+              {{ card1dGraph.pert_diff ? card1dGraph.pert_diff : 0 }}%
             </span>
             &nbsp;&nbsp;
             <!-- <span class="g-sales-diff"></span> &nbsp;&nbsp; -->
@@ -430,7 +491,18 @@
               crossorigin="anonymous"
             />
             <canvas class="slab_image_canvas"></canvas>
-            <img :src="graphImageBase" alt="" class="slab_graph" />
+            <img
+              :src="graphImage"
+              v-if="this.showalldGraph == true"
+              alt=""
+              class="slab_graph"
+            />
+            <img
+              :src="graphImage1d"
+              v-if="this.show1dGraph == true"
+              alt=""
+              class="slab_graph"
+            />
           </div>
           <div class="clearfix g-download-out text-right">
             <a
@@ -605,9 +677,12 @@ export default {
       this.$router.push('/dashboard')
     }
     this.getData()
-    this.updateGraph(2, 1)
-    this.updateGraph(90, 1)
-    
+
+    this.updateGraph1d(2, 1)
+    setTimeout(() => {
+      this.updateGraph(90, 1)
+    }, 200)
+
     this.getSalesGraph()
   },
   watch: {
@@ -620,9 +695,18 @@ export default {
         // $('.g-main-text .g-to-sales').text(
         //   $('.card-title_new .theme-btn').text()
         // )
-        if (this.graphImage != '') {
-          $('.g-main-text .g-image-link').text('Graph URL ' + this.graphImage)
+        if (this.show1dGraph == true) {
+          if (this.graphImage1d != '') {
+            $('.g-main-text .g-image-link').text(
+              'Graph URL ' + this.graphImage1d
+            )
+          }
+        } else {
+          if (this.graphImage != '') {
+            $('.g-main-text .g-image-link').text('Graph URL ' + this.graphImage)
+          }
         }
+
         if ($('.image-conatiner img').attr('src') != '') {
           $('.g-main-text .slab-image-link').text(
             'Slab URL ' + $('.image-conatiner img').attr('src')
@@ -656,24 +740,30 @@ export default {
       activeDaysGraph: 2,
       initGraphLabelLength: 0,
       graphImage: '',
+      graphImage1d: '',
       graphImageBase: '',
       graphDataEmpty: false,
       dialogVisible: false,
       lastSalePrice: '',
       lastSaleDate: '',
+      lastSale1dDate: '',
       highestSale: '',
       lowestSale: '',
       slabstoxValue: 0,
       sx_icon_class: 'theme-btn',
+      sx_icon1d_class: 'theme-btn',
       currentUrl: location.href,
       cardHistory: [],
       cardGraph: [],
+      card1dGraph: [],
       series: [
         {
           name: 'SX',
           data: [],
         },
       ],
+      show1dGraph: false,
+      showalldGraph: true,
       salesQty: [],
       chartOptions: {
         chart: {
@@ -949,24 +1039,30 @@ export default {
       }
     },
     updateGraph(days = 90, intialTime = 0) {
+      // if(intialTime == 1 || (intialTime == 0 && days != 2)){
       try {
         this.$axios
           .$get(`get-single-card-graph/${this.id}/${days}`)
           .then((res) => {
             if (res.status == 200) {
-              
               if (intialTime == 1) {
                 this.activeDaysGraph = 90
+                this.show1dGraph = false
+                this.showalldGraph = true
                 $('.dashboard-apex-top-alld').show()
                 $('.dashboard-apex-top-1d').hide()
               } else {
-                if (days == 2) {
-                  $('.dashboard-apex-top-1d').show()
-                  $('.dashboard-apex-top-alld').hide()
-                } else {
-                  $('.dashboard-apex-top-alld').show()
-                  $('.dashboard-apex-top-1d').hide()
-                }
+                // if (days == 2) {
+                //    this.show1dGraph = true;
+                //    this.showalldGraph = false;
+                //   // $('.dashboard-apex-top-1d').show()
+                //   // $('.dashboard-apex-top-alld').hide()
+                // } else {
+                this.show1dGraph = false
+                this.showalldGraph = true
+                $('.dashboard-apex-top-alld').show()
+                $('.dashboard-apex-top-1d').hide()
+                // }
                 this.activeDaysGraph = days
               }
               //1W to 5Y
@@ -1013,95 +1109,129 @@ export default {
                     },
                   },
                 }
-              }
-              //1D
-              if (days == 2) {
-                this.series1d = [{ name: 'SX', data: res.data.values }]
-                this.salesQty1d = res.data.qty
-                this.chartOptions1d = {
-                  xaxis: {
-                    tickAmount: 24,
-                    tickPlacement: 'on',
-                    categories: res.data.labels,
-                    labels: {
-                      formatter: function (value) {
-                        if (value !== undefined) {
-                          var splittedCategories = value.split(':')
-                          var mins = splittedCategories[1]
-                          if (mins == '00') {
-                            return value
-                          } else {
-                            return ''
-                          }
-                        }
-                        return ''
-                      },
-                    },
-                  },
-                  yaxis: {
-                    labels: {
-                      style: {
-                        colors: '#edecec',
-                        fontSize: '10px',
-                        fontFamily: 'NexaBold',
-                      },
-                      formatter: (value, ind) => {
-                        let valCheck = value
-                        if (Number(value) === value && value % 1 !== 0) {
-                          let valCheck = Number(value).toFixed(2)
-                        }
 
-                        let lblStr = `$${valCheck}`
-                        return lblStr
-                      },
-                    },
-                  },
-                  tooltip: {
-                    enabled: true,
-                    x: {
-                      formatter: (value, ind) => {
-                        return res.data.labels[ind.dataPointIndex]
-                      },
-                    },
-                    y: {
-                      formatter: (value, ind) => {
-                        let lblStr = `$${value}`
-                        if (typeof ind == 'object')
-                          lblStr = `$${value} (${
-                            this.salesQty1d[ind.dataPointIndex]
-                          })`
-                        else lblStr = `$${value} (${this.salesQty1d[ind]})`
-                        return lblStr
-                      },
-                    },
-                  },
+                this.cardGraph = res.data
+                this.highestSale = res.data.highestSale
+                this.lowestSale = res.data.lowestSale
+                this.lastSaleDate = res.data.lastSaleDate
+                this.lastSalePrice = res.data.lastSalePrice
+                this.initGraphLabelLength = res.data.labels
+                  ? res.data.labels.length
+                  : 0
+                this.slabstoxValue = res.data.slabstoxValue
+
+                if (this.cardGraph.sx_icon == 'up') {
+                  this.sx_icon_class = 'theme-green-btn'
+                } else if (this.cardGraph.sx_icon == 'down') {
+                  this.sx_icon_class = 'theme-red-btn'
                 }
-              }
-              this.cardGraph = res.data
-              this.highestSale = res.data.highestSale
-              this.lowestSale = res.data.lowestSale
-              this.lastSaleDate = res.data.lastSaleDate
-              this.lastSalePrice = res.data.lastSalePrice
-              this.initGraphLabelLength = res.data.labels
-                ? res.data.labels.length
-                : 0
-              this.slabstoxValue = res.data.slabstoxValue
 
-              if (this.cardGraph.sx_icon == 'up') {
-                this.sx_icon_class = 'theme-green-btn'
-              } else if (this.cardGraph.sx_icon == 'down') {
-                this.sx_icon_class = 'theme-red-btn'
+                setTimeout(() => {
+                  this.generateImageOfGraph('all')
+                }, 1000)
               }
-
-              setTimeout(() => {
-                this.generateImageOfGraph()
-              }, 1000)
             } else {
               this.$router.push('/dashboard')
             }
           })
       } catch (error) {
         console.log(error)
+      }
+    },
+    updateGraph1d(days = 2, intialTime = 0) {
+      if (intialTime == 1) {
+        try {
+          this.$axios
+            .$get(`get-single-card-graph/${this.id}/${days}`)
+            .then((res) => {
+              if (res.status == 200) {
+                //1D
+                if (days == 2) {
+                  this.series1d = [{ name: 'SX', data: res.data.values }]
+                  this.salesQty1d = res.data.qty
+                  this.chartOptions1d = {
+                    xaxis: {
+                      tickAmount: 24,
+                      tickPlacement: 'on',
+                      categories: res.data.labels,
+                      labels: {
+                        formatter: function (value) {
+                          if (value !== undefined) {
+                            var splittedCategories = value.split(':')
+                            var mins = splittedCategories[1]
+                            if (mins == '00') {
+                              return value
+                            } else {
+                              return ''
+                            }
+                          }
+                          return ''
+                        },
+                      },
+                    },
+                    yaxis: {
+                      labels: {
+                        style: {
+                          colors: '#edecec',
+                          fontSize: '10px',
+                          fontFamily: 'NexaBold',
+                        },
+                        formatter: (value, ind) => {
+                          let valCheck = value
+                          if (Number(value) === value && value % 1 !== 0) {
+                            let valCheck = Number(value).toFixed(2)
+                          }
+
+                          let lblStr = `$${valCheck}`
+                          return lblStr
+                        },
+                      },
+                    },
+                    tooltip: {
+                      enabled: true,
+                      x: {
+                        formatter: (value, ind) => {
+                          return res.data.labels[ind.dataPointIndex]
+                        },
+                      },
+                      y: {
+                        formatter: (value, ind) => {
+                          let lblStr = `$${value}`
+                          if (typeof ind == 'object')
+                            lblStr = `$${value} (${
+                              this.salesQty1d[ind.dataPointIndex]
+                            })`
+                          else lblStr = `$${value} (${this.salesQty1d[ind]})`
+                          return lblStr
+                        },
+                      },
+                    },
+                  }
+                  this.card1dGraph = res.data
+                  if (this.card1dGraph.sx_icon == 'up') {
+                    this.sx_icon1d_class = 'theme-green-btn'
+                  } else if (this.card1dGraph.sx_icon == 'down') {
+                    this.sx_icon1d_class = 'theme-red-btn'
+                  }
+                  this.lastSale1dDate = res.data.lastSaleDate
+
+                  setTimeout(() => {
+                    this.generateImageOfGraph(2)
+                  }, 1500)
+                }
+              } else {
+                this.$router.push('/dashboard')
+              }
+            })
+        } catch (error) {
+          console.log(error)
+        }
+      } else {
+        this.show1dGraph = true
+        this.showalldGraph = false
+        $('.dashboard-apex-top-1d').show()
+        $('.dashboard-apex-top-alld').hide()
+        this.activeDaysGraph = days
       }
     },
     getSalesGraph() {
@@ -1137,31 +1267,40 @@ export default {
         description: encodeURI(this.metaDesc),
       })
     },
-    generateImageOfGraph() {
-      const chartInstance = this.$refs.cardDataChart.chart.dataURI()
+    generateImageOfGraph(days) {
+      if (days == 'all') {
+        var chartInstance = this.$refs.cardDataChart.chart.dataURI();
+        var prefix = 'cdc';
+      } else {
+        var chartInstance = this.$refs.cardDataChart1d.chart.dataURI()
+        var prefix = 'cdc1d';
+      }
+
       chartInstance.then((val) => {
         let img = new Image()
         img.src = val.imgURI
         this.graphImageBase = img.src
-        // console.log(this.graphImageBase);
         this.$axios
-          .$post('generate-graph-image', { image: img.src, prefix: 'cdc' })
+          .$post('generate-graph-image', { image: img.src, prefix: prefix })
           .then((res) => {
             if (res.status == 200) {
-              this.graphImage = res.url
-
-              this.metaDesc =
-                this.card.title +
-                ' SX Value $' +
-                this.slabstoxValue +
-                ' Card Cost Change $' +
-                this.cardGraph.dollar_diff +
-                ' ' +
-                this.cardGraph.pert_diff +
-                '% Slab Image ' +
-                this.card.cardImage +
-                ' Slab Sales Graph ' +
-                this.graphImage
+              if (days == 'all') {
+                this.graphImage = res.url
+              } else {
+                this.graphImage1d = res.url
+              }
+              //   this.metaDesc =
+              //     this.card.title +
+              //     ' SX Value $' +
+              //     this.slabstoxValue +
+              //     ' Card Cost Change $' +
+              //     this.cardGraph.dollar_diff +
+              //     ' ' +
+              //     this.cardGraph.pert_diff +
+              //     '% Slab Image ' +
+              //     this.card.cardImage +
+              //     ' Slab Sales Graph ' +
+              //     this.graphImage
             }
           })
       })
@@ -1416,7 +1555,7 @@ ul.my-card-listing {
     position: relative;
     margin: 15px;
     padding: 0;
-        min-height: 660px;
+    min-height: 660px;
     .add-my-port,
     .add-my-port1,
     .add-my-port2 {

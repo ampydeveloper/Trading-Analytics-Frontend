@@ -180,7 +180,7 @@ export default {
   auth: 'guest',
   head() {
     return {
-      title: 'Trenders - Slabstox',
+      title: 'Trenders - SlabStox',
     }
   },
   mounted() {

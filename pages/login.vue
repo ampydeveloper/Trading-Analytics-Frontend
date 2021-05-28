@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row">
         <div class="col"></div>
-        <div class="col-md-10 col-sm-10">
+        <div class="col-md-10 col-sm-12">
           <div class="row">
             <div class="col-md-6 col-sm-6 login-form">
               <h1 v-if="showLoginForm">Sign In</h1>

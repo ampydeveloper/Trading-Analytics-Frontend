@@ -9,7 +9,7 @@
     <span class="toggle_topnav">+</span>
     <div class="header-top-mobile d-none clearfix">
       <div class="sibar-logo-top">
-        <img src="~/assets/img/dashboard-sidebar-top-logo.png" alt="Slabstox" />
+        <img src="~/assets/img/dashboard-sidebar-middel-logo.png" alt="Slabstox" />
       </div>
 
       <ul
@@ -31,24 +31,25 @@
     </div>
     <div class="profile_wrap b-profileImage">
       <b-navbar-nav class="top-nav-navbar">
-        <b-nav-item
+        <!-- <b-nav-item
           class="top-nav-icon"
           href="javascript:;"
           v-if="user != null && user.full_name != null"
           @click="shownotification = !shownotification"
         >
           <img class="icon" src="~/assets/img/icons/bell.png" />
-        </b-nav-item>
+        </b-nav-item> -->
         <!-- <b-nav-item class="top-nav-icon" to="/cart">
           <img class="icon" src="~/assets/img/icons/cart.png" />
           <span v-show="cartItemsCount > 0" class="cart-item-count">{{
             cartItemsCount
           }}</span>
         </b-nav-item> -->
-        <!-- <b-nav-item-dropdown right v-if="user != null && user.full_name != null">
+       <b-nav-item-dropdown right v-if="user != null && user.full_name != null">
           <template v-slot:button-content>
             <b-avatar variant="info" :src="user.picture" class></b-avatar>
             <em>{{ user.full_name }}</em>
+            <span class="bg"></span>
           </template>
           <b-dropdown-item to="/profile"
             ><img class="icon" src="~/assets/img/icons/profile_icon.png" />My
@@ -60,7 +61,7 @@
               src="~/assets/img/icons/logout_icon.png"
             />Logout</b-dropdown-item
           >
-        </b-nav-item-dropdown> -->
+        </b-nav-item-dropdown> 
       </b-navbar-nav>
     </div>
 
@@ -516,6 +517,9 @@ export default {
       color: $theme-off-white !important;
       margin-left: 10px;
       font-size: 14px;
+      @media (max-width: 767px) {
+    color: #39414a !important;
+      }
       em {
         padding: 0px 15px 0px 5px;
         font-size: 10px;
@@ -929,12 +933,14 @@ export default {
 @media (max-width: 767px) {
   .header-top-mobile {
     display: block !important;
+    background:#fff;
     .sibar-logo-top {
       display: inline-block;
-      padding: 15px 15px;
+      padding: 18px 15px 15px 15px;
       img {
         width: 100%;
-        max-width: 180px;
+        max-width: 145px;
+        margin-left: -6px;
       }
     }
     .upper-links {
@@ -943,7 +949,13 @@ export default {
       text-align: right;
       width: auto;
       padding-right: 13px;
-      margin-top: 33px;
+      margin-top: 21px;
+      li {
+        color: #000;
+        a{
+        color: #000;
+        }
+      }
     }
   }
 }

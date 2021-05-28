@@ -251,7 +251,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-4 col-sm-4 t-p-5 dash-live-auction">
+      <div class="col-md-12 col-sm-12 col-lg-4 t-p-5 dash-live-auction">
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">
@@ -284,7 +284,7 @@
         </div>
       </div>
 
-      <div class="col-md-4 col-sm-4 t-p-5 dash-watchlist">
+      <div class="col-md-12 col-sm-12 col-lg-4 t-p-5 dash-watchlist">
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">
@@ -315,7 +315,7 @@
         </div>
       </div>
 
-      <div class="col-md-4 col-sm-4 t-p-5 dash-trenders">
+      <div class="col-md-12 col-sm-12 col-lg-4 t-p-5 dash-trenders">
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">
@@ -402,12 +402,12 @@ export default {
   auth: 'guest',
   head() {
     return {
-      title: 'Dashboard - Slabstox',
+      title: 'Dashboard - SlabStox',
       meta: [
         {
           hid: 'dashboard',
-          name: 'Dashboard - Slabstox',
-          content: 'Check Slabstox Featured Slabs',
+          name: 'Dashboard - SlabStox',
+          content: 'Check SlabStox Featured Slabs',
         },
         { property: 'og:title', content: 'Check Slabstox Featured Slabs' },
         { property: 'og:image', content: this.logo },
@@ -439,11 +439,12 @@ export default {
     this.featureHeight =
       $('.featured-listing .my-card').outerHeight() + 10 + 'px'
 
-    $(window).resize(function () {
-      this.featureHeight =
-        $('.featured-listing .my-card').outerHeight() + 10 + 'px'
-      // console.log($('.featured-listing .my-card').outerHeight())
-    })
+    // $(window).resize(function () {
+    //   this.featureHeight =
+    //     $('.featured-listing .my-card').outerHeight() + 10 + 'px'
+    //   // console.log($('.featured-listing .my-card').outerHeight())
+    // })
+
   },
   components: {
     CardListItem,
@@ -1053,13 +1054,20 @@ ul.featured-listing {
 }
 .featured-listing {
   li.my-card {
-    padding-left: 40px !important;
-    padding-right: 40px !important;
+    // padding-left: 40px !important;
+    // padding-right: 40px !important;
+     padding-left: 2vw !important;
+    padding-right: 2vw !important;
     width: 20% !important;
     margin: 0;
     padding-top: 25px;
     padding-bottom: 25px;
     position: relative;
+
+@media (max-width: 1340px) {
+      padding-left: 1.4vw !important;
+      padding-right: 1.4vw !important;
+    }
 
     @media (max-width: 1200px) {
       padding-left: 15px !important;
@@ -1071,10 +1079,12 @@ ul.featured-listing {
     margin-right: -2px;
   }
 }
-
+.featured-listing-outer {
+    margin: 0 -15px;
+  }
 @media (max-width: 1200px) {
   .featured-listing-outer {
-    margin: 0 -15px;
+    // margin: 0 -15px;
     .featured-listing {
       min-width: 936px;
     }

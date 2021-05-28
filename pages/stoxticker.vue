@@ -988,11 +988,11 @@ export default {
   },
   head() {
     return {
-      title: 'Stoxticker - Slabstox',
+      title: 'Stoxticker - SlabStox',
       meta: [
         {
           hid: 'stoxticker',
-          name: 'Stoxticker - Slabstox',
+          name: 'Stoxticker - SlabStox',
           content: 'Check our StoxTicker',
         },
         { property: 'og:title', content: 'Check our StoxTicker' },
@@ -1002,7 +1002,7 @@ export default {
           content: 'StoxTicker@' + (this.data.sale ? this.data.sale : ''),
         },
         { property: 'og:url', content: this.currentUrl },
-        { property: 'og:site_name', content: 'Slabstox' },
+        { property: 'og:site_name', content: 'SlabStox' },
         { property: 'og:type', content: 'website' },
       ],
     }

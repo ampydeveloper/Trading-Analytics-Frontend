@@ -129,7 +129,7 @@ export default {
   layout: 'dashboard',
   head() {
     return {
-      title: 'Stox Request - Slabstox'
+      title: 'Stox Request - SlabStox'
     }
   },
   mounted() {},

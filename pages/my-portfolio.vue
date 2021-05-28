@@ -382,7 +382,7 @@ export default {
   layout: 'dashboard',
   head() {
     return {
-      title: 'My Portfolio - Slabstox',
+      title: 'My Portfolio - SlabStox',
     }
   },
   mounted() {

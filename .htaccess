@@ -6,9 +6,12 @@
 # allow social media crawlers to work by redirecting them to a server-rendered static version on the page
 RewriteCond %{HTTP_USER_AGENT} googlebot|bingbot|yandex|baiduspider|facebookexternalhit|twitterbot|rogerbot>
 RewriteRule card-data(.*)$ https://api.slabstox.com/card-data [R=301,L]
-RewriteRule stoxticker https://api.slabstox.com/stoxticker [R=301,L]
+RewriteRule stoxticker https://api.slabstox.com/main-stoxticker [R=301,L]
 RewriteRule stox-details(.*)$ https://api.slabstox.com/stoxticker-details [R=301,L]
 RewriteRule stox-sells(.*)$ https://api.slabstox.com/sx-stoxticker [R=301,L]
+
+RewriteCond %{HTTPS} off
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
@@ -17,10 +20,13 @@ RewriteRule ^(.*)$ /index.html [NC,QSA]
 # Handle Authorization Header
 RewriteCond %{HTTP:Authorization} .
 RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
 </IfModule>
 
 #order deny,allow
 #allow from 179.61.195.37
 #allow from 76.109.216.181
 #allow from 117.247.227.86
+#allow from 106.204.200.82
+#allow from 106.211.72.231
 #deny from all

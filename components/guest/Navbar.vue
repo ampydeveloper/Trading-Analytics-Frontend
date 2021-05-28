@@ -8,9 +8,16 @@
           </a>
         </div>
         <div class="col-12 col-sm-12 col-md-9 col-lg-9">
-          <ul v-if="!authenticated" class="upper-links list-inline">
+          <ul
+            v-if="!authenticated"
+            class="upper-links list-inline navbar-withlg-upper-links"
+          >
             <li>
-              <img class="nav-logo" src="~/assets/prostox-black-logo.png" alt="Slabstox" />
+              <img
+                class="nav-logo"
+                src="~/assets/prostox-black-logo.png"
+                alt="Slabstox"
+              />
             </li>
             <li>
               <nuxt-link to="/login">
@@ -34,23 +41,29 @@
                 <b-nav-item class="show-only-on-mobile" to="/register">
                   <i>Sign Up</i>
                 </b-nav-item>
-                <b-nav-item href="#">
-                  <i>Company</i>
+                <b-nav-item to="https://www.slabstox.com/explore/">
+                  <i>Explore</i>
                 </b-nav-item>
-                <b-nav-item href="#">
-                  <i>Podcasts</i>
+                <b-nav-item to="/dashboard">
+                  <i>Slabstoxpro</i>
                 </b-nav-item>
-                <b-nav-item href="#">
-                  <i>Blog</i>
+                <b-nav-item href="https://www.slabstox.com/slabshield/">
+                  <i>Slabshield</i>
                 </b-nav-item>
-                <b-nav-item href="#">
-                  <i>Slabstox</i>
+                <b-nav-item href="https://www.slabstox.com/podcast/">
+                  <i>Podcast</i>
                 </b-nav-item>
-                <b-nav-item href="#">
-                  <i>Shop</i>
+                <b-nav-item href="https://www.slabstox.com/blog/">
+                  <i>Latest</i>
                 </b-nav-item>
-                <b-nav-item href="#">
+                <b-nav-item href="https://www.slabstox.com/connect/">
                   <i>Connect</i>
+                </b-nav-item>
+                <b-nav-item
+                  class="btn-shop-out"
+                  href="https://www.slabstox.com/shop/"
+                >
+                  <i>Shop</i>
                 </b-nav-item>
               </b-navbar-nav>
             </b-collapse>
@@ -69,11 +82,11 @@ export default {}
 header.guestHeader {
   background-color: #fff !important;
   padding-bottom: 13px;
-    .container {
-        max-width: 1170px;
-        padding-left: 9px;
-        padding-right: 9px;
-    }
+  .container {
+    max-width: 1170px;
+    padding-left: 9px;
+    padding-right: 9px;
+  }
 
   .header-logo {
     width: 100%;
@@ -152,7 +165,12 @@ header.guestHeader {
     text-transform: uppercase;
     color: #888586;
   }
-
+  .upper-links.navbar-withlg-upper-links {
+    margin-top: 29px;
+    margin-right: 12px;
+    text-align: right;
+    width: auto;
+  }
   .upper-links li a {
     color: #888586;
     font-family: 'CocogoosePro-SemiLightItalic', Helvetica, Arial, sans-serif;
@@ -169,14 +187,14 @@ header.guestHeader {
   .navbar .nav-item a.nav-link {
     font-size: 14px;
     padding: 6px 12px;
-    font-family: "Roboto", Helvetica, Arial, sans-serif;
+    font-family: 'Roboto', Helvetica, Arial, sans-serif;
     line-height: 14px;
     font-weight: 700;
     font-style: normal;
     letter-spacing: 2px;
     text-transform: uppercase;
     i {
-        font-style: normal;
+      font-style: normal;
     }
   }
   .upper-links {
@@ -186,10 +204,30 @@ header.guestHeader {
   }
   nav.navbar {
     margin-top: 95px;
+    // margin-top: 99px;
+    padding-bottom: 0;
   }
-    
+  @media (max-width: 1200px) {
+    .navbar-nav > .nav-item {
+      margin: 0;
+      a.nav-link {
+        font-size: 11px;
+        padding: 6px 5px ;
+      }
+     
+    }
 
+   .navbar-nav .btn-shop-out a.nav-link {
+        margin-left: 8px !important;
+        padding: 7px 10px !important;
+        font-size: 12px !important;
+        margin-top: -2px !important;
+      }
+  }
   @media (max-width: 768px) {
+     nav.navbar{
+    margin: 0;
+    }
     .header-logo {
       width: 150px !important;
     }
@@ -202,10 +240,10 @@ header.guestHeader {
     }
   }
 
-  @media (max-width: 425px) {
+  @media (max-width: 576px) {
     .header-logo {
-      width: 60% !important;
-      margin-top: -30px !important;
+      // width: 60% !important;
+      margin-top: -21px !important;
     }
     .upper-links {
       /* position: relative !important;
@@ -224,12 +262,17 @@ header.guestHeader {
     }
 
     nav.navbar {
-      margin-top: 0px;
-      margin-top: -82px;
+      margin-top: -53px;
+      float: right;
     }
 
     nav.navbar button {
       border: none;
+      width: 100%;
+    text-align: right;
+    &:focus{
+      outline: none;
+    }
     }
 
     .navbar .nav-item a.nav-link {
@@ -245,13 +288,29 @@ header.guestHeader {
   .show-only-on-mobile {
     display: none;
   }
-  @media (max-width: 425px) {
+  .navbar-nav .btn-shop-out a.nav-link {
+    background: #1ce783;
+    border-radius: 3px;
+    transform: skewX(-8deg);
+    font-weight: bold;
+    padding: 13px 16px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: 0;
+    color: #fff !important;
+    margin-left: 35px;
+    margin-top: -10px;
+    font-size: 13px;
+    font-style: normal;
+    font-family: Helvetica, Arial, sans-serif;
+  }
+  @media (max-width: 576px) {
     .show-only-on-mobile {
       display: block;
     }
     nav.navbar {
       .navbar-toggler {
-        width: 100%;
+        // width: 100%;
         .navbar-toggler-icon {
           float: right;
           margin-top: 22px;

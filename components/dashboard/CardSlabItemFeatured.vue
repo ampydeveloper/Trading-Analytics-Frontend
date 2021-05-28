@@ -75,6 +75,15 @@ export default {
     background: #272d33;
     color: #fff;
         text-align: left;
+         @media (max-width: 1420px) {
+   font-size: 9px;
+    }
+     @media (max-width: 1330px) {
+   font-size: 8px;
+    }
+    @media (max-width: 1200px) {
+   font-size: 10px;
+    }
   }
   .sxvalue {
     span.high {

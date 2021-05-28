@@ -71,7 +71,7 @@ export default {
   auth: 'guest',
   head() {
     return {
-      title: 'Live Listings - Slabstox',
+      title: 'Live Listings - SlabStox',
     }
   },
   mounted() {

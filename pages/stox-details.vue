@@ -336,11 +336,11 @@ export default {
   layout: 'dashboard',
   head() {
     return {
-      title: 'Stoxticker - Slabstox',
+      title: 'Stoxticker - SlabStox',
       meta: [
         {
           hid: 'stoxticker-details',
-          name: 'Stoxticker - Slabstox',
+          name: 'Stoxticker - SlabStox',
           content: 'Check Stoxticker: ' + this.stoxtickerDetails.board.name,
         },
         {
