@@ -75,7 +75,7 @@
                 :class="
                   (sxIcon && sxIcon == 'up'
                     ? 'theme-green-btn'
-                    : 'theme-red-btn') + ' card-btn'
+                    : 'theme-red-btn') + ' card-btn dashboard-apex-top-alld'
                 "
               >
                 <font-awesome-icon
@@ -87,7 +87,7 @@
               <button
                 :class="
                   (sxIcon && sxIcon == 'up' ? 'theme-btn' : 'theme-red-btn') +
-                  ' card-btn'
+                  ' card-btn dashboard-apex-top-alld'
                 "
               >
                 <font-awesome-icon
@@ -95,71 +95,47 @@
                   :icon="['fas', 'long-arrow-alt-' + sxIcon]"
                 />&nbsp;{{ perc_diff }}%
               </button>
+
+              <button
+                :class="
+                  (sxIcon1d && sxIcon1d == 'up'
+                    ? 'theme-green-btn'
+                    : 'theme-red-btn') + ' card-btn dashboard-apex-top-1d'
+                "
+                style="display: none"
+              >
+                <font-awesome-icon
+                  v-if="sxIcon1d && sxIcon1d !== undefined"
+                  :icon="['fas', 'long-arrow-alt-' + sxIcon1d]"
+                />&nbsp;
+                <span class="g-dollar-d-val"> ${{ doller_diff1d }}</span>
+              </button>
+              <button
+                :class="
+                  (sxIcon1d && sxIcon1d == 'up'
+                    ? 'theme-btn'
+                    : 'theme-red-btn') + ' card-btn dashboard-apex-top-1d'
+                "
+                style="display: none"
+              >
+                <font-awesome-icon
+                  v-if="sxIcon1d && sxIcon1d !== undefined"
+                  :icon="['fas', 'long-arrow-alt-' + sxIcon1d]"
+                />&nbsp;{{ perc_diff1d }}%
+              </button>
+
               <span class="card-link" v-b-modal.openSeeProblemPopup>
                 Export Data
                 <font-awesome-icon :icon="['fas', 'chevron-right']" />
               </span>
-              <span class="total_sales" style="display: none">{{
+              <!-- <span class="total_sales" style="display: none">{{
                 total_sales
-              }}</span>
-              <!-- <span class="float-right share-lk-top">
-                <span class="share-icon">
-                  <img src="~/assets/img/share-icon.png" alt />
-                </span>
-                <div class="share-all-outer">
-                  <ul>
-                    <li>
-                      <a href="javascript:;" @click="shareFb()"
-                        ><img src="~/assets/img/icons/facebook.svg" alt
-                      /></a>
-                    </li>
-                    <li>
-                      <a
-                        :href="
-                          'https://twitter.com/intent/tweet?url=' +
-                          encodeURI(baseUrl) +
-                          '&text=StoxTicker@' +
-                          stoxtickerData.sale.toFixed(2)
-                        "
-                        target="_blank"
-                        ><img src="~/assets/img/icons/twitter.svg" alt
-                      /></a>
-                    </li>
-                    <li>
-                      <a
-                        :href="
-                          'http://pinterest.com/pin/create/button/?url=' +
-                          encodeURI(this.baseUrl) +
-                          '&media=' +
-                          encodeURI(this.graphImage) +
-                          '&description=' +
-                          encodeURI('Buy & Sell Sports Cards Online')
-                        "
-                        target="_blank"
-                        ><img src="~/assets/img/pinterest.png" alt
-                      /></a>
-                    </li>
-                    <li>
-                      <a
-                        :href="
-                          'https://www.linkedin.com/shareArticle?mini=true&url=' +
-                          encodeURI(baseUrl)
-                        "
-                        target="_blank"
-                        ><img src="~/assets/img/icons/linkedin-circled.svg" alt
-                      /></a>
-                    </li>
-                  </ul>
-                </div>
-                <span class="share-icon" @click='chart2Img()'>
-                  <img src="~/assets/img/share-icon.png" alt />
-                </span> 
-              </span> -->
+              }}</span> -->
             </h5>
             <div class="dashboard-apex-top" ref="dashboardApexChart">
-              <div class="dashboard-apex-top-1d">
+              <div class="dashboard-apex-top-1d" style="display: none">
                 <VueApexCharts
-                  ref="dashChart"
+                  ref="dashChart1d"
                   type="area"
                   height="350"
                   :options="chartOptions1d"
@@ -183,7 +159,7 @@
                     'dashboard-graph-footer-month-filter-item ' +
                     (activeDaysGraph == 2 ? 'active' : '')
                   "
-                  @click="updateGraph(2)"
+                  @click="updateGraph1d(2, 1)"
                 >
                   1D
                 </li>
@@ -360,10 +336,24 @@
       <div class="g-main-text">
         <span class="g-title"></span>
         &nbsp;&nbsp;<span class="g-sx"></span> &nbsp;&nbsp;
-        <!-- <span class="g-to-sales"></span> &nbsp;&nbsp; -->
-        <span class="g-sales-diff"></span>&nbsp;&nbsp;
-        <span class="g-sales-pert">Percentage Change {{ perc_diff }}%</span
-        >&nbsp;&nbsp; <span class="g-image-link"></span>&nbsp;&nbsp;
+
+        <span class="g-sales-diff" v-if="this.showalldGraph == true"
+          >Price Change ${{ doller_diff }}</span
+        >
+        <span class="g-sales-diff" v-if="this.show1dGraph == true"
+          >Price Change ${{ doller_diff1d }}</span
+        >
+        &nbsp;&nbsp;
+        <span class="g-sales-pert" v-if="this.showalldGraph == true"
+          >Percentage Change {{ perc_diff }}%</span
+        >
+        <span class="g-sales-pert" v-if="this.show1dGraph == true"
+          >Percentage Change {{ perc_diff1d }}%</span
+        >
+        &nbsp;&nbsp;
+
+        <span class="g-image-link"></span>&nbsp;&nbsp;
+
         <span class="slab-image-link"></span>
       </div>
 
@@ -373,7 +363,18 @@
         <!-- <img src="" class="slab_image_dup" alt="" /> -->
         <img src="" class="slab_image" alt="" crossorigin="anonymous" />
         <canvas class="slab_image_canvas"></canvas>
-        <img :src="graphImageBase" alt="" class="slab_graph" />
+        <img
+          :src="graphImage"
+          alt=""
+          class="slab_graph"
+          v-if="this.showalldGraph == true"
+        />
+        <img
+          :src="graphImage1d"
+          v-if="this.show1dGraph == true"
+          alt=""
+          class="slab_graph"
+        />
       </div>
       <div class="clearfix g-download-out text-right">
         <a
@@ -391,10 +392,8 @@
 <script>
 import CardSlabItem from '~/components/dashboard/CardSlabItem'
 import CardListItem from '~/components/dashboard/CardListItem'
-// import MyListing from '~/components/dashboard/MyListing'
 import { BASE_URL } from '../constants/keys'
 import $ from 'jquery'
-// import 'overlayscrollbars-vue/css/OverlayScrollbars.css';
 
 export default {
   transition: 'fade',
@@ -433,7 +432,6 @@ export default {
     this.getStoxtickerData()
     this.logo = document.getElementById('sidebarLogo').src
     this.$store.dispatch('advancesearch/fetchAttributes')
-    // this.print()
   },
   updated() {
     this.featureHeight =
@@ -444,12 +442,10 @@ export default {
     //     $('.featured-listing .my-card').outerHeight() + 10 + 'px'
     //   // console.log($('.featured-listing .my-card').outerHeight())
     // })
-
   },
   components: {
     CardListItem,
     CardSlabItem,
-    // MyListing,
     VueApexCharts: () => import('vue-apexcharts'),
   },
   data() {
@@ -463,6 +459,7 @@ export default {
       logo: null,
       baseUrl: BASE_URL,
       graphImage: '',
+      graphImage1d: '',
       graphImageBase: '',
       cardImage: '',
       liveAuction: [],
@@ -474,10 +471,16 @@ export default {
       dialogVisible: false,
       perc_diff: 0,
       doller_diff: 0,
+      perc_diff1d: 0,
+      doller_diff1d: 0,
       total_sales: 0,
       last_timestamp: 0,
       keyCount: 0,
       sxIcon: '',
+      sxIcon1d: '',
+      show1dGraph: false,
+      showalldGraph: true,
+      graph1dInitialized: false,
       stoxtickerData: {
         total: 0,
         sale: 0,
@@ -543,8 +546,21 @@ export default {
           categories: [],
         },
         tooltip: {
+          enabled: true,
           x: {
             format: 'MM/dd/yy',
+          },
+        },
+        noData: {
+          text: 'Graph Loading...',
+          align: 'center',
+          verticalAlign: 'middle',
+          offsetX: 0,
+          offsetY: 0,
+          style: {
+            colors: '#edecec',
+            fontSize: '10px',
+            fontFamily: 'NexaBold',
           },
         },
       },
@@ -599,24 +615,26 @@ export default {
               fontSize: '10px',
               fontFamily: 'NexaBold',
             },
-            // formatter: function (value, ind) {
-            //                 console.log(value)
-            //                 if (value !== undefined) {
-            //                   var splittedCategories = value.split(':')
-            //                   var mins = splittedCategories[1]
-            //                   if (mins == '00') {
-            //                     return value
-            //                   } else {
-            //                     return ''
-            //                   }
-            //                 }
-            //                 return ''
-            //               },
           },
           type: 'category',
           tickAmount: 24,
           tickPlacement: 'on',
           categories: [],
+        },
+        tooltip: {
+          enabled: true,
+        },
+        noData: {
+          text: 'Graph Loading...',
+          align: 'center',
+          verticalAlign: 'middle',
+          offsetX: 0,
+          offsetY: 0,
+          style: {
+            colors: '#edecec',
+            fontSize: '10px',
+            fontFamily: 'NexaBold',
+          },
         },
       },
     }
@@ -631,12 +649,6 @@ export default {
         $('.g-main-text .g-sx').text(
           $('.my-card.active .sxvalue .sxvalue-text').text()
         )
-        // $('.g-main-text .g-to-sales').text(
-        //   'Total Sales ' + $('.total_sales').text()
-        // )
-        $('.g-main-text .g-sales-diff').text(
-          'Price Change ' + $('.g-dollar-d-val').text()
-        )
 
         $('.g-img-full .slab_image, .g-img-full .slab_image_dup').attr(
           'src',
@@ -644,8 +656,11 @@ export default {
         )
         self.cardImage = $('.my-card.active .image-container img').attr('src')
 
-        if (self.graphImage != '') {
+        if (self.graphImage != '' && this.showalldGraph == true) {
           $('.g-main-text .g-image-link').text('Graph URL ' + self.graphImage)
+        }
+        if (self.graphImage1d != '' && this.show1dGraph == true) {
+          $('.g-main-text .g-image-link').text('Graph URL ' + self.graphImage1d)
         }
         if (self.cardImage != '') {
           $('.g-main-text .slab-image-link').text('Slab URL ' + self.cardImage)
@@ -654,12 +669,12 @@ export default {
     },
   },
   methods: {
-    openImage(src) {
-      window.open(src, '_blank')
-    },
     downloadImage() {
-      $('.apexcharts-toolbar .exportPNG').click()
-
+      if (this.showalldGraph == true) {
+        $('.dashboard-apex-top-alld .apexcharts-toolbar .exportPNG').click()
+      } else {
+        $('.dashboard-apex-top-1d .apexcharts-toolbar .exportPNG').click()
+      }
       const wrapper = document.getElementById('g-img-full')
       const img = wrapper.querySelector('.slab_image')
       const canvas = wrapper.querySelector('.slab_image_canvas')
@@ -721,16 +736,18 @@ export default {
               this.featuredListingItems = res.data
               if (this.featuredListingItems.length > 0) {
                 this.toggleCardActive(this.featuredListingItems[0])
-// setTimeout(() => {
-                this.updateGraph(2, 1)
-                  //  }, 1000)
+
                 this.updateGraph(90, 1)
               }
             }
           })
       } catch (err) {
         this.requestInProcessFeatured = false
-        console.log(err)
+        // console.log(err)
+        this.$toast.error(
+          'There has been an error featured slabs. Please refresh your page.',
+          { timeOut: 10000 }
+        )
       }
     },
     getLiveAuction() {
@@ -745,7 +762,7 @@ export default {
             }
           })
       } catch (err) {
-        console.log(err)
+        // console.log(err)
       }
     },
     getTernder() {
@@ -760,7 +777,7 @@ export default {
             }
           })
       } catch (err) {
-        console.log(err)
+        // console.log(err)
       }
     },
     getWatchlist() {
@@ -775,7 +792,7 @@ export default {
             }
           })
       } catch (err) {
-        console.log(err)
+        // console.log(err)
       }
     },
     getStoxtickerData() {
@@ -783,17 +800,136 @@ export default {
         this.$axios.$get('get-stoxticker-data').then((res) => {
           if (res.status == 200) {
             this.stoxtickerData = res.data
-          } else {
-            this.$router.push('/404')
           }
+          // else {
+          //   this.$router.push('/404')
+          // }
         })
       } catch (error) {
         console.log(error)
       }
     },
+    updateGraph1d(days = 2, intialTime = 0) {
+      if (intialTime == 1 && this.graph1dInitialized == false) {
+        try {
+          this.graph1dInitialized = true
+          this.graphDataEmpty = false
+          this.activeDaysGraph = days
+          this.$axios
+            .$get(`get-dashboard-graph/${days}/${this.cardActiveId}`)
+            .then((res) => {
+              if (res.status == 200) {
+                this.perc_diff1d = res.data.perc_diff
+                this.doller_diff1d = String(res.data.doller_diff)
+                this.sxIcon1d = res.data.sx_icon
+                // this.total_sales = res.data.total_sales
+                // this.last_timestamp = res.data.last_timestamp
+
+                this.show1dGraph = true
+                this.showalldGraph = false
+                $('.dashboard-apex-top-1d').show()
+                $('.dashboard-apex-top-alld').hide()
+
+                if (this.initGraphLabelLength != res.data.labels.length) {
+                  // this.graphDataEmpty = false
+
+                  this.series1d = [{ name: 'SX', data: res.data.values }]
+                  this.salesQty1d = res.data.qty
+
+                  this.chartOptions1d = {
+                    xaxis: {
+                      tickAmount: 24,
+                      categories: res.data.labels,
+                      type: 'category',
+                      tickPlacement: 'on',
+                      labels: {
+                        style: {
+                          colors: '#edecec',
+                          fontSize: '10px',
+                          fontFamily: 'NexaBold',
+                        },
+                        formatter: function (value, ind) {
+                          if (value !== undefined) {
+                            var splittedCategories = value.split(':')
+                            var mins = splittedCategories[1]
+                            if (mins == '00') {
+                              return value
+                            } else {
+                              return ''
+                            }
+                          }
+                          return ''
+                        },
+                      },
+                    },
+                    yaxis: {
+                      labels: {
+                        style: {
+                          colors: '#edecec',
+                          fontSize: '10px',
+                          fontFamily: 'NexaBold',
+                        },
+                        formatter: (value, ind) => {
+                          let valCheck = value
+                          if (Number(value) === value && value % 1 !== 0) {
+                            let valCheck = Number(value).toFixed(2)
+                          }
+
+                          let lblStr = `$${valCheck}`
+                          return lblStr
+                        },
+                      },
+                    },
+                    tooltip: {
+                      // enabled: true,
+                      x: {
+                        formatter: (value, ind) => {
+                          return res.data.labels[ind.dataPointIndex]
+                        },
+                      },
+                      y: {
+                        formatter: (value, ind) => {
+                          let lblStr = `$${value}`
+                          if (typeof ind == 'object')
+                            lblStr = `$${value} (${
+                              this.salesQty1d[ind.dataPointIndex]
+                            })`
+                          else lblStr = `$${value} (${this.salesQty1d[ind]})`
+                          return lblStr
+                        },
+                      },
+                    },
+                  }
+
+                  this.initGraphLabelLength = res.data.labels.length
+                  setTimeout(() => {
+                    this.generateImageOfGraph(2)
+                  }, 3000)
+                } else {
+                  this.graphDataEmpty = true
+                }
+              }
+            })
+        } catch (error) {
+          // console.log(error)
+          this.$toast.error(
+            'There has been an error loading graphs. Please refresh your page.',
+            { timeOut: 10000 }
+          )
+        }
+      } else {
+        this.graphDataEmpty = false
+        this.show1dGraph = true
+        this.showalldGraph = false
+        $('.dashboard-apex-top-1d').show()
+        $('.dashboard-apex-top-alld').hide()
+        this.activeDaysGraph = days
+      }
+    },
     updateGraph(days = 90, intialTime = 0) {
       try {
         this.graphDataEmpty = false
+        this.activeDaysGraph = days
         this.$axios
           .$get(`get-dashboard-graph/${days}/${this.cardActiveId}`)
           .then((res) => {
@@ -801,148 +937,59 @@ export default {
               this.perc_diff = res.data.perc_diff
               this.doller_diff = String(res.data.doller_diff)
               this.sxIcon = res.data.sx_icon
-              this.total_sales = res.data.total_sales
-              this.last_timestamp = res.data.last_timestamp
-              this.activeDaysGraph = 90
-              if (intialTime == 1) {
-                this.activeDaysGraph = 90
-                $('.dashboard-apex-top-alld').show()
-                $('.dashboard-apex-top-1d').hide()
-              } else {
-                if (days == 2) {
-                  $('.dashboard-apex-top-1d').show()
-                  $('.dashboard-apex-top-alld').hide()
-                } else {
-                  $('.dashboard-apex-top-alld').show()
-                  $('.dashboard-apex-top-1d').hide()
-                }
-                this.activeDaysGraph = days
+
+              if (days == 90) {
+                this.last_timestamp = res.data.last_timestamp
               }
 
+              this.show1dGraph = false
+              this.showalldGraph = true
+              $('.dashboard-apex-top-alld').show()
+              $('.dashboard-apex-top-1d').hide()
+
               if (this.initGraphLabelLength != res.data.labels.length) {
-                this.graphDataEmpty = false
-                if (days != 2) {
-                  this.series = [{ name: 'SX', data: res.data.values }]
-                  this.salesQty = res.data.qty
-                  // this.chartOptions = {}
-                  // window.setTimeout(function () {
-                    this.chartOptions = {
-                      xaxis: {
-                        categories: res.data.labels,
+                this.series = [{ name: 'SX', data: res.data.values }]
+                this.salesQty = res.data.qty
+                this.chartOptions = {
+                  xaxis: {
+                    categories: res.data.labels,
+                  },
+                  yaxis: {
+                    labels: {
+                      style: {
+                        colors: '#edecec',
+                        fontSize: '10px',
+                        fontFamily: 'NexaBold',
                       },
-                      yaxis: {
-                        labels: {
-                          style: {
-                            colors: '#edecec',
-                            fontSize: '10px',
-                            fontFamily: 'NexaBold',
-                          },
-                          formatter: (value, ind) => {
-                            let valCheck = value
-                            if (Number(value) === value && value % 1 !== 0) {
-                              let valCheck = Number(value).toFixed(2)
-                            }
+                      formatter: (value, ind) => {
+                        let valCheck = value
+                        if (Number(value) === value && value % 1 !== 0) {
+                          let valCheck = Number(value).toFixed(2)
+                        }
 
-                            let lblStr = `$${valCheck}`
-                            return lblStr
-                          },
-                        },
+                        let lblStr = `$${valCheck}`
+                        return lblStr
                       },
-                      tooltip: {
-                        enabled: true,
-                        x: {
-                          format: 'MM/dd/yy',
-                        },
-                        y: {
-                          formatter: (value, ind) => {
-                            let lblStr = `$${value}`
-                            if (typeof ind == 'object')
-                              lblStr = `$${value} (${
-                                this.salesQty[ind.dataPointIndex]
-                              })`
-                            else lblStr = `$${value} (${this.salesQty[ind]})`
-                            return lblStr
-                          },
-                        },
+                    },
+                  },
+                  tooltip: {
+                    y: {
+                      formatter: (value, ind) => {
+                        let lblStr = `$${value}`
+                        if (typeof ind == 'object')
+                          lblStr = `$${value} (${
+                            this.salesQty[ind.dataPointIndex]
+                          })`
+                        else lblStr = `$${value} (${this.salesQty[ind]})`
+                        return lblStr
                       },
-                    }
-                  // }, 1000)
-                }
-                if (days == 2) {
-                  this.series1d = [{ name: 'SX', data: res.data.values }]
-                  this.salesQty1d = res.data.qty
-                  // this.chartOptions1d = {}
-                  // window.setTimeout(function () {
-                    this.chartOptions1d = {
-                      xaxis: {
-                        tickAmount: 24,
-                        categories: res.data.labels,
-                        type: 'category',
-                        tickPlacement: 'on',
-                        labels: {
-                          style: {
-                            colors: '#edecec',
-                            fontSize: '10px',
-                            fontFamily: 'NexaBold',
-                          },
-                          formatter: function (value, ind) {
-                            if (value !== undefined) {
-                              var splittedCategories = value.split(':')
-                              var mins = splittedCategories[1]
-                              if (mins == '00') {
-                                return value
-                              } else {
-                                return ''
-                              }
-                            }
-                            return ''
-                          },
-                        },
-                      },
-                      yaxis: {
-                        labels: {
-                          style: {
-                            colors: '#edecec',
-                            fontSize: '10px',
-                            fontFamily: 'NexaBold',
-                          },
-                          formatter: (value, ind) => {
-                            let valCheck = value
-                            if (Number(value) === value && value % 1 !== 0) {
-                              let valCheck = Number(value).toFixed(2)
-                            }
-
-                            let lblStr = `$${valCheck}`
-                            return lblStr
-                          },
-                        },
-                      },
-                      tooltip: {
-                        enabled: true,
-                        x: {
-                          formatter: (value, ind) => {
-                            return res.data.labels[ind.dataPointIndex]
-                          },
-                        },
-                        y: {
-                          formatter: (value, ind) => {
-                            let lblStr = `$${value}`
-                            if (typeof ind == 'object')
-                              lblStr = `$${value} (${
-                                this.salesQty1d[ind.dataPointIndex]
-                              })`
-                            else lblStr = `$${value} (${this.salesQty1d[ind]})`
-                            return lblStr
-                          },
-                        },
-                      },
-                    }
-                  // }, 1000)
+                    },
+                  },
                 }
 
                 this.initGraphLabelLength = res.data.labels.length
                 setTimeout(() => {
-                  this.generateImageOfGraph()
+                  this.generateImageOfGraph('all')
                 }, 2000)
               } else {
                 this.graphDataEmpty = true
@@ -950,31 +997,35 @@ export default {
             }
           })
       } catch (error) {
-        console.log(error)
+        // console.log(error)
+        this.$toast.error(
+          'There has been an error loading graphs. Please refresh your page.',
+          { timeOut: 10000 }
+        )
       }
     },
-    shareFb() {
-      FB.ui({
-        method: 'feed',
-        name: 'StoxTicker@' + this.stoxtickerData.sale.toFixed(2),
-        link: encodeURI(thinitGraphLabelLengthis.graphImage), //this.baseUrl
-        picture: this.graphImage,
-        description: 'Check our StoxTicker value',
-      })
-    },
+    generateImageOfGraph(days) {
+      if (days == 'all') {
+        var chartInstance = this.$refs.dashChart.chart.dataURI()
+        var prefix = 'cdc'
+      } else {
+        var chartInstance = this.$refs.dashChart1d.chart.dataURI()
+        var prefix = 'cdc1d'
+      }
 
-    generateImageOfGraph() {
-      const chartInstance = this.$refs.dashChart.chart.dataURI()
       chartInstance.then((val) => {
         let img = new Image()
         img.src = val.imgURI
         this.graphImageBase = img.src
         this.$axios
-          .$post('generate-image', { image: img.src, prefix: 'sd' })
+          .$post('generate-image', { image: img.src, prefix: prefix })
           .then((res) => {
             if (res.status == 200) {
-              this.graphImage = res.url
-              console.log(res.url)
+              if (days == 'all') {
+                this.graphImage = res.url
+              } else {
+                this.graphImage1d = res.url
+              }
             }
           })
       })
@@ -1056,7 +1107,7 @@ ul.featured-listing {
   li.my-card {
     // padding-left: 40px !important;
     // padding-right: 40px !important;
-     padding-left: 2vw !important;
+    padding-left: 2vw !important;
     padding-right: 2vw !important;
     width: 20% !important;
     margin: 0;
@@ -1064,7 +1115,7 @@ ul.featured-listing {
     padding-bottom: 25px;
     position: relative;
 
-@media (max-width: 1340px) {
+    @media (max-width: 1340px) {
       padding-left: 1.4vw !important;
       padding-right: 1.4vw !important;
     }
@@ -1080,8 +1131,8 @@ ul.featured-listing {
   }
 }
 .featured-listing-outer {
-    margin: 0 -15px;
-  }
+  margin: 0 -15px;
+}
 @media (max-width: 1200px) {
   .featured-listing-outer {
     // margin: 0 -15px;

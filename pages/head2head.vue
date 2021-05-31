@@ -341,10 +341,20 @@
               <div class="sx_value">
                 <div class="row">
                   <div class="col-md-6 left">
-                    <h3>SX: ${{ card_one.sx ? card_one.sx : 0 }}</h3>
+                    <h3 class="dashboard-apex-top-alld">
+                      SX: ${{ card_one.sx ? card_one.sx : 0 }}
+                    </h3>
+                    <h3 class="dashboard-apex-top-1d">
+                      SX: ${{ card_one.sx1d ? card_one.sx1d : 0 }}
+                    </h3>
                   </div>
                   <div class="col-md-6 right">
-                    <h3>SX: ${{ card_two.sx ? card_two.sx : 0 }}</h3>
+                    <h3 class="dashboard-apex-top-alld">
+                      SX: ${{ card_two.sx ? card_two.sx : 0 }}
+                    </h3>
+                    <h3 class="dashboard-apex-top-1d">
+                      SX: ${{ card_two.sx1d ? card_two.sx1d : 0 }}
+                    </h3>
                   </div>
                 </div>
               </div>
@@ -353,8 +363,12 @@
                   <div class="card">
                     <div class="card-body dashboard-graph pt-0 pb-0">
                       <div class="dashboard-apex-top">
-                        <div class="dashboard-apex-top-1d">
+                        <div
+                          class="dashboard-apex-top-1d"
+                          style="display: none"
+                        >
                           <VueApexCharts
+                            ref="h2hDataChart1d"
                             type="area"
                             height="350"
                             :options="chartOptions1d"
@@ -363,6 +377,7 @@
                         </div>
                         <div class="dashboard-apex-top-alld">
                           <VueApexCharts
+                            ref="h2hDataChart"
                             type="area"
                             height="350"
                             :options="chartOptions"
@@ -377,7 +392,7 @@
                               'dashboard-graph-footer-month-filter-item ' +
                               (activeDaysGraph == 2 ? 'active' : '')
                             "
-                            @click="getGraphData(2)"
+                            @click="getGraphData1d(2, 1)"
                           >
                             1D
                           </li>
@@ -515,7 +530,9 @@
                   Last Sale Date:
                   {{
                     card_two.last_sale
-                      ? this.$moment(card_two.last_sale.timestamp).format('M/D/Y')
+                      ? this.$moment(card_two.last_sale.timestamp).format(
+                          'M/D/Y'
+                        )
                       : 'N/A'
                   }}
                 </li>
@@ -645,6 +662,9 @@
                     :src="itemdata.cardImage"
                     :alt="itemdata.id"
                   />
+                  <span v-if="itemdata.grade != null" class="grade-image-text">{{
+        itemdata.grade
+      }}</span>
                 </div>
                 <button
                   @click="addToHeadToHead(itemdata)"
@@ -719,6 +739,9 @@ export default {
         high_sale: null,
         low_sale: null,
       },
+      show1dGraph: false,
+      showalldGraph: true,
+      graph1dInitialized: false,
       series: [
         {
           name: 'SX',
@@ -765,13 +788,13 @@ export default {
               fontFamily: 'NexaBold',
             },
           },
-          // type: 'category',
           type: 'datetime',
           tickAmount: 6,
           tickPlacement: 'on',
           categories: [],
         },
         tooltip: {
+          enabled: true,
           x: {
             format: 'MM/dd/yy',
           },
@@ -870,8 +893,8 @@ export default {
         this.selectedCardOne = this.card_one.selectedCard
         this.selectedCardTwo = this.card_two.selectedCard
         this.getGraphData(this.activeDaysGraph, 1)
-        this.getGraphData(2, 1)
-$('.sec-h2h-out').show()
+        // this.getGraphData(2, 1)
+        $('.sec-h2h-out').show()
         $('.first-h2h-out').hide()
         this.showSelectedCards = true
       } else {
@@ -1014,99 +1037,126 @@ $('.sec-h2h-out').show()
     },
     getGraphData(days = 90, intialTime = 0) {
       try {
+        this.activeDaysGraph = days
         let cardIds =
           this.card_one.selectedCard.id + '|' + this.card_two.selectedCard.id
         this.$axios
           .$get('get-card-graph/' + cardIds + '/' + days)
           .then((res) => {
             if (res.status == 200) {
-              // $('.sec-h2h-out').show();
-              //     $('.first-h2h-out').hide();
-              // this.activeDaysGraph = days
+                       this.show1dGraph = false
+              this.showalldGraph = true
+              $('.dashboard-apex-top-alld').show()
+              $('.dashboard-apex-top-1d').hide()
+
+              this.series = [
+                {
+                  name: '<span class="sales-t1">SX</span>',
+                  data: res.data.values1,
+                },
+                {
+                  name: '<span class="sales-t2">SX</span>',
+                  data: res.data.values2,
+                },
+              ]
+              this.salesQty = [{ data: res.data.qty1 }, { data: res.data.qty2 }]
+              this.chartOptions = {
+                xaxis: {
+                  // type: 'datetime',
+                  // tickAmount: days == 2 ? 24 : 6,
+                  categories: res.data.lable1,
+                },
+                yaxis: {
+                  labels: {
+                    style: {
+                      colors: '#edecec',
+                      fontSize: '10px',
+                      fontFamily: 'NexaBold',
+                    },
+                    formatter: (value, ind) => {
+                      if (value == 'undefined') {
+                        return 0
+                      }
+                      let valCheck = value
+                      if (Number(value) === value && value % 1 !== 0) {
+                        let valCheck = Number(value).toFixed(2)
+                      }
+                      return `$${valCheck}`
+                    },
+                  },
+                },
+                tooltip: {
+                  // enabled: true,
+                  // x: {
+                  //   format: days == 2 ? 'MM/dd/yy HH:mm' : 'MM/dd/yy',
+                  // },
+                  y: {
+                    formatter: (value, ind) => {
+                      if (value == 'undefined') {
+                        return 0
+                      }
+                      let lblStr = `$${value}`
+                      if (typeof ind == 'object')
+                        var salesQtyVal = this.salesQty[ind.seriesIndex]
+
+                      let quantity = salesQtyVal.data[ind.dataPointIndex]
+
+                      lblStr = `$${value} (${quantity})`
+                      return lblStr
+                    },
+                  },
+                },
+              }
+
+              this.initGraphLabel1Length = res.data.lable1.length
+
+              this.card_one.sx = res.data.sx1
+              this.card_two.sx = res.data.sx2
+
               if (intialTime == 1) {
-                this.activeDaysGraph = 90
-                $('.dashboard-apex-top-alld').show()
-                $('.dashboard-apex-top-1d').hide()
-              } else {
-                if (days == 2) {
-                  $('.dashboard-apex-top-1d').show()
-                  $('.dashboard-apex-top-alld').hide()
-                } else {
-                  $('.dashboard-apex-top-alld').show()
-                  $('.dashboard-apex-top-1d').hide()
-                }
-                this.activeDaysGraph = days
+                this.card_one.slabstoxvalue1 = res.data.slabstoxvalue1
+                this.card_two.slabstoxvalue2 = res.data.slabstoxvalue2
+                this.card_one.rank = res.data.rank1
+                this.card_two.rank = res.data.rank2
+                this.card_one.low_sale = res.data.low_sale1
+                this.card_two.low_sale = res.data.low_sale2
+                this.card_one.high_sale = res.data.high_sale1
+                this.card_two.high_sale = res.data.high_sale2
+                this.card_one.last_sale = res.data.last_sale1
+                this.card_two.last_sale = res.data.last_sale2
               }
-              // if(this.initGraphLabelLength != res.data.labels.length){
-              if (days != 2) {
-                this.series = [
-                  {
-                    name: '<span class="sales-t1">SX</span>',
-                    data: res.data.values1,
-                  },
-                  {
-                    name: '<span class="sales-t2">SX</span>',
-                    data: res.data.values2,
-                  },
-                ]
-                this.salesQty = [
-                  { data: res.data.qty1 },
-                  { data: res.data.qty2 },
-                ]
-                this.chartOptions = {
-                  xaxis: {
-                    type: 'datetime',
-                    tickAmount: days == 2 ? 24 : 6,
-                    categories: res.data.lable1,
-                  },
-                  yaxis: {
-                    labels: {
-                      style: {
-                        colors: '#edecec',
-                        fontSize: '10px',
-                        fontFamily: 'NexaBold',
-                      },
-                      formatter: (value, ind) => {
-                        if (value == 'undefined') {
-                          return 0
-                        }
-                        let valCheck = value
-                        if (Number(value) === value && value % 1 !== 0) {
-                          let valCheck = Number(value).toFixed(2)
-                        }
+            } else {
+              // this.$router.push('/404')
+              this.$toast.error(
+                'There has been an error loading graphs. Please refresh your page.',
+                { timeOut: 10000 }
+              )
+            }
+          })
+      } catch (error) {
+        // console.log(error)
+        this.$toast.error(
+          'There has been an error loading graphs. Please refresh your page.',
+          { timeOut: 10000 }
+        )
+      }
+    },
+    getGraphData1d(days = 2, intialTime = 0) {
+      this.activeDaysGraph = days
+      if (intialTime == 1 && this.graph1dInitialized == false) {
+        try {
+          let cardIds =
+            this.card_one.selectedCard.id + '|' + this.card_two.selectedCard.id
+          this.$axios
+            .$get('get-card-graph/' + cardIds + '/' + days)
+            .then((res) => {
+              if (res.status == 200) {
+                this.graph1dInitialized = true
+                this.show1dGraph = true
+                this.showalldGraph = false
+                $('.dashboard-apex-top-1d').show()
+                $('.dashboard-apex-top-alld').hide()
 
-                        return `$${valCheck}`
-                      },
-                    },
-                  },
-                  tooltip: {
-                    enabled: true,
-                    x: {
-                      format: days == 2 ? 'MM/dd/yy HH:mm' : 'MM/dd/yy',
-                    },
-                    y: {
-                      formatter: (value, ind) => {
-                        if (value == 'undefined') {
-                          return 0
-                        }
-                        let lblStr = `$${value}`
-                        if (typeof ind == 'object')
-                          var salesQtyVal = this.salesQty[ind.seriesIndex]
-
-                        let quantity = salesQtyVal.data[ind.dataPointIndex]
-                        // console.log(quantity);
-                        // if (quantity == "undefined"){
-                        //    quantity = 0
-                        // }
-                        lblStr = `$${value} (${quantity})`
-                        return lblStr
-                      },
-                    },
-                  },
-                }
-              }
-
-              if (days == 2) {
                 this.series1d = [
                   {
                     name: '<span class="sales-t1">SX</span>',
@@ -1162,8 +1212,8 @@ $('.sec-h2h-out').show()
                     },
                   },
                   tooltip: {
-                    enabled: true,
-                      x: {
+                    // enabled: true,
+                    x: {
                       formatter: (value, ind) => {
                         return res.data.lable1[ind.dataPointIndex]
                       },
@@ -1184,28 +1234,32 @@ $('.sec-h2h-out').show()
                     },
                   },
                 }
-              }
 
-              this.initGraphLabel1Length = res.data.lable1.length
-              // }
-              this.card_one.slabstoxvalue1 = res.data.slabstoxvalue1
-              this.card_two.slabstoxvalue2 = res.data.slabstoxvalue2
-              this.card_one.sx = res.data.sx1
-              this.card_two.sx = res.data.sx2
-              this.card_one.rank = res.data.rank1
-              this.card_two.rank = res.data.rank2
-              this.card_one.low_sale = res.data.low_sale1
-              this.card_two.low_sale = res.data.low_sale2
-              this.card_one.high_sale = res.data.high_sale1
-              this.card_two.high_sale = res.data.high_sale2
-              this.card_one.last_sale = res.data.last_sale1
-              this.card_two.last_sale = res.data.last_sale2
-            } else {
-              this.$router.push('/404')
-            }
-          })
-      } catch (error) {
-        console.log(error)
+                this.initGraphLabel1Length = res.data.lable1.length
+
+                this.card_one.sx1d = res.data.sx1
+                this.card_two.sx1d = res.data.sx2
+              } else {
+                // this.$router.push('/404')
+                 this.$toast.error(
+                'There has been an error loading graphs. Please refresh your page.',
+                { timeOut: 10000 }
+              )
+              }
+            })
+        } catch (error) {
+          // console.log(error)
+           this.$toast.error(
+                'There has been an error loading graphs. Please refresh your page.',
+                { timeOut: 10000 }
+              )
+        }
+      } else {
+        this.show1dGraph = true
+        this.showalldGraph = false
+        $('.dashboard-apex-top-1d').show()
+        $('.dashboard-apex-top-alld').hide()
+        this.activeDaysGraph = days
       }
     },
     resultSelect(card) {
