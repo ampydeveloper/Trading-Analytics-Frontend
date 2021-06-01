@@ -52,7 +52,7 @@
             <span class="bg"></span>
           </template>
           <b-dropdown-item to="/profile"
-            ><img class="icon" src="~/assets/img/icons/profile_icon.png" />My
+            ><img class="icon" src="~/assets/img/icons/profile_icon.png" />
             Profile</b-dropdown-item
           >
           <b-dropdown-item @click="logout" href="javascript:;"
@@ -246,7 +246,7 @@
           <span class="bg"></span>
         </template>
         <b-dropdown-item to="/profile">
-          <img class="icon" src="~/assets/img/icons/profile_icon.png" />My
+          <img class="icon" src="~/assets/img/icons/profile_icon.png" />
           Profile
         </b-dropdown-item>
         <b-dropdown-item @click="logout" href="javascript:;">
@@ -411,8 +411,7 @@ export default {
     @media (max-width: 991px) {
       padding-left: 17px;
     }
-    @media (max-width: 767px) {
-    }
+
     .advance-search-label {
       position: relative;
       text-decoration: underline;
@@ -517,9 +516,7 @@ export default {
       color: $theme-off-white !important;
       margin-left: 10px;
       font-size: 14px;
-      @media (max-width: 767px) {
-    color: #39414a !important;
-      }
+     
       em {
         padding: 0px 15px 0px 5px;
         font-size: 10px;
@@ -959,4 +956,9 @@ export default {
     }
   }
 }
+ @media (max-width: 767px) {
+   .dashboard-nav-bar .top-nav-navbar .nav-item .nav-link{
+    color: #39414a !important;
+   }
+      }
 </style>

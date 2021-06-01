@@ -141,6 +141,22 @@ $theme-nav-badge-color: #de3030;
   margin-top: -3px;
   margin-right: 12px !important;
 }
+.toasted-container.top-right{
+  right: 15px !important;
+}
+.toasted-container .toasted{
+  padding: 8px 12px 5px 12px !important;
+  font-weight: normal !important;
+  border: none;
+  border-radius: 2px;
+  font-size: 11px !important;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+.toasted.toasted-primary {
+  background: #1ce783;
+  color: #212529;
+}
 
 .card {
   background: $theme-card-background-color;
@@ -1298,8 +1314,7 @@ html body main .my-card-listing {
 .up_img {
   position: absolute;
   left: -7px;
-  top: 7px;
-
+  top: 12px;
   @media (max-width: 768px) {
     position: relative;
   }
@@ -2789,9 +2804,11 @@ html body #__nuxt .b-profileImage .dropdown-menu {
     border: 0;
     border-top-right-radius: 0 !important;
     min-width: auto;
-    left: 4px !important;
-    right: 0px !important;
-    top: 30px !important;
+    // left: 4px !important;
+    left: auto !important;
+    // right: 0px !important;
+    right: 5px !important;
+    top: 30px !important;    
   }
 
   .cart_wrap {

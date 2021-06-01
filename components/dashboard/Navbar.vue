@@ -7,16 +7,21 @@
       alt
     />
     <span class="toggle_topnav">+</span>
+     <div class="header-top-mobile d-none clearfix">
+      <div class="sibar-logo-top">
+        <img src="~/assets/img/dashboard-sidebar-middel-logo.png" alt="Slabstox" />
+      </div>
+    </div>
     <div class="profile_wrap b-profileImage">
       <b-navbar-nav class="top-nav-navbar">
-        <b-nav-item
+        <!-- <b-nav-item
           class="top-nav-icon"
           href="javascript:;"
           v-if="user != null && user.full_name != null"
           @click="shownotification = !shownotification"
         >
           <img class="icon" src="~/assets/img/icons/bell.png" />
-        </b-nav-item>
+        </b-nav-item> -->
         <!-- <b-nav-item class="top-nav-icon" to="/cart">
           <img class="icon" src="~/assets/img/icons/cart.png" />
           <span v-show="cartItemsCount > 0" class="cart-item-count">{{
@@ -355,6 +360,9 @@ export default {
     width: 10%;
     margin: 0px 25px;
     margin-top: 20px;
+     @media (max-width: 991px) {
+      display: none;
+    }
   }
   .custom-smart-search {
     .display_keyword {
@@ -381,8 +389,11 @@ export default {
     }
   }
   .nav-bar-form {
-    width: 100%;
+ width: calc(100% - 150px);
     margin-top: 25px;
+    @media (max-width: 991px) {
+      padding-left: 17px;
+    }
     .advance-search-label {
       position: relative;
       text-decoration: underline;

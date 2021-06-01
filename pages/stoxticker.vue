@@ -930,14 +930,14 @@ slabstox.com
               </button>
 
               <nuxt-link
-                :class="'theme-btn card-btn thb-btn sx-allboards-apex-top-1d'+allBoardGraph[key].id" style="display: none margin-right: 4px;"
+                :class="'theme-btn card-btn thb-btn REDDF sx-allboards-apex-top-1d'+allBoardGraph[key].id" style="display: none; margin-right: 4px;"
                 :to="`stox-details?board=${allBoardGraph[key].id}`"
                 v-if="user != null && user.full_name != null"
                 >{{ allBoardGraph[key].name }}
                 ${{ allBoardGraph[key].total_card_value }}
               </nuxt-link>
               <span
-                :class="'theme-btn card-btn thb-btn sx-allboards-apex-top-1d'+allBoardGraph[key].id" style="display: none margin-right: 4px;"
+                :class="'theme-btn card-btn thb-btn sx-allboards-apex-top-1d'+allBoardGraph[key].id" style="display: none; margin-right: 4px;"
                v-if="user == null || user.full_name == null" v-b-modal.loginTopPopup
                 >{{ allBoardGraph[key].name }}
                 ${{ allBoardGraph[key].total_card_value }}
@@ -1106,9 +1106,7 @@ export default {
 
     this.getData()
     this.slabstoxGraph(90, 1)
-    // setTimeout(() => {
-    //   this.slabstoxGraph(2, 1)
-    // }, 5000)
+  
     this.getSoldListing()
     // this.getAllBoards()
     this.allBoardGraphFunc(90)
@@ -1159,9 +1157,8 @@ export default {
 
     $(document).on('click', '.add-to-board', function (e) {
       $(this).parent().addClass('active')
-      // var activeSlab = $(this).parent().clone();
       $('.search-slabs-out .my-card-active-listing').append(
-        $(this).parent().clone()
+        $(this).parent().prop('outerHTML')
       )
       $(this).parent().remove()
       e.preventDefault()
@@ -1192,7 +1189,7 @@ export default {
       doller_diff: 0,
       total_sales: 0,
       last_timestamp: 'N/A',
-      currentUrl: location.href,
+      currentUrl: location.origin +'/main-stoxticker',
       soldListing: '',
       // allBoards: '',
       allBoardGraph: [],
@@ -1518,17 +1515,17 @@ export default {
                         },
                       },
                       noData: {
-          text: 'Graph Loading...',
-          align: 'center',
-          verticalAlign: 'middle',
-          offsetX: 0,
-          offsetY: 0,
-          style: {
-            colors: '#edecec',
-            fontSize: '10px',
-            fontFamily: 'NexaBold',
-          },
-        },
+                        text: 'Graph Loading...',
+                        align: 'center',
+                        verticalAlign: 'middle',
+                        offsetX: 0,
+                        offsetY: 0,
+                        style: {
+                          colors: '#edecec',
+                          fontSize: '10px',
+                          fontFamily: 'NexaBold',
+                        },
+                      },
                     })
                   }
                 })
@@ -1547,10 +1544,10 @@ export default {
         console.log(err)
       }
     },
-    openSearchBoard(boardId){
-if(this.user != null && this.user.full_name != null){
- this.$router.push('/stox-details?board=' + boardId) 
-}
+    openSearchBoard(boardId) {
+      if (this.user != null && this.user.full_name != null) {
+        this.$router.push('/stox-details?board=' + boardId)
+      }
     },
     hideSmartSearch(event) {
       this.showSmartSearch = false
@@ -1747,8 +1744,6 @@ if(this.user != null && this.user.full_name != null){
             this.sxSalesQty = res.data.qty
             this.sxChartOptions = {
               xaxis: {
-                // type: 'datetime',
-                // tickAmount: days == 2 ? 24 : 6,
                 categories: res.data.labels,
               },
               yaxis: {
@@ -1765,10 +1760,6 @@ if(this.user != null && this.user.full_name != null){
                 },
               },
               tooltip: {
-                // enabled: true,
-                // x: {
-                //   format: days == 2 ? 'MM/dd/yy HH:mm' : 'MM/dd/yy',
-                // },
                 y: {
                   formatter: (value, ind) => {
                     let lblStr = `$${value}`
@@ -1853,7 +1844,6 @@ if(this.user != null && this.user.full_name != null){
                   },
                 },
                 tooltip: {
-                  // enabled: true,
                   x: {
                     formatter: (value, ind) => {
                       return res.data.labels[ind.dataPointIndex]
@@ -1919,7 +1909,7 @@ if(this.user != null && this.user.full_name != null){
                       data: item.sales_graph.values,
                     },
                   ]
-                  this.boardDaysGraph.push(2)
+                  this.boardDaysGraph.push(90)
                   this.boardSalesQty.push(item.sales_graph.qty)
                   this.boardChartOptions.push({
                     chart: {
@@ -2091,63 +2081,63 @@ if(this.user != null && this.user.full_name != null){
     },
     allBoardGraphSingleFunc1d(days, board, boardKey, intialTime = 0) {
       try {
-        this.boardChartOptions.splice(boardKey, 1, {
-          chart: {
-            toolbar: {
-              show: false,
-            },
-            height: 350,
-            type: 'area',
-            background: 'transparent',
-            zoom: {
-              enabled: false,
-            },
-          },
-          colors: ['#14f078'],
-          dataLabels: {
-            enabled: false,
-          },
-          stroke: {
-            curve: 'smooth',
-          },
-          xaxis: {
-            labels: {
-              style: {
-                colors: '#edecec',
-                fontSize: '10px',
-                fontFamily: 'NexaBold',
-              },
-            },
-            type: 'category',
-            tickAmount: 24,
-            tickPlacement: 'on',
-            categories: [],
-          },
-          yaxis: {
-            labels: {
-              style: {
-                colors: '#edecec',
-                fontSize: '10px',
-                fontFamily: 'NexaBold',
-              },
-            },
-          },
-          tooltip: {
-            enabled: true,
-          },
-          noData: {
-            text: 'Graph Loading...',
-            align: 'center',
-            verticalAlign: 'middle',
-            offsetX: 0,
-            offsetY: 0,
-            style: {
-              colors: '#edecec',
-              fontSize: '10px',
-              fontFamily: 'NexaBold',
-            },
-          },
-        })
+        // this.boardChartOptions.splice(boardKey, 1, {
+        //   chart: {
+        //     toolbar: {
+        //       show: false,
+        //     },
+        //     height: 350,
+        //     type: 'area',
+        //     background: 'transparent',
+        //     zoom: {
+        //       enabled: false,
+        //     },
+        //   },
+        //   colors: ['#14f078'],
+        //   dataLabels: {
+        //     enabled: false,
+        //   },
+        //   stroke: {
+        //     curve: 'smooth',
+        //   },
+        //   xaxis: {
+        //     labels: {
+        //       style: {
+        //         colors: '#edecec',
+        //         fontSize: '10px',
+        //         fontFamily: 'NexaBold',
+        //       },
+        //     },
+        //     type: 'category',
+        //     tickAmount: 24,
+        //     tickPlacement: 'on',
+        //     categories: [],
+        //   },
+        //   yaxis: {
+        //     labels: {
+        //       style: {
+        //         colors: '#edecec',
+        //         fontSize: '10px',
+        //         fontFamily: 'NexaBold',
+        //       },
+        //     },
+        //   },
+        //   tooltip: {
+        //     enabled: true,
+        //   },
+        //   noData: {
+        //     text: 'Graph Loading...',
+        //     align: 'center',
+        //     verticalAlign: 'middle',
+        //     offsetX: 0,
+        //     offsetY: 0,
+        //     style: {
+        //       colors: '#edecec',
+        //       fontSize: '10px',
+        //       fontFamily: 'NexaBold',
+        //     },
+        //   },
+        // })
 
         this.$axios
           .$get(`stoxticker/single-graph-board/${days}/${board}`)
@@ -2157,7 +2147,7 @@ if(this.user != null && this.user.full_name != null){
               // this.allBoardsShowalldGraph = false
               $('.sx-allboards-apex-top-alld' + board).hide()
               $('.sx-allboards-apex-top-1d' + board).show()
-
+// console.log(this.boardChartOptions);
               this.boardDaysGraph.splice(boardKey, 1, days)
               this.allBoardGraph.splice(boardKey, 1, res.data)
 
@@ -2166,57 +2156,58 @@ if(this.user != null && this.user.full_name != null){
               ])
               this.boardSalesQty.splice(boardKey, 1, res.data.sales_graph.qty)
               this.boardChartOptions.splice(boardKey, 1, {
-                // chart: {
-                //   toolbar: {
-                //     show: false,
-                //   },
-                //   height: 350,
-                //   type: 'area',
-                //   background: 'transparent',
-                //   zoom: {
-                //     enabled: false,
-                //   },
-                // },
-                // colors: ['#14f078'],
-                // dataLabels: {
-                //   enabled: false,
-                // },
-                // stroke: {
-                //   curve: 'smooth',
-                // },
+                chart: {
+                  toolbar: {
+                    show: false,
+                  },
+                  height: 350,
+                  type: 'area',
+                  background: 'transparent',
+                  zoom: {
+                    enabled: false,
+                  },
+                },
+                colors: ['#14f078'],
+                dataLabels: {
+                  enabled: false,
+                },
+                stroke: {
+                  curve: 'smooth',
+                },
                 xaxis: {
-                  // labels: {
-                  //   style: {
-                  //     colors: '#edecec',
-                  //     fontSize: '10px',
-                  //     fontFamily: 'NexaBold',
-                  //   },
-                  // },
-                  // type: 'datetime',
-                  // tickAmount: days == 2 ? 24 : 6,
+                  labels: {
+                    style: {
+                      colors: '#edecec',
+                      fontSize: '10px',
+                      fontFamily: 'NexaBold',
+                    },
+                  },
+                   type: 'category',
+            tickAmount: 24,
+            tickPlacement: 'on',
                   categories: res.data.sales_graph.labels,
                   labels: {
-                      formatter: function (value) {
-                        if (value !== undefined) {
-                          var splittedCategories = value.split(':')
-                          var mins = splittedCategories[1]
-                          if (mins == '00') {
-                            return value
-                          } else {
-                            return ''
-                          }
+                    formatter: function (value) {
+                      if (value !== undefined) {
+                        var splittedCategories = value.split(':')
+                        var mins = splittedCategories[1]
+                        if (mins == '00') {
+                          return value
+                        } else {
+                          return ''
                         }
-                        return ''
-                      },
+                      }
+                      return ''
                     },
+                  },
                 },
                 yaxis: {
                   labels: {
-                    // style: {
-                    //   colors: '#edecec',
-                    //   fontSize: '10px',
-                    //   fontFamily: 'NexaBold',
-                    // },
+                    style: {
+                      colors: '#edecec',
+                      fontSize: '10px',
+                      fontFamily: 'NexaBold',
+                    },
                     formatter: (value, ind) => {
                       let valCheck = value
                       if (Number(value) === value && value % 1 !== 0) {
@@ -2229,7 +2220,7 @@ if(this.user != null && this.user.full_name != null){
                   },
                 },
                 tooltip: {
-                  // enabled: true,
+                  enabled: true,
                   x: {
                     formatter: (value, ind) => {
                       return res.data.sales_graph.labels[ind.dataPointIndex]
@@ -2467,13 +2458,16 @@ ul.my-card-listing {
     }
   }
   .bs-stats3 {
-    width: 34vw;
+    width: 42vw;
     @media (max-width: 768px) {
       width: 100%;
     }
   }
   .bs-stats4 {
-    width: 22vw;
+    width: 20vw;
+    h2 {
+      padding-left: 24px;
+    }
     @media (max-width: 768px) {
       width: 100%;
     }

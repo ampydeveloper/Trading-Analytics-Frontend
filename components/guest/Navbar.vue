@@ -41,7 +41,7 @@
                 <b-nav-item class="show-only-on-mobile" to="/register">
                   <i>Sign Up</i>
                 </b-nav-item>
-                <b-nav-item to="https://www.slabstox.com/explore/">
+                <b-nav-item href="https://www.slabstox.com/explore/">
                   <i>Explore</i>
                 </b-nav-item>
                 <b-nav-item to="/dashboard">

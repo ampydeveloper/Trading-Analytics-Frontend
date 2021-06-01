@@ -20,7 +20,50 @@
             ref="shareImage"
           >
             <h5 class="card-title">
-              <button class="theme-btn card-btn">
+              <button
+                class="theme-btn card-btn dashboard-apex-top-1d"
+                style="display: none"
+              >
+                {{ stoxtickerDetails.board.name }} ${{
+                  stoxtickerDetails1d.cardData.total_card_value
+                }}
+              </button>
+              <button
+                :class="
+                  (stoxtickerDetails1d.cardData.sx_icon &&
+                  stoxtickerDetails1d.cardData.sx_icon == 'up'
+                    ? 'theme-green-btn'
+                    : 'theme-red-btn') + ' card-btn dashboard-apex-top-1d'
+                "
+                style="display: none"
+              >
+                <font-awesome-icon
+                  v-if="stoxtickerDetails1d.cardData.sx_icon !== undefined"
+                  :icon="[
+                    'fas',
+                    'long-arrow-alt-' + stoxtickerDetails1d.cardData.sx_icon,
+                  ]"
+                />&nbsp;&nbsp;${{ stoxtickerDetails1d.cardData.sx_value }}
+              </button>
+              <button
+                :class="
+                  (stoxtickerDetails1d.cardData.sx_icon &&
+                  stoxtickerDetails1d.cardData.sx_icon == 'up'
+                    ? 'theme-btn'
+                    : 'theme-red-btn') + ' card-btn dashboard-apex-top-1d'
+                "
+                style="display: none"
+              >
+                <font-awesome-icon
+                  v-if="stoxtickerDetails1d.cardData.sx_icon !== undefined"
+                  :icon="[
+                    'fas',
+                    'long-arrow-alt-' + stoxtickerDetails1d.cardData.sx_icon,
+                  ]"
+                />&nbsp;&nbsp;{{ stoxtickerDetails1d.cardData.pert_diff }}%
+              </button>
+
+              <button class="theme-btn card-btn dashboard-apex-top-alld">
                 {{ stoxtickerDetails.board.name }} ${{
                   stoxtickerDetails.cardData.total_card_value
                 }}
@@ -30,7 +73,7 @@
                   (stoxtickerDetails.cardData.sx_icon &&
                   stoxtickerDetails.cardData.sx_icon == 'up'
                     ? 'theme-green-btn'
-                    : 'theme-red-btn') + ' card-btn'
+                    : 'theme-red-btn') + ' card-btn dashboard-apex-top-alld'
                 "
               >
                 <font-awesome-icon
@@ -41,13 +84,12 @@
                   ]"
                 />&nbsp;&nbsp;${{ stoxtickerDetails.cardData.sx_value }}
               </button>
-
               <button
                 :class="
                   (stoxtickerDetails.cardData.sx_icon &&
                   stoxtickerDetails.cardData.sx_icon == 'up'
                     ? 'theme-btn'
-                    : 'theme-red-btn') + ' card-btn'
+                    : 'theme-red-btn') + ' card-btn dashboard-apex-top-alld'
                 "
               >
                 <font-awesome-icon
@@ -159,16 +201,46 @@
                     }}</span
                   >
                   &nbsp;&nbsp;
-                  <span class="g-sx"
-                    >Sales Change ${{ stoxtickerDetails.cardData.sx_value }}
+                  <span class="g-sx" v-if="this.show1dGraph == true"
+                    >Price Change ${{
+                      stoxtickerDetails1d.cardData.sx_value
+                    }}&nbsp;&nbsp;
+                    Percentage Change
+                    {{ stoxtickerDetails1d.cardData.pert_diff }}%</span
+                  >
+                  <span class="g-sx" v-if="this.showalldGraph == true"
+                    >Price Change ${{
+                      stoxtickerDetails.cardData.sx_value
+                    }}&nbsp;&nbsp;
+                    Percentage Change
                     {{ stoxtickerDetails.cardData.pert_diff }}%</span
                   >
                   &nbsp;&nbsp;
-                  <span class="slab-image-link">{{ graphImage }}</span>
+                  <span
+                    class="slab-image-link"
+                    v-if="this.show1dGraph == true"
+                    >Graph URL {{ graphImage1d }}</span
+                  >
+                  <span
+                    class="slab-image-link"
+                    v-if="this.showalldGraph == true"
+                    >Graph URL {{ graphImage }}</span
+                  >
                 </div>
 
                 <div class="shar-text">Share Graphics</div>
-                <div class="g-img-full" id="g-img-full">
+                <div
+                  class="g-img-full"
+                  id="g-img-full"
+                  v-if="this.show1dGraph == true"
+                >
+                  <img :src="graphImage1d" alt="" class="slab_graph" />
+                </div>
+                <div
+                  class="g-img-full"
+                  id="g-img-full"
+                  v-if="this.showalldGraph == true"
+                >
                   <img :src="graphImage" alt="" class="slab_graph" />
                 </div>
                 <div class="clearfix g-download-out text-right">
@@ -183,9 +255,9 @@
               </b-modal>
             </h5>
             <div class="dashboard-apex-top" ref="dashboardApexChart">
-              <div class="dashboard-apex-top-1d">
+              <div class="dashboard-apex-top-1d" style="display: none">
                 <VueApexCharts
-                  ref="dashChart"
+                  ref="dashChart1d"
                   type="area"
                   height="350"
                   :options="chartOptions1d"
@@ -209,7 +281,7 @@
                     'dashboard-graph-footer-month-filter-item ' +
                     (activeDaysGraph == 2 ? 'active' : '')
                   "
-                  @click="getStoxtickerData(2)"
+                  @click="getStoxtickerData1d(2, 1)"
                 >
                   1D
                 </li>
@@ -368,7 +440,7 @@ export default {
   mounted() {
     if (this.$route.query.board != null) {
       this.getStoxtickerData(90, 1)
-      this.getStoxtickerData(2, 1)
+      // this.getStoxtickerData(2, 1)
     }
   },
   components: {
@@ -383,15 +455,22 @@ export default {
       logo: null,
       baseUrl: BASE_URL,
       graphImage: '',
+      graphImage1d: '',
       dialogVisible: false,
       activeDaysGraph: 2,
       initGraphLabelLength: 0,
       graphDataEmpty: false,
       boardFollow: false,
       currentUrl: location.href,
+      graph1dInitialized: false,
+      show1dGraph: false,
+      showalldGraph: true,
       stoxtickerDetails: {
         board: [],
         cards: [],
+        cardData: [],
+      },
+      stoxtickerDetails1d: {
         cardData: [],
       },
       stoxtickerData: {
@@ -450,8 +529,21 @@ export default {
           categories: [],
         },
         tooltip: {
+          enabled: true,
           x: {
             format: 'MM/dd/yy',
+          },
+        },
+        noData: {
+          text: 'Graph Loading...',
+          align: 'center',
+          verticalAlign: 'middle',
+          offsetX: 0,
+          offsetY: 0,
+          style: {
+            colors: '#edecec',
+            fontSize: '10px',
+            fontFamily: 'NexaBold',
           },
         },
       },
@@ -502,13 +594,33 @@ export default {
           tickAmount: 24,
           tickPlacement: 'on',
           categories: [],
-        }
+        },
+        tooltip: {
+          enabled: true,
+        },
+        noData: {
+          text: 'Graph Loading...',
+          align: 'center',
+          verticalAlign: 'middle',
+          offsetX: 0,
+          offsetY: 0,
+          style: {
+            colors: '#edecec',
+            fontSize: '10px',
+            fontFamily: 'NexaBold',
+          },
+        },
       },
     }
   },
   methods: {
     downloadImage() {
-      $('.apexcharts-toolbar .exportPNG').click()
+      // $('.apexcharts-toolbar .exportPNG').click()
+      if (this.showalldGraph == true) {
+        $('.dashboard-apex-top-alld .apexcharts-toolbar .exportPNG').click()
+      } else {
+        $('.dashboard-apex-top-1d .apexcharts-toolbar .exportPNG').click()
+      }
     },
     trimString(title) {
       if (title.length > 53) {
@@ -523,88 +635,112 @@ export default {
     },
     getStoxtickerData(days = 90, intialTime = 0) {
       try {
+        this.activeDaysGraph = days
         this.$axios
           .$get(`stoxticker/board-details/${this.$route.query.board}/${days}`)
           .then((res) => {
             if (res.status == 200) {
-              this.activeDaysGraph = days
-              this.stoxtickerDetails.board = res.board
-              this.stoxtickerDetails.cards = res.cards
               this.stoxtickerDetails.cardData = res.card_data
-              this.stoxtickerDetails.last_timestamp =
-                res.card_data.sales_graph.last_timestamp
-              this.boardFollow = res.follow != null ? true : false
-//  this.activeDaysGraph = 90
+
               if (intialTime == 1) {
-                this.activeDaysGraph = 90
-                $('.dashboard-apex-top-alld').show()
-                $('.dashboard-apex-top-1d').hide()
-              } else {
-                if (days == 2) {
-                  $('.dashboard-apex-top-1d').show()
-                  $('.dashboard-apex-top-alld').hide()
-                } else {
-                  $('.dashboard-apex-top-alld').show()
-                  $('.dashboard-apex-top-1d').hide()
-                }
-                this.activeDaysGraph = days
+                this.stoxtickerDetails.board = res.board
+                this.stoxtickerDetails.cards = res.cards
+                this.stoxtickerDetails.last_timestamp =
+                  res.card_data.sales_graph.last_timestamp
+                this.boardFollow = res.follow != null ? true : false
               }
 
-              if (days != 2) {
-                this.series = [
-                  { name: 'SX', data: res.card_data.sales_graph.values },
-                ]
-                this.salesQty = res.card_data.sales_graph.qty
-                this.chartOptions = {
-                  xaxis: {
-                    categories: res.card_data.sales_graph.labels,
-                  },
-                  yaxis: {
-                    labels: {
-                      style: {
-                        colors: '#edecec',
-                        fontSize: '10px',
-                        fontFamily: 'NexaBold',
-                      },
-                      formatter: (value, ind) => {
-                        let valCheck = value
-                        if (Number(value) === value && value % 1 !== 0) {
-                          let valCheck = Number(value).toFixed(2)
-                        }
+              this.show1dGraph = false
+              this.showalldGraph = true
+              $('.dashboard-apex-top-alld').show()
+              $('.dashboard-apex-top-1d').hide()
 
-                        let lblStr = `$${valCheck}`
-                        return lblStr
-                      },
+              this.series = [
+                { name: 'SX', data: res.card_data.sales_graph.values },
+              ]
+              this.salesQty = res.card_data.sales_graph.qty
+              this.chartOptions = {
+                xaxis: {
+                  categories: res.card_data.sales_graph.labels,
+                },
+                yaxis: {
+                  labels: {
+                    style: {
+                      colors: '#edecec',
+                      fontSize: '10px',
+                      fontFamily: 'NexaBold',
+                    },
+                    formatter: (value, ind) => {
+                      let valCheck = value
+                      if (Number(value) === value && value % 1 !== 0) {
+                        let valCheck = Number(value).toFixed(2)
+                      }
+
+                      let lblStr = `$${valCheck}`
+                      return lblStr
                     },
                   },
-                  colors: ['#14f078'],
-                  tooltip: {
-                    enabled: true,
-                    x: {
-                      format: days == 2 ? 'MM/dd/yy HH:mm' : 'MM/dd/yy',
-                    },
-                    y: {
-                      formatter: (value, ind) => {
-                        let lblStr = `$${value}`
-                        if (typeof ind == 'object')
-                          lblStr = `$${value} (${
-                            this.salesQty[ind.dataPointIndex]
-                          })`
-                        else lblStr = `$${value} (${this.salesQty[ind]})`
-                        return lblStr
-                      },
+                },
+                colors: ['#14f078'],
+                tooltip: {
+                  // enabled: true,
+                  // x: {
+                  //   format: days == 2 ? 'MM/dd/yy HH:mm' : 'MM/dd/yy',
+                  // },
+                  y: {
+                    formatter: (value, ind) => {
+                      let lblStr = `$${value}`
+                      if (typeof ind == 'object')
+                        lblStr = `$${value} (${
+                          this.salesQty[ind.dataPointIndex]
+                        })`
+                      else lblStr = `$${value} (${this.salesQty[ind]})`
+                      return lblStr
                     },
                   },
-                }
+                },
               }
-              if (days == 2) {
+
+              setTimeout(() => {
+                this.generateImageOfGraph('all')
+              }, 2000)
+            } else {
+              // this.$router.push('/404')
+              this.$toast.error(
+                'There has been an error loading graph. Please refresh your page.',
+                { timeOut: 10000 }
+              )
+            }
+          })
+      } catch (error) {
+        // console.log(error)
+        this.$toast.error(
+          'There has been an error loading graph. Please refresh your page.',
+          { timeOut: 10000 }
+        )
+      }
+    },
+    getStoxtickerData1d(days = 2, intialTime = 0) {
+      if (intialTime == 1 && this.graph1dInitialized == false) {
+        try {
+          this.activeDaysGraph = days
+          this.$axios
+            .$get(`stoxticker/board-details/${this.$route.query.board}/${days}`)
+            .then((res) => {
+              if (res.status == 200) {
+                this.graph1dInitialized = true
+                this.stoxtickerDetails1d.cardData = res.card_data
+                this.show1dGraph = true
+                this.showalldGraph = false
+                $('.dashboard-apex-top-1d').show()
+                $('.dashboard-apex-top-alld').hide()
                 this.series1d = [
                   { name: 'SX', data: res.card_data.sales_graph.values },
                 ]
                 this.salesQty1d = res.card_data.sales_graph.qty
                 this.chartOptions1d = {
                   xaxis: {
-                     tickAmount: 24,
+                    tickAmount: 24,
                     tickPlacement: 'on',
                     categories: res.card_data.sales_graph.labels,
                     labels: {
@@ -662,39 +798,55 @@ export default {
                     },
                   },
                 }
-              }
 
-              setTimeout(() => {
-                this.generateImageOfGraph()
-              }, 1000)
-            } else {
-              this.$router.push('/404')
-            }
-          })
-      } catch (error) {
-        console.log(error)
+                setTimeout(() => {
+                  this.generateImageOfGraph(2)
+                }, 3000)
+              } else {
+                // this.$router.push('/404')
+                this.$toast.error(
+                  'There has been an error loading graph. Please refresh your page.',
+                  { timeOut: 10000 }
+                )
+              }
+            })
+        } catch (error) {
+          // console.log(error)
+          this.$toast.error(
+            'There has been an error loading graph. Please refresh your page.',
+            { timeOut: 10000 }
+          )
+        }
+      } else {
+        this.show1dGraph = true
+        this.showalldGraph = false
+        $('.dashboard-apex-top-1d').show()
+        $('.dashboard-apex-top-alld').hide()
+        this.activeDaysGraph = days
       }
     },
-    shareFb() {
-      FB.ui({
-        method: 'feed',
-        name: 'StoxTicker@' + this.stoxtickerData.sale.toFixed(2),
-        link: encodeURI(this.graphImage), //this.baseUrl
-        picture: this.graphImage,
-        description: 'Check our StoxTicker value',
-      })
-    },
-    generateImageOfGraph() {
-      const chartInstance = this.$refs.dashChart.chart.dataURI()
+
+    generateImageOfGraph(days) {
+      // const chartInstance = this.$refs.dashChart.chart.dataURI()
+      if (days == 'all') {
+        var chartInstance = this.$refs.dashChart.chart.dataURI()
+        var prefix = 'stoxticker-board-details'
+      } else {
+        var chartInstance = this.$refs.dashChart1d.chart.dataURI()
+        var prefix = 'stoxticker-board-details-1d'
+      }
       chartInstance.then((val) => {
         let img = new Image()
         img.src = val.imgURI
         this.$axios
-          .$post('generate-image', { image: img.src, prefix: 'sd' })
+          .$post('generate-image', { image: img.src, prefix: prefix })
           .then((res) => {
             if (res.status == 200) {
-              this.graphImage = res.url
-              // console.log(res.url)
+              if (days == 'all') {
+                this.graphImage = res.url
+              } else {
+                this.graphImage1d = res.url
+              }
             }
           })
       })
@@ -869,6 +1021,9 @@ html body main .my-card-listing .my-card[data-v-672220c2]:nth-child(6n + 7) {
   padding: 15px 15px;
   border-radius: 2px;
   text-transform: initial;
+  .g-title{
+        text-transform: capitalize;
+  }
 }
 .shar-text {
   margin-left: 20px;
@@ -883,7 +1038,7 @@ html body main .my-card-listing .my-card[data-v-672220c2]:nth-child(6n + 7) {
     margin-top: 10px;
   }
   .slab_graph {
-    width: 80%;
+    width: 100%;
   }
 }
 .g-download-img-all {

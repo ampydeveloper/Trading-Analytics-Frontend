@@ -173,16 +173,16 @@ ul.my-card-listing {
   line-height: 2;
   margin-top: 2px;
 }
-.toasted.toasted-primary {
-  background: #1ce783;
-  border: none;
-  border-radius: 2px;
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  padding: 8px 12px 5px 12px !important;
-  color: #212529;
-}
+// .toasted.toasted-primary {
+//   background: #1ce783;
+//   border: none;
+//   border-radius: 2px;
+//   font-size: 11px;
+//   text-transform: uppercase;
+//   letter-spacing: 2px;
+//   padding: 8px 12px 5px 12px !important;
+//   color: #212529;
+// }
 
 
 .message {

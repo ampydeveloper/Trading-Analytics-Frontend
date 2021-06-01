@@ -696,6 +696,7 @@ export default {
       // width: 359px;
       // height: 505px;
       width: 100%;
+      position: relative;
       // height: calc(100% - 112px);
       height: 83%;
       display: block;
@@ -709,9 +710,10 @@ export default {
         margin: 0 auto;
         max-width: 100%;
         // vertical-align: middle;
-        transform: translate(0, -50%);
-        top: 50%;
-        position: relative;
+        transform: translate(-50%, -50%);
+    top: 50%;
+    position: absolute;
+    left: 50%;
       }
     }
     .view-listing-on-ebay {
