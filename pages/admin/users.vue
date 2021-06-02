@@ -6,16 +6,16 @@
           <div class="card-body">
             <h5 class="card-title">
               <button class="theme-btn card-btn">Users Management</button>
-            
-                <button
-                      class="theme-green-btn card-btn pull-right"
-                      @click="action(user, 'create', 'Create User')"
-                    >
-                      Create User
-                    </button>
+
+              <button
+                class="theme-green-btn card-btn pull-right"
+                @click="action(user, 'create', 'Create User')"
+              >
+                Create User
+              </button>
             </h5>
           </div>
-          <div class="card-body search-form">
+          <!-- <div class="card-body search-form">
             <div class="row">
               <div class="col-4">
                 <div class="input-group mb-3">
@@ -40,9 +40,9 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
           <div class="table_wrapper ap">
-            <table class="table table-striped">
+            <table class="table table-striped" id="all-users-table">
               <thead>
                 <tr>
                   <th>Id</th>
@@ -57,7 +57,7 @@
                   <th>Deleted</th>
                   <!-- <th>Overall Rank</th>
                   <th>Slab Value</th> -->
-                  <th>Actions</th>
+                  <th style="width: 175px;">Actions</th>
                 </tr>
               </thead>
               <tbody v-if="users.length > 0">
@@ -65,7 +65,7 @@
                   <td>{{ user.id }}</td>
                   <td>{{ user.full_name }}</td>
                   <td>{{ user.email }}</td>
-                  <td>{{ (user.roles[0]?user.roles[0].name:'') }}</td>
+                  <td>{{ user.roles[0] ? user.roles[0].name : '' }}</td>
                   <td>{{ user.mobile }}</td>
                   <td>{{ user.dob }}</td>
                   <td>{{ user.address }}</td>
@@ -94,7 +94,11 @@
                   <td>{{ user.slab_value }}</td> -->
                   <td>
                     <button
-                      v-if='(user.roles.length && user.roles[0].name != "administrator") || isAdmin'
+                      v-if="
+                        (user.roles.length &&
+                          user.roles[0].name != 'administrator') ||
+                        isAdmin
+                      "
                       class="card-btn btn btn-primary btn-table-spec"
                       @click="action(user, 'password', 'Change Password')"
                       style="margin-top: 4px"
@@ -102,7 +106,11 @@
                       Change Password
                     </button>
                     <button
-                      v-if='(user.roles.length && user.roles[0].name != "administrator") || isAdmin'
+                      v-if="
+                        (user.roles.length &&
+                          user.roles[0].name != 'administrator') ||
+                        isAdmin
+                      "
                       class="card-btn btn btn-primary btn-table-spec"
                       @click="action(user, 'edit', 'Edit User')"
                       style="margin-top: 4px"
@@ -111,7 +119,10 @@
                     ><br />
                     <button
                       class="card-btn btn btn-primary btn-table-spec"
-                      v-if="user.roles[0]!= null && user.roles[0].name != 'administrator'"
+                      v-if="
+                        user.roles[0] != null &&
+                        user.roles[0].name != 'administrator'
+                      "
                       @click="action(user, 'active', 'Change Active Status')"
                       style="margin-top: 4px"
                     >
@@ -119,7 +130,11 @@
                     </button>
                     <button
                       class="card-btn btn btn-danger btn-table-spec"
-                      v-if="user.roles[0]!= null && user.roles[0].name != 'administrator' && isAdmin"
+                      v-if="
+                        user.roles[0] != null &&
+                        user.roles[0].name != 'administrator' &&
+                        isAdmin
+                      "
                       @click="action(user, 'delete', 'Change Deletion Status')"
                       style="margin-top: 4px"
                     >
@@ -138,15 +153,7 @@
                   <td colspan="11" class="text-center">No users available.</td>
                 </tr>
               </tbody>
-              <tfoot>
-                <!-- <tr>
-                  <td colspan="6">
-                    <button class="theme-btn card-btn" :disabled="page == 1" @click="getUsers(--page)">
-                      Previous
-                    </button>
-                    <button class="theme-btn card-btn" @click="getUsers(++page)">Next</button>
-                  </td>
-                </tr> -->
+              <!-- <tfoot>
                 <tr v-if="page - 1 == 1 && users.length >= 30">
                   <td colspan="11">
                     <button
@@ -238,7 +245,7 @@
                     </button>
                   </td>
                 </tr>
-              </tfoot>
+              </tfoot> -->
             </table>
           </div>
         </div>
@@ -409,7 +416,9 @@
           class="p-4 search-form"
         >
           <h6 class="text-capitalize">
-            Do you really want to Change The Status of "{{ activeUser.full_name }}"?
+            Do you really want to Change The Status of "{{
+              activeUser.full_name
+            }}"?
           </h6>
         </section>
         <section v-else-if="activeType == 'password'" class="p-4 search-form">
@@ -444,6 +453,7 @@
 </template>
 
 <script>
+import $ from 'jquery'
 import sellSlabs from '../sell-slabs.vue'
 export default {
   components: { sellSlabs },
@@ -461,11 +471,32 @@ export default {
       setTimeout(() => this.usersSearch(), 500)
     }
   },
+  watch: {
+    users(val) {
+      if (val.length > 0) {
+        setTimeout(function () {
+          if (!$.fn.dataTable.isDataTable('#all-users-table')) {
+            $('#all-users-table').DataTable({
+              pageLength: 20,
+              oLanguage: { sSearch: '' },
+              aoColumnDefs: [
+                {
+                  bSortable: false,
+                  aTargets: [-1, -2, -3, -4, -5, -6, -7],
+                },
+              ],
+            })
+            $('.dataTables_filter input').attr('placeholder', 'Search')
+          }
+        }, 100)
+      }
+    },
+  },
   data() {
     return {
       popUpTitle: '',
       users: [],
-      user_id:'',
+      user_id: '',
       page: 1,
       requestInProcess: false,
       activeType: '',
@@ -491,7 +522,7 @@ export default {
               this.requestInProcess = false
               if (res.status == 200) {
                 this.users = res.data.data
-                this.page = res.data.next
+                // this.page = res.data.next
               }
               this.hideLoader()
             })
@@ -535,9 +566,10 @@ export default {
     action(user, type, popUpTitle = null) {
       this.activeType = type
       this.activeUser = {}
-      if(type != 'create'){
+      if (type != 'create') {
         this.activeUser = { ...user }
-        if(this.activeUser.roles.length > 0) this.activeUser.user_roles = this.activeUser.roles[0].id
+        if (this.activeUser.roles.length > 0)
+          this.activeUser.user_roles = this.activeUser.roles[0].id
       }
       this.popUpTitle = popUpTitle
       this.$bvModal.show('updatePopup')

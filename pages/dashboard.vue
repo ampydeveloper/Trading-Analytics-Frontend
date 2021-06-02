@@ -1104,7 +1104,7 @@ ul.featured-listing {
   }
 }
 .featured-listing {
-  li.my-card {
+  li.my-card { 
     // padding-left: 40px !important;
     // padding-right: 40px !important;
     padding-left: 2vw !important;

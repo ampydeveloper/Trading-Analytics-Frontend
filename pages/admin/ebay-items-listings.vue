@@ -88,6 +88,7 @@
                   <th><input type="checkbox" class="main-checkbox" /></th>
                   <th style="width: 75px">Id</th>
                   <th>Title</th>
+                  <th style="width: 83px">Time Left</th>
                   <th style="width: 80px">Price</th>
                   <th style="width: 120px">Sold Price</th>
                   <th style="width: 130px">Listing Id</th>
@@ -107,6 +108,7 @@
                   </td>
                   <td>{{ item.id }}</td>
                   <td>{{ item.title }}</td>
+                  <td>{{ (item.time_left!='0s'?item.time_left:'00:00') }}</td>
                   <td>${{ item.price }}</td>
                   <td class="search-form tabel-in">
                     <input

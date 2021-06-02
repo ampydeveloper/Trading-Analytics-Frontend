@@ -26,7 +26,7 @@
                     <a
                       target="_blank"
                       style="color: #28a745"
-                      :href="currentOrigin + '/card-data/?id=' + card.id"
+                      :href="currentOrigin + '/card-data/?id=' + card.card_id"
                     >
                       {{ card.card.title }}
                     </a>

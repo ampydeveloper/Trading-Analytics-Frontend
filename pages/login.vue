@@ -217,6 +217,7 @@ export default {
       this.twoFactor.id = data.id
     },
     async login() {
+      $('.login-form .error-message').text('')
       if (this.validation()) {
         try {
           this.errorMessage = null
