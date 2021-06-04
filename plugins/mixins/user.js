@@ -50,38 +50,60 @@ const User = {
                 authAdminMiddleware() {
                     if (!this.authenticated) {
                         window.localStorage.clear()
-                        this.$router.push('/')
+                        this.$router.push('/dashboard')
                     } else {
                         if (this.user) {
                             if (this.user.roles[0].name != 'administrator' && (this.user.roles[0].name).toLowerCase() != 'moderator' && (this.user.roles[0].name).toLowerCase() != 'data entry') {
                                 this.$router.push('/dashboard')
                             } else {
-                                this.$router.push('/admin')
+                                // this.$router.push('/admin')
+                                this.$router.push(this.$route.path)
                             }
                         }
                     }
                 },
                 authMiddleware() {
+                    // console.log('authMiddleware');
                     if (!this.authenticated) {
                         window.localStorage.clear()
-                        this.$router.push('/')
+                        this.$router.push('/dashboard')
                     } else {
-                        if (this.user) {
-                            if (this.user.roles[0].name != 'user') {
-                                this.$router.push('/admin')
+                        // if (this.user) {
+                        //     if (this.user.roles[0].name != 'user') {
+                        //         this.$router.push('/admin')
+                        //     }
+                        // }
+
+                        if (this.user.roles && this.user.roles[0].name != 'user') {
+                            // this.$router.push('/admin')
+                            this.$router.push(this.$route.path)
+                        } else {
+                            if (this.$route.path.indexOf('admin')!== -1) {
+                                this.$router.push('/dashboard')
+                            }else{
+                                this.$router.push(this.$route.path)
                             }
+                            
                         }
                     }
                 },
                 guestMiddleware() {
+                    // console.log('guestMiddleware');
                     // console.log(window.localStorage.getItem('OpenFirstTime'));
                     if (this.user) {
+                        console.log('guestMiddleware user');
                         if (this.user.roles && this.user.roles[0].name != 'user') {
-                            this.$router.push('/admin')
-                        } else {
+                            // this.$router.push('/admin')
                             this.$router.push(this.$route.path)
+                        } else {
+                            if (this.$route.path.indexOf('admin')!== -1) {
+                                this.$router.push('/dashboard')
+                            }else{
+                                this.$router.push(this.$route.path)
+                            }
                         }
                     } else {
+                        // console.log('guestMiddleware not user');
 // console.log(this.$route.path);
 this.$router.push(this.$route.path)
                         // console.log(window.localStorage.getItem('OpenFirstTime'));

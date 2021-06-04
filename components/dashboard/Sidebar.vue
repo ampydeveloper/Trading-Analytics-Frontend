@@ -117,6 +117,12 @@
             <div class="link-text">Slab Request</div>
           </span>
         </li>
+        <li class="nav-item" v-if="user != null && user.full_name != null && user.roles[0].name != 'user'">
+          <a class="nav-link" href="/admin" target="_blank">
+            <div class="icon dashboard-icon"></div>
+            <div class="link-text">Admin Panel</div>
+         </a>
+        </li>
       </ul>
       <!-- <div class="sibar-logo-middel">
         <img src="~/assets/img/dashboard-sidebar-middel-logo.png" alt="Slabstox" />

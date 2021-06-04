@@ -128,6 +128,12 @@
             <div class="link-text">Advance Search</div>
           </nuxt-link>
         </li> -->
+        <li class="nav-item">
+           <a class="nav-link" href="/dashboard" target="_blank">
+            <div class="icon dashboard-icon"></div>
+            <div class="link-text">User Panel</div>
+               </a>
+        </li>
       </ul>
     </div>
   </nav>

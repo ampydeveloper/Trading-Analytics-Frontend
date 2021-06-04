@@ -165,7 +165,7 @@ export default {
     return {
       title: 'Login - Slabstox',
       meta: [
-        {hid: 'login', name: 'Login - Slabstox', content: 'Buy & Sell Slabs' },
+        { hid: 'login', name: 'Login - Slabstox', content: 'Buy & Sell Slabs' },
         { property: 'og:title', content: 'Buy & Sell Slabs' },
         { property: 'og:image', content: $('.header-logo').attr('src') },
         {
@@ -232,7 +232,17 @@ export default {
               data: { token: res.data.auth },
             })
             document.getElementById('__nuxt').style.display = 'none'
-            window.location.href = '/dashboard'
+            if (this.user) {
+              if (
+                this.user.roles[0].name != 'administrator' &&
+                this.user.roles[0].name.toLowerCase() != 'moderator' &&
+                this.user.roles[0].name.toLowerCase() != 'data entry'
+              ) {
+                window.location.href = '/dashboard'
+              } else {
+                window.location.href = '/admin'
+              }
+            }
           }
           this.isSubmit = false
           this.hideLoader()
