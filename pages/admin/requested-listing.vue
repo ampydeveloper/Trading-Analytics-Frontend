@@ -106,7 +106,9 @@
             placeholder="New Card ID"
           />
         </div>
-        <div class="form_column" style="margin-top: -15px;"><label></label><small>Enter new card ID if needed.</small></div>
+        <div class="form_column" style="margin-top: -15px">
+          <label></label><small>Enter new card ID if needed.</small>
+        </div>
       </section>
       <div class="ap clearfix text-right">
         <a
@@ -136,7 +138,7 @@ export default {
       title: 'Admin Dashboard - Slabstox',
     }
   },
-   components: {},
+  components: {},
   data() {
     return {
       cards: [],
@@ -150,52 +152,35 @@ export default {
   mounted() {
     this.getRequestedListing(this.page)
   },
-   watch: {
+  watch: {
     cards(val) {
-          if (val.length > 0) {
-    setTimeout(function () {
-      if (!$.fn.dataTable.isDataTable('#all-request-listing-table')) {
-        $('#all-request-listing-table').DataTable({
-          pageLength: 20,
-          oLanguage: { sSearch: '' },
-          aoColumnDefs: [
-            {
-              bSortable: false,
-              aTargets: [-1,-2,-3,-4],
-            },
-          ],
-        })
-        $('.dataTables_filter input').attr('placeholder', 'Search')
-      }
-    }, 100)
+      if (val.length > 0) {
+        setTimeout(function () {
+          if (!$.fn.dataTable.isDataTable('#all-request-listing-table')) {
+            $('#all-request-listing-table').DataTable({
+              pageLength: 20,
+              oLanguage: { sSearch: '' },
+              aoColumnDefs: [
+                {
+                  bSortable: false,
+                  aTargets: [-1, -2, -3, -4],
+                },
+              ],
+            })
+            $('.dataTables_filter input').attr('placeholder', 'Search')
           }
-    }
+        }, 100)
+      }
+    },
   },
-  // updated() {
-  //   setTimeout(function () {
-  //     if (!$.fn.dataTable.isDataTable('#all-request-listing-table')) {
-  //       $('#all-request-listing-table').DataTable({
-  //         pageLength: 20,
-  //         oLanguage: { sSearch: '' },
-  //         aoColumnDefs: [
-  //           {
-  //             bSortable: false,
-  //             aTargets: [-1,-2,-3,-4],
-  //           },
-  //         ],
-  //       })
-  //       $('.dataTables_filter input').attr('placeholder', 'Search')
-  //     }
-  //   }, 1000)
-  // },
- 
-  methods: {
+   methods: {
     cancelRequest() {
       this.checkSlabOldId = null
       this.$bvModal.hide('checkSlabPopup')
     },
     checkItem(card) {
       this.checkCard = card
+       this.checkSlabNewId= null
       this.$bvModal.show('checkSlabPopup')
     },
     getRequestedListing(page) {

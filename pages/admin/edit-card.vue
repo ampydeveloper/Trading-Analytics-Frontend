@@ -40,6 +40,10 @@
                 <input v-model="card.card" type="text" class="form-control" placeholder="Card" required/>
               </div>
               <div class="form_column">
+                <label>Title</label>
+                <input v-model="card.title" type="text" class="form-control" placeholder="Title" required/>
+              </div>
+              <div class="form_column">
                 <label>RC</label>
                 <select v-model="card.rc" class="form-control">
                   <option value="yes">YES</option>
@@ -183,6 +187,7 @@ export default {
         brand: '',
         card: '',
         rc: '0',
+         title: '',
         variation: '',
         grade: '',
         qualifiers: '',
@@ -222,7 +227,7 @@ export default {
     getData(card_id) {
       try {
         this.$axios.$get('get-edit-card/' + card_id).then(res => {
-            console.log(res);
+            // console.log(res);
           if (res.status == 200) {
             this.card = {
                 id: res.data.id,
@@ -232,6 +237,7 @@ export default {
                     brand: res.data.brand,
                     card: res.data.card,
                     rc: res.data.rc,
+                     title: res.data.title,
                     variation: res.data.variation,
                     grade: res.data.grade,
                     qualifiers: res.data.qualifiers,

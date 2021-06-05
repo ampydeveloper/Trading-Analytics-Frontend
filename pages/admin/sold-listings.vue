@@ -55,13 +55,13 @@
             <table class="table table-striped">
               <thead>
                 <tr>
-                  <th>Id</th>
+                  <th style="width: 75px">Id</th>
                   <th>Title</th>
-                  <th>Price</th>
-                  <th>Sold Price</th>
-                  <th>Listing Id</th>
-                  <th>Card Id</th>
-                  <th>Status</th>
+                  <th style="width: 80px">Price</th>
+                  <th style="width: 120px">Sold Price</th>
+                  <th style="width: 130px">Listing Id</th>
+                  <th style="width: 75px">Slab Id</th>
+                  <th style="width: 70px">Status</th>
                   <!-- <th>Actions</th> -->
                 </tr>
               </thead>
@@ -384,6 +384,7 @@ export default {
       sportsList: [],
       sportFilter: null,
       filter: null,
+      allPages: 0,
       // card: {
       //   soldPrice: '',
       // },

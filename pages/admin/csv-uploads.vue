@@ -24,9 +24,12 @@
                   :key="card.id"
                   :id="'csv-upload-' + card.id"
                 >
-                  <td>
+                  <td
+                  :data-order="
+                      $moment(card.created_at).format('YYYY-MM-DD HH:mm:ss')
+                    ">
                     {{
-                      $moment(card.created_at).format('MMMM DD Y - hh:mm:ss')
+                      $moment(card.created_at).format('MMMM DD Y - HH:mm:ss')
                     }}
                   </td>
                   <td>{{ card.file_name }}</td>
@@ -233,10 +236,11 @@ export default {
             $('#csv-uploads-table').DataTable({
               pageLength: 20,
               oLanguage: { sSearch: '' },
+              "aaSorting": [],
               aoColumnDefs: [
                 {
                   bSortable: false,
-                  aTargets: [-1],
+                  aTargets: [-1,-2,-3],
                 },
               ],
             })

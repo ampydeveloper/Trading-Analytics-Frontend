@@ -253,7 +253,7 @@
                 :to="'/product?id=' + item.id + '&slag=' + item.title"
                 :title="item.title"
               >
-                ${{ item.price > 0 ? trimString(item.price) : 0 }}
+                ${{ item.price }}
               </nuxt-link>
             </span>
           </div>
@@ -284,7 +284,7 @@
                 class=""
                 :to="'/card-data?id=' + item.id"
                 :title="item.title"
-                >${{ item.price > 0 ? trimString(item.price) : 0 }}
+                >${{ item.price }}
               </nuxt-link>
             </span>
           </div>
@@ -318,7 +318,7 @@
                 :to="'/card-data?id=' + item.id"
                 :title="item.title"
               >
-                ${{ item.price > 0 ? trimString(item.price) : 0 }}
+                ${{ item.price }}
               </nuxt-link>
             </span>
           </div>
@@ -466,7 +466,7 @@ export default {
       ternder: [],
       watchlist: [],
       activeDaysGraph: 2,
-      initGraphLabelLength: 0,
+      // initGraphLabelLength: 0,
       graphDataEmpty: false,
       dialogVisible: false,
       perc_diff: 0,
@@ -830,7 +830,7 @@ export default {
                 $('.dashboard-apex-top-1d').show()
                 $('.dashboard-apex-top-alld').hide()
 
-                if (this.initGraphLabelLength != res.data.labels.length) {
+                // if (this.initGraphLabelLength != res.data.labels.length) {
                   // this.graphDataEmpty = false
 
                   this.series1d = [{ name: 'SX', data: res.data.values }]
@@ -901,13 +901,13 @@ export default {
                     },
                   }
 
-                  this.initGraphLabelLength = res.data.labels.length
+                  // this.initGraphLabelLength = res.data.labels.length
                   setTimeout(() => {
                     this.generateImageOfGraph(2)
                   }, 3000)
-                } else {
-                  this.graphDataEmpty = true
-                }
+                // } else {
+                //   this.graphDataEmpty = true
+                // }
               }
             })
         } catch (error) {
@@ -947,7 +947,7 @@ export default {
               $('.dashboard-apex-top-alld').show()
               $('.dashboard-apex-top-1d').hide()
 
-              if (this.initGraphLabelLength != res.data.labels.length) {
+              // if (this.initGraphLabelLength != res.data.labels.length) {
                 this.series = [{ name: 'SX', data: res.data.values }]
                 this.salesQty = res.data.qty
                 this.chartOptions = {
@@ -987,13 +987,13 @@ export default {
                   },
                 }
 
-                this.initGraphLabelLength = res.data.labels.length
+                // this.initGraphLabelLength = res.data.labels.length
                 setTimeout(() => {
                   this.generateImageOfGraph('all')
                 }, 2000)
-              } else {
-                this.graphDataEmpty = true
-              }
+              // } else {
+              //   this.graphDataEmpty = true
+              // }
             }
           })
       } catch (error) {

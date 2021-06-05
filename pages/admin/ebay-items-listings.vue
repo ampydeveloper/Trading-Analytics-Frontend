@@ -66,6 +66,7 @@
                     placeholder="Search Listings"
                     aria-label="Search term..."
                     aria-describedby="button-addon2"
+                    @keyup.enter="getItems(1)"
                   />
                   <div class="input-group-append">
                     <button

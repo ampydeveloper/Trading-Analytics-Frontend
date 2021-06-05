@@ -45,13 +45,13 @@
             <table class="table table-striped" id="all-users-table">
               <thead>
                 <tr>
-                  <th>Id</th>
+                  <th style="width: 30px;">Id</th>
                   <th>Name</th>
                   <th>Email</th>
-                  <th>Role</th>
+                  <th style="width: 85px;">Role</th>
                   <th>Mobile</th>
-                  <th>DOB</th>
-                  <th>Address</th>
+                  <!-- <th>DOB</th>
+                  <th>Address</th> -->
                   <th>Confirmed</th>
                   <th>Active</th>
                   <th>Deleted</th>
@@ -67,8 +67,8 @@
                   <td>{{ user.email }}</td>
                   <td>{{ user.roles[0] ? user.roles[0].name : '' }}</td>
                   <td>{{ user.mobile }}</td>
-                  <td>{{ user.dob }}</td>
-                  <td>{{ user.address }}</td>
+                  <!-- <td>{{ user.dob }}</td>
+                  <td>{{ user.address }}</td> -->
                   <td>
                     <font-awesome-icon
                       v-if="user.confirmed"
@@ -294,7 +294,7 @@
               required="required"
             />
           </div>
-          <div class="form_column">
+          <!-- <div class="form_column">
             <label for="dob">Date of Birth(DOB)</label>
             <input
               type="date"
@@ -312,7 +312,7 @@
               name="address"
               required="required"
             />
-          </div>
+          </div> -->
           <div class="form_column">
             <label for="address">Change Role</label>
             <select v-model="activeUser.user_roles" class="form-control">
@@ -374,7 +374,7 @@
               required="required"
             />
           </div>
-          <div class="form_column">
+          <!-- <div class="form_column">
             <label for="dob">Date of Birth(DOB)</label>
             <input
               type="date"
@@ -392,7 +392,7 @@
               name="address"
               required="required"
             />
-          </div>
+          </div> -->
           <div class="form_column">
             <label for="address">Change Role</label>
             <select v-model="activeUser.user_roles" class="form-control">

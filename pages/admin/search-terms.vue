@@ -27,7 +27,7 @@
                     <nuxt-link
                       style="color: #fff"
                       v-if="card.card_details != null"
-                      :to="`ebay-specific-listings?card=${card.id}`"
+                      :to="`ebay-specific-listings?card=${card.card_details.id}`"
                       >{{ card.card_details.title }}</nuxt-link
                     >
                     <span >
@@ -54,7 +54,7 @@
                     "
                   >
                     {{
-                      $moment(card.created_at).format('MMMM DD Y - hh:mm:ss')
+                      $moment(card.created_at).format('MMMM DD Y - HH:mm:ss')
                     }}
                   </td>
                 </tr>
@@ -102,6 +102,7 @@ export default {
           dom: 'Bfrtip',
           buttons: [{ extend: 'csv', text: 'Export as CSV' }],
           oLanguage: { sSearch: '' },
+          "aaSorting": [],
           aoColumnDefs: [
             {
               bSortable: false,
@@ -115,25 +116,6 @@ export default {
           }
     },
   },
-  // updated() {
-  //   setTimeout(function () {
-  //     if (!$.fn.dataTable.isDataTable('#search-cards-table')) {
-  //       $('#search-cards-table').DataTable({
-  //         pageLength: 20,
-  //         dom: 'Bfrtip',
-  //         buttons: [{ extend: 'csv', text: 'Export as CSV' }],
-  //         oLanguage: { sSearch: '' },
-  //         aoColumnDefs: [
-  //           {
-  //             bSortable: false,
-  //             aTargets: [-2, -3, -4],
-  //           },
-  //         ],
-  //       })
-  //       $('.dataTables_filter input').attr('placeholder', 'Search Terms')
-  //     }
-  //   }, 1000)
-  // },
   components: {},
   data() {
     return {

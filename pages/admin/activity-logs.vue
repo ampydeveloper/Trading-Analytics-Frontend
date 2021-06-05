@@ -9,7 +9,7 @@
             </h5>
           </div>
           <div class="card-body search-form">
-            <div class="row justify-content-center">
+            <div class="row">
               <div class="col-3">
                   <v-select label='name' placeholder='Select User'  :reduce='name => name.id' :options="users" v-model='selUser'>
                       <template slot="no-options"> Type to search users...</template>
@@ -35,12 +35,12 @@
             <table class="table table-striped">
               <thead>
                 <tr>
-                  <th>#</th>
-                  <th>Action</th>
-                  <th>Entity</th>
+                  <th style="width: 75px">#</th>
+                  <th style="width: 100px">Action</th>
+                  <th style="width: 150px">Entity</th>
                   <th>Entity Id</th>
                   <th>Operations</th>
-                  <th>Date/time</th>
+                  <th style="width: 150px">Date/time</th>
                 </tr>
               </thead>
               <tbody v-if="logs.length > 0">
@@ -74,7 +74,7 @@
               </tbody>
               <tfoot>
                 <tr>
-                  <td colspan="4">
+                  <td colspan="6">
                     <button
                       class="theme-btn card-btn"
                       :disabled="page == 1"

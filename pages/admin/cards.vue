@@ -73,6 +73,7 @@
                     placeholder="Search Slabs"
                     aria-label="Search term..."
                     aria-describedby="button-addon2"
+                    @keyup.enter="getCards(1)"
                   />
                   <div class="input-group-append">
                     <button
@@ -93,7 +94,7 @@
               <thead>
                 <tr>
                   <th><input type="checkbox" class="main-checkbox" /></th>
-                  <th>Id</th>
+                  <th style="width: 75px">Id</th>
                   <th>Sport</th>
                   <th>player</th>
                   <th>year</th>
@@ -105,7 +106,7 @@
                   <th class="text-center" v-if="!isDataEntry">Published</th>
                   <th class="text-center" v-if="!isDataEntry">Featured</th>
                   <th class="text-center" v-if="!isDataEntry">SX Pro</th>
-                  <th class="text-center">Actions</th>
+                  <th style="width: 153px" class="text-center">Actions</th>
                 </tr>
               </thead>
               <tbody v-if="cards.length > 0">
@@ -127,52 +128,57 @@
                   <td>{{ card.variation }}</td>
                   <td>{{ card.grade }}</td>
                   <td class="text-center" v-if="!isDataEntry">
+                    <!-- Unpublished -->
                     <button
                       class="card-btn btn btn-danger btn-table-spec tag"
                       v-if="card.active == 0"
                       @click="setCardStatus(card.id, 1)"
                     >
-                      <i class="fa fa-close" aria-hidden="true"></i> Unpublished
+                      <i class="fa fa-close" aria-hidden="true"></i> 
                     </button>
+                    <!-- Published -->
                     <button
                       class="card-btn btn btn-primary btn-table-spec tag"
                       v-if="card.active == 1"
                       @click="setCardStatus(card.id, 0)"
                     >
-                      <i class="fa fa-check" aria-hidden="true"></i> Published
+                      <i class="fa fa-check" aria-hidden="true"></i> 
                     </button>
                   </td>
                   <td class="text-center" v-if="!isDataEntry">
+                    <!-- Not Featured -->
                     <button
                       class="card-btn btn btn-danger btn-table-spec tag"
                       v-if="card.is_featured == 0"
                       @click="setFeaturedCard(card.id, 1)"
                     >
-                      <i class="fa fa-close" aria-hidden="true"></i> Not
-                      Featured
+                      <i class="fa fa-close" aria-hidden="true"></i> 
                     </button>
+                    <!-- Featured -->
                     <button
                       class="card-btn btn btn-primary btn-table-spec tag"
                       v-if="card.is_featured == 1"
                       @click="setFeaturedCard(card.id, 0)"
                     >
-                      <i class="fa fa-check" aria-hidden="true"></i> Featured
+                      <i class="fa fa-check" aria-hidden="true"></i> 
                     </button>
                   </td>
                   <td class="text-center" v-if="!isDataEntry">
+                    <!-- Inactive -->
                     <button
                       class="card-btn btn btn-danger btn-table-spec tag"
                       v-if="card.is_sx == 0"
                       @click="setCardSx(card.id, 1)"
                     >
-                      <i class="fa fa-close" aria-hidden="true"></i> Inactive
+                      <i class="fa fa-close" aria-hidden="true"></i> 
                     </button>
+                    <!-- Active -->
                     <button
                       class="card-btn btn btn-primary btn-table-spec tag"
                       v-if="card.is_sx == 1"
                       @click="setCardSx(card.id, 0)"
                     >
-                      <i class="fa fa-check" aria-hidden="true"></i> Active
+                      <i class="fa fa-check" aria-hidden="true"></i> 
                     </button>
                   </td>
                   <td class="text-center" v-if="isDataEntry">
@@ -219,12 +225,12 @@
               </tbody>
               <tbody v-if="cards.length == 0 && requestInProcess">
                 <tr>
-                  <td colspan="12" class="text-center">Loading...</td>
+                  <td colspan="14" class="text-center">Loading...</td>
                 </tr>
               </tbody>
               <tbody v-if="cards.length == 0 && requestInProcess == false">
                 <tr>
-                  <td colspan="12" class="text-center">No slabs found.</td>
+                  <td colspan="14" class="text-center">No slabs found.</td>
                 </tr>
               </tbody>
               <tfoot>
