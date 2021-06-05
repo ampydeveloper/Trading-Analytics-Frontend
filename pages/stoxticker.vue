@@ -783,7 +783,7 @@ slabstox.com
                   >
                     <font-awesome-icon
                       :icon="['fas', 'long-arrow-alt-' + boardSearch[key].sx_icon]"
-                    />&nbsp;${{ boardSearch[key].sx_value }}
+                    />&nbsp;${{ boardSearch[key].doller_diff }}
                   </button>
                   <button
                     :class="
@@ -910,13 +910,13 @@ slabstox.com
                     'long-arrow-alt-' + allBoardGraph[key].sx_icon,
                   ]"
                 />&nbsp;&nbsp;
-                <span class="g-dollar-d-val"> ${{ allBoardGraph[key].sx_value }}</span>
+                <span class="g-dollar-d-val"> ${{ allBoardGraph[key].doller_diff }}</span>
               </button>
               <button
                 :class="
                   (allBoardGraph[key].sx_icon &&
                   allBoardGraph[key].sx_icon == 'up'
-                    ? 'theme-btn'
+                    ? 'theme-green-btn'
                     : 'theme-red-btn') + ' card-btn sx-allboards-apex-top-alld'+allBoardGraph[key].id
                 "
               >
@@ -930,7 +930,7 @@ slabstox.com
               </button>
 
               <nuxt-link
-                :class="'theme-btn card-btn thb-btn REDDF sx-allboards-apex-top-1d'+allBoardGraph[key].id" style="display: none; margin-right: 4px;"
+                :class="'theme-btn card-btn thb-btn sx-allboards-apex-top-1d'+allBoardGraph[key].id" style="display: none; margin-right: 4px;"
                 :to="`stox-details?board=${allBoardGraph[key].id}`"
                 v-if="user != null && user.full_name != null"
                 >{{ allBoardGraph[key].name }}
@@ -957,13 +957,13 @@ slabstox.com
                     'long-arrow-alt-' + allBoardGraph[key].sx_icon,
                   ]"
                 />&nbsp;&nbsp;
-                <span class="g-dollar-d-val"> ${{ allBoardGraph[key].sx_value }}</span>
+                <span class="g-dollar-d-val"> ${{ allBoardGraph[key].doller_diff }}</span>
               </button>
               <button
                 :class="
                   (allBoardGraph[key].sx_icon &&
                   allBoardGraph[key].sx_icon == 'up'
-                    ? 'theme-btn'
+                    ? 'theme-green-btn'
                     : 'theme-red-btn') + ' card-btn sx-allboards-apex-top-1d'+allBoardGraph[key].id
                 " style="display: none"
               >
@@ -979,24 +979,24 @@ slabstox.com
             <div class="dashboard-apex-top">
                <div :class="'sx-allboards-apex-top-1d'+allBoardGraph[key].id" style="display: none">
               <VueApexCharts
-              ref="stoxtickerBoardChart1d"
+              ref="stoxtickerBoardChart"
                 type="area"
                 height="350"
                 :key="`vac-${key}-dashChart`"
                 :options="boardChartOptions[key]"
                 :series="boardSeries[key]"
               ></VueApexCharts>
-                 </div>
-                  <div :class="'sx-allboards-apex-top-alld'+allBoardGraph[key].id">
- <VueApexCharts
- ref="stoxtickerBoardChart"
-                type="area"
-                height="350"
-                :key="`vac-${key}-dashChart`"
-                :options="boardChartOptions[key]"
-                :series="boardSeries[key]"
-              ></VueApexCharts>
-                        </div>
+                </div>
+                <div :class="'sx-allboards-apex-top-alld'+allBoardGraph[key].id">
+                  <VueApexCharts
+                    ref="stoxtickerBoardChart"
+                    type="area"
+                    height="350"
+                    :key="`vac-${key}-dashChart`"
+                    :options="boardChartOptions[key]"
+                    :series="boardSeries[key]"
+                  ></VueApexCharts>
+                </div>
             </div>
             <div class="dashboard-graph-footer" id='`boardGraphs-${key}`'>
               <ul class="dashboard-graph-footer-month-filter" :id='`dc-${key}-ul`' :key='`dc-${key}-ul`'>
@@ -1106,7 +1106,7 @@ export default {
 
     this.getData()
     this.slabstoxGraph(90, 1)
-  
+
     this.getSoldListing()
     // this.getAllBoards()
     this.allBoardGraphFunc(90)
@@ -1189,7 +1189,7 @@ export default {
       doller_diff: 0,
       total_sales: 0,
       last_timestamp: 'N/A',
-      currentUrl: location.origin +'/main-stoxticker',
+      currentUrl: location.origin + '/main-stoxticker',
       soldListing: '',
       // allBoards: '',
       allBoardGraph: [],
@@ -1197,6 +1197,12 @@ export default {
       boardChartOptions: [],
       boardSeries: [],
       boardSalesQty: [],
+
+      allBoardGraph1d: [],
+      boardChartOptions1d: [],
+      boardSeries1d: [],
+      boardSalesQty1d: [],
+
       searchChartOptions: [],
       searchSeries: [],
       searchSalesQty: [],
@@ -1893,11 +1899,6 @@ export default {
       try {
         this.$axios.$get(`stoxticker/all-boards/${days}`).then((res) => {
           if (res.status == 200) {
-            // this.allBoardsShow1dGraph = false
-            // this.allBoardsShowalldGraph = true
-            // $('.sx-allboards-apex-top-alld').show()
-            // $('.sx-allboards-apex-top-1d').hide()
-
             if (res.data != null && res.data.length > 0) {
               res.data.map((item, key) => {
                 this.boardDaysGraph[key] = days
@@ -2147,15 +2148,16 @@ export default {
               // this.allBoardsShowalldGraph = false
               $('.sx-allboards-apex-top-alld' + board).hide()
               $('.sx-allboards-apex-top-1d' + board).show()
-// console.log(this.boardChartOptions);
+              // console.log(this.boardChartOptions);
               this.boardDaysGraph.splice(boardKey, 1, days)
-              this.allBoardGraph.splice(boardKey, 1, res.data)
+              this.allBoardGraph1d.splice(boardKey, 1, res.data)
 
-              this.boardSeries.splice(boardKey, 1, [
+              this.boardSeries1d.splice(boardKey, 1, [
                 { name: 'SX', data: res.data.sales_graph.values },
               ])
-              this.boardSalesQty.splice(boardKey, 1, res.data.sales_graph.qty)
-              this.boardChartOptions.splice(boardKey, 1, {
+              this.boardSalesQty1d.splice(boardKey, 1, res.data.sales_graph.qty)
+              console.log(res.data.sales_graph.labels)
+              this.boardChartOptions1d.splice(boardKey, 1, {
                 chart: {
                   toolbar: {
                     show: false,
@@ -2182,9 +2184,9 @@ export default {
                       fontFamily: 'NexaBold',
                     },
                   },
-                   type: 'category',
-            tickAmount: 24,
-            tickPlacement: 'on',
+                  type: 'category',
+                  tickAmount: 24,
+                  tickPlacement: 'on',
                   categories: res.data.sales_graph.labels,
                   labels: {
                     formatter: function (value) {
@@ -2231,9 +2233,9 @@ export default {
                       let lblStr = `$${value}`
                       if (typeof ind == 'object')
                         lblStr = `$${value} (${
-                          this.boardSalesQty[ind.dataPointIndex]
+                          this.boardSalesQty1d[ind.dataPointIndex]
                         })`
-                      else lblStr = `$${value} (${this.boardSalesQty[ind]})`
+                      else lblStr = `$${value} (${this.boardSalesQty1d[ind]})`
                       return lblStr
                     },
                   },

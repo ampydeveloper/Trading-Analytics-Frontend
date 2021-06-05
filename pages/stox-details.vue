@@ -43,13 +43,13 @@
                     'fas',
                     'long-arrow-alt-' + stoxtickerDetails1d.cardData.sx_icon,
                   ]"
-                />&nbsp;&nbsp;${{ stoxtickerDetails1d.cardData.sx_value }}
+                />&nbsp;&nbsp;${{ stoxtickerDetails1d.cardData.doller_diff }}
               </button>
               <button
                 :class="
                   (stoxtickerDetails1d.cardData.sx_icon &&
                   stoxtickerDetails1d.cardData.sx_icon == 'up'
-                    ? 'theme-btn'
+                    ? 'theme-green-btn'
                     : 'theme-red-btn') + ' card-btn dashboard-apex-top-1d'
                 "
                 style="display: none"
@@ -82,13 +82,13 @@
                     'fas',
                     'long-arrow-alt-' + stoxtickerDetails.cardData.sx_icon,
                   ]"
-                />&nbsp;&nbsp;${{ stoxtickerDetails.cardData.sx_value }}
+                />&nbsp;&nbsp;${{ stoxtickerDetails.cardData.doller_diff }}
               </button>
               <button
                 :class="
                   (stoxtickerDetails.cardData.sx_icon &&
                   stoxtickerDetails.cardData.sx_icon == 'up'
-                    ? 'theme-btn'
+                    ? 'theme-green-btn'
                     : 'theme-red-btn') + ' card-btn dashboard-apex-top-alld'
                 "
               >
