@@ -594,7 +594,9 @@ import $ from 'jquery'
 export default {
   transition: 'fade',
   layout: 'guestOuter',
-  auth: 'guest',
+  // auth: 'guest',
+  // auth: false,
+  // home:false,
   head() {
     return {
       title: `${this.metaTitle}`,

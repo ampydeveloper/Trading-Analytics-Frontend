@@ -740,7 +740,7 @@ slabstox.com
             <button class="card-btn theme-btn">Create Board</button>
           </h5>
           <div class="search-bar">
-          <input type="text" :value="user.first_name + ' ' +  (user.last_name!=null?user.last_name:'')" placeholder="ENTER BOARD NAME" style="margin-bottom: 15px;">
+          <input type="text" :value="(user!=null?user.first_name:'')  + ' ' +  (user!=null?user.last_name:'')" placeholder="ENTER BOARD NAME" style="margin-bottom: 15px;">
 </div>
           <div class="create-board-out my-card text-center">
  <button class="my-card-view-listing create-board" @click="createBoard()">
@@ -1075,7 +1075,7 @@ import vClickOutside from 'v-click-outside'
 export default {
   transition: 'fade',
   layout: 'guestOuter',
-  auth: 'guest',
+  // auth: 'guest',
   directives: {
     clickOutside: vClickOutside.directive,
   },

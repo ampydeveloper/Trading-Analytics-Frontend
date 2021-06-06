@@ -157,7 +157,8 @@ export default {
         secure: false,
       }
     },
-    watchLoggedIn: true
+    watchLoggedIn: true,
+    rewriteRedirects:true
   },
 
 

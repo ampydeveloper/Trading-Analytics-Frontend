@@ -52,20 +52,19 @@
     <nuxt-link
       :class="'my-card-view-listing ' + timeEndClass"
       :to="'/product?id=' + itemdata.id + '&slag=' + itemdata.title"
-      v-if="user != null && user.full_name != null"
     >
       {{ viewListingText }}
       <font-awesome-icon :icon="['fas', 'chevron-circle-right']" />
     </nuxt-link>
 
-    <span
+    <!-- <span
       :class="'my-card-view-listing '"
       v-if="user == null || user.full_name == null"
       v-b-modal.loginTopPopup
     >
       {{ viewListingText }}
       <font-awesome-icon :icon="['fas', 'chevron-circle-right']" />
-    </span>
+    </span> -->
 
     <div
       class="my-card-view-listing-on-ebay"

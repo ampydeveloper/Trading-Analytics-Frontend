@@ -63,12 +63,10 @@ const User = {
                     }
                 },
                 authMiddleware() {
-                    // console.log('authMiddleware');
                     if (!this.authenticated) {
                         window.localStorage.clear()
                         this.$router.push('/dashboard')
                     } else {
-
                         if (this.user.roles && this.user.roles[0].name != 'user') {
                             // this.$router.push('/admin')
                             //Let user open all page 
@@ -85,26 +83,33 @@ const User = {
                     }
                 },
                 guestMiddleware() {
-                    // console.log('guestMiddleware');
-
                     if (this.user) {
-                        // console.log('guestMiddleware user');
-                        if (this.user.roles && this.user.roles[0].name != 'user') {
+                        if (this.$route.path.indexOf('login') !== -1 || this.$route.path.indexOf('register') !== -1 || this.$route.path.indexOf('forgot-password') !== -1) {
+                            //user is trying to open login page 
+                            this.$router.push('/dashboard')
+                        }
+                        else if (this.user.roles && this.user.roles[0].name != 'user') {
                             // this.$router.push('/admin')
-                            //Let user open all page 
+                            //user is admin allow all pages
                             // this.$router.push(this.$route.path)
                         } else {
                             if (this.$route.path.indexOf('admin') !== -1) {
+                                //user is trying to open admin 
                                 this.$router.push('/dashboard')
                             } else {
-                                //Let user open all page 
+                                //user is simple user allow all pages
                                 // this.$router.push(this.$route.path)
                             }
                         }
                     } else {
-                        //Let user open all page 
-                        // console.log('guestMiddleware not user');
-                        // this.$router.push(this.$route.path)
+                        //Let user open guest pages
+                        if (!this.$route.path.indexOf('dashboard') !== -1) {
+                            window.localStorage.setItem('OpenUrl', this.$route.fullPath)
+                            setTimeout(() => {
+                                //   console.log(window.localStorage.getItem('OpenUrl'))
+                                this.$router.push(window.localStorage.getItem('OpenUrl'))
+                            }, 1300)
+                        }
                     }
                 },
                 addToCart(data) {

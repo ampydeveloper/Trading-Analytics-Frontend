@@ -68,7 +68,7 @@ import LiveListingCard from '~/components/dashboard/LiveListingCard'
 export default {
   transition: 'fade',
   layout: 'guestOuter',
-  auth: 'guest',
+  // auth: 'guest',
   head() {
     return {
       title: 'Live Listings - SlabStox',

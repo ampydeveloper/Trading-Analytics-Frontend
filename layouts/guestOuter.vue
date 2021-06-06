@@ -5,12 +5,15 @@
       <div class="container-fluid">
         <div class="row">
           <Sidebar />
-          <main role="main" class="col-md-9 ml-sm-auto col-lg-10 dashboard-main">
+          <main
+            role="main"
+            class="col-md-9 ml-sm-auto col-lg-10 dashboard-main"
+          >
             <div class="row">
               <AdvanceSearch />
               <nuxt />
-            </div>          
-            <Footer />         
+            </div>
+            <Footer />
           </main>
         </div>
       </div>
@@ -31,22 +34,40 @@ import Footer from '~/components/dashboard/Footer'
 import { BSpinner } from 'bootstrap-vue'
 
 export default {
-  // middleware: 'guest',
+  // middleware({ store, redirect }) {
+  //   if (store.state.auth.loggedIn) {
+  //     if (
+  //       store.state.auth.user.roles &&
+  //       store.state.auth.user.roles[0].name != 'user'
+  //     ) {
+  //       //user is admin allow all pages
+  //       // return redirect(route.fullPath)
+  //     } else {
+  //       if (store.$router.history.current.path.indexOf('admin') !== -1) {
+  //         //user is trying to open admin 
+  //         return redirect('/')
+  //       } else {
+  //         //user is simple user allow all pages
+  //         // return redirect(route.fullPath)
+  //       }
+  //     }
+  //   } 
+  // },
   head() {
     return {
       link: [{ rel: 'stylesheet', href: '/css/layout/dashboard.css' }],
       bodyAttrs: {
-        class: 'dashboardLayout'
-      }
+        class: 'dashboardLayout',
+      },
     }
   },
   watch: {
-    $route () {
-      if(this.$route.path !='/search'){
+    $route() {
+      if (this.$route.path != '/search') {
         this.$store.dispatch('advancesearch/hide')
       }
       this.$store.dispatch('advancesearch/update_keyword', '')
-    }
+    },
   },
   components: {
     NavbarGuestOuter,
@@ -55,16 +76,13 @@ export default {
     AdvanceSearch,
   },
   mounted() {
-    // window._epn = {campaign: 5338756216, smartPopover:false};
-
     this.guestMiddleware()
-    // this.$router.push('/dashboard')
   },
 }
 </script>
 
 <style>
-main{
+main {
   padding-top: 10px;
 }
 #spinner-holder {

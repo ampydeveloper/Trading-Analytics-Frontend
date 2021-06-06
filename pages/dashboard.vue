@@ -398,7 +398,7 @@ import $ from 'jquery'
 export default {
   transition: 'fade',
   layout: 'guestOuter',
-  auth: 'guest',
+  // auth: 'guest',
   head() {
     return {
       title: 'Dashboard - SlabStox',

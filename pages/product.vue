@@ -357,7 +357,7 @@
 import RealtedProductList from '~/components/dashboard/RealtedProductList'
 export default {
   transition: 'fade',
-  layout: 'dashboard',
+  layout: 'guestOuter',
   head() {
     return {
       title: 'Product Details - SlabStox',
