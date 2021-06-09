@@ -106,9 +106,12 @@ const User = {
                         if (!this.$route.path.indexOf('dashboard') !== -1) {
                             window.localStorage.setItem('OpenUrl', this.$route.fullPath)
                             setTimeout(() => {
-                                //   console.log(window.localStorage.getItem('OpenUrl'))
-                                this.$router.push(window.localStorage.getItem('OpenUrl'))
-                            }, 1300)
+                                var openUrl = window.localStorage.getItem('OpenUrl');
+                                if(openUrl != null){
+                                    this.$router.push(openUrl)
+                                    window.localStorage.setItem('OpenUrl', null)
+                                }                                
+                            }, 1400)
                         }
                     }
                 },

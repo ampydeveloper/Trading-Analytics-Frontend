@@ -253,7 +253,7 @@
                 :to="'/product?id=' + item.id + '&slag=' + item.title"
                 :title="item.title"
               >
-                ${{ item.price }}
+                ${{ item.sx_value }}
               </nuxt-link>
             </span>
           </div>
@@ -453,6 +453,7 @@ export default {
       featureHeight: '400px',
       cardsActive: false,
       cardActiveId: 0,
+      cardActive1dId: 0,
       cardActiveTitle: '',
       featuredListingItems: [],
       requestInProcessFeatured: false,
@@ -480,7 +481,7 @@ export default {
       sxIcon1d: '',
       show1dGraph: false,
       showalldGraph: true,
-      graph1dInitialized: false,
+      // graph1dInitialized: false,
       stoxtickerData: {
         total: 0,
         sale: 0,
@@ -810,9 +811,10 @@ export default {
       }
     },
     updateGraph1d(days = 2, intialTime = 0) {
-      if (intialTime == 1 && this.graph1dInitialized == false) {
+      if (intialTime == 1 && this.cardActive1dId != this.cardActiveId) {
         try {
-          this.graph1dInitialized = true
+          this.cardActive1dId = this.cardActiveId;
+          // this.graph1dInitialized = true
           this.graphDataEmpty = false
           this.activeDaysGraph = days
           this.$axios
