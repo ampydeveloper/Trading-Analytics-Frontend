@@ -5,7 +5,7 @@
         <div class="card ap">
           <div class="card-body">
             <h5 class="card-title">
-              <button class="theme-btn card-btn">Users Management</button>
+              <button class="theme-btn card-btn">User Management</button>
 
               <button
                 class="theme-green-btn card-btn pull-right"

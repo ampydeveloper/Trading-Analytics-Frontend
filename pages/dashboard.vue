@@ -132,7 +132,7 @@
                 total_sales
               }}</span> -->
             </h5>
-            <div class="dashboard-apex-top" ref="dashboardApexChart">
+            <div class="dashboard-apex-top">
               <div class="dashboard-apex-top-1d" style="display: none">
                 <VueApexCharts
                   ref="dashChart1d"
@@ -253,7 +253,7 @@
                 :to="'/product?id=' + item.id + '&slag=' + item.title"
                 :title="item.title"
               >
-                ${{ item.sx_value }}
+                SX $:{{ item.sx_value }}
               </nuxt-link>
             </span>
           </div>

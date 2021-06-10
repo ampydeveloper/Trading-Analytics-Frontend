@@ -6,28 +6,6 @@
         <div class="card card-single-row-outer">
           <div class="card-body">
             <h5 class="card-title">
-              <button class="card-btn theme-btn theme-green-btn">Recent Listings</button>
-            </h5>
-            <div class="dataloader" v-if="requestInProcess">
-              <b-spinner variant="success" label="Spinning"></b-spinner>
-            </div>
-            <ul class="my-card-listing" v-if="normalListingItems.length > 0">
-              <CardListItem v-for="item in normalListingItems" :key="item.id" :itemdata="item" />
-            </ul>
-
-            <div class="empty-result" v-if="normalListingItems.length == 0 && !requestInProcess">
-              <p>There are no cards here. Check again soon.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-12 t-p-5">
-        <div class="card card-single-row-outer">
-          <div class="card-body">
-            <h5 class="card-title">
               <button class="card-btn theme-btn theme-green-btn ending-title">Ending Soon</button>
             </h5>
             <div class="dataloader" v-if="requestInProcessEndingSoon">
@@ -47,6 +25,28 @@
 
     <LiveListingCard v-for="(card, key) in cards" :key="key" :card="card" />
 
+ <div class="row">
+      <div class="col-12 t-p-5">
+        <div class="card card-single-row-outer">
+          <div class="card-body">
+            <h5 class="card-title">
+              <button class="card-btn theme-btn theme-green-btn">Recent Listings</button>
+            </h5>
+            <div class="dataloader" v-if="requestInProcess">
+              <b-spinner variant="success" label="Spinning"></b-spinner>
+            </div>
+            <ul class="my-card-listing" v-if="normalListingItems.length > 0">
+              <CardListItem v-for="item in normalListingItems" :key="item.id" :itemdata="item" />
+            </ul>
+
+            <div class="empty-result" v-if="normalListingItems.length == 0 && !requestInProcess">
+              <p>There are no cards here. Check again soon.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
     <!--<div class="row">
       <div class="col-12 t-p-5">
         <div class="card no_bg">

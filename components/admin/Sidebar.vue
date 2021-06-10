@@ -95,7 +95,7 @@
                 style="font-size: 20px"
               />
             </div>
-            <div class="link-text">Users Management</div>
+            <div class="link-text">User Management</div>
           </nuxt-link>
         </li>
         <li class="nav-item" v-if="isAdmin">
