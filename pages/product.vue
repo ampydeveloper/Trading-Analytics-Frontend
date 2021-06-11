@@ -504,49 +504,58 @@ export default {
       this.timeLeft.hours = this.data.time_hours
       this.timeLeft.mins = this.data.time_mins
       this.timeLeft.secs = this.data.time_secs
-      this.timeLeft.intervalObject = setInterval(() => {
-      
-        this.timeLeft.secs = this.timeLeft.secs - 1
-        if (this.timeLeft.secs == 0) {
-          this.timeLeft.mins = this.timeLeft.mins - 1
-          this.timeLeft.secs = 60
-        }
-        if (this.timeLeft.mins == 0) {
-          this.timeLeft.hours = this.timeLeft.hours - 1
-          this.timeLeft.mins = 60
-        }
-        if (this.timeLeft.days > 0) {
-          this.timeLeft.value =
-            this.timeLeft.days +
-            'd ' +
-            this.timeLeft.hours +
-            'h ' +
-            this.timeLeft.mins +
-            'm'
-        } else if (this.timeLeft.hours > 1) {
-          this.timeLeft.value =
-            this.timeLeft.hours +
-            'h ' +
-            this.timeLeft.mins +
-            'm ' +
-            this.timeLeft.secs +
-            's'
-        } else if (this.timeLeft.mins > 1) {
-          this.timeLeft.value =
-            this.timeLeft.mins + 'm ' + this.timeLeft.secs + 's'
-        } else {
-          this.timeLeft.value = this.timeLeft.secs + 's'
-        }
-        if (
-          (this.timeLeft.days == 0) &
-          (this.timeLeft.hours == 0) &
-          (this.timeLeft.mins == 0) &
-          (this.timeLeft.secs == 0)
-        ) {
-          this.timeLeft.value = '00:00'
-          clearInterval(this.timeLeft.intervalObject)
-        }
-      }, 1000)
+
+      if (
+        this.timeLeft.days != 0 ||
+        this.timeLeft.hours != 0 ||
+        this.timeLeft.mins != 0 ||
+        this.timeLeft.secs != 0
+      ) {
+        this.timeLeft.intervalObject = setInterval(() => {
+          this.timeLeft.secs = this.timeLeft.secs - 1
+          if (this.timeLeft.secs == 0) {
+            this.timeLeft.mins = this.timeLeft.mins - 1
+            this.timeLeft.secs = 60
+          }
+          if (this.timeLeft.mins == 0) {
+            this.timeLeft.hours = this.timeLeft.hours - 1
+            this.timeLeft.mins = 60
+          }
+          if (this.timeLeft.days > 0) {
+            this.timeLeft.value =
+              this.timeLeft.days +
+              'd ' +
+              this.timeLeft.hours +
+              'h ' +
+              this.timeLeft.mins +
+              'm'
+          } else if (this.timeLeft.hours > 1) {
+            this.timeLeft.value =
+              this.timeLeft.hours +
+              'h ' +
+              this.timeLeft.mins +
+              'm ' +
+              this.timeLeft.secs +
+              's'
+          } else if (this.timeLeft.mins > 1) {
+            this.timeLeft.value =
+              this.timeLeft.mins + 'm ' + this.timeLeft.secs + 's'
+          } else {
+            this.timeLeft.value = this.timeLeft.secs + 's'
+          }
+          if (
+            this.timeLeft.days == 0 &&
+            this.timeLeft.hours == 0 &&
+            this.timeLeft.mins == 0 &&
+            this.timeLeft.secs == 0
+          ) {
+            this.timeLeft.value = '00:00'
+            clearInterval(this.timeLeft.intervalObject)
+          }
+        }, 1000)
+      } else {
+        this.timeLeft.value = '00:00'
+      }
 
       // if (this.timeLeftFromBack && this.timeLeftFromBack != '0s') {
       //   this.timeLeft.value = this.timeLeftFromBack
@@ -711,9 +720,9 @@ export default {
         max-width: 100%;
         // vertical-align: middle;
         transform: translate(-50%, -50%);
-    top: 50%;
-    position: absolute;
-    left: 50%;
+        top: 50%;
+        position: absolute;
+        left: 50%;
       }
     }
     .view-listing-on-ebay {

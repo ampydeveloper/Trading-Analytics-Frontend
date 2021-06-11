@@ -78,6 +78,7 @@ export default {
     { src: '~/plugins/vue-apexchart.js', ssr: false },
     { src: '~/plugins/fb-sdk.js', ssr: false },
     { src: '~/plugins/datatable.js', ssr: false },
+    { src: '~/plugins/gtm.js', ssr: false },
   ],
   /*
   ** Nuxt.js dev-modules

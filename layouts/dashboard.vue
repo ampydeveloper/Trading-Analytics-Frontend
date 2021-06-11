@@ -55,13 +55,8 @@ export default {
     AdvanceSearch,
   },
   mounted() {
-    // window._epn = {campaign: 5338756216, smartPopover:false};
-    // console.log(this.user);
     this.authMiddleware()
     this.$store.dispatch('advancesearch/fetchAttributes');
-    // .then(() => {
-  //   // console.log("This would be printed after dispatch!!")
-  //  })
   //  this.$store.dispatch('watchlist/fetchIds').then(() => {
   //   // console.log("This would be printed after dispatch!!")
   //  })

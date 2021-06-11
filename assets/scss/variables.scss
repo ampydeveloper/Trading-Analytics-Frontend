@@ -2429,6 +2429,9 @@ html body #__nuxt .b-profileImage .dropdown-menu {
     // }
 .marquee-text-wrap{
   width: calc(100% - 120px);
+  @media (max-width: 767px) {
+    width: 100%;
+  }
 }
     .h3-title {
       padding: 0;
@@ -3091,7 +3094,7 @@ html body #__nuxt .b-profileImage .dropdown-menu {
   .stoxticker_listing ul li h3,
   .stoxticker_listing ul li h4,
   .stoxticker_listing ul li h5 {
-    width: 100%;
+    width: auto;
     padding-right: 0px;
     margin-bottom: 6px !important;
   }

@@ -582,7 +582,7 @@ slabstox.com
                 <li>
                   <h3 class="h3-title">BASKETBALL</h3>
 
-                  <marquee-text :duration="30" :paused="paused" v-if="soldListing.basketball!=0">
+                  <marquee-text :duration="30" :paused="paused" :key="soldListingbasketballMarqueeKey" v-if="soldListing.basketball!=0">
                     <div @mouseenter="paused = !paused" @mouseleave="paused = false">
   <template v-for="list in soldListing.basketball">
                     <h4>
@@ -604,9 +604,9 @@ slabstox.com
                 <li>
                   <h3 class="h3-title">FOOTBALL</h3>
                 
-                <marquee-text :duration="30" :paused="paused" v-if="soldListing.football!=0">
+                <marquee-text :duration="30" :paused="paused" :key="soldListingfootballMarqueeKey" v-if="soldListing.football!=0">
                     <div @mouseenter="paused = !paused" @mouseleave="paused = false">
-                   <template v-if="soldListing.football>0" v-for="list in soldListing.football">
+                   <template v-for="list in soldListing.football">
                     <h4>
                       <nuxt-link
       class="sx-stox-card-link"
@@ -626,7 +626,7 @@ slabstox.com
                 <li>
                   <h3 class="h3-title">BASEBALL</h3>
                 
-                <marquee-text :duration="30" :paused="paused" v-if="soldListing.baseball!=0">
+                <marquee-text :duration="30" :paused="paused" :key="soldListingbaseballMarqueeKey" v-if="soldListing.baseball!=0">
                     <div @mouseenter="paused = !paused" @mouseleave="paused = false">
                     <template v-for="list in soldListing.baseball">
                     <h4>
@@ -649,7 +649,7 @@ slabstox.com
                 <li>
                   <h3 class="h3-title">SOCCER</h3>
                  
-                 <marquee-text :duration="30" :paused="paused" v-if="soldListing.soccer!=0">
+                 <marquee-text :duration="30" :paused="paused" :key="soldListingsoccerMarqueeKey" v-if="soldListing.soccer!=0">
                     <div @mouseenter="paused = !paused" @mouseleave="paused = false">
                    <template v-for="list in soldListing.soccer">
                     <h4>
@@ -671,7 +671,7 @@ slabstox.com
                 <li>
                   <h3 class="h3-title">POKÉMON</h3> 
                 
-                <marquee-text :duration="30" :paused="paused" v-if="soldListing.pokemon!=0">
+                <marquee-text :duration="30" :paused="paused" :key="soldListingpokemonMarqueeKey" v-if="soldListing.pokemon!=0">
                     <div @mouseenter="paused = !paused" @mouseleave="paused = false">
                    <template v-for="list in soldListing.pokemon">
                     <h4>
@@ -1228,6 +1228,11 @@ export default {
       last_timestamp: 'N/A',
       currentUrl: location.origin + '/main-stoxticker',
       soldListing: '',
+      soldListingbasketballMarqueeKey: 0,
+      soldListingfootballMarqueeKey: 0,
+      soldListingbaseballMarqueeKey: 0,
+      soldListingsoccerMarqueeKey: 0,
+      soldListingpokemonMarqueeKey: 0,
       // allBoards: '',
       allBoardGraph: [],
       boardDaysGraph: [],
@@ -1718,6 +1723,11 @@ export default {
         this.$axios.$get('stoxticker/sold-listings').then((res) => {
           if (res.status == 200) {
             this.soldListing = res.data
+            this.soldListingbasketballMarqueeKey = 1
+            this.soldListingfootballMarqueeKey = 2
+            this.soldListingbaseballMarqueeKey = 3
+            this.soldListingsoccerMarqueeKey = 4
+            this.soldListingpokemonMarqueeKey = 5
           } else {
             this.$router.push('/404')
           }
