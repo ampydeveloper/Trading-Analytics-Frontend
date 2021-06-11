@@ -86,7 +86,7 @@
               </button>
               <button
                 :class="
-                  (sxIcon && sxIcon == 'up' ? 'theme-btn' : 'theme-red-btn') +
+                  (sxIcon && sxIcon == 'up' ? 'theme-green-btn' : 'theme-red-btn') +
                   ' card-btn dashboard-apex-top-alld'
                 "
               >
@@ -113,7 +113,7 @@
               <button
                 :class="
                   (sxIcon1d && sxIcon1d == 'up'
-                    ? 'theme-btn'
+                    ? 'theme-green-btn'
                     : 'theme-red-btn') + ' card-btn dashboard-apex-top-1d'
                 "
                 style="display: none"

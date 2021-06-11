@@ -15,7 +15,7 @@
             <li>
               <img
                 class="nav-logo"
-                src="~/assets/prostox-black-logo.png"
+                src="~/assets/img/dashboard-sidebar-middel-logo.png"
                 alt="Slabstox"
               />
             </li>
@@ -93,7 +93,7 @@ header.guestHeader {
   }
 
   .nav-logo {
-    width: 70px;
+    width: 90px;
   }
 
   .navbar-nav > .nav-item {

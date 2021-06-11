@@ -33,6 +33,7 @@
                       type="text"
                       placeholder="STOXTICKER BOARD SEARCH"
                       v-model="searchKeyword"
+                      @keyup.enter="searchBoard()"
                     />
                   </div>
                 </div>
@@ -77,6 +78,7 @@
                     <button
                       class="card-btn custom-stox-search"
                       @click="searchBoard()"
+                      
                     >
                       search stoxticker board
                       <font-awesome-icon
@@ -579,8 +581,10 @@ slabstox.com
               <ul>
                 <li>
                   <h3 class="h3-title">BASKETBALL</h3>
-                  <marquee direction="left" onmouseover="this.stop();" onmouseout="this.start();">
-                    <template v-for="list in soldListing.basketball">
+
+                  <marquee-text :duration="30" :paused="paused" v-if="soldListing.basketball!=0">
+                    <div @mouseenter="paused = !paused" @mouseleave="paused = false">
+  <template v-for="list in soldListing.basketball">
                     <h4>
                        <nuxt-link
       class="sx-stox-card-link"
@@ -588,14 +592,20 @@ slabstox.com
     >{{list.card.title}} - ${{list.sold_price}}
      </nuxt-link> &nbsp;&nbsp;</h4>
                       </template>
-                      <template v-if="soldListing.basketball==0">
-                      <h4>No recent sold listings.</h4>
-                      </template>
-                  </marquee>
+                    </div>
+                  </marquee-text>
+
+                  <marquee-text :duration="30" :paused="paused" :repeat="1" v-if="soldListing.basketball==0">
+                    <div @mouseenter="paused = !paused" @mouseleave="paused = false">
+                      <h4 style="padding: 0 50px;">No recent sold listings.</h4>
+                    </div>
+                  </marquee-text>
                 </li>
                 <li>
                   <h3 class="h3-title">FOOTBALL</h3>
-                  <marquee direction="left" onmouseover="this.stop();" onmouseout="this.start();">
+                
+                <marquee-text :duration="30" :paused="paused" v-if="soldListing.football!=0">
+                    <div @mouseenter="paused = !paused" @mouseleave="paused = false">
                    <template v-if="soldListing.football>0" v-for="list in soldListing.football">
                     <h4>
                       <nuxt-link
@@ -604,14 +614,20 @@ slabstox.com
     >{{list.card.title}} - ${{list.sold_price}}
      </nuxt-link>&nbsp;&nbsp;</h4>
                       </template>
-                  <template v-if="soldListing.football==0">
-                    <h4>No recent sold listings.</h4>
-                      </template>
-                  </marquee>
+           </div>
+                  </marquee-text>
+
+                  <marquee-text :duration="30" :paused="paused" :repeat="1" v-if="soldListing.football==0">
+                    <div @mouseenter="paused = !paused" @mouseleave="paused = false">
+                    <h4 style="padding: 0 50px;">No recent sold listings.</h4>
+           </div>
+                  </marquee-text>
                 </li>
                 <li>
                   <h3 class="h3-title">BASEBALL</h3>
-                  <marquee direction="left" onmouseover="this.stop();" onmouseout="this.start();">
+                
+                <marquee-text :duration="30" :paused="paused" v-if="soldListing.baseball!=0">
+                    <div @mouseenter="paused = !paused" @mouseleave="paused = false">
                     <template v-for="list in soldListing.baseball">
                     <h4>
                       <nuxt-link
@@ -620,14 +636,21 @@ slabstox.com
     >{{list.card.title}} - ${{list.sold_price}}
      </nuxt-link>&nbsp;&nbsp;</h4>
                       </template>
-                      <template v-if="soldListing.baseball==0">
-                    <h4>No recent sold listings.</h4>
-                      </template>
-                  </marquee>
+                </div>
+                  </marquee-text>
+
+                  <marquee-text :duration="30" :paused="paused" :repeat="1" v-if="soldListing.baseball==0">
+                    <div @mouseenter="paused = !paused" @mouseleave="paused = false">
+                    <h4 style="padding: 0 50px;">No recent sold listings.</h4>
+                </div>
+                  </marquee-text>
+
                 </li>
                 <li>
                   <h3 class="h3-title">SOCCER</h3>
-                  <marquee direction="left" onmouseover="this.stop();" onmouseout="this.start();">
+                 
+                 <marquee-text :duration="30" :paused="paused" v-if="soldListing.soccer!=0">
+                    <div @mouseenter="paused = !paused" @mouseleave="paused = false">
                    <template v-for="list in soldListing.soccer">
                     <h4>
                       <nuxt-link
@@ -636,14 +659,20 @@ slabstox.com
     >{{list.card.title}} - ${{list.sold_price}}
      </nuxt-link>&nbsp;&nbsp;</h4>
                       </template>
-                      <template v-if="soldListing.soccer==0">
-                    <h4>No recent sold listings.</h4>
-                      </template>
-                  </marquee>
+               </div>
+                  </marquee-text>
+
+                  <marquee-text :duration="30" :paused="paused" :repeat="1" v-if="soldListing.soccer==0">
+                    <div @mouseenter="paused = !paused" @mouseleave="paused = false">
+                    <h4 style="padding: 0 50px;">No recent sold listings.</h4>
+               </div>
+                  </marquee-text>
                 </li>
                 <li>
                   <h3 class="h3-title">POKÉMON</h3> 
-                  <marquee direction="left" onmouseover="this.stop();" onmouseout="this.start();">
+                
+                <marquee-text :duration="30" :paused="paused" v-if="soldListing.pokemon!=0">
+                    <div @mouseenter="paused = !paused" @mouseleave="paused = false">
                    <template v-for="list in soldListing.pokemon">
                     <h4>
                       <nuxt-link
@@ -652,10 +681,14 @@ slabstox.com
     >{{list.card.title}} - ${{list.sold_price}}
      </nuxt-link>&nbsp;&nbsp;</h4>
                       </template>
-                      <template v-if="soldListing.pokemon==0">
-                    <h4>No recent sold listings.</h4>
-                      </template>
-                  </marquee>
+                </div>
+                  </marquee-text>
+
+                  <marquee-text :duration="30" :paused="paused" :repeat="1" v-if="soldListing.pokemon==0">
+                    <div @mouseenter="paused = !paused" @mouseleave="paused = false">
+                    <h4 style="padding: 0 50px;">No recent sold listings.</h4>
+                </div>
+                  </marquee-text>
                 </li>
               </ul>
              
@@ -1071,6 +1104,7 @@ import CardSlabItem from '~/components/dashboard/CardSlabItem'
 import CardListItem from '~/components/dashboard/CardListItem'
 import $ from 'jquery'
 import vClickOutside from 'v-click-outside'
+import MarqueeText from 'vue-marquee-text-component'
 
 export default {
   transition: 'fade',
@@ -1168,10 +1202,12 @@ export default {
   components: {
     CardListItem,
     CardSlabItem,
+    MarqueeText,
     VueApexCharts: () => import('vue-apexcharts'),
   },
   data() {
     return {
+      paused: false,
       logo: null,
       baseUrl: BASE_URL,
       keyword: null,
@@ -2195,8 +2231,8 @@ export default {
     allBoardGraphSingleFunc1d(days, board, boardKey) {
       try {
         this.boardDaysGraph.splice(boardKey, 1, days)
-       $('.sx-allboards-apex-top-alld' + board).hide()
-              $('.sx-allboards-apex-top-1d' + board).show()
+        $('.sx-allboards-apex-top-alld' + board).hide()
+        $('.sx-allboards-apex-top-1d' + board).show()
 
         // this.$axios
         //   .$get(`stoxticker/single-graph-board/${days}/${board}`)
@@ -2214,7 +2250,7 @@ export default {
         //         { name: 'SX', data: res.data.sales_graph.values },
         //       ])
         //       this.boardSalesQty1d.splice(boardKey, 1, res.data.sales_graph.qty)
-         
+
         //       this.boardChartOptions1d.splice(boardKey, 1, {
         //         chart: {
         //           toolbar: {

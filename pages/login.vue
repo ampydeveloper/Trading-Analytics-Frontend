@@ -70,10 +70,6 @@
                         <nuxt-link to="/forgot-password"
                           >Forgot Your Password ?</nuxt-link
                         >
-
-                        <!-- <nuxt-link to="/reset-password?token=c785d5928d7223168dbf9e91cb5c7880"
-                          >Forssr Password ?</nuxt-link
-                        > -->
                       </p>
                       <button
                         :disabled="isSubmit"

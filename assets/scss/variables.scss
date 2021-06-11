@@ -2383,7 +2383,7 @@ html body #__nuxt .b-profileImage .dropdown-menu {
       font-family: "NexaBold", Helvetica, Arial, sans-serif;
       margin-bottom: 0px !important;
       margin-top: 0px !important;
-      width: 20%;
+      width: 120px;
       padding-right: 10px;
     }
 
@@ -2427,7 +2427,9 @@ html body #__nuxt .b-profileImage .dropdown-menu {
     //   font-style: italic;
     //   float: left;
     // }
-
+.marquee-text-wrap{
+  width: calc(100% - 120px);
+}
     .h3-title {
       padding: 0;
       text-align: left;

@@ -125,7 +125,7 @@
                     <div class="pretty p-default">
                       <input type="checkbox" v-model="form.agree" required />
                       <div class="state">
-                        <label>Agree to terms of service</label>
+                        <label>Agree to terms of use</label>
                       </div>
                     </div>
                   </b-input-group>
@@ -138,6 +138,18 @@
                     <font-awesome-icon :icon="['fas', 'chevron-right']" />
                   </button>
                 </b-form-group>
+
+                <b-form-group class="text-center have-an-account">
+                  <span>
+                    By clicking Agree and sign up, you agree to our
+                    <a
+                      href="https://www.slabstox.com/terms-conditions/"
+                      target="_blank"
+                      >Terms of Use Agreement</a
+                    >.
+                  </span>
+                </b-form-group>
+
                 <b-form-group class="text-center have-an-account">
                   <nuxt-link to="/login">
                     Have an account? log in
@@ -247,7 +259,8 @@ export default {
       }
     },
     validation() {
-      const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      const re =
+        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       if (!re.test(String(this.form.email).toLowerCase())) {
         this.errors.email = 'Valid email is required.'
         return false
@@ -343,6 +356,7 @@ export default {
       text-transform: uppercase;
       letter-spacing: 4px;
       width: 225px;
+      border: 0;
       &:hover {
         box-shadow: none;
         background-color: #0ab25f;
@@ -357,17 +371,16 @@ export default {
 
     .have-an-account {
       text-align: center;
-      a {
-        text-transform: uppercase;
+      text-transform: uppercase;
         color: #242424;
         font-size: 12px;
-        font-weight: bolder;
+      a {
+        color: #242424;
+      
       }
     }
   }
 }
-</style>
-<style>
 .signup-form .signup-form input .signup-form .input-group {
   padding: 0px 30px;
 }
@@ -382,6 +395,9 @@ export default {
   font-weight: bolder;
   text-transform: uppercase;
   font-size: 12px;
+  a {
+    color: #05fb62;
+  }
 }
 .pretty {
   margin: 0 auto;
