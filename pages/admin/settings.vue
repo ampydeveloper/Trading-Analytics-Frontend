@@ -170,7 +170,7 @@ export default {
   },
   head() {
     return {
-      title: 'App Settings - Slabstox',
+      title: 'App Settings - SlabStox',
     }
   },
   mounted() {

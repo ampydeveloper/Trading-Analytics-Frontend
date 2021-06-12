@@ -86,8 +86,9 @@
               </button>
               <button
                 :class="
-                  (sxIcon && sxIcon == 'up' ? 'theme-green-btn' : 'theme-red-btn') +
-                  ' card-btn dashboard-apex-top-alld'
+                  (sxIcon && sxIcon == 'up'
+                    ? 'theme-green-btn'
+                    : 'theme-red-btn') + ' card-btn dashboard-apex-top-alld'
                 "
               >
                 <font-awesome-icon
@@ -238,18 +239,25 @@
               </nuxt-link>
             </h5>
             <p class="card-text dash-no-cards" v-if="liveAuction.length == 0">
-              <span>There are no slabs here.</span>
+              <span>There are no listings here.</span>
             </p>
+
             <span
               class="card-text-link dash-list"
               v-for="item in liveAuction"
               :key="item.id"
             >
               <span class="card-text-s">
-                {{ trimString(item.title) }}
+                <nuxt-link
+                  class=""
+                  :to="'/product?id=' + item.id + '&slag=' + item.title"
+                  :title="item.title"
+                >
+                  {{ trimString(item.title) }}
+                </nuxt-link>
               </span>
               <nuxt-link
-                class=""
+                class="price-link"
                 :to="'/product?id=' + item.id + '&slag=' + item.title"
                 :title="item.title"
               >
@@ -278,10 +286,17 @@
               v-for="item in watchlist"
               :key="item.id"
             >
-              <span class="card-text-s">{{ trimString(item.title) }} </span>
+              <span class="card-text-s">
+                <nuxt-link
+                  :to="'/card-data?id=' + item.id"
+                  :title="item.title"
+                >
+                  {{ trimString(item.title) }}
+                </nuxt-link>
+              </span>
 
               <nuxt-link
-                class=""
+                class="price-link"
                 :to="'/card-data?id=' + item.id"
                 :title="item.title"
                 >${{ item.price }}
@@ -309,12 +324,17 @@
               v-for="(item, index) in ternder"
               :key="item.id"
             >
-              <span class="card-text-s"
-                >{{ index + 1 }}. {{ trimString(item.title) }}
+              <span class="card-text-s">
+                <nuxt-link
+                  :to="'/card-data?id=' + item.id"
+                  :title="item.title"
+                >
+                  {{ index + 1 }}. {{ trimString(item.title) }}
+                </nuxt-link>
               </span>
 
               <nuxt-link
-                class=""
+                class="price-link"
                 :to="'/card-data?id=' + item.id"
                 :title="item.title"
               >
@@ -813,7 +833,7 @@ export default {
     updateGraph1d(days = 2, intialTime = 0) {
       if (intialTime == 1 && this.cardActive1dId != this.cardActiveId) {
         try {
-          this.cardActive1dId = this.cardActiveId;
+          this.cardActive1dId = this.cardActiveId
           // this.graph1dInitialized = true
           this.graphDataEmpty = false
           this.activeDaysGraph = days
@@ -833,80 +853,80 @@ export default {
                 $('.dashboard-apex-top-alld').hide()
 
                 // if (this.initGraphLabelLength != res.data.labels.length) {
-                  // this.graphDataEmpty = false
+                // this.graphDataEmpty = false
 
-                  this.series1d = [{ name: 'SX', data: res.data.values }]
-                  this.salesQty1d = res.data.qty
+                this.series1d = [{ name: 'SX', data: res.data.values }]
+                this.salesQty1d = res.data.qty
 
-                  this.chartOptions1d = {
-                    xaxis: {
-                      tickAmount: 24,
-                      categories: res.data.labels,
-                      type: 'category',
-                      tickPlacement: 'on',
-                      labels: {
-                        style: {
-                          colors: '#edecec',
-                          fontSize: '10px',
-                          fontFamily: 'NexaBold',
-                        },
-                        formatter: function (value, ind) {
-                          if (value !== undefined) {
-                            var splittedCategories = value.split(':')
-                            var mins = splittedCategories[1]
-                            if (mins == '00') {
-                              return value
-                            } else {
-                              return ''
-                            }
+                this.chartOptions1d = {
+                  xaxis: {
+                    tickAmount: 24,
+                    categories: res.data.labels,
+                    type: 'category',
+                    tickPlacement: 'on',
+                    labels: {
+                      style: {
+                        colors: '#edecec',
+                        fontSize: '10px',
+                        fontFamily: 'NexaBold',
+                      },
+                      formatter: function (value, ind) {
+                        if (value !== undefined) {
+                          var splittedCategories = value.split(':')
+                          var mins = splittedCategories[1]
+                          if (mins == '00') {
+                            return value
+                          } else {
+                            return ''
                           }
-                          return ''
-                        },
+                        }
+                        return ''
                       },
                     },
-                    yaxis: {
-                      labels: {
-                        style: {
-                          colors: '#edecec',
-                          fontSize: '10px',
-                          fontFamily: 'NexaBold',
-                        },
-                        formatter: (value, ind) => {
-                          let valCheck = value
-                          if (Number(value) === value && value % 1 !== 0) {
-                            let valCheck = Number(value).toFixed(2)
-                          }
+                  },
+                  yaxis: {
+                    labels: {
+                      style: {
+                        colors: '#edecec',
+                        fontSize: '10px',
+                        fontFamily: 'NexaBold',
+                      },
+                      formatter: (value, ind) => {
+                        let valCheck = value
+                        if (Number(value) === value && value % 1 !== 0) {
+                          let valCheck = Number(value).toFixed(2)
+                        }
 
-                          let lblStr = `$${valCheck}`
-                          return lblStr
-                        },
+                        let lblStr = `$${valCheck}`
+                        return lblStr
                       },
                     },
-                    tooltip: {
-                      // enabled: true,
-                      x: {
-                        formatter: (value, ind) => {
-                          return res.data.labels[ind.dataPointIndex]
-                        },
-                      },
-                      y: {
-                        formatter: (value, ind) => {
-                          let lblStr = `$${value}`
-                          if (typeof ind == 'object')
-                            lblStr = `$${value} (${
-                              this.salesQty1d[ind.dataPointIndex]
-                            })`
-                          else lblStr = `$${value} (${this.salesQty1d[ind]})`
-                          return lblStr
-                        },
+                  },
+                  tooltip: {
+                    // enabled: true,
+                    x: {
+                      formatter: (value, ind) => {
+                        return res.data.labels[ind.dataPointIndex]
                       },
                     },
-                  }
+                    y: {
+                      formatter: (value, ind) => {
+                        let lblStr = `$${value}`
+                        if (typeof ind == 'object')
+                          lblStr = `$${value} (${
+                            this.salesQty1d[ind.dataPointIndex]
+                          })`
+                        else lblStr = `$${value} (${this.salesQty1d[ind]})`
+                        return lblStr
+                      },
+                    },
+                  },
+                }
 
-                  // this.initGraphLabelLength = res.data.labels.length
-                  setTimeout(() => {
-                    this.generateImageOfGraph(2)
-                  }, 3000)
+                // this.initGraphLabelLength = res.data.labels.length
+                setTimeout(() => {
+                  this.generateImageOfGraph(2)
+                }, 3000)
                 // } else {
                 //   this.graphDataEmpty = true
                 // }
@@ -950,49 +970,49 @@ export default {
               $('.dashboard-apex-top-1d').hide()
 
               // if (this.initGraphLabelLength != res.data.labels.length) {
-                this.series = [{ name: 'SX', data: res.data.values }]
-                this.salesQty = res.data.qty
-                this.chartOptions = {
-                  xaxis: {
-                    categories: res.data.labels,
-                  },
-                  yaxis: {
-                    labels: {
-                      style: {
-                        colors: '#edecec',
-                        fontSize: '10px',
-                        fontFamily: 'NexaBold',
-                      },
-                      formatter: (value, ind) => {
-                        let valCheck = value
-                        if (Number(value) === value && value % 1 !== 0) {
-                          let valCheck = Number(value).toFixed(2)
-                        }
+              this.series = [{ name: 'SX', data: res.data.values }]
+              this.salesQty = res.data.qty
+              this.chartOptions = {
+                xaxis: {
+                  categories: res.data.labels,
+                },
+                yaxis: {
+                  labels: {
+                    style: {
+                      colors: '#edecec',
+                      fontSize: '10px',
+                      fontFamily: 'NexaBold',
+                    },
+                    formatter: (value, ind) => {
+                      let valCheck = value
+                      if (Number(value) === value && value % 1 !== 0) {
+                        let valCheck = Number(value).toFixed(2)
+                      }
 
-                        let lblStr = `$${valCheck}`
-                        return lblStr
-                      },
+                      let lblStr = `$${valCheck}`
+                      return lblStr
                     },
                   },
-                  tooltip: {
-                    y: {
-                      formatter: (value, ind) => {
-                        let lblStr = `$${value}`
-                        if (typeof ind == 'object')
-                          lblStr = `$${value} (${
-                            this.salesQty[ind.dataPointIndex]
-                          })`
-                        else lblStr = `$${value} (${this.salesQty[ind]})`
-                        return lblStr
-                      },
+                },
+                tooltip: {
+                  y: {
+                    formatter: (value, ind) => {
+                      let lblStr = `$${value}`
+                      if (typeof ind == 'object')
+                        lblStr = `$${value} (${
+                          this.salesQty[ind.dataPointIndex]
+                        })`
+                      else lblStr = `$${value} (${this.salesQty[ind]})`
+                      return lblStr
                     },
                   },
-                }
+                },
+              }
 
-                // this.initGraphLabelLength = res.data.labels.length
-                setTimeout(() => {
-                  this.generateImageOfGraph('all')
-                }, 2000)
+              // this.initGraphLabelLength = res.data.labels.length
+              setTimeout(() => {
+                this.generateImageOfGraph('all')
+              }, 2000)
               // } else {
               //   this.graphDataEmpty = true
               // }
@@ -1070,15 +1090,21 @@ ul.featured-listing {
   line-height: 2;
   letter-spacing: 1px;
   a {
+    color: $theme-off-white;
+    &:hover {
+       color: $theme-off-white;
+    }
+  }
+  .price-link {
     color: #1ce783;
     float: right;
-    width: 84px;
+    width: 110px;
     &:hover {
       color: #1ce783;
     }
   }
   .card-text-s {
-    width: calc(100% - 84px);
+    width: calc(100% - 110px);
     display: inline-block;
     text-decoration: underline;
     padding-right: 10px;
@@ -1106,7 +1132,7 @@ ul.featured-listing {
   }
 }
 .featured-listing {
-  li.my-card { 
+  li.my-card {
     // padding-left: 40px !important;
     // padding-right: 40px !important;
     padding-left: 2vw !important;

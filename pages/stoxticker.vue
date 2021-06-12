@@ -597,7 +597,7 @@ slabstox.com
 
                   <marquee-text :duration="30" :paused="paused" :repeat="1" v-if="soldListing.basketball==0">
                     <div @mouseenter="paused = !paused" @mouseleave="paused = false">
-                      <h4 style="padding: 0 50px;">No recent sold listings.</h4>
+                      <h4 style="padding: 0 50px;">No recently sold listings.</h4>
                     </div>
                   </marquee-text>
                 </li>
@@ -619,7 +619,7 @@ slabstox.com
 
                   <marquee-text :duration="30" :paused="paused" :repeat="1" v-if="soldListing.football==0">
                     <div @mouseenter="paused = !paused" @mouseleave="paused = false">
-                    <h4 style="padding: 0 50px;">No recent sold listings.</h4>
+                    <h4 style="padding: 0 50px;">No recently sold listings.</h4>
            </div>
                   </marquee-text>
                 </li>
@@ -641,7 +641,7 @@ slabstox.com
 
                   <marquee-text :duration="30" :paused="paused" :repeat="1" v-if="soldListing.baseball==0">
                     <div @mouseenter="paused = !paused" @mouseleave="paused = false">
-                    <h4 style="padding: 0 50px;">No recent sold listings.</h4>
+                    <h4 style="padding: 0 50px;">No recently sold listings.</h4>
                 </div>
                   </marquee-text>
 
@@ -664,7 +664,7 @@ slabstox.com
 
                   <marquee-text :duration="30" :paused="paused" :repeat="1" v-if="soldListing.soccer==0">
                     <div @mouseenter="paused = !paused" @mouseleave="paused = false">
-                    <h4 style="padding: 0 50px;">No recent sold listings.</h4>
+                    <h4 style="padding: 0 50px;">No recently sold listings.</h4>
                </div>
                   </marquee-text>
                 </li>
@@ -686,7 +686,7 @@ slabstox.com
 
                   <marquee-text :duration="30" :paused="paused" :repeat="1" v-if="soldListing.pokemon==0">
                     <div @mouseenter="paused = !paused" @mouseleave="paused = false">
-                    <h4 style="padding: 0 50px;">No recent sold listings.</h4>
+                    <h4 style="padding: 0 50px;">No recently sold listings.</h4>
                 </div>
                   </marquee-text>
                 </li>

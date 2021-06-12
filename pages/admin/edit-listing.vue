@@ -185,7 +185,7 @@ export default {
   layout: 'admin',
   head() {
     return {
-      title: 'Admin Ebay Item Fetch - Slabstox',
+      title: 'Admin Ebay Item Fetch - SlabStox',
     }
   },
   mounted() {

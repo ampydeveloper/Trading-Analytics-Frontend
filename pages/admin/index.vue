@@ -12,7 +12,7 @@ export default {
   layout: 'admin',
   head() {
     return {
-      title: 'Admin Dashboard - Slabstox'
+      title: 'Admin Dashboard - SlabStox'
     }
   },
   mounted() {

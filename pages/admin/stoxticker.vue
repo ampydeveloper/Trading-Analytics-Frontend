@@ -461,7 +461,7 @@ export default {
   },
   head() {
     return {
-      title: 'Stoxticker - Slabstox',
+      title: 'Stoxticker - SlabStox',
     }
   },
   mounted() {

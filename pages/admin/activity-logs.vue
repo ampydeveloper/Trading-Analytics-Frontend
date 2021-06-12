@@ -423,7 +423,7 @@ export default {
   layout: 'admin',
   head() {
     return {
-      title: 'Activity Logs - Slabstox',
+      title: 'Activity Logs - SlabStox',
     }
   },
   mounted() {

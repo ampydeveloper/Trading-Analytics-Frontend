@@ -461,7 +461,7 @@ export default {
   layout: 'admin',
   head() {
     return {
-      title: 'Users Management - Slabstox',
+      title: 'Users Management - SlabStox',
     }
   },
   mounted() {

@@ -237,7 +237,7 @@ export default {
   layout: 'admin',
   head() {
     return {
-      title: 'Stoxticker - Slabstox',
+      title: 'Stoxticker - SlabStox',
       meta: [
         {
            hid: 'stoxticker-details',name: 'Stoxticker - Slabstox',
