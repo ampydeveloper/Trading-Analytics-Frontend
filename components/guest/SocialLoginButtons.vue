@@ -27,6 +27,7 @@ import {
 } from '../../constants/keys'
 
 export default {
+  props: ['errorMessageVal'],
   mounted() {
     this.googleSDK()
     this.facebookSDK()
@@ -92,7 +93,6 @@ export default {
       }
     },
     prepareLoginButton() {
-      $('.login-form .error-message').text('')
       const selfthis = this
       window['gAuth2'].attachClickHandler(
         document.getElementById('google-btn'),
@@ -111,20 +111,15 @@ export default {
           selfthis.socialLogin(data, 'google')
         },
         (error) => {
-          // console.log(error)
-          // console.log(error.error)
+          console.log(error);
           if (error.error != 'popup_closed_by_user') {
-            $('.login-form .error-message')
-              .text(
-                'There has been an error fetching your details. Please check your Google account for permissions or check your browser for cookie settings.'
-              )
-              .show()
+            this.errorMessageVal =
+              'There has been an error fetching your details. Please check your Google account for permissions or check your browser for cookie settings.'
             this.$toast.error(
               'There has been an error fetching your details. Please check your Google account for permissions or check your browser for cookie settings.',
               { timeOut: 10000 }
             )
           }
-
           // alert(JSON.stringify(error, undefined, 2));
         }
       )
@@ -156,11 +151,9 @@ export default {
       })(document, 'script', 'facebook-jssdk')
     },
     facebook() {
-     
       const selfthis = this
       FB.login(
         function (response) {
-           $('.login-form .error-message').text('')
           if (response.status === 'connected') {
             // Logged into your webpage and Facebook.
             FB.api('/me?fields=id,first_name,last_name,email', function (res) {
@@ -172,21 +165,15 @@ export default {
           } else {
             // The person is not logged into your webpage or we are unable to tell.
             if (response.status != undefined) {
-              $('.login-form .error-message')
-                .text(
-                  'There has been an error fetching your details. Please check your Facebook account for permissions or check your browser for cookie settings.'
-                )
-                .show()
+              this.errorMessageVal =
+                'There has been an error fetching your details. Please check your Facebook account for permissions or check your browser for cookie settings.'
               this.$toast.error(
                 'There has been an error fetching your details. Please check your Facebook account for permissions or check your browser for cookie settings.',
                 { timeOut: 10000 }
               )
             } else {
-              $('.login-form .error-message')
-                .text(
-                  'There has been an error fetching your details. Please try again.'
-                )
-                .show()
+              this.errorMessageVal =
+                'There has been an error fetching your details. Please try again.'
               this.$toast.error(
                 'There has been an error fetching your details. Please try again.',
                 { timeOut: 10000 }

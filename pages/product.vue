@@ -225,14 +225,10 @@
               <a
                 class="slab-specs-btn theme-green-btn"
                 target="_blank"
-                v-if="
-                  data.listing_info != null &&
-                  data.listing_info.listingType == 'Auction'
-                "
                 :href="viewItemURL"
-                >Place Bid</a
+                >VIEW LISTING ON EBAY</a
               >
-              <a
+              <!-- <a
                 class="slab-specs-btn theme-buy-now-btn"
                 target="_blank"
                 :href="viewItemURL"
@@ -240,8 +236,8 @@
                   data.listing_info != null &&
                   data.listing_info.listingType != 'Auction'
                 "
-                >Buy Now</a
-              >
+                >VIEW LISTING ON EBAY</a
+              > -->
               <!-- <a
                 class="slab-specs-btn theme-btn"
                 v-if="
@@ -869,9 +865,10 @@ export default {
       display: inline-block;
       text-align: center;
       font-size: 14px !important;
-      width: calc(33% - 3px);
-      float: left;
-      margin: 0 2px;
+      // width: calc(33% - 3px);
+          width: 100%;
+      // float: left;
+      // margin: 0 2px;
       &.theme-green-btn {
         color: #000;
       }

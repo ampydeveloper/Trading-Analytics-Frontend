@@ -127,6 +127,7 @@
               <SocialLoginButtons
                 v-if="showLoginForm"
                 v-on:onSocialLogin="processAuthLogin"
+                :errorMessageVal="errorMessage"
               ></SocialLoginButtons>
             </div>
             <div
@@ -159,7 +160,7 @@ export default {
   layout: 'guest',
   head() {
     return {
-      title: 'Login - Slabstox',
+      title: 'Login - SlabStox',
       meta: [
         { hid: 'login', name: 'Login - Slabstox', content: 'Buy & Sell Slabs' },
         { property: 'og:title', content: 'Buy & Sell Slabs' },
@@ -213,7 +214,6 @@ export default {
       this.twoFactor.id = data.id
     },
     async login() {
-      $('.login-form .error-message').text('')
       if (this.validation()) {
         try {
           this.errorMessage = null
