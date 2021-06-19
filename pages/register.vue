@@ -223,31 +223,15 @@ export default {
             this.form
           )
           if (resgisterRes.status == 200) {
-            // document.getElementById('__nuxt').style.display = "none";
-            console.log(resgisterRes)
             this.successMessage = resgisterRes.data.message
             setTimeout(function () {
               window.location.href = '/login'
-              // this.$router.push('/login')
-            }, 3000)
+            }, 7000)
           } else {
             this.errorMessage = resgisterRes.data.error.message
           }
-          // await this.$auth.loginWith('local', {
-          //   data: { email: this.form.email, password: this.form.password }
-          // })
-          // const res = await this.$axios.post('auth/login', this.form)
-          // if (res.status == 200) {
-          //   // this.processAuthLogin(res.data)
-          //   const a = await this.$auth.loginWith('local', {
-          //     data: { token: res.data.auth }
-          //   })
-          //   document.getElementById('__nuxt').style.display = "none";
-          //   window.location.href = '/dashboard'
-          // }
           this.hideLoader()
           this.$nuxt.$loading.finish()
-          // this.$router.push('/')
         } catch (e) {
           this.$nuxt.$loading.finish()
           this.hideLoader()
@@ -262,12 +246,12 @@ export default {
       const re =
         /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       if (!re.test(String(this.form.email).toLowerCase())) {
-        this.errors.email = 'Valid email is required.'
+        this.errors.email = 'This is invalid email. Try another one.'
         return false
       }
 
       if (this.form.password != this.form.confirmpassword) {
-        this.errors.confirmpassword = 'Password do not match.'
+        this.errors.confirmpassword = 'Password do not match. Check your passwords.'
         return false
       }
       return true
@@ -283,9 +267,9 @@ export default {
         if (res.data.errors.hasOwnProperty('password')) {
           this.errors.password = res.data.errors.password[0]
         }
-        this.errorMessage = 'Registration failed.'
+        this.errorMessage = 'Your account signup is failed. Try again.'
       } else if (res.status == 500) {
-        this.errorMessage = 'Unable to process you request.'
+        this.errorMessage = 'Unable to process you request. Please try again.'
       }
     },
     resetErrors() {

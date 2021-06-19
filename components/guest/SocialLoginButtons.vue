@@ -120,7 +120,6 @@ export default {
               { timeOut: 10000 }
             )
           }
-          // alert(JSON.stringify(error, undefined, 2));
         }
       )
     },
