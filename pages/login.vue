@@ -248,7 +248,11 @@ export default {
           this.isSubmit = false
           if (e) {
             this.handelError(e.response)
-            this.errorMessage = 'Invalid Email or Password.'
+            if (e.response.data.error.message) {
+              this.errorMessage = e.response.data.error.message
+            } else {
+              this.errorMessage = 'Invalid Email or Password. Try again.'
+            }
           }
         }
       }
@@ -276,17 +280,23 @@ export default {
       } catch (e) {
         this.hideLoader()
         this.handelError(e.response)
-        this.errorMessage = 'Login failed.'
+        if (e.response.data.error.message) {
+          this.errorMessage = e.response.data.error.message
+        } else {
+          this.errorMessage =
+            'Google authentication is not working. Please try again.'
+        }
       }
     },
     validation() {
-      const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      const re =
+        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       if (!re.test(String(this.form.email).toLowerCase())) {
-        this.errors.email = 'Valid email required'
+        this.errors.email = 'This is invalid email. Try another one.'
         return false
       }
       if (this.form.password.length == 0) {
-        this.errors.password = 'Password required'
+        this.errors.password = 'Password is required. Please add one.'
         return false
       }
       return true

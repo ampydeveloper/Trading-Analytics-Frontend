@@ -45,7 +45,7 @@
               <p
                 v-if="emailSent"
                 class="email-sent-message"
-              >Password Reset link is sent to your email, please check your inbox</p>
+              >Password reset link has been sent to you successfully. Please check your inbox.</p>
             </div>
             <div class="col-md-6 col-sm-6 login-page-signup-section">
               <p class="dont-have-account for-forgetpassword">Don't Have an Account?</p>
@@ -148,11 +148,11 @@ export default {
     margin-bottom: 30px;
   }
   .email-sent-message {
-    font-size: 16px;
-    font-weight: bolder;
+    font-size: 15px;
     text-transform: uppercase;
     text-align: center;
     margin-bottom: 50px;
+    color: #28a745;
   }
   .for-forgetpassword {
     margin-top: 105px !important;
