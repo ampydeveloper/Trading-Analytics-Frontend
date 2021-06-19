@@ -2,11 +2,13 @@
   <nav class="col-md-2 d-none d-md-block bg-light sidebar">
     <div class="sidebar-sticky">
       <div class="sibar-logo-top">
-        <img
-          src="~/assets/img/dashboard-sidebar-middel-logo.png"
-          alt="Slabstox"
-          id="sidebarLogo"
-        />
+        <a href="/"
+          ><img
+            src="~/assets/img/dashboard-sidebar-middel-logo.png"
+            alt="Slabstox"
+            id="sidebarLogo"
+          />
+        </a>
       </div>
       <ul class="nav flex-column nav-list-first">
         <li class="nav-item">
@@ -117,11 +119,18 @@
             <div class="link-text">Slab Request</div>
           </span>
         </li>
-        <li class="nav-item" v-if="user != null && user.full_name != null && user.roles[0].name != 'user'">
+        <li
+          class="nav-item"
+          v-if="
+            user != null &&
+            user.full_name != null &&
+            user.roles[0].name != 'user'
+          "
+        >
           <a class="nav-link" href="/admin" target="_blank">
             <div class="icon dashboard-icon"></div>
             <div class="link-text">Admin Panel</div>
-         </a>
+          </a>
         </li>
       </ul>
       <!-- <div class="sibar-logo-middel">
@@ -148,7 +157,9 @@
 
     <b-modal id="loginTopPopup" title="ADDITIONAL SX PRO FEATURES" hide-footer>
       <div class="shar-text" style="padding: 20px 20px">
-        To Access Additional Features Please <nuxt-link to="/register">Sign Up</nuxt-link> or <a href="/login">Sign In</a>.
+        To Access Additional Features Please
+        <nuxt-link to="/register">Sign Up</nuxt-link> or
+        <a href="/login">Sign In</a>.
       </div>
     </b-modal>
   </nav>
@@ -159,9 +170,9 @@ export default {}
 </script>
 
 <style lang="scss" scoped>
-.shar-text{
-  a{
-        color: #11d675;
+.shar-text {
+  a {
+    color: #11d675;
   }
 }
 .sidebar {
@@ -177,6 +188,7 @@ export default {}
   .sibar-logo-top {
     margin-bottom: 25px;
     img {
+      cursor: pointer;
       width: 100%;
       max-width: 235px;
       padding: 20px 10px;
