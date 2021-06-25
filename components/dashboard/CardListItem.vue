@@ -51,31 +51,21 @@
     </div>
     <nuxt-link
       :class="'my-card-view-listing ' + timeEndClass"
-      :to="'/product?id=' + itemdata.id + '&slag=' + itemdata.title"
+      :to="viewItemURL"
     >
-      {{ viewListingText }}
+       View Listing on Ebay
       <font-awesome-icon :icon="['fas', 'chevron-circle-right']" />
     </nuxt-link>
 
-    <!-- <span
-      :class="'my-card-view-listing '"
-      v-if="user == null || user.full_name == null"
-      v-b-modal.loginTopPopup
-    >
-      {{ viewListingText }}
-      <font-awesome-icon :icon="['fas', 'chevron-circle-right']" />
-    </span> -->
-
     <div
       class="my-card-view-listing-on-ebay"
-      v-if="user != null && user.full_name != null"
     >
-      <a
-        class="my-card-view-listing-on-ebay-link"
-        :href="viewItemURL"
-        target="_blank"
-        >View Listing on Ebay</a
-      >
+       <nuxt-link
+      class="my-card-view-listing-on-ebay-link"
+      :to="'/product?id=' + itemdata.id + '&slag=' + itemdata.title"
+    >
+      {{ viewListingText }}
+    </nuxt-link>
     </div>
   </li>
 </template>

@@ -132,15 +132,23 @@
                   <td colspan="6">
                     <button
                       class="theme-btn card-btn"
-                      :disabled="page == 1"
-                      @click="getActivityLogs(page-1)"
+                      :disabled="page.current-1 <= 0"
+                      @click="getActivityLogs(page.current-1)"
                     >
                       Previous
                     </button>
                     <button
+                      :class="[{active: pg == page.current}, 'theme-btn card-btn ml-1']"
+                      v-for='pg in page.list'
+                      @click="getActivityLogs(pg)"
+                      v-text='pg'
+                      :key='"page"+pg'
+                    >{{pg}}
+                    </button>
+                    <button
                       class="theme-btn card-btn"
-                      :disabled="page==last_page"
-                      @click="getActivityLogs(page+1)"
+                      :disabled="page.current+1>page.last"
+                      @click="getActivityLogs(page.current+1)"
                     >
                       Next
                     </button>
@@ -442,11 +450,16 @@ export default {
       users: [],
       models: [],
       logs: [],
-      page: 1,
+      // page: 1,
       last_page: 0,
       requestInProcess: false,
       dataTableSel:null,
-      allPages:0
+      allPages:0,
+      page:{
+        current: 0,
+        last: 0,
+        list: []
+      }
     }
   },
 //   watch: {
@@ -488,6 +501,14 @@ export default {
 //       },
 //     },
   methods: {    
+    getPages(){
+        let start = 1, end = 0
+        let current = this.page.current
+        if(current - 1 >= 4) start = current - 3
+        if(current + 3 > this.page.last) end = this.page.last
+        else end = current + 3
+        this.page.list = [...Array((end+1)-start).keys()].map(i => i + start)
+    },
     getUsers() {
       if (!this.requestInProcess) {
         try {
@@ -514,7 +535,7 @@ export default {
       }
     },
     getActivityLogs(page = 1) {
-      if (!this.requestInProcess && this.selUser > 0) {
+      if (!this.requestInProcess && this.selUser > 0 && this.page.current != page) {
         try {
           this.showLoader()
           this.requestInProcess = true
@@ -525,9 +546,12 @@ export default {
             .then((res) => {
               if (res.status == 200) {
                 this.logs = res.data.data.data
-                this.page = res.data.data.current_page
-                this.last_page = res.data.data.last_page
-                this.allPages = this.totalCount = res.data.data.total
+                this.page.current = res.data.data.current_page
+                this.page.last = res.data.data.last_page
+                this.getPages()
+                // this.page = res.data.data.current_page
+                // this.last_page = res.data.data.last_page
+                // this.allPages = this.totalCount = res.data.data.total
               }
               this.requestInProcess = false
               this.hideLoader()
@@ -557,5 +581,8 @@ ul.my-card-listing {
 .card-link {
   line-height: 2;
   margin-top: 2px;
+}
+.active.theme-btn.card-btn{
+  border: 3px solid #1ce783
 }
 </style>
