@@ -60,6 +60,14 @@
                 <font-awesome-icon :icon="['fas', 'chevron-right']" />
               </a>
             </div>
+            <div class="slab-specs-btn-group view-listing-on-ebay-mobile">
+              <a
+                class="slab-specs-btn theme-green-btn"
+                target="_blank"
+                :href="viewItemURL"
+                >VIEW LISTING ON EBAY</a
+              >
+            </div>
           </div>
         </div>
       </div>
@@ -228,26 +236,6 @@
                 :href="viewItemURL"
                 >VIEW LISTING ON EBAY</a
               >
-              <!-- <a
-                class="slab-specs-btn theme-buy-now-btn"
-                target="_blank"
-                :href="viewItemURL"
-                v-if="
-                  data.listing_info != null &&
-                  data.listing_info.listingType != 'Auction'
-                "
-                >VIEW LISTING ON EBAY</a
-              > -->
-              <!-- <a
-                class="slab-specs-btn theme-btn"
-                v-if="
-                  data.listing_info != null &&
-                  data.listing_info.listingType == 'Auction'
-                "
-                target="_blank"
-                :href="viewItemURL"
-                >Make Offer</a
-              > -->
             </div>
           </div>
           <div class="col-md-5 col-sm-5 purchase-info">
@@ -709,6 +697,9 @@ export default {
       @media (max-width: 991px) {
         height: 76%;
       }
+      @media (max-width: 767px) {
+        height: auto;
+      }
       img {
         width: auto;
         display: block;
@@ -729,6 +720,15 @@ export default {
         color: $theme-btn-green;
         font-size: 9px;
         text-decoration: none;
+      }
+      @media (max-width: 767px) {
+        display: none;
+      }
+    }
+    .view-listing-on-ebay-mobile {
+      display: none;
+      @media (max-width: 767px) {
+        display: block;
       }
     }
   }
@@ -866,7 +866,7 @@ export default {
       text-align: center;
       font-size: 14px !important;
       // width: calc(33% - 3px);
-          width: 100%;
+      width: 100%;
       // float: left;
       // margin: 0 2px;
       &.theme-green-btn {

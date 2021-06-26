@@ -155,8 +155,8 @@ export default {
         soccer_image: '',
         pokemon_image: '',
         listing_image: '',
-        trenders_order: ['basketball', 'soccer','baseball', 'football', 'pokemon'],
-        live_listings_order: ['basketball', 'soccer','baseball', 'football', 'pokemon']
+        trenders_order: ['basketball', 'soccer','baseball', 'football', 'hockey', 'pokemon'],
+        live_listings_order: ['basketball', 'soccer','baseball', 'football', 'hockey', 'pokemon', 'random bin']
       },
       src:{
         basketball: '',

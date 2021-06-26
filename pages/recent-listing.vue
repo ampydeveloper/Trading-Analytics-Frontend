@@ -4,8 +4,56 @@
       <div class="col-12 t-p-5">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">
+            <h5 class="card-title custom-smart-search-player-name">
               <button class="theme-green-btn card-btn">Recent Listing</button>
+              <div class="internal-search-container">
+              <input
+                v-model="keyword"
+                v-on:keyup.enter="search()"
+                v-on:keyup="getSmartKeyword()"
+                class="card-title-search-field"
+                type="text"
+                placeholder="search"
+              />
+              <div class="display_keyword" v-if="showSmartSearch">
+                <ul v-click-outside="hideSmartSearch">
+                  <li
+                    v-for="(item, key) of smartKeyword"
+                    :key="key"
+                    @click="selectKeyword(item.player)"
+                  >
+                    {{ item.player }}
+                  </li>
+                  <li v-if="smartKeyword.length == 0">
+                    No results found for this search
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="ll-head-right float-right">
+              <div class="custom-dropdown">
+                <button class="dropbtn">Filter By</button>
+                <div class="dropdown-content">
+                  <a href="javascript:;" @click="filterBy('ending_soon')"
+                    >Ending Soon</a
+                  >
+                  <a href="javascript:;" @click="filterBy('price_low_to_high')"
+                    >price low to high</a
+                  >
+                  <a href="javascript:;" @click="filterBy('buy_it_now')"
+                    >buy it now</a
+                  >
+                </div>
+              </div>
+              <nuxt-link
+                class="card-link"
+                :to="'/recent-listing?filter=ending_soon'"
+              >
+                View All
+                <font-awesome-icon :icon="['fas', 'chevron-right']" />
+              </nuxt-link>
+            </div>
             </h5>
             <div class="dataloader" v-if="requestInProcess">
               <b-spinner variant="success" label="Spinning"></b-spinner>
@@ -13,7 +61,7 @@
             <p
               v-if="items.length == 0"
               class="no-result-found"
-            >{{ (requestInProcess) ? '' : 'No result found'}}</p>
+            >{{ (requestInProcess) ? '' : 'There are no cards here. Check again soon.'}}</p>
             <ul v-else class="my-card-listing">
               <CardListItem v-for="item in items" :key="item.id" :itemdata="item" />
             </ul>
@@ -33,7 +81,7 @@ export default {
   layout: 'guestOuter',
   head() {
     return {
-      title: 'Search - Slabstox'
+      title: 'Live Listings  - Slabstox'
     }
   },
   mounted() {
@@ -43,6 +91,9 @@ export default {
    async mounted() {
     if (this.$route.query.hasOwnProperty('sport')) {
       this.sport = this.$route.query.sport
+    }
+    if (this.$route.query.hasOwnProperty('filter')) {
+      this.filter = this.$route.query.filter
     }
     this.searchCards()
   },
@@ -57,6 +108,12 @@ export default {
       page: 1,
       noMoreData: false,
       sport: null,
+       filter: null,
+       keyword: null,
+      // filterByKeword: '',
+         filterVal: 1,
+          showSmartSearch: false,
+      smartKeyword: [],
     }
   },
   methods: {
@@ -68,13 +125,18 @@ export default {
             this.items = []
           }
           this.requestInProcess = true
+          if(this.filter != 'recent'){
+            var axiosUrl = 'search/recent-listing';
+            }else{
+               var axiosUrl = 'search/get-recent-auction-list';
+            }
           this.$axios
-            .$post('search/recent-listing', {
+            .$post(axiosUrl, {
               take: 100,
               page: this.page,
               sport: this.sport,
-              // filterBy: 'ending_soon',
-              filterBy: '',
+              filterBy: this.filter,
+              search: this.keyword,
             })
             .then(res => {
               this.requestInProcess = false
@@ -97,11 +159,49 @@ export default {
                 }
               }
             })
+            
         } catch (err) {
           this.requestInProcess = false
           console.log(err)
         }
       }
+    },
+ hideSmartSearch(event) {
+      this.showSmartSearch = false
+    },
+    getSmartKeyword() {
+      try {
+        this.$axios
+          .$post('search/get-smart-keyword-onlyname', {
+            keyword: this.keyword,
+          })
+          .then((res) => {
+            if (res.status == 200) {
+              if (this.keyword == res.keyword) {
+                this.smartKeyword = res.data
+                this.showSmartSearch = true
+              }
+            }
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+      } catch (err) {
+        console.log(err)
+      }
+    },
+    selectKeyword(value, cardId) {
+      this.keyword = value
+      this.showSmartSearch = false
+      this.searchCards(false)
+    },
+    filterBy(data) {
+      this.filter = data
+      this.searchCards(false)
+    },
+    changeFilter(val) {
+      this.filterVal = val
+      this.searchCards(false)
     },
     scroll() {
       window.onscroll = () => {
@@ -110,7 +210,6 @@ export default {
         const offsetHeight = document.documentElement.offsetHeight
         let bottomOfWindow =
           scrollTop >= offsetHeight - 10 && scrollTop <= offsetHeight + 10
-          console.log(bottomOfWindow)
         if (bottomOfWindow) {
           if (!this.noMoreData) {
             this.searchCards(true)
@@ -244,6 +343,36 @@ export default {
     text-transform: uppercase;
     text-align: center;
     color: #ffffff;
+  }
+}
+.custom-smart-search-player-name {
+  .internal-search-container {
+    width: 200px;
+    display: inline-grid;
+    position: relative;
+    .display_keyword {
+      position: absolute;
+      background: #fff;
+      width: 100%;
+      margin: 14px 40px;
+      z-index: 9;
+      ul {
+        list-style: none;
+        text-transform: none;
+        font-family: 'CocogoosePro-Italic', Helvetica, Arial, sans-serif;
+        font-size: 12px;
+        padding: 5px 0px;
+        margin: 0;
+        li {
+          cursor: pointer;
+          line-height: 2;
+          padding-left: 10px;
+          &:hover {
+            background: #cccccc;
+          }
+        }
+      }
+    }
   }
 }
 </style>

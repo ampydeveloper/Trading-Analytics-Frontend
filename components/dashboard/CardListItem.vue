@@ -49,13 +49,13 @@
         :alt="itemdata.id"
       />
     </div>
-    <nuxt-link
-      :class="'my-card-view-listing ' + timeEndClass"
-      :to="viewItemURL"
+    <a
+      class="my-card-view-listing"
+      :href="viewItemURL" target="_blank"
     >
        View Listing on Ebay
       <font-awesome-icon :icon="['fas', 'chevron-circle-right']" />
-    </nuxt-link>
+    </a>
 
     <div
       class="my-card-view-listing-on-ebay"
@@ -385,7 +385,7 @@ export default {
     );
     padding: 6px 5px 5px 5px;
     color: #000;
-    font-size: 12px;
+    font-size: 10px;
     display: block;
     text-align: center;
     &:hover {

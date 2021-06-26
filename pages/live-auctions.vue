@@ -1,7 +1,7 @@
 <template>
   <div class="col-md-12 col-sm-12 search-page live-auctions-page">
     
-    <div class="row">
+    <!-- <div class="row">
       <div class="col-12 t-p-5">
         <div class="card card-single-row-outer">
           <div class="card-body">
@@ -21,11 +21,14 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
+
+<EndingSoonListing />
 
     <LiveListingCard v-for="(card, key) in cards" :key="key" :card="card" />
 
- <div class="row">
+<RecentListing />
+ <!-- <div class="row">
       <div class="col-12 t-p-5">
         <div class="card card-single-row-outer">
           <div class="card-body">
@@ -45,26 +48,17 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     
-    <!--<div class="row">
-      <div class="col-12 t-p-5">
-        <div class="card no_bg">
-          <div class="card-body">
-            <ul class="my-card-listing">
-              <CardListItem v-for="item in normalListingItems" :key="item.id" :itemdata="item" />
-            </ul>
-          </div>
-        </div>
-      </div>-->
-
-    </div>
+    <!-- </div> -->
   </div>
 </template>
 
 <script>
 import CardListItem from '~/components/dashboard/CardListItem'
 import LiveListingCard from '~/components/dashboard/LiveListingCard'
+import EndingSoonListing from '~/components/dashboard/EndingSoonListing'
+import RecentListing from '~/components/dashboard/RecentListing'
 export default {
   transition: 'fade',
   layout: 'guestOuter',
@@ -75,108 +69,107 @@ export default {
     }
   },
   mounted() {
-    this.getEndingSoonListing()
-    this.getNormalRecentListing()
+    // this.getEndingSoonListing()
+    // this.getNormalRecentListing()
     // this.scroll()
   },
   components: {
     CardListItem,
     LiveListingCard,
+    EndingSoonListing,
+    RecentListing,
   },
   data() {
     return {
-      normalListingItems: [],
-      endingSoonListingItems: [],
+      // normalListingItems: [],
+      // endingSoonListingItems: [],
       page: 1,
       requestInProcess: false,
-      requestInProcessEndingSoon: false,
+      // requestInProcessEndingSoon: false,
       noMoreData: false,
       cards: [
         'basketball',
         'soccer',
         'baseball',
         'football',
+        'hockey',
         'pokemon',
         'random bin',
       ],
     }
   },
   methods: {
-    getEndingSoonListing() {
-      try {
-        this.endingSoonListingItems = []
-        this.requestInProcessEndingSoon = true
-        this.$axios
-          .$post('search/ending-soon-listing', {
-            take: 12,
-            filterBy: 'ending_soon',
-          })
-          .then((res) => {
-            this.requestInProcessEndingSoon = false
-            if (res.status == 200) {
-              this.cards = [...res.order, ...['random bin']]
-              this.endingSoonListingItems = res.data
-            }
-          })
-      } catch (err) {
-        this.requestInProcessEndingSoon = false
-        console.log(err)
-      }
-    },
-    getNormalRecentListing(status = false) {
-      if (!this.requestInProcess) {
-        try {
-          if (!status) {
-            this.page = 1
-            this.normalListingItems = []
-          }
-          this.requestInProcess = true
-          this.$axios
-            .$post('search/get-recent-auction-list', {
-              take: 6,
-              page: this.page,
-            })
-            .then((res) => {
-              this.requestInProcess = false
-              if (res.status == 200) {
-                if (res.items != null && res.items.length > 0) {
-                  // if (status) {
-                  //   res.items.data.map(item => {
-                  //     this.normalListingItems.push(item)
-                  //   })
-                  // } else {
-                  this.normalListingItems = res.items
-                  // }
-                  this.page = 1
-                } else {
-                  if (!status) {
-                    this.normalListingItems = []
-                  } else {
-                    this.noMoreData = true
-                  }
-                }
-              }
-            })
-        } catch (err) {
-          this.requestInProcess = false
-          console.log(err)
-        }
-      }
-    },
-    scroll() {
-      window.onscroll = () => {
-        const scrollTop =
-          document.documentElement.scrollTop + window.innerHeight
-        const offsetHeight = document.documentElement.offsetHeight
-        let bottomOfWindow =
-          scrollTop >= offsetHeight - 15 && scrollTop <= offsetHeight + 15
-        if (bottomOfWindow) {
-          if (!this.noMoreData) {
-            this.getNormalRecentListing(true)
-          }
-        }
-      }
-    },
+    // getEndingSoonListing() {
+    //   //getting order only by this API
+    //   try {
+    //     this.$axios
+    //       .$post('search/ending-soon-listing', {
+    //         take: 1,
+    //         filterBy: 'ending_soon',
+    //       })
+    //       .then((res) => {
+    //         if (res.status == 200) {
+    //           this.cards = [...res.order, ...['hockey','random bin']]
+    //         }
+    //       })
+    //   } catch (err) {
+    //     console.log(err)
+    //   }
+    // },
+    // getNormalRecentListing(status = false) {
+    //   if (!this.requestInProcess) {
+    //     try {
+    //       if (!status) {
+    //         this.page = 1
+    //         this.normalListingItems = []
+    //       }
+    //       this.requestInProcess = true
+    //       this.$axios
+    //         .$post('search/get-recent-auction-list', {
+    //           take: 6,
+    //           page: this.page,
+    //         })
+    //         .then((res) => {
+    //           this.requestInProcess = false
+    //           if (res.status == 200) {
+    //             if (res.items != null && res.items.length > 0) {
+    //               // if (status) {
+    //               //   res.items.data.map(item => {
+    //               //     this.normalListingItems.push(item)
+    //               //   })
+    //               // } else {
+    //               this.normalListingItems = res.items
+    //               // }
+    //               this.page = 1
+    //             } else {
+    //               if (!status) {
+    //                 this.normalListingItems = []
+    //               } else {
+    //                 this.noMoreData = true
+    //               }
+    //             }
+    //           }
+    //         })
+    //     } catch (err) {
+    //       this.requestInProcess = false
+    //       console.log(err)
+    //     }
+    //   }
+    // },
+    // scroll() {
+    //   window.onscroll = () => {
+    //     const scrollTop =
+    //       document.documentElement.scrollTop + window.innerHeight
+    //     const offsetHeight = document.documentElement.offsetHeight
+    //     let bottomOfWindow =
+    //       scrollTop >= offsetHeight - 15 && scrollTop <= offsetHeight + 15
+    //     if (bottomOfWindow) {
+    //       if (!this.noMoreData) {
+    //         this.getNormalRecentListing(true)
+    //       }
+    //     }
+    //   }
+    // },
   },
 }
 </script> 

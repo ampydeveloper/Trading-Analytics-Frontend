@@ -4,8 +4,8 @@
       <div class="card card-single-row-outer">
         <div class="card-body">
           <h5 class="card-title custom-smart-search-player-name">
-            <button class="card-btn theme-btn">
-              {{ card != 'pokemon' ? card : 'Pokémon' }}
+            <button class="card-btn theme-btn theme-green-btn ending-title">
+              Recent Listings
             </button>
             <div class="internal-search-container">
               <input
@@ -32,62 +32,6 @@
               </div>
             </div>
 
-            <div
-              class="trender-cards-footer"
-              v-if="data.length >= 0 && !requestInProcess && showFilters"
-            >
-              <ul class="trender-cards-footer-month-filter">
-                <li
-                  class="trender-cards-footer-month-filter-item"
-                  :class="{ active: filterVal == 1 }"
-                  @click="changeFilter(1)"
-                >
-                  1D
-                </li>
-                <li
-                  class="trender-cards-footer-month-filter-item"
-                  :class="{ active: filterVal == 2 }"
-                  @click="changeFilter(2)"
-                >
-                  1W
-                </li>
-                <li
-                  class="trender-cards-footer-month-filter-item"
-                  :class="{ active: filterVal == 3 }"
-                  @click="changeFilter(3)"
-                >
-                  1M
-                </li>
-                <li
-                  class="trender-cards-footer-month-filter-item"
-                  :class="{ active: filterVal == 4 }"
-                  @click="changeFilter(4)"
-                >
-                  3M
-                </li>
-                <li
-                  class="trender-cards-footer-month-filter-item"
-                  :class="{ active: filterVal == 5 }"
-                  @click="changeFilter(5)"
-                >
-                  6M
-                </li>
-                <li
-                  class="trender-cards-footer-month-filter-item"
-                  :class="{ active: filterVal == 6 }"
-                  @click="changeFilter(6)"
-                >
-                  1Y
-                </li>
-                <li
-                  class="trender-cards-footer-month-filter-item"
-                  :class="{ active: filterVal == 7 }"
-                  @click="changeFilter(7)"
-                >
-                  5Y
-                </li>
-              </ul>
-            </div>
             <div class="ll-head-right float-right">
               <div class="custom-dropdown">
                 <button class="dropbtn">Filter By</button>
@@ -105,19 +49,20 @@
               </div>
               <nuxt-link
                 class="card-link"
-                :to="'/recent-listing?sport=' + card"
+                :to="'/recent-listing?filter=recent'"
               >
                 View All
                 <font-awesome-icon :icon="['fas', 'chevron-right']" />
               </nuxt-link>
             </div>
           </h5>
+
           <div class="dataloader" v-if="requestInProcess">
             <b-spinner variant="success" label="Spinning"></b-spinner>
           </div>
-          <ul class="my-card-listing">
+          <ul class="my-card-listing" v-if="normalListingItems.length > 0">
             <CardListItem
-              v-for="item in data"
+              v-for="item in normalListingItems"
               :key="item.id"
               :itemdata="item"
             />
@@ -125,7 +70,7 @@
 
           <div
             class="empty-result"
-            v-if="data.length == 0 && !requestInProcess"
+            v-if="normalListingItems.length == 0 && !requestInProcess"
           >
             <p>There are no cards here. Check again soon.</p>
           </div>
@@ -158,31 +103,50 @@ export default {
     return {
       data: [],
       keyword: null,
-      // filterByKeword: 'ending_soon',
       filterByKeword: '',
       requestInProcess: false,
       filterVal: 1,
       showSmartSearch: false,
       smartKeyword: [],
+      normalListingItems: [],
     }
   },
   async mounted() {
     this.search()
+    this.getNormalRecentListing()
   },
   methods: {
+    getNormalRecentListing() {
+      if (!this.requestInProcess) {
+        try {
+          this.requestInProcess = true
+          this.$axios
+            .$post('search/get-recent-auction-list', {
+              take: 6,
+              page: this.page,
+            })
+            .then((res) => {
+              this.requestInProcess = false
+              if (res.status == 200) {
+               this.normalListingItems = res.items
+              }
+            })
+        } catch (err) {
+          this.requestInProcess = false
+          console.log(err)
+        }
+      }
+    },
     hideSmartSearch(event) {
       this.showSmartSearch = false
     },
     getSmartKeyword() {
       try {
-        //this.requestInProcess = true
         this.$axios
           .$post('search/get-smart-keyword-onlyname', {
             keyword: this.keyword,
-            sport: this.card,
           })
           .then((res) => {
-            //this.requestInProcess = false
             if (res.status == 200) {
               if (this.keyword == res.keyword) {
                 this.smartKeyword = res.data
@@ -191,14 +155,11 @@ export default {
             }
           })
           .catch((err) => {
-            //this.requestInProcess = false
             console.log(err)
           })
       } catch (err) {
-        //this.requestInProcess = false
         console.log(err)
       }
-      console.log(this.keyword)
     },
     selectKeyword(value, cardId) {
       this.keyword = value
@@ -214,16 +175,15 @@ export default {
         this.data = []
         this.requestInProcess = true
         this.$axios
-          .$post('search/recent-listing', {
-            take: 12,
-            sport: this.card,
+          .$post('search/get-recent-auction-list', {
+            take: 6,
             search: this.keyword,
             filterBy: this.filterByKeword,
           })
           .then((res) => {
             this.requestInProcess = false
             if (res.status == 200) {
-              this.data = res.data
+              this.normalListingItems = res.items
             }
           })
       } catch (err) {
