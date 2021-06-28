@@ -2,10 +2,12 @@
   <nav class="col-md-2 d-none d-md-block bg-light sidebar">
     <div class="sidebar-sticky">
       <div class="sibar-logo-top">
+         <nuxt-link class="" to="/admin">
         <img
           src="~/assets/img/dashboard-sidebar-middel-logo.png"
           alt="Slabstox"
         />
+         </nuxt-link>
       </div>
       <ul class="nav flex-column nav-list-first">
         <li class="nav-item">

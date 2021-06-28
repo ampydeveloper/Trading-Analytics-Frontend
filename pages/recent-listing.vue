@@ -7,56 +7,65 @@
             <h5 class="card-title custom-smart-search-player-name">
               <button class="theme-green-btn card-btn">Recent Listing</button>
               <div class="internal-search-container">
-              <input
-                v-model="keyword"
-                v-on:keyup.enter="search()"
-                v-on:keyup="getSmartKeyword()"
-                class="card-title-search-field"
-                type="text"
-                placeholder="search"
-              />
-              <div class="display_keyword" v-if="showSmartSearch">
-                <ul v-click-outside="hideSmartSearch">
-                  <li
-                    v-for="(item, key) of smartKeyword"
-                    :key="key"
-                    @click="selectKeyword(item.player)"
-                  >
-                    {{ item.player }}
-                  </li>
-                  <li v-if="smartKeyword.length == 0">
-                    No results found for this search
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="ll-head-right float-right">
-              <div class="custom-dropdown">
-                <button class="dropbtn">Filter By</button>
-                <div class="dropdown-content">
-                  <a href="javascript:;" @click="filterBy('ending_soon')"
-                    >Ending Soon</a
-                  >
-                  <a href="javascript:;" @click="filterBy('price_low_to_high')"
-                    >price low to high</a
-                  >
-                  <a href="javascript:;" @click="filterBy('buy_it_now')"
-                    >buy it now</a
-                  >
+                <input
+                  v-model="keyword"
+                  v-on:keyup.enter="search()"
+                  v-on:keyup="getSmartKeyword()"
+                  class="card-title-search-field"
+                  type="text"
+                  placeholder="search"
+                />
+                <div class="display_keyword" v-if="showSmartSearch">
+                  <ul v-click-outside="hideSmartSearch">
+                    <li
+                      v-for="(item, key) of smartKeyword"
+                      :key="key"
+                      @click="selectKeyword(item.player)"
+                    >
+                      {{ item.player }}
+                    </li>
+                    <li v-if="smartKeyword.length == 0">
+                      No results found for this search
+                    </li>
+                  </ul>
                 </div>
               </div>
-            </div>
+
+              <div class="ll-head-right float-right">
+                <div class="custom-dropdown">
+                  <button class="dropbtn">Filter By</button>
+                  <div class="dropdown-content">
+                    <a href="javascript:;" @click="filterBy('ending_soon')"
+                      >Ending Soon</a
+                    >
+                    <a
+                      href="javascript:;"
+                      @click="filterBy('price_low_to_high')"
+                      >price low to high</a
+                    >
+                    <a href="javascript:;" @click="filterBy('buy_it_now')"
+                      >buy it now</a
+                    >
+                  </div>
+                </div>
+              </div>
             </h5>
             <div class="dataloader" v-if="requestInProcess">
               <b-spinner variant="success" label="Spinning"></b-spinner>
             </div>
-            <p
-              v-if="items.length == 0"
-              class="no-result-found"
-            >{{ (requestInProcess) ? '' : 'There are no cards here. Check again soon.'}}</p>
+            <p v-if="items.length == 0" class="no-result-found">
+              {{
+                requestInProcess
+                  ? ''
+                  : 'There are no cards here. Check again soon.'
+              }}
+            </p>
             <ul v-else class="my-card-listing">
-              <CardListItem v-for="item in items" :key="item.id" :itemdata="item" />
+              <CardListItem
+                v-for="item in items"
+                :key="item.id"
+                :itemdata="item"
+              />
             </ul>
           </div>
         </div>
@@ -74,14 +83,14 @@ export default {
   layout: 'guestOuter',
   head() {
     return {
-      title: 'Live Listings  - Slabstox'
+      title: 'Live Listings  - Slabstox',
     }
   },
   mounted() {
     this.searchCards()
     // this.scroll()
   },
-   async mounted() {
+  async mounted() {
     if (this.$route.query.hasOwnProperty('sport')) {
       this.sport = this.$route.query.sport
     }
@@ -92,7 +101,7 @@ export default {
   },
   components: {
     CardListItem,
-    BSpinner
+    BSpinner,
   },
   data() {
     return {
@@ -101,11 +110,11 @@ export default {
       page: 1,
       noMoreData: false,
       sport: null,
-       filter: null,
-       keyword: null,
+      filter: null,
+      keyword: null,
       // filterByKeword: '',
-         filterVal: 1,
-          showSmartSearch: false,
+      filterVal: 1,
+      showSmartSearch: false,
       smartKeyword: [],
     }
   },
@@ -118,29 +127,35 @@ export default {
             this.items = []
           }
           this.requestInProcess = true
-          if(this.filter != 'recent'){
-            var axiosUrl = 'search/recent-listing';
-            }else{
-               var axiosUrl = 'search/get-recent-auction-list';
-            }
+          if (this.filter != 'recent') {
+            var axiosUrl = 'search/recent-listing'
+          } else {
+            var axiosUrl = 'search/get-recent-auction-list'
+          }
           this.$axios
             .$post(axiosUrl, {
               take: 100,
               page: this.page,
               sport: this.sport,
-              filterBy: (this.filter!='recent'?this.filter:null),
+              filterBy: this.filter != 'recent' ? this.filter : null,
               search: this.keyword,
             })
-            .then(res => {
+            .then((res) => {
               this.requestInProcess = false
               if (res.status == 200) {
-                if (res.data != null && res.data.length > 0) {
+                if (this.filter != 'recent') {
+                  var resultData = res.data
+                } else {
+                  var resultData = res.items
+                }
+
+                if (resultData != null && resultData.length > 0) {
                   if (status) {
-                    res.data.map(item => {
+                    resultData.map((item) => {
                       this.items.push(item)
                     })
                   } else {
-                    this.items = res.data
+                    this.items = resultData
                   }
                   this.page = res.next
                 } else {
@@ -152,14 +167,13 @@ export default {
                 }
               }
             })
-            
         } catch (err) {
           this.requestInProcess = false
           console.log(err)
         }
       }
     },
- hideSmartSearch(event) {
+    hideSmartSearch(event) {
       this.showSmartSearch = false
     },
     getSmartKeyword() {
@@ -209,8 +223,8 @@ export default {
           }
         }
       }
-    }
-  }
+    },
+  },
 }
 </script>
 

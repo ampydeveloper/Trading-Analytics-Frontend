@@ -187,7 +187,13 @@ export default {
           .then((res) => {
             this.requestInProcess = false
             if (res.status == 200) {
-              this.normalListingItems = res.items
+              if (this.filterByKeword == 'price_low_to_high') {
+                res.items.map((item) => {
+                  this.normalListingItems.push(item)
+                })
+              } else {
+                this.normalListingItems = res.items
+              }
             }
           })
       } catch (err) {

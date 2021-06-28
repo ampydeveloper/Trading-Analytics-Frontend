@@ -859,6 +859,10 @@ export default {
   .slab-specs-btn-group {
     margin-top: 10px;
     padding-left: 1px;
+
+    @media (max-width: 767px) {
+        display: none;
+      }
     .slab-specs-btn {
       border-radius: 0px;
       padding: 22px 5px;

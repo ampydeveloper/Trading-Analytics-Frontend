@@ -1652,7 +1652,7 @@ ul.my-card-listing {
     padding: 0px;
     margin: 0px -2px 7px -2px;
     list-style-type: none;
-    display: flex;
+    // display: flex;
     width: auto;
   }
   .labels li {
@@ -1662,7 +1662,7 @@ ul.my-card-listing {
     border-radius: 2px;
     margin-left: 2px;
     text-align: center;
-    width: 25%;
+    // width: 25%;
     float: left;
     font-size: 12px;
     text-transform: uppercase;
@@ -1670,6 +1670,7 @@ ul.my-card-listing {
     margin-right: 2px;
     font-style: italic;
     line-height: 1;
+        margin-bottom: 3px;
   }
   .card-body {
     padding-bottom: 15px;
