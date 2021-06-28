@@ -641,6 +641,7 @@ export default {
       font-size: 12px;
       text-transform: uppercase;
       padding-top: 5px;
+      margin-bottom: 3px;
       label {
         background: #ffffff;
         padding: 6px 9px;

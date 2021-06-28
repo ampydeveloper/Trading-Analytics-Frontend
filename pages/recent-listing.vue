@@ -46,13 +46,6 @@
                   >
                 </div>
               </div>
-              <nuxt-link
-                class="card-link"
-                :to="'/recent-listing?filter=ending_soon'"
-              >
-                View All
-                <font-awesome-icon :icon="['fas', 'chevron-right']" />
-              </nuxt-link>
             </div>
             </h5>
             <div class="dataloader" v-if="requestInProcess">
@@ -135,7 +128,7 @@ export default {
               take: 100,
               page: this.page,
               sport: this.sport,
-              filterBy: this.filter,
+              filterBy: (this.filter!='recent'?this.filter:null),
               search: this.keyword,
             })
             .then(res => {

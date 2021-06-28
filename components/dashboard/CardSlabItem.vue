@@ -166,9 +166,9 @@ export default {
     background: #272d33;
     // border-radius: 2px;
     // height: 245px;
-    @media (max-width: 767px) {
-      height: 380px !important;
-    }
+    // @media (max-width: 767px) {
+    //   height: 380px !important;
+    // }
     height: 16vw;
     .icons-container {
       position: absolute;
@@ -195,9 +195,9 @@ export default {
       padding: 5px;
       max-height: 16vw;
       // max-height: 245px;
-      @media (max-width: 767px) {
-        max-height: 380px !important;
-      }
+      // @media (max-width: 767px) {
+      //   max-height: 380px !important;
+      // }
     }
   }
   .my-card-view-listing {

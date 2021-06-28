@@ -2,7 +2,7 @@
   <div class="col-md-12 col-sm-12 search-page trenders-page">
     <div class="row">
       <div class="col-12 t-p-5">
-        <div class="card card-single-row-outer myportfolio">
+        <div class="card card-single-row-outer myportfolio my-card-listing-scroll-outer">
           <div class="card-body">
             <h5 class="card-title">
               <div class="card-btn-head-outer">
@@ -126,14 +126,15 @@
             <div class="dataloader" v-if="requestInProcessRecent">
               <b-spinner variant="success" label="Spinning"></b-spinner>
             </div>
-            <ul class="my-card-listing rfive-columns">
+             <overlay-scrollbars>
+            <ul class="my-card-listing rfive-columns my-card-listing-scroll clearfix">
               <CardSlabItem
                 v-for="item in recentListingItems"
                 :key="item.id"
                 :itemdata="item"
               />
             </ul>
-
+</overlay-scrollbars>
             <div
               class="empty-result"
               v-if="recentListingItems.length == 0 && !requestInProcessRecent"
@@ -154,7 +155,7 @@
 
     <div class="row">
       <div class="col-12 t-p-5">
-        <div class="card no_bg">
+        <div class="card no_bg my-card-listing-scroll-outer">
           <div class="card-body">
             <ul class="my-card-listing">
               <CardSlabItem

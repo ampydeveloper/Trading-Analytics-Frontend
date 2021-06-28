@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col-12 t-p-5">
-      <div class="card card-single-row-outer">
+      <div class="card card-single-row-outer my-card-listing-scroll-outer">
         <div class="card-body">
           <h5 class="card-title custom-smart-search-player-name">
             <div class="card-btn-head-outer">
@@ -144,7 +144,7 @@
 
             <div class="ll-head-right float-right">
               <nuxt-link class="card-link" :to="'/top-trenders?sport=' + card">
-                View Top 100
+                View All
                 <font-awesome-icon :icon="['fas', 'chevron-right']" />
               </nuxt-link>
             </div>
@@ -152,13 +152,15 @@
           <div class="dataloader" v-if="requestInProcess">
             <b-spinner variant="success" label="Spinning"></b-spinner>
           </div>
-          <ul class="my-card-listing">
+             <overlay-scrollbars>
+          <ul class="my-card-listing my-card-listing-scroll clearfix">
             <CardSlabItem
               v-for="item in data"
               :key="item.id"
               :itemdata="item"
             />
           </ul>
+          </overlay-scrollbars>
 
           <div
             class="empty-result"

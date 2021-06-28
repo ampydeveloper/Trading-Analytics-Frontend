@@ -6,133 +6,142 @@
           <div class="card-body">
             <h5 class="card-title custom-smart-search-player-name">
               <div class="card-btn-head-outer">
-              <button class="theme-green-btn card-btn">Top Trenders</button>
+                <button class="theme-green-btn card-btn">Top Trenders</button>
               </div>
 
               <div class="internal-search-container">
-              <input
-                v-model="keyword"
-                v-on:keyup.enter="search()"
-                v-on:keyup="getSmartKeyword()"
-                class="card-title-search-field"
-                type="text"
-                placeholder="search"
-              />
-              <div class="display_keyword" v-if="showSmartSearch">
-                <ul v-click-outside="hideSmartSearch">
+                <input
+                  v-model="keyword"
+                  v-on:keyup.enter="search()"
+                  v-on:keyup="getSmartKeyword()"
+                  class="card-title-search-field"
+                  type="text"
+                  placeholder="search"
+                />
+                <div class="display_keyword" v-if="showSmartSearch">
+                  <ul v-click-outside="hideSmartSearch">
+                    <li
+                      v-for="(item, key) of smartKeyword"
+                      :key="key"
+                      @click="selectKeyword(item.player)"
+                    >
+                      {{ item.player }}
+                    </li>
+                    <li v-if="smartKeyword.length == 0">
+                      No results found for this search
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div
+                class="trender-cards-footer"
+                v-if="items.length >= 0 && !requestInProcess"
+              >
+                <ul class="trender-cards-footer-month-filter">
                   <li
-                    v-for="(item, key) of smartKeyword"
-                    :key="key"
-                    @click="selectKeyword(item.player)"
+                    class="trender-cards-footer-month-filter-item"
+                    :class="[
+                      filterVal == 1 ? 'active' : '',
+                      filterVal == 1 && items.length == 0 ? 'nodata' : '',
+                    ]"
+                    @click="changeFilter(1)"
                   >
-                    {{ item.player }}
+                    1D
                   </li>
-                  <li v-if="smartKeyword.length == 0">
-                    No results found for this search
+                  <li
+                    class="trender-cards-footer-month-filter-item"
+                    :class="[
+                      filterVal == 2 ? 'active' : '',
+                      filterVal == 2 && items.length == 0 ? 'nodata' : '',
+                    ]"
+                    @click="changeFilter(2)"
+                  >
+                    1W
+                  </li>
+                  <li
+                    class="trender-cards-footer-month-filter-item"
+                    :class="[
+                      filterVal == 3 ? 'active' : '',
+                      filterVal == 3 && items.length == 0 ? 'nodata' : '',
+                    ]"
+                    @click="changeFilter(3)"
+                  >
+                    1M
+                  </li>
+                  <li
+                    class="trender-cards-footer-month-filter-item"
+                    :class="[
+                      filterVal == 4 ? 'active' : '',
+                      filterVal == 4 && items.length == 0 ? 'nodata' : '',
+                    ]"
+                    @click="changeFilter(4)"
+                  >
+                    3M
+                  </li>
+                  <li
+                    class="trender-cards-footer-month-filter-item"
+                    :class="[
+                      filterVal == 5 ? 'active' : '',
+                      filterVal == 5 && items.length == 0 ? 'nodata' : '',
+                    ]"
+                    @click="changeFilter(5)"
+                  >
+                    6M
+                  </li>
+                  <li
+                    class="trender-cards-footer-month-filter-item"
+                    :class="[
+                      filterVal == 6 && items.length > 0 ? 'active' : '',
+                      filterVal == 6 && items.length == 0 ? 'nodata' : '',
+                    ]"
+                    @click="changeFilter(6)"
+                  >
+                    1Y
+                  </li>
+                  <li
+                    class="trender-cards-footer-month-filter-item"
+                    :class="[
+                      filterVal == 7 && items.length > 0 ? 'active' : '',
+                      filterVal == 7 && items.length == 0 ? 'nodata' : '',
+                    ]"
+                    @click="changeFilter(7)"
+                  >
+                    5Y
                   </li>
                 </ul>
               </div>
-            </div>
 
-             <div
-              class="trender-cards-footer"
-              v-if="items.length >= 0 && !requestInProcess"
-            >
-              <ul class="trender-cards-footer-month-filter">
-                <li
-                  class="trender-cards-footer-month-filter-item"
-                  :class="[
-                    filterVal == 1 ? 'active' : '',
-                    filterVal == 1 && items.length == 0 ? 'nodata' : '',
-                  ]"
-                  @click="changeFilter(1)"
-                >
-                  1D
-                </li>
-                <li
-                  class="trender-cards-footer-month-filter-item"
-                  :class="[
-                    filterVal == 2 ? 'active' : '',
-                    filterVal == 2 && items.length == 0 ? 'nodata' : '',
-                  ]"
-                  @click="changeFilter(2)"
-                >
-                  1W
-                </li>
-                <li
-                  class="trender-cards-footer-month-filter-item"
-                  :class="[
-                    filterVal == 3 ? 'active' : '',
-                    filterVal == 3 && items.length == 0 ? 'nodata' : '',
-                  ]"
-                  @click="changeFilter(3)"
-                >
-                  1M
-                </li>
-                <li
-                  class="trender-cards-footer-month-filter-item"
-                  :class="[
-                    filterVal == 4 ? 'active' : '',
-                    filterVal == 4 && items.length == 0 ? 'nodata' : '',
-                  ]"
-                  @click="changeFilter(4)"
-                >
-                  3M
-                </li>
-                <li
-                  class="trender-cards-footer-month-filter-item"
-                  :class="[
-                    filterVal == 5 ? 'active' : '',
-                    filterVal == 5 && items.length == 0 ? 'nodata' : '',
-                  ]"
-                  @click="changeFilter(5)"
-                >
-                  6M
-                </li>
-                <li
-                  class="trender-cards-footer-month-filter-item"
-                  :class="[
-                    filterVal == 6 && items.length > 0 ? 'active' : '',
-                    filterVal == 6 && items.length == 0 ? 'nodata' : '',
-                  ]"
-                  @click="changeFilter(6)"
-                >
-                  1Y
-                </li>
-                <li
-                  class="trender-cards-footer-month-filter-item"
-                  :class="[
-                    filterVal == 7 && items.length > 0 ? 'active' : '',
-                    filterVal == 7 && items.length == 0 ? 'nodata' : '',
-                  ]"
-                  @click="changeFilter(7)"
-                >
-                  5Y
-                </li>
-              </ul>
-            </div>
-            
-            <div class="custom-dropdown float-right">
-                <button class="dropbtn">Filter By</button>
-                <div class="dropdown-content">
-                  <a href="javascript:;" @click="filterOrderBy('price'+orderByPrice)"
-                    >$ Price</a
-                  >
-                  <a href="javascript:;" @click="filterOrderBy('percent'+orderByPercent)"
-                    >% Percent</a
-                  >
+              <div class="ll-head-right float-right">
+                <div class="custom-dropdown">
+                  <button class="dropbtn">Filter By</button>
+                  <div class="dropdown-content">
+                    <a
+                      href="javascript:;"
+                      @click="filterOrderBy('price' + orderByPrice)"
+                      >$ Price</a
+                    >
+                    <a
+                      href="javascript:;"
+                      @click="filterOrderBy('percent' + orderByPercent)"
+                      >% Percent</a
+                    >
+                  </div>
                 </div>
-             </div>
+              </div>
             </h5>
             <div class="dataloader" v-if="requestInProcess">
               <b-spinner variant="success" label="Spinning"></b-spinner>
             </div>
-            <p
-              v-if="items.length == 0"
-              class="no-result-found"
-            >{{ (requestInProcess) ? '' : 'No result found'}}</p>
+            <p v-if="items.length == 0" class="no-result-found">
+              {{ requestInProcess ? '' : 'No result found' }}
+            </p>
             <ul v-else class="my-card-listing">
-              <CardSlabItem v-for="item in items" :key="item.id" :itemdata="item" />
+              <CardSlabItem
+                v-for="item in items"
+                :key="item.id"
+                :itemdata="item"
+              />
             </ul>
           </div>
         </div>
@@ -148,7 +157,7 @@ import vClickOutside from 'v-click-outside'
 
 export default {
   directives: {
-      clickOutside: vClickOutside.directive
+    clickOutside: vClickOutside.directive,
   },
   props: {
     showFilters: {
@@ -161,23 +170,23 @@ export default {
   // auth: 'guest',
   head() {
     return {
-      title: 'Search - Slabstox'
+      title: 'Search - Slabstox',
     }
   },
   mounted() {
     this.searchCards()
     // this.scroll()
   },
-   async mounted() {
+  async mounted() {
     if (this.$route.query.hasOwnProperty('sport')) {
       this.sport = this.$route.query.sport
     }
-    this.searchCards();
+    this.searchCards()
     // this.search();
   },
   components: {
     CardSlabItem,
-    BSpinner
+    BSpinner,
   },
   data() {
     return {
@@ -191,9 +200,9 @@ export default {
       filterVal: 4,
       showSmartSearch: false,
       smartKeyword: [],
-       orderByPrice: 'up',
+      orderByPrice: 'up',
       orderByPercent: 'up',
-        orderBy: null
+      orderBy: null,
     }
   },
   methods: {
@@ -202,10 +211,18 @@ export default {
       this.search()
     },
     filterOrderBy(orderType) {
-        if(orderType == 'priceup') { this.orderByPrice = 'down'; }else { this.orderByPrice = 'up'; }
-        if(orderType == 'percentup') { this.orderByPercent = 'down'; }else { this.orderByPercent = 'up'; }
-        this.orderBy = orderType
-        this.search()
+      if (orderType == 'priceup') {
+        this.orderByPrice = 'down'
+      } else {
+        this.orderByPrice = 'up'
+      }
+      if (orderType == 'percentup') {
+        this.orderByPercent = 'down'
+      } else {
+        this.orderByPercent = 'up'
+      }
+      this.orderBy = orderType
+      this.search()
     },
     searchCards(status = false) {
       if (!this.requestInProcess) {
@@ -219,14 +236,14 @@ export default {
             .$post('search/slab-listing', {
               take: 100,
               page: this.page,
-              sport: this.sport
+              sport: this.sport,
             })
-            .then(res => {
+            .then((res) => {
               this.requestInProcess = false
               if (res.status == 200) {
                 if (res.data != null && res.data.length > 0) {
                   if (status) {
-                    res.data.map(item => {
+                    res.data.map((item) => {
                       this.items.push(item)
                     })
                   } else {
@@ -260,7 +277,7 @@ export default {
             orderby: this.orderBy,
             filterval: this.filterVal,
           })
-          .then(res => {
+          .then((res) => {
             this.requestInProcess = false
             if (res.status == 200) {
               this.items = res.data
@@ -271,8 +288,8 @@ export default {
         console.log(err)
       }
     },
-    hideSmartSearch(event){
-      this.showSmartSearch = false;
+    hideSmartSearch(event) {
+      this.showSmartSearch = false
     },
     getSmartKeyword() {
       try {
@@ -280,18 +297,18 @@ export default {
         this.$axios
           .$post('search/get-smart-keyword-onlyname', {
             keyword: this.keyword,
-            sport: this.sport
+            sport: this.sport,
           })
-          .then(res => {
+          .then((res) => {
             //this.requestInProcess = false
             if (res.status == 200) {
-              if(this.keyword == res.keyword){
+              if (this.keyword == res.keyword) {
                 this.smartKeyword = res.data
                 this.showSmartSearch = true
               }
             }
           })
-          .catch(err => {
+          .catch((err) => {
             //this.requestInProcess = false
             console.log(err)
           })
@@ -313,15 +330,15 @@ export default {
         const offsetHeight = document.documentElement.offsetHeight
         let bottomOfWindow =
           scrollTop >= offsetHeight - 10 && scrollTop <= offsetHeight + 10
-          // console.log(bottomOfWindow)
+        // console.log(bottomOfWindow)
         if (bottomOfWindow) {
           if (!this.noMoreData) {
             this.searchCards(true)
           }
         }
       }
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -456,9 +473,9 @@ export default {
     position: relative;
     padding-left: 20px;
     .card-title-search-field {
-    margin-left: 0px;
-    width: 100%;
-}
+      margin-left: 0px;
+      width: 100%;
+    }
     .display_keyword {
       position: absolute;
       background: #fff;
