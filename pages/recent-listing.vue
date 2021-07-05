@@ -46,6 +46,9 @@
                     <a href="javascript:;" @click="filterBy('buy_it_now')"
                       >buy it now</a
                     >
+                    <a href="javascript:;" @click="filterBy('sx_high_to_low')"
+                    >SX High to Low</a
+                  >
                   </div>
                 </div>
               </div>
@@ -134,7 +137,7 @@ export default {
           }
           this.$axios
             .$post(axiosUrl, {
-              take: 100,
+              take: 18,
               page: this.page,
               sport: this.sport,
               filterBy: this.filter != 'recent' ? this.filter : null,
@@ -151,9 +154,15 @@ export default {
 
                 if (resultData != null && resultData.length > 0) {
                   if (status) {
-                    resultData.map((item) => {
-                      this.items.push(item)
-                    })
+                    // resultData.map((item) => {
+                    //   this.items.push(item)
+                    // })
+
+                    if (!Array.isArray(resultData)) {
+                      Object.values(resultData).map((item) => {
+                        this.items.push(item)
+                      })
+                    }
                   } else {
                     this.items = resultData
                   }

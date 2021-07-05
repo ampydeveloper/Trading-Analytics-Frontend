@@ -234,7 +234,7 @@ export default {
           this.requestInProcess = true
           this.$axios
             .$post('search/slab-listing', {
-              take: 100,
+              take: 18,
               page: this.page,
               sport: this.sport,
             })
