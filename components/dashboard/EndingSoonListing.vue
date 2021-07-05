@@ -45,6 +45,9 @@
                   <a href="javascript:;" @click="filterBy('buy_it_now')"
                     >buy it now</a
                   >
+                  <a href="javascript:;" @click="filterBy('sx_high_to_low')"
+                    >SX High to Low</a
+                  >
                 </div>
               </div>
               <nuxt-link
@@ -186,7 +189,15 @@ export default {
           .then((res) => {
             this.requestInProcessEndingSoon = false
             if (res.status == 200) {
-              this.endingSoonListingItems = res.data
+              
+              if (!Array.isArray(res.data)) {
+                Object.values(res.data).map((item) => {
+                  this.endingSoonListingItems.push(item)
+                })
+              } else {
+                this.endingSoonListingItems = res.data
+              }
+
             }
           })
       } catch (err) {

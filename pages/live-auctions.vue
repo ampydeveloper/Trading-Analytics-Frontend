@@ -1,56 +1,10 @@
 <template>
   <div class="col-md-12 col-sm-12 search-page live-auctions-page">
-    
-    <!-- <div class="row">
-      <div class="col-12 t-p-5">
-        <div class="card card-single-row-outer">
-          <div class="card-body">
-            <h5 class="card-title">
-              <button class="card-btn theme-btn theme-green-btn ending-title">Ending Soon</button>
-            </h5>
-            <div class="dataloader" v-if="requestInProcessEndingSoon">
-              <b-spinner variant="success" label="Spinning"></b-spinner>
-            </div>
-            <ul class="my-card-listing" v-if="endingSoonListingItems.length > 0">
-              <CardListItem v-for="item in endingSoonListingItems" :key="item.id" :itemdata="item" />
-            </ul>
-
-            <div class="empty-result" v-if="endingSoonListingItems.length == 0 && !requestInProcessEndingSoon">
-              <p>There are no cards here. Check again soon.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
-
-<EndingSoonListing />
+    <EndingSoonListing />
 
     <LiveListingCard v-for="(card, key) in cards" :key="key" :card="card" />
 
-<RecentListing />
- <!-- <div class="row">
-      <div class="col-12 t-p-5">
-        <div class="card card-single-row-outer">
-          <div class="card-body">
-            <h5 class="card-title">
-              <button class="card-btn theme-btn theme-green-btn">Recent Listings</button>
-            </h5>
-            <div class="dataloader" v-if="requestInProcess">
-              <b-spinner variant="success" label="Spinning"></b-spinner>
-            </div>
-            <ul class="my-card-listing" v-if="normalListingItems.length > 0">
-              <CardListItem v-for="item in normalListingItems" :key="item.id" :itemdata="item" />
-            </ul>
-
-            <div class="empty-result" v-if="normalListingItems.length == 0 && !requestInProcess">
-              <p>There are no cards here. Check again soon.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
-    
-    <!-- </div> -->
+    <RecentListing />
   </div>
 </template>
 
@@ -62,7 +16,6 @@ import RecentListing from '~/components/dashboard/RecentListing'
 export default {
   transition: 'fade',
   layout: 'guestOuter',
-  // auth: 'guest',
   head() {
     return {
       title: 'Live Listings - SlabStox',

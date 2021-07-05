@@ -2435,16 +2435,13 @@ html body #__nuxt .b-profileImage .dropdown-menu {
       display: inherit;
       padding-right: 20px;
 
-      &:nth-child(odd) {
-        a {
-          color: #1de783;
-        }
+      a.listing-rise {
+        color: #1de783;
       }
 
-      &:nth-child(even) {
-        a {
-          color: #dd4d4d;
-        }
+      a.listing-fall {
+        color: #dd4d4d;
+
       }
     }
 
@@ -4280,14 +4277,15 @@ html body #__nuxt .b-profileImage .dropdown-menu {
     margin: 0;
     margin-top: 10px;
 
-    .trender-cards-footer-month-filter{
+    .trender-cards-footer-month-filter {
       padding: 0px 5px 4px 5px;
-      .trender-cards-footer-month-filter-item{
+
+      .trender-cards-footer-month-filter-item {
         padding: 4px 6px 3px 6px;
         font-size: 10px;
       }
     }
-  } 
+  }
 }
 
 #openSeeProblemPopup,

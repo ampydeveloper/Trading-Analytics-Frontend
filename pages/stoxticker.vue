@@ -589,6 +589,7 @@ slabstox.com
                        <nuxt-link
       class="sx-stox-card-link"
       :to="'/card-data/?id=' + list.card.id"
+      :class="(list.slab_sold_flag == true?'listing-rise':'listing-fall')"
     >{{list.card.title}} - ${{list.sold_price}}
      </nuxt-link> &nbsp;&nbsp;</h4>
                       </template>
@@ -601,29 +602,30 @@ slabstox.com
                     </div>
                   </marquee-text>
                 </li>
-                <li>
-                  <h3 class="h3-title">FOOTBALL</h3>
-                
-                <marquee-text :duration="30" :paused="paused" :key="soldListingfootballMarqueeKey" v-if="soldListing.football!=0">
+                 <li>
+                  <h3 class="h3-title">SOCCER</h3>
+                 
+                 <marquee-text :duration="30" :paused="paused" :key="soldListingsoccerMarqueeKey" v-if="soldListing.soccer!=0">
                     <div @mouseenter="paused = !paused" @mouseleave="paused = false">
-                   <template v-for="list in soldListing.football">
+                   <template v-for="list in soldListing.soccer">
                     <h4>
                       <nuxt-link
       class="sx-stox-card-link"
       :to="'/card-data/?id=' + list.card.id"
+          :class="(list.slab_sold_flag == true?'listing-rise':'listing-fall')"
     >{{list.card.title}} - ${{list.sold_price}}
      </nuxt-link>&nbsp;&nbsp;</h4>
                       </template>
-           </div>
+               </div>
                   </marquee-text>
 
-                  <marquee-text :duration="30" :paused="paused" :repeat="1" v-if="soldListing.football==0">
+                  <marquee-text :duration="30" :paused="paused" :repeat="1" v-if="soldListing.soccer==0">
                     <div @mouseenter="paused = !paused" @mouseleave="paused = false">
                     <h4 style="padding: 0 50px;">No recently sold listings.</h4>
-           </div>
+               </div>
                   </marquee-text>
                 </li>
-                <li>
+                 <li>
                   <h3 class="h3-title">BASEBALL</h3>
                 
                 <marquee-text :duration="30" :paused="paused" :key="soldListingbaseballMarqueeKey" v-if="soldListing.baseball!=0">
@@ -633,6 +635,7 @@ slabstox.com
                       <nuxt-link
       class="sx-stox-card-link"
       :to="'/card-data/?id=' + list.card.id"
+          :class="(list.slab_sold_flag == true?'listing-rise':'listing-fall')"
     >{{list.card.title}} - ${{list.sold_price}}
      </nuxt-link>&nbsp;&nbsp;</h4>
                       </template>
@@ -647,27 +650,51 @@ slabstox.com
 
                 </li>
                 <li>
-                  <h3 class="h3-title">SOCCER</h3>
-                 
-                 <marquee-text :duration="30" :paused="paused" :key="soldListingsoccerMarqueeKey" v-if="soldListing.soccer!=0">
+                  <h3 class="h3-title">FOOTBALL</h3>
+                
+                <marquee-text :duration="30" :paused="paused" :key="soldListingfootballMarqueeKey" v-if="soldListing.football!=0">
                     <div @mouseenter="paused = !paused" @mouseleave="paused = false">
-                   <template v-for="list in soldListing.soccer">
+                   <template v-for="list in soldListing.football">
                     <h4>
                       <nuxt-link
       class="sx-stox-card-link"
       :to="'/card-data/?id=' + list.card.id"
+          :class="(list.slab_sold_flag == true?'listing-rise':'listing-fall')"
     >{{list.card.title}} - ${{list.sold_price}}
      </nuxt-link>&nbsp;&nbsp;</h4>
                       </template>
-               </div>
+           </div>
                   </marquee-text>
 
-                  <marquee-text :duration="30" :paused="paused" :repeat="1" v-if="soldListing.soccer==0">
+                  <marquee-text :duration="30" :paused="paused" :repeat="1" v-if="soldListing.football==0">
                     <div @mouseenter="paused = !paused" @mouseleave="paused = false">
                     <h4 style="padding: 0 50px;">No recently sold listings.</h4>
-               </div>
+           </div>
                   </marquee-text>
                 </li>
+               <li>
+                  <h3 class="h3-title">HOCKEY</h3> 
+                
+                <marquee-text :duration="30" :paused="paused" :key="soldListingpokemonMarqueeKey" v-if="soldListing.hockey!=0">
+                    <div @mouseenter="paused = !paused" @mouseleave="paused = false">
+                   <template v-for="list in soldListing.hockey">
+                    <h4>
+                      <nuxt-link
+      class="sx-stox-card-link"
+      :to="'/card-data/?id=' + list.card.id"
+          :class="(list.slab_sold_flag == true?'listing-rise':'listing-fall')"
+    >{{list.card.title}} - ${{list.sold_price}}
+     </nuxt-link>&nbsp;&nbsp;</h4>
+                      </template>
+                </div>
+                  </marquee-text>
+
+                  <marquee-text :duration="30" :paused="paused" :repeat="1" v-if="soldListing.hockey==0">
+                    <div @mouseenter="paused = !paused" @mouseleave="paused = false">
+                    <h4 style="padding: 0 50px;">No recently sold listings.</h4>
+                </div>
+                  </marquee-text>
+                </li>               
                 <li>
                   <h3 class="h3-title">POKÉMON</h3> 
                 
@@ -678,6 +705,7 @@ slabstox.com
                       <nuxt-link
       class="sx-stox-card-link"
       :to="'/card-data/?id=' + list.card.id"
+          :class="(list.slab_sold_flag == true?'listing-rise':'listing-fall')"
     >{{list.card.title}} - ${{list.sold_price}}
      </nuxt-link>&nbsp;&nbsp;</h4>
                       </template>
@@ -690,6 +718,7 @@ slabstox.com
                 </div>
                   </marquee-text>
                 </li>
+                
               </ul>
              
             </div>

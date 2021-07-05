@@ -101,6 +101,9 @@
                   <a href="javascript:;" @click="filterBy('buy_it_now')"
                     >buy it now</a
                   >
+                  <a href="javascript:;" @click="filterBy('sx_high_to_low')"
+                    >SX High to Low</a
+                  >
                 </div>
               </div>
               <nuxt-link
@@ -116,14 +119,17 @@
             <b-spinner variant="success" label="Spinning"></b-spinner>
           </div>
           <overlay-scrollbars>
-          <ul class="my-card-listing my-card-listing-scroll clearfix" v-if="data.length > 0">
-            <CardListItem
-              v-for="item in data"
-              :key="item.id"
-              :itemdata="item"
-            />
-          </ul>
-</overlay-scrollbars>
+            <ul
+              class="my-card-listing my-card-listing-scroll clearfix"
+              v-if="data.length > 0"
+            >
+              <CardListItem
+                v-for="item in data"
+                :key="item.id"
+                :itemdata="item"
+              />
+            </ul>
+          </overlay-scrollbars>
           <div
             class="empty-result"
             v-if="data.length == 0 && !requestInProcess"
@@ -224,7 +230,15 @@ export default {
           .then((res) => {
             this.requestInProcess = false
             if (res.status == 200) {
-              this.data = res.data
+              this.data = []
+
+              if (!Array.isArray(res.data)) {
+                Object.values(res.data).map((item) => {
+                  this.data.push(item)
+                })
+              } else {
+                this.data = res.data
+              }
             }
           })
       } catch (err) {
