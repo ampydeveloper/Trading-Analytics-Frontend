@@ -47,8 +47,8 @@
                       >buy it now</a
                     >
                     <a href="javascript:;" @click="filterBy('sx_high_to_low')"
-                    >SX High to Low</a
-                  >
+                      >SX High to Low</a
+                    >
                   </div>
                 </div>
               </div>
@@ -90,7 +90,7 @@ export default {
     }
   },
   mounted() {
-    this.searchCards()
+    // this.searchCards()
     // this.scroll()
   },
   async mounted() {
@@ -101,6 +101,7 @@ export default {
       this.filter = this.$route.query.filter
     }
     this.searchCards()
+     this.scroll()
   },
   components: {
     CardListItem,
@@ -154,12 +155,12 @@ export default {
 
                 if (resultData != null && resultData.length > 0) {
                   if (status) {
-                    // resultData.map((item) => {
-                    //   this.items.push(item)
-                    // })
-
                     if (!Array.isArray(resultData)) {
                       Object.values(resultData).map((item) => {
+                        this.items.push(item)
+                      })
+                    } else {
+                      resultData.map((item) => {
                         this.items.push(item)
                       })
                     }

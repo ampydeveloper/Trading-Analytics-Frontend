@@ -1,5 +1,217 @@
 <template>
   <div class="col-md-12 col-sm-12 dashboard_page">
+
+    <div class="row">
+<div class="col-md-12 col-sm-12 t-p-5 stoxticker_listing-outer">
+          <div class="card stoxticker_page stoxticker_listing analytics_page">
+            <div class="card-body">
+              <h5 class="card-title">
+                <button class="theme-btn card-btn">SX STOXTICKER</button>
+                <span class="float-right share-lk-top sb-data-values-out">
+                <span class="share-icon si-white">
+                  Share
+                  <img src="~/assets/img/share-icon-white.png" alt />
+                </span>
+                <div class="share-all-outer" style="top: 19px;">
+                  <ul>
+                    <li style="margin: 0;">
+                      <a :href="'https://www.facebook.com/sharer/sharer.php?u='+encodeURI(sxStoxtickerUrl)"  target="_blank"
+                        ><img src="~/assets/img/icons/facebook.svg" alt
+                      /></a>
+                    </li>
+                    <li style="margin: 0;">
+                      <a
+                        :href="
+                          'https://twitter.com/intent/tweet?url=' +
+                          encodeURI(sxStoxtickerUrl) +
+                          '&text=StoxTicker@' +
+                         (stoxtickerData.total?stoxtickerData.total:'')
+                        "
+                        target="_blank"
+                        ><img src="~/assets/img/icons/twitter.svg" alt
+                      /></a>
+                    </li>
+                    <li style="margin: 0;">
+                      <a
+                        :href="
+                          'http://pinterest.com/pin/create/button/?url=' +
+                          encodeURI(sxStoxtickerUrl) +
+                          '&description=' +
+                          encodeURI('Buy & Sell Sports Cards Online')
+                        "
+                        target="_blank"
+                        ><img src="~/assets/img/pinterest.png" alt
+                      /></a>
+                    </li>
+                    <li style="margin: 0;">
+                      <a
+                        :href="
+                          'https://www.linkedin.com/shareArticle?mini=true&url=' +
+                          encodeURI(sxStoxtickerUrl)
+                        "
+                        target="_blank"
+                        ><img src="~/assets/img/icons/linkedin-circled.svg" alt
+                      /></a>
+                    </li>
+                  </ul>
+                </div>
+              </span>
+              </h5>
+              <ul>
+                <li>
+                  <h3 class="h3-title">BASKETBALL</h3>
+
+                  <marquee-text :duration="30" :paused="paused" :key="soldListingbasketballMarqueeKey" v-if="soldListing.basketball!=0">
+                    <div @mouseenter="paused = !paused" @mouseleave="paused = false">
+  <template v-for="list in soldListing.basketball">
+                    <h4>
+                       <nuxt-link
+      class="sx-stox-card-link"
+      :to="'/card-data/?id=' + list.card.id"
+      :class="(list.slab_sold_flag == true?'listing-rise':'listing-fall')"
+    >{{list.card.title}} - ${{list.sold_price}}
+     </nuxt-link> &nbsp;&nbsp;</h4>
+                      </template>
+                    </div>
+                  </marquee-text>
+
+                  <marquee-text :duration="30" :paused="paused" :repeat="1" v-if="soldListing.basketball==0">
+                    <div @mouseenter="paused = !paused" @mouseleave="paused = false">
+                      <h4 style="padding: 0 50px;">No recently sold listings.</h4>
+                    </div>
+                  </marquee-text>
+                </li>
+                 <li>
+                  <h3 class="h3-title">SOCCER</h3>
+                 
+                 <marquee-text :duration="30" :paused="paused" :key="soldListingsoccerMarqueeKey" v-if="soldListing.soccer!=0">
+                    <div @mouseenter="paused = !paused" @mouseleave="paused = false">
+                   <template v-for="list in soldListing.soccer">
+                    <h4>
+                      <nuxt-link
+      class="sx-stox-card-link"
+      :to="'/card-data/?id=' + list.card.id"
+          :class="(list.slab_sold_flag == true?'listing-rise':'listing-fall')"
+    >{{list.card.title}} - ${{list.sold_price}}
+     </nuxt-link>&nbsp;&nbsp;</h4>
+                      </template>
+               </div>
+                  </marquee-text>
+
+                  <marquee-text :duration="30" :paused="paused" :repeat="1" v-if="soldListing.soccer==0">
+                    <div @mouseenter="paused = !paused" @mouseleave="paused = false">
+                    <h4 style="padding: 0 50px;">No recently sold listings.</h4>
+               </div>
+                  </marquee-text>
+                </li>
+                 <li>
+                  <h3 class="h3-title">BASEBALL</h3>
+                
+                <marquee-text :duration="30" :paused="paused" :key="soldListingbaseballMarqueeKey" v-if="soldListing.baseball!=0">
+                    <div @mouseenter="paused = !paused" @mouseleave="paused = false">
+                    <template v-for="list in soldListing.baseball">
+                    <h4>
+                      <nuxt-link
+      class="sx-stox-card-link"
+      :to="'/card-data/?id=' + list.card.id"
+          :class="(list.slab_sold_flag == true?'listing-rise':'listing-fall')"
+    >{{list.card.title}} - ${{list.sold_price}}
+     </nuxt-link>&nbsp;&nbsp;</h4>
+                      </template>
+                </div>
+                  </marquee-text>
+
+                  <marquee-text :duration="30" :paused="paused" :repeat="1" v-if="soldListing.baseball==0">
+                    <div @mouseenter="paused = !paused" @mouseleave="paused = false">
+                    <h4 style="padding: 0 50px;">No recently sold listings.</h4>
+                </div>
+                  </marquee-text>
+
+                </li>
+                <li>
+                  <h3 class="h3-title">FOOTBALL</h3>
+                
+                <marquee-text :duration="30" :paused="paused" :key="soldListingfootballMarqueeKey" v-if="soldListing.football!=0">
+                    <div @mouseenter="paused = !paused" @mouseleave="paused = false">
+                   <template v-for="list in soldListing.football">
+                    <h4>
+                      <nuxt-link
+      class="sx-stox-card-link"
+      :to="'/card-data/?id=' + list.card.id"
+          :class="(list.slab_sold_flag == true?'listing-rise':'listing-fall')"
+    >{{list.card.title}} - ${{list.sold_price}}
+     </nuxt-link>&nbsp;&nbsp;</h4>
+                      </template>
+           </div>
+                  </marquee-text>
+
+                  <marquee-text :duration="30" :paused="paused" :repeat="1" v-if="soldListing.football==0">
+                    <div @mouseenter="paused = !paused" @mouseleave="paused = false">
+                    <h4 style="padding: 0 50px;">No recently sold listings.</h4>
+           </div>
+                  </marquee-text>
+                </li>
+               <li>
+                  <h3 class="h3-title">HOCKEY</h3> 
+                
+                <marquee-text :duration="30" :paused="paused" :key="soldListinghockeyMarqueeKey" v-if="soldListing.hockey!=0">
+                    <div @mouseenter="paused = !paused" @mouseleave="paused = false">
+                   <template v-for="list in soldListing.hockey">
+                    <h4>
+                      <nuxt-link
+      class="sx-stox-card-link"
+      :to="'/card-data/?id=' + list.card.id"
+          :class="(list.slab_sold_flag == true?'listing-rise':'listing-fall')"
+    >{{list.card.title}} - ${{list.sold_price}}
+     </nuxt-link>&nbsp;&nbsp;</h4>
+                      </template>
+                </div>
+                  </marquee-text>
+
+                  <marquee-text :duration="30" :paused="paused" :repeat="1" v-if="soldListing.hockey==0">
+                    <div @mouseenter="paused = !paused" @mouseleave="paused = false">
+                    <h4 style="padding: 0 50px;">No recently sold listings.</h4>
+                </div>
+                  </marquee-text>
+                </li>               
+                <li>
+                  <h3 class="h3-title">POKÉMON</h3> 
+                
+                <marquee-text :duration="30" :paused="paused" :key="soldListingpokemonMarqueeKey" v-if="soldListing.pokemon!=0">
+                    <div @mouseenter="paused = !paused" @mouseleave="paused = false">
+                   <template v-for="list in soldListing.pokemon">
+                    <h4>
+                      <nuxt-link
+      class="sx-stox-card-link"
+      :to="'/card-data/?id=' + list.card.id"
+          :class="(list.slab_sold_flag == true?'listing-rise':'listing-fall')"
+    >{{list.card.title}} - ${{list.sold_price}}
+     </nuxt-link>&nbsp;&nbsp;</h4>
+                      </template>
+                </div>
+                  </marquee-text>
+
+                  <marquee-text :duration="30" :paused="paused" :repeat="1" v-if="soldListing.pokemon==0">
+                    <div @mouseenter="paused = !paused" @mouseleave="paused = false">
+                    <h4 style="padding: 0 50px;">No recently sold listings.</h4>
+                </div>
+                  </marquee-text>
+                </li>
+                
+              </ul>
+             
+            </div>
+          </div>
+          <div class="social_share ss-h4" style="margin-bottom: 0;">
+            <h4>
+              <a class="embed-link" href="#" @click="embedSellsCode()"
+                >EMBEDD CODE </>
+              </a>
+            </h4>
+          </div>
+        </div>
+      </div>
+
     <div class="row">
       <div class="col-md-12 col-sm-12 t-p-5 dash-featured">
         <div class="card">
@@ -129,9 +341,6 @@
                 Export Data
                 <font-awesome-icon :icon="['fas', 'chevron-right']" />
               </span>
-              <!-- <span class="total_sales" style="display: none">{{
-                total_sales
-              }}</span> -->
             </h5>
             <div class="dashboard-apex-top">
               <div class="dashboard-apex-top-1d" style="display: none">
@@ -413,6 +622,7 @@
 import CardSlabItem from '~/components/dashboard/CardSlabItem'
 import CardListItem from '~/components/dashboard/CardListItem'
 import { BASE_URL } from '../constants/keys'
+import MarqueeText from 'vue-marquee-text-component'
 import $ from 'jquery'
 
 export default {
@@ -452,6 +662,10 @@ export default {
     this.getStoxtickerData()
     this.logo = document.getElementById('sidebarLogo').src
     this.$store.dispatch('advancesearch/fetchAttributes')
+    this.getSoldListing()    
+
+     var currentHref = location.href
+    this.sxStoxtickerUrl = currentHref.replace('dashboard', 'stox-sells')
   },
   updated() {
     this.featureHeight =
@@ -465,11 +679,21 @@ export default {
   },
   components: {
     CardListItem,
+     MarqueeText,
     CardSlabItem,
     VueApexCharts: () => import('vue-apexcharts'),
   },
   data() {
     return {
+       paused: false,
+       sxStoxtickerUrl: '',
+      soldListing: '',
+      soldListingbasketballMarqueeKey: 0,
+      soldListingfootballMarqueeKey: 0,
+      soldListingbaseballMarqueeKey: 0,
+      soldListingsoccerMarqueeKey: 0,
+      soldListingpokemonMarqueeKey: 0,
+      soldListinghockeyMarqueeKey: 0,
       featureHeight: '400px',
       cardsActive: false,
       cardActiveId: 0,
@@ -1051,6 +1275,32 @@ export default {
             }
           })
       })
+    },
+    getSoldListing() {
+      try {
+        this.$axios.$get('stoxticker/sold-listings').then((res) => {
+          if (res.status == 200) {
+            this.soldListing = res.data
+            //below keys added so the marque plugin can update the content when data comes 
+            this.soldListingbasketballMarqueeKey = 1
+            this.soldListingfootballMarqueeKey = 2
+            this.soldListingbaseballMarqueeKey = 3
+            this.soldListingsoccerMarqueeKey = 4
+            this.soldListingpokemonMarqueeKey = 5
+            this.soldListinghockeyMarqueeKey = 6
+          } else {
+            this.$toast.error(
+          'There has been an error fetching SX Stoxticker. Please refresh your page.',
+          { timeOut: 10000 }
+        )
+          }
+        })
+      } catch (error) {
+       this.$toast.error(
+          'There has been an error fetching SX Stoxticker. Please refresh your page.',
+          { timeOut: 10000 }
+        )
+      }
     },
   },
 }

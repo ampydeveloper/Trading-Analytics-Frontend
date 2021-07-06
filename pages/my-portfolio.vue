@@ -667,7 +667,7 @@ export default {
       this.portfolioPopUpTitle = 'Add to Price and Quantity'
       this.addPortfolioVar.isedit = 'no'
       this.addPortfolioVar.id = id
-      this.addPortfolioVar.quantity = 0
+      this.addPortfolioVar.quantity = 1
       this.addPortfolioVar.price = 0
       this.addPortfolioVar.grade = 0
       this.$bvModal.hide('addToPortfolio')

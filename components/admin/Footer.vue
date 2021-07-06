@@ -1,7 +1,7 @@
 <template>
   <footer>
       <p class="dashbord-footer-para">
-        <nuxt-link to="/">Slabstox.com</nuxt-link>
+        <a href="https://www.slabstox.com/" target="_blank">Slabstox.com</a>
       </p>
   </footer>
 </template>

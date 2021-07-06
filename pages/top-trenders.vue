@@ -175,7 +175,7 @@ export default {
   },
   mounted() {
     this.searchCards()
-    // this.scroll()
+    this.scroll()
   },
   async mounted() {
     if (this.$route.query.hasOwnProperty('sport')) {

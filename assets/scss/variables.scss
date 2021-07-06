@@ -4708,3 +4708,39 @@ html body main .my-card-listing-scroll {
     }
   }
 }
+.sb-data-values-out {
+  .share-icon {
+    margin-left: 0 !important;
+    margin-top: -5px !important;
+    font-size: 11px !important;
+    font-style: normal !important;
+  }
+  .si-white {
+    color: #fff;
+  }
+}
+.share-lk-top {
+  cursor: pointer;
+  span {
+    margin-right: 5px;
+    img {
+      width: 20px;
+      margin-top: -5px;
+      margin-left: 10px;
+    }
+  }
+}
+.share-lk-top span {
+  font-family: 'Nexabold', Helvetica, Arial, sans-serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #edecec;
+  margin: 0;
+  line-height: 25px;
+  display: inline-block;
+}
+.share-all-outer {
+  left: 32px;
+  top: 25px;
+}

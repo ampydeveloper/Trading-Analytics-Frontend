@@ -675,7 +675,7 @@ slabstox.com
                <li>
                   <h3 class="h3-title">HOCKEY</h3> 
                 
-                <marquee-text :duration="30" :paused="paused" :key="soldListingpokemonMarqueeKey" v-if="soldListing.hockey!=0">
+                <marquee-text :duration="30" :paused="paused" :key="soldListinghockeyMarqueeKey" v-if="soldListing.hockey!=0">
                     <div @mouseenter="paused = !paused" @mouseleave="paused = false">
                    <template v-for="list in soldListing.hockey">
                     <h4>
@@ -724,7 +724,6 @@ slabstox.com
             </div>
           </div>
           <div class="social_share ss-h4">
-         
             <h4>
               <a class="embed-link" href="#" @click="embedSellsCode()"
                 >EMBEDD CODE </>
@@ -732,6 +731,7 @@ slabstox.com
             </h4>
           </div>
         </div>
+
         <b-modal id="embedSellsCode" title="" size="xl" hide-footer>
           <h5>Copy code and paste to your website.</h5>
           <p class="code-text">
@@ -1262,6 +1262,7 @@ export default {
       soldListingbaseballMarqueeKey: 0,
       soldListingsoccerMarqueeKey: 0,
       soldListingpokemonMarqueeKey: 0,
+      soldListinghockeyMarqueeKey: 0,
       // allBoards: '',
       allBoardGraph: [],
       boardDaysGraph: [],
@@ -1752,17 +1753,25 @@ export default {
         this.$axios.$get('stoxticker/sold-listings').then((res) => {
           if (res.status == 200) {
             this.soldListing = res.data
+            //below keys added so the marque plugin can update the content when data comes 
             this.soldListingbasketballMarqueeKey = 1
             this.soldListingfootballMarqueeKey = 2
             this.soldListingbaseballMarqueeKey = 3
             this.soldListingsoccerMarqueeKey = 4
             this.soldListingpokemonMarqueeKey = 5
+            this.soldListinghockeyMarqueeKey = 6
           } else {
-            this.$router.push('/404')
+            this.$toast.error(
+          'There has been an error fetching SX Stoxticker. Please refresh your page.',
+          { timeOut: 10000 }
+        )
           }
         })
       } catch (error) {
-        this.$router.push('/404')
+       this.$toast.error(
+          'There has been an error fetching SX Stoxticker. Please refresh your page.',
+          { timeOut: 10000 }
+        )
       }
     },
     embedStatsCode() {
@@ -2979,42 +2988,6 @@ html body main .card.search-slabs-out .my-card-listing .my-card {
     .dashboard-graph-footer-update-at {
       margin-top: 21px;
     }
-  }
-}
-.share-lk-top {
-  cursor: pointer;
-  span {
-    margin-right: 5px;
-    img {
-      width: 20px;
-      margin-top: -5px;
-      margin-left: 10px;
-    }
-  }
-}
-.share-lk-top span {
-  font-family: 'Nexabold', Helvetica, Arial, sans-serif;
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: #edecec;
-  margin: 0;
-  line-height: 25px;
-  display: inline-block;
-}
-.share-all-outer {
-  left: 32px;
-  top: 25px;
-}
-.sb-data-values-out {
-  .share-icon {
-    margin-left: 0 !important;
-    margin-top: -5px !important;
-    font-size: 11px !important;
-    font-style: normal !important;
-  }
-  .si-white {
-    color: #fff;
   }
 }
 </style>
