@@ -162,7 +162,7 @@ export default {
                     } else {
                       resultData.map((item) => {
                         this.items.push(item)
-                      })
+                      }) 
                     }
                   } else {
                     this.items = resultData
