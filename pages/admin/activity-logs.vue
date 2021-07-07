@@ -551,7 +551,7 @@ export default {
                 this.getPages()
                 // this.page = res.data.data.current_page
                 // this.last_page = res.data.data.last_page
-                // this.allPages = this.totalCount = res.data.data.total
+                this.allPages = this.totalCount = res.data.data.total
               }
               this.requestInProcess = false
               this.hideLoader()
