@@ -170,7 +170,7 @@ export default {
   // auth: 'guest',
   head() {
     return {
-      title: 'Search - Slabstox',
+      title: 'Top Trenders - Slabstox',
     }
   },
   mounted() {
@@ -243,11 +243,23 @@ export default {
               if (res.status == 200) {
                 if (res.data != null && res.data.length > 0) {
                   if (status) {
+                    if (!Array.isArray(res.data)) {
+                      Object.values(res.data).map((item) => {
+                        this.items.push(item)
+                      })
+                    } else {
                     res.data.map((item) => {
                       this.items.push(item)
                     })
+                    }
                   } else {
+                     if (!Array.isArray(res.data)) {
+                      Object.values(res.data).map((item) => {
+                        this.items.push(item)
+                      })
+                    } else {
                     this.items = res.data
+                    }
                   }
                   this.page = res.next
                 } else {
