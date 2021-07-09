@@ -101,7 +101,7 @@ export default {
       this.filter = this.$route.query.filter
     }
     this.searchCards()
-     this.scroll()
+    this.scroll()
   },
   components: {
     CardListItem,
@@ -162,10 +162,16 @@ export default {
                     } else {
                       resultData.map((item) => {
                         this.items.push(item)
-                      }) 
+                      })
                     }
                   } else {
-                    this.items = resultData
+                    if (!Array.isArray(resultData)) {
+                      Object.values(resultData).map((item) => {
+                        this.items.push(item)
+                      })
+                    } else {
+                      this.items = resultData
+                    }
                   }
                   this.page = res.next
                 } else {

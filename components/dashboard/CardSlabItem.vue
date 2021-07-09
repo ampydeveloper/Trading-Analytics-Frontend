@@ -60,6 +60,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    orderBy: {
+      type: String,
+      default: "priceup",
+    },
   },
   data() {
     return {
@@ -76,7 +80,7 @@ export default {
     this.isActive = this.activeSt
     var sx_val = this.itemdata.sx_value != null ? this.itemdata.sx_value : 0
     this.pert_change_space =
-      this.itemdata.show_perentage == true ? this.itemdata.sx_percent + '%' : '$' + sx_val
+      (this.orderBy == "percentup" || this.orderBy == "percentdown") ? this.itemdata.sx_percent + '%' : '$' + sx_val
   },
   methods: {
     selectSlabCard(id) {

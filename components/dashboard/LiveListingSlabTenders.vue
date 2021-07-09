@@ -158,6 +158,7 @@
               v-for="item in data"
               :key="item.id"
               :itemdata="item"
+              :orderBy="orderBy"
             />
           </ul>
           </overlay-scrollbars>

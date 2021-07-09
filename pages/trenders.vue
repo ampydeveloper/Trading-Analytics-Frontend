@@ -2,120 +2,143 @@
   <div class="col-md-12 col-sm-12 search-page trenders-page">
     <div class="row">
       <div class="col-12 t-p-5">
-        <div class="card card-single-row-outer myportfolio my-card-listing-scroll-outer">
+        <div
+          class="
+            card card-single-row-outer
+            myportfolio
+            my-card-listing-scroll-outer
+          "
+        >
           <div class="card-body">
             <h5 class="card-title">
               <div class="card-btn-head-outer">
-              <button class="theme-light-grey-btn card-btn">
-                Top Trenders
-              </button>
+                <button class="theme-light-grey-btn card-btn">
+                  Top Trenders
+                </button>
               </div>
 
-              <div
-              class="trender-cards-footer"
-            >
-              <ul class="trender-cards-footer-month-filter">
-                <li
-                  class="trender-cards-footer-month-filter-item"
-                  :class="[
-                    filterVal == 1 ? 'active' : '',
-                    filterVal == 1 && recentListingItems.length == 0 ? 'nodata' : '',
-                  ]"
-                  @click="changeFilter(1)"
-                >
-                  1D
-                </li>
-                <li
-                  class="trender-cards-footer-month-filter-item"
-                  :class="[
-                    filterVal == 2 ? 'active' : '',
-                    filterVal == 2 && recentListingItems.length == 0 ? 'nodata' : '',
-                  ]"
-                  @click="changeFilter(2)"
-                >
-                  1W
-                </li>
-                <li
-                  class="trender-cards-footer-month-filter-item"
-                  :class="[
-                    filterVal == 3 ? 'active' : '',
-                    filterVal == 3 && recentListingItems.length == 0 ? 'nodata' : '',
-                  ]"
-                  @click="changeFilter(3)"
-                >
-                  1M
-                </li>
-                <li
-                  class="trender-cards-footer-month-filter-item"
-                  :class="[
-                    filterVal == 4 ? 'active' : '',
-                    filterVal == 4 && recentListingItems.length == 0 ? 'nodata' : '',
-                  ]"
-                  @click="changeFilter(4)"
-                >
-                  3M
-                </li>
-                <li
-                  class="trender-cards-footer-month-filter-item"
-                  :class="[
-                    filterVal == 5 ? 'active' : '',
-                    filterVal == 5 && recentListingItems.length == 0 ? 'nodata' : '',
-                  ]"
-                  @click="changeFilter(5)"
-                >
-                  6M
-                </li>
-                <li
-                  class="trender-cards-footer-month-filter-item"
-                  :class="[
-                    filterVal == 6 && recentListingItems.length > 0 ? 'active' : '',
-                    filterVal == 6 && recentListingItems.length == 0 ? 'nodata' : '',
-                  ]"
-                  @click="changeFilter(6)"
-                >
-                  1Y
-                </li>
-                <li
-                  class="trender-cards-footer-month-filter-item"
-                  :class="[
-                    filterVal == 7 && recentListingItems.length > 0 ? 'active' : '',
-                    filterVal == 7 && recentListingItems.length == 0 ? 'nodata' : '',
-                  ]"
-                  @click="changeFilter(7)"
-                >
-                  5Y
-                </li>
-              </ul>
-            </div>
+              <div class="trender-cards-footer">
+                <ul class="trender-cards-footer-month-filter">
+                  <li
+                    class="trender-cards-footer-month-filter-item"
+                    :class="[
+                      filterVal == 1 ? 'active' : '',
+                      filterVal == 1 && recentListingItems.length == 0
+                        ? 'nodata'
+                        : '',
+                    ]"
+                    @click="changeFilter(1)"
+                  >
+                    1D
+                  </li>
+                  <li
+                    class="trender-cards-footer-month-filter-item"
+                    :class="[
+                      filterVal == 2 ? 'active' : '',
+                      filterVal == 2 && recentListingItems.length == 0
+                        ? 'nodata'
+                        : '',
+                    ]"
+                    @click="changeFilter(2)"
+                  >
+                    1W
+                  </li>
+                  <li
+                    class="trender-cards-footer-month-filter-item"
+                    :class="[
+                      filterVal == 3 ? 'active' : '',
+                      filterVal == 3 && recentListingItems.length == 0
+                        ? 'nodata'
+                        : '',
+                    ]"
+                    @click="changeFilter(3)"
+                  >
+                    1M
+                  </li>
+                  <li
+                    class="trender-cards-footer-month-filter-item"
+                    :class="[
+                      filterVal == 4 ? 'active' : '',
+                      filterVal == 4 && recentListingItems.length == 0
+                        ? 'nodata'
+                        : '',
+                    ]"
+                    @click="changeFilter(4)"
+                  >
+                    3M
+                  </li>
+                  <li
+                    class="trender-cards-footer-month-filter-item"
+                    :class="[
+                      filterVal == 5 ? 'active' : '',
+                      filterVal == 5 && recentListingItems.length == 0
+                        ? 'nodata'
+                        : '',
+                    ]"
+                    @click="changeFilter(5)"
+                  >
+                    6M
+                  </li>
+                  <li
+                    class="trender-cards-footer-month-filter-item"
+                    :class="[
+                      filterVal == 6 && recentListingItems.length > 0
+                        ? 'active'
+                        : '',
+                      filterVal == 6 && recentListingItems.length == 0
+                        ? 'nodata'
+                        : '',
+                    ]"
+                    @click="changeFilter(6)"
+                  >
+                    1Y
+                  </li>
+                  <li
+                    class="trender-cards-footer-month-filter-item"
+                    :class="[
+                      filterVal == 7 && recentListingItems.length > 0
+                        ? 'active'
+                        : '',
+                      filterVal == 7 && recentListingItems.length == 0
+                        ? 'nodata'
+                        : '',
+                    ]"
+                    @click="changeFilter(7)"
+                  >
+                    5Y
+                  </li>
+                </ul>
+              </div>
 
-            <div class="trender-cards-footer">
-              <button
-                :class="orderByPriceClass + ' card-btn t-p-5'"
-                @click="filterOrderBy('price' + orderByPrice)"
-              >
-                <font-awesome-icon
-                  v-if="orderByPrice !== undefined"
-                  :icon="[
-                    'fas',
-                    'long-arrow-alt-' + (orderByPrice == 'up' ? 'down' : 'up'),
-                  ]"
-                />&nbsp;&nbsp;$ Price
-              </button>
+              <div class="trender-cards-footer">
+                <button
+                  :class="orderByPriceClass + ' card-btn t-p-5'"
+                  @click="filterOrderBy('price' + orderByPrice)"
+                >
+                  <font-awesome-icon
+                    v-if="orderByPrice !== undefined"
+                    :icon="[
+                      'fas',
+                      'long-arrow-alt-' +
+                        (orderByPrice == 'up' ? 'down' : 'up'),
+                    ]"
+                  />&nbsp;&nbsp;$ Price
+                </button>
 
-              <button
-                :class="orderByPercentClass + ' card-btn t-p-5'"
-                @click="filterOrderBy('percent' + orderByPercent)"
-              >
-                <font-awesome-icon
-                  v-if="orderByPercent !== undefined"
-                  :icon="[
-                    'fas',
-                    'long-arrow-alt-' +
-                      (orderByPercent == 'up' ? 'down' : 'up'),
-                  ]"
-                />&nbsp;&nbsp;Percent %
-              </button>
-            </div>
+                <button
+                  :class="orderByPercentClass + ' card-btn t-p-5'"
+                  @click="filterOrderBy('percent' + orderByPercent)"
+                >
+                  <font-awesome-icon
+                    v-if="orderByPercent !== undefined"
+                    :icon="[
+                      'fas',
+                      'long-arrow-alt-' +
+                        (orderByPercent == 'up' ? 'down' : 'up'),
+                    ]"
+                  />&nbsp;&nbsp;Percent %
+                </button>
+              </div>
 
               <!-- <input  v-model="keyword" @keyup="getRecentListing()" class="card-title-search-field" type="text" placeholder="search"> -->
               <!-- <nuxt-link class="card-link float-right" :to="'/top-trenders'">
@@ -126,15 +149,23 @@
             <div class="dataloader" v-if="requestInProcessRecent">
               <b-spinner variant="success" label="Spinning"></b-spinner>
             </div>
-             <overlay-scrollbars>
-            <ul class="my-card-listing rfive-columns my-card-listing-scroll clearfix">
-              <CardSlabItem
-                v-for="item in recentListingItems"
-                :key="item.id"
-                :itemdata="item"
-              />
-            </ul>
-</overlay-scrollbars>
+            <overlay-scrollbars>
+              <ul
+                class="
+                  my-card-listing
+                  rfive-columns
+                  my-card-listing-scroll
+                  clearfix
+                "
+              >
+                <CardSlabItem
+                  v-for="item in recentListingItems"
+                  :key="item.id"
+                  :itemdata="item"
+                  :orderBy="orderBy"
+                />
+              </ul>
+            </overlay-scrollbars>
             <div
               class="empty-result"
               v-if="recentListingItems.length == 0 && !requestInProcessRecent"
@@ -302,11 +333,23 @@ export default {
               if (res.status == 200) {
                 if (res.data != null && res.data.length > 0) {
                   if (status) {
-                    res.data.map((item) => {
-                      this.normalListingItems.push(item)
-                    })
+                    if (!Array.isArray(res.data)) {
+                      Object.values(res.data).map((item) => {
+                        this.normalListingItems.push(item)
+                      })
+                    } else {
+                      res.data.map((item) => {
+                        this.normalListingItems.push(item)
+                      })
+                    }
                   } else {
-                    this.normalListingItems = res.data
+                    if (!Array.isArray(res.data)) {
+                      Object.values(res.data).map((item) => {
+                        this.normalListingItems.push(item)
+                      })
+                    } else {
+                      this.normalListingItems = res.data
+                    }
                   }
                   this.page = res.next
                 } else {
@@ -343,7 +386,7 @@ export default {
 </script> 
 
 <style lang="scss" scoped>
-.trenders-page{
+.trenders-page {
   padding-right: 25px !important;
   padding-left: 25px !important;
 }
@@ -440,8 +483,8 @@ export default {
     color: #ffffff;
   }
 }
-.card-single-row-outer.myportfolio{
-  .theme-green-btn{
+.card-single-row-outer.myportfolio {
+  .theme-green-btn {
     border: 1px solid #212529;
     padding: 7px 11px 4px 11px;
   }
