@@ -200,7 +200,7 @@ export default {
       keyword: null,
       filterByKeword: null,
       requestInProcess: false,
-      filterVal: 4,
+      filterVal: 2,
       showSmartSearch: false,
       smartKeyword: [],
       orderByPrice: 'up',

@@ -236,7 +236,7 @@ export default {
       noMoreData: false,
       keyword: null,
       cards: [],
-      filterVal: 4,
+      filterVal: 2,
       orderByPrice: 'up',
       orderByPercent: 'down',
       orderBy: 'percentup',

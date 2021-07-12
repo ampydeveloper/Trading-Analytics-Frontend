@@ -24,6 +24,9 @@
                 <a href="javascript:;" @click="filterBy('buy_it_now')"
                   >buy it now</a
                 >
+                <a href="javascript:;" @click="filterBy('sx_high_to_low')"
+                      >SX High to Low</a
+                    >
               </div>
             </div>
           </h5>
@@ -72,7 +75,7 @@ export default {
       requestInProcess: false,
       page: 1,
       noMoreData: false,
-      filterByKeword: 'ending_soon',
+      filterByKeword: null,
       keyword: null,
     }
   },

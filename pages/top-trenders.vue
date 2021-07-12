@@ -241,6 +241,7 @@ export default {
             .then((res) => {
               this.requestInProcess = false
               if (res.status == 200) {
+                console.log(res.data.length);
                 if (res.data != null && res.data.length > 0) {
                   if (status) {
                     if (!Array.isArray(res.data)) {
@@ -258,6 +259,7 @@ export default {
                         this.items.push(item)
                       })
                     } else {
+                      //  console.log('array 2 always here');
                     this.items = res.data
                     }
                   }
@@ -283,7 +285,7 @@ export default {
         this.requestInProcess = true
         this.$axios
           .$post('search/slab-listing', {
-            take: 100,
+            take: 18,
             sport: this.sport,
             search: this.keyword,
             orderby: this.orderBy,

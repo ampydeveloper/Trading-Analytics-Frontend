@@ -99,6 +99,7 @@ export default {
     }
     if (this.$route.query.hasOwnProperty('filter')) {
       this.filter = this.$route.query.filter
+      this.pageFilter = this.$route.query.filter
     }
     this.searchCards()
     this.scroll()
@@ -115,6 +116,7 @@ export default {
       noMoreData: false,
       sport: null,
       filter: null,
+      pageFilter: null,
       keyword: null,
       // filterByKeword: '',
       filterVal: 1,
@@ -131,10 +133,10 @@ export default {
             this.items = []
           }
           this.requestInProcess = true
-          if (this.filter != 'recent') {
-            var axiosUrl = 'search/recent-listing'
-          } else {
+          if (this.pageFilter == 'recent') {
             var axiosUrl = 'search/get-recent-auction-list'
+          } else {
+            var axiosUrl = 'search/recent-listing'
           }
           this.$axios
             .$post(axiosUrl, {
@@ -147,10 +149,10 @@ export default {
             .then((res) => {
               this.requestInProcess = false
               if (res.status == 200) {
-                if (this.filter != 'recent') {
-                  var resultData = res.data
-                } else {
+                if (this.pageFilter == 'recent') {
                   var resultData = res.items
+                } else {
+                  var resultData = res.data
                 }
 
                 if (resultData != null && resultData.length > 0) {
