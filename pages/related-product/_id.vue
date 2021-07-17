@@ -31,7 +31,7 @@ import { BSpinner } from 'bootstrap-vue'
 
 export default {
   transition: 'fade',
-  layout: 'dashboard',
+  layout: 'guestOuter',
   head() {
     return {
       title: 'Related Products - Slabstox'

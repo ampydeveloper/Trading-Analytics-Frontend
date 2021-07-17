@@ -1,5 +1,52 @@
 <template>
   <div class="col-md-10 col-sm-10 profile_page">
+    <div class="row" v-if="requestCount!=null">
+      <div class="col-md-6 col-sm-6 profile_stat_outer">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">
+              <button class="theme-btn card-btn">Listing Requests</button>
+            </h5>
+            <div class="profile_stat_box">
+              <div class="row">
+                <div class="col-md-6 col-sm-6">
+                  <p class="count count-green">{{requestCount.listingCountApproved}}</p>
+                  <p class="display-title">Approved</p>
+                </div>
+
+                <div class="col-md-6 col-sm-6">
+                  <p class="count">{{requestCount.listingCountRejected}}</p>
+                  <p class="display-title">Rejected</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-6 profile_stat_outer">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">
+              <button class="theme-btn card-btn">Slab Requests</button>
+            </h5>
+            <div class="profile_stat_box">
+              <div class="row">
+                <div class="col-md-6 col-sm-6">
+                  <p class="count count-green">{{requestCount.slabCountApproved}}</p>
+                  <p class="display-title">Approved</p>
+                </div>
+
+                <div class="col-md-6 col-sm-6">
+                  <p class="count">{{requestCount.slabCountRejected}}</p>
+                  <p class="display-title">Rejected</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="row">
       <div class="col-md-6 col-sm-6 payment-option-left">
         <div class="card">
@@ -629,6 +676,7 @@ export default {
       },
       facebook: null,
       google: null,
+      requestCount:null,
       disconnect: {
         provider: null,
         id: null,
@@ -643,6 +691,7 @@ export default {
           if (res.status == 200) {
             this.facebook = res.facebook
             this.google = res.google
+            this.requestCount = res.request_count
             if (this.facebook == null) {
               this.profile_facebookSDK()
             }
@@ -1092,6 +1141,38 @@ export default {
       color: #212529;
       margin-top: 15px;
     }
+  }
+}
+.profile_stat_outer{
+  .card{
+            height: auto;
+    margin-bottom: 30px;
+    min-height: auto;
+    .card-body{
+      padding-bottom: 30px;
+    }
+  }
+}
+.profile_stat_box {
+  .count {
+    font-size: 75px;
+    text-align: center;
+    color: #cfcfcf;
+    margin: 0;
+    line-height: 80px;
+  }
+  .count-green {
+    color: #1ce783;
+  }
+  .display-title {
+    color: #fff;
+    font-size: 10px;
+    margin-top: 3px;
+    letter-spacing: 1px;
+    display: block;
+    text-align: center;
+    text-transform: uppercase;
+        margin-bottom: 0;
   }
 }
 </style>

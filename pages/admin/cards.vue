@@ -652,7 +652,6 @@ export default {
       }
     },
     setFeaturedCard(id, tstatus) {
-      console.log(id, ' : ', tstatus)
       if (!this.requestInProcess) {
         try {
           this.showLoader()

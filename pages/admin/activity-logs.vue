@@ -19,7 +19,7 @@
                   v-model="selUser"
                 >
                   <template slot="no-options">
-                    Type to search users...</template
+                    Search Users</template
                   >
                 </v-select>
               </div>
@@ -32,7 +32,7 @@
                   :options="models"
                   v-model="selModel"
                 >
-                  <template slot="no-options"> Select entity type...</template>
+                  <template slot="no-options"> Select Entity Type</template>
                 </v-select>
               </div>
               <div
@@ -50,7 +50,7 @@
                   v-model="selSt"
                 >
                   <template slot="no-options">
-                    Select Approval Status...</template
+                    Select Approval Status</template
                   >
                 </v-select>
               </div>
@@ -138,7 +138,7 @@
                       Previous
                     </button>
                     <button
-                      :class="[{active: pg == page.current}, 'theme-btn card-btn ml-1']"
+                      :class="[{'active-pagination': pg == page.current}, 'theme-btn card-btn ml-1']"
                       v-for='pg in page.list'
                       @click="getActivityLogs(pg)"
                       v-text='pg'
@@ -155,264 +155,6 @@
                   </td>
                 </tr>
               </tfoot>
-               <!-- <tfoot>
-                <tr v-if="page - 1 == 1 && logs.length >= 30">
-                  <td colspan="14">
-                    <button class="theme-btn card-btn disable-pagination">
-                      First
-                    </button>
-                    <button class="theme-btn card-btn disable-pagination">
-                      Previous
-                    </button>
-                    <button class="theme-btn card-btn active-pagination">
-                      1
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getActivityLogs(2)"
-                      v-if="allPages >= 2"
-                    >
-                      2
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getActivityLogs(3)"
-                      v-if="allPages >= 3"
-                    >
-                      3
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getActivityLogs(4)"
-                      v-if="allPages >= 4"
-                    >
-                      4
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getActivityLogs(5)"
-                      v-if="allPages >= 5"
-                    >
-                      5
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getActivityLogs(2)"
-                      v-if="allPages >= 2"
-                    >
-                      Next
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getActivityLogs(allPages)"
-                    >
-                      Last
-                    </button>
-                  </td>
-                </tr>
-                <tr v-if="page - 1 == 2 && logs.length >= 30">
-                  <td colspan="14">
-                    <button class="theme-btn card-btn disable-pagination">
-                      First
-                    </button>
-                    <button class="theme-btn card-btn" @click="getActivityLogs(1)">
-                      Previous
-                    </button>
-                    <button class="theme-btn card-btn active-pagination">
-                      2
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getActivityLogs(3)"
-                      v-if="allPages >= 3"
-                    >
-                      3
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getActivityLogs(4)"
-                      v-if="allPages >= 4"
-                    >
-                      4
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getActivityLogs(5)"
-                      v-if="allPages >= 5"
-                    >
-                      5
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getActivityLogs(6)"
-                      v-if="allPages >= 6"
-                    >
-                      6
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getActivityLogs(3)"
-                      v-if="allPages >= 3"
-                    >
-                      Next
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getActivityLogs(allPages)"
-                    >
-                      Last
-                    </button>
-                  </td>
-                </tr>
-                <tr v-if="page - 1 == 3 && logs.length >= 30">
-                  <td colspan="14">
-                    <button class="theme-btn card-btn disable-pagination">
-                      First
-                    </button>
-                    <button class="theme-btn card-btn" @click="getActivityLogs(2)">
-                      Previous
-                    </button>
-                    <button class="theme-btn card-btn" @click="getActivityLogs(2)">
-                      2
-                    </button>
-                    <button class="theme-btn card-btn active-pagination">
-                      3
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getActivityLogs(4)"
-                      v-if="allPages >= 4"
-                    >
-                      4
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getActivityLogs(5)"
-                      v-if="allPages >= 5"
-                    >
-                      5
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getActivityLogs(6)"
-                      v-if="allPages >= 6"
-                    >
-                      6
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getActivityLogs(4)"
-                      v-if="allPages >= 4"
-                    >
-                      Next
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getActivityLogs(allPages)"
-                    >
-                      Last
-                    </button>
-                  </td>
-                </tr>
-                <tr v-if="page - 1 > 3 && logs.length >= 30">
-                  <td colspan="14">
-                    <button class="theme-btn card-btn" @click="getActivityLogs(1)">
-                      First
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getActivityLogs(page - 2)"
-                    >
-                      Previous
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getActivityLogs(page - 3)"
-                    >
-                      {{ page - 3 }}
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getActivityLogs(page - 2)"
-                    >
-                      {{ page - 2 }}
-                    </button>
-                    <button class="theme-btn card-btn active-pagination">
-                      {{ page - 1 }}
-                    </button>
-                    <button class="theme-btn card-btn" @click="getActivityLogs(page)">
-                      {{ page }}
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getActivityLogs(page + 1)"
-                      v-if="allPages >= page + 1"
-                    >
-                      {{ page + 1 }}
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      v-if="allPages >= page"
-                      @click="getActivityLogs(page)"
-                    >
-                      Next
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getActivityLogs(allPages)"
-                    >
-                      Last
-                    </button>
-                  </td>
-                </tr>
-                <tr v-if="page - 1 == allPages">
-                  <td colspan="14">
-                    <button
-                      class="theme-btn card-btn disable-pagination"
-                      v-if="page - 1 == 1"
-                    >
-                      First
-                    </button>
-                    <button
-                      class="theme-btn card-btn disable-pagination"
-                      v-if="page - 1 == 1"
-                    >
-                      Previous
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getActivityLogs(1)"
-                      v-if="page - 1 != 1"
-                    >
-                      First
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getActivityLogs(page - 2)"
-                      v-if="page - 2 > 0"
-                    >
-                      Previous
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getActivityLogs(page - 2)"
-                      v-if="page - 2 > 0"
-                    >
-                      {{ page - 2 }}
-                    </button>
-                    <button class="theme-btn card-btn active-pagination">
-                      {{ page - 1 }}
-                    </button>
-
-                    <button class="theme-btn card-btn disable-pagination">
-                      Next
-                    </button>
-                    <button class="theme-btn card-btn disable-pagination">
-                      Last
-                    </button>
-                  </td>
-                </tr>
-              </tfoot> -->
             </table>
           </div>
         </div>
@@ -436,7 +178,6 @@ export default {
   },
   mounted() {
     this.getUsers()
-    // this.getActivityLogs(this.page)
   },
   components: {
     vSelect,
@@ -462,44 +203,6 @@ export default {
       }
     }
   },
-//   watch: {
-//       logs(val) {
-//         if (val.length > 0) {
-//           setTimeout(function () {
-//             if (!$.fn.dataTable.isDataTable('#all-activity-logs-table')) {
-//               this.dataTableSel = $('#all-activity-logs-table').DataTable({
-//                 pageLength: 20,
-//                 oLanguage: { sSearch: '' },
-//                 aoColumnDefs: [
-//                   {
-//                     bSortable: false,
-//                     aTargets: [-1, -2, -3, -4],
-//                   },
-//                 ],
-//               })
-//               $('.dataTables_filter input').attr('placeholder', 'Search')
-//             }else{
-//               // this.dataTableSel.ajax.reload();
-// //               this.dataTableSel.fnClearTable();
-// // this.dataTableSel.fnDestroy();
-//               // $('#all-activity-logs-table').DataTable().destroy();
-//               // $('#all-activity-logs-table').DataTable().destroy();
-//           //  $('#all-activity-logs-table').DataTable({
-//           //       pageLength: 20,
-//           //       oLanguage: { sSearch: '' },
-//           //       aoColumnDefs: [
-//           //         {
-//           //           bSortable: false,
-//           //           aTargets: [-1, -2, -3, -4],
-//           //         },
-//           //       ],
-//           //     })
-//           //     $('.dataTables_filter input').attr('placeholder', 'Search')
-//             }
-//           }, 500)
-//         }
-//       },
-//     },
   methods: {    
     getPages(){
         let start = 1, end = 0
@@ -535,7 +238,8 @@ export default {
       }
     },
     getActivityLogs(page = 1) {
-      if (!this.requestInProcess && this.selUser > 0 && this.page.current != page) {
+      // this.page.current != page //condition may be needed 
+      if (!this.requestInProcess && this.selUser > 0) {
         try {
           this.showLoader()
           this.requestInProcess = true
@@ -545,6 +249,8 @@ export default {
             )
             .then((res) => {
               if (res.status == 200) {
+                console.log(res.data.data);
+                console.log(this.logs);
                 this.logs = res.data.data.data
                 this.page.current = res.data.data.current_page
                 this.page.last = res.data.data.last_page
@@ -584,5 +290,9 @@ ul.my-card-listing {
 }
 .active.theme-btn.card-btn{
   border: 3px solid #1ce783
+}
+.active-pagination {
+  color: #1ce783;
+  background: #272d33;
 }
 </style>

@@ -45,11 +45,13 @@
             <table class="table table-striped" id="all-users-table">
               <thead>
                 <tr>
-                  <th style="width: 30px;">Id</th>
+                  <th style="width: 45px">Id</th>
                   <th>Name</th>
                   <th>Email</th>
-                  <th style="width: 85px;">Role</th>
+                  <th style="width: 85px">Role</th>
                   <th>Mobile</th>
+                   <th>Listing Requests</th>
+                    <th>Slab Requests</th>
                   <!-- <th>DOB</th>
                   <th>Address</th> -->
                   <th>Confirmed</th>
@@ -57,7 +59,7 @@
                   <th>Deleted</th>
                   <!-- <th>Overall Rank</th>
                   <th>Slab Value</th> -->
-                  <th style="width: 175px;">Actions</th>
+                  <th style="width: 175px">Actions</th>
                 </tr>
               </thead>
               <tbody v-if="users.length > 0">
@@ -67,6 +69,22 @@
                   <td>{{ user.email }}</td>
                   <td>{{ user.roles[0] ? user.roles[0].name : '' }}</td>
                   <td>{{ user.mobile }}</td>
+                  <td>
+                    <span v-if="user.roles[0] != null && (user.roles[0].name == 'user' || user.roles[0].name == 'data entry')" class="badge badge-success btn-table-spec">
+                    {{ user.listingCountApproved }}
+                    </span>
+                    <span v-if="user.roles[0] != null && (user.roles[0].name == 'user' || user.roles[0].name == 'data entry')" class="badge badge-danger btn-table-spec">
+                    {{ user.listingCountRejected }}
+                    </span>
+                  </td>
+                  <td>
+                    <span v-if="user.roles[0] != null && (user.roles[0].name == 'user' || user.roles[0].name == 'data entry')" class="badge badge-success btn-table-spec">
+                    {{ user.slabCountApproved }}
+                    </span>
+                    <span  v-if="user.roles[0] != null && (user.roles[0].name == 'user' || user.roles[0].name == 'data entry')" class="badge badge-danger btn-table-spec">
+                    {{ user.slabCountRejected }}
+                    </span>
+                  </td>
                   <!-- <td>{{ user.dob }}</td>
                   <td>{{ user.address }}</td> -->
                   <td>
@@ -153,66 +171,170 @@
                   <td colspan="11" class="text-center">No users available.</td>
                 </tr>
               </tbody>
-              <!-- <tfoot>
+              <tfoot>
                 <tr v-if="page - 1 == 1 && users.length >= 30">
-                  <td colspan="11">
-                    <button
-                      class="theme-btn card-btn active-pagination"
-                      @click="getUsers(1)"
-                    >
+                  <td colspan="14">
+                    <button class="theme-btn card-btn disable-pagination">
+                      First
+                    </button>
+                    <button class="theme-btn card-btn disable-pagination">
+                      Previous
+                    </button>
+                    <button class="theme-btn card-btn active-pagination">
                       1
                     </button>
-                    <button class="theme-btn card-btn" @click="getUsers(2)">
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getUsers(2)"
+                      v-if="allPages >= 2"
+                    >
                       2
                     </button>
-                    <button class="theme-btn card-btn" @click="getUsers(3)">
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getUsers(3)"
+                      v-if="allPages >= 3"
+                    >
+                      3
+                    </button>
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getUsers(4)"
+                      v-if="allPages >= 4"
+                    >
+                      4
+                    </button>
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getUsers(5)"
+                      v-if="allPages >= 5"
+                    >
+                      5
+                    </button>
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getUsers(2)"
+                      v-if="allPages >= 2"
+                    >
                       Next
+                    </button>
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getUsers(allPages)"
+                    >
+                      Last
                     </button>
                   </td>
                 </tr>
                 <tr v-if="page - 1 == 2 && users.length >= 30">
-                  <td colspan="11">
-                    <button class="theme-btn card-btn" @click="getUsers(1)">
-                      1
+                  <td colspan="14">
+                    <button class="theme-btn card-btn disable-pagination">
+                      First
                     </button>
-                    <button
-                      class="theme-btn card-btn active-pagination"
-                      @click="getUsers(2)"
-                    >
+                    <button class="theme-btn card-btn" @click="getUsers(1)">
+                      Previous
+                    </button>
+                    <button class="theme-btn card-btn active-pagination">
                       2
                     </button>
-                    <button class="theme-btn card-btn" @click="getUsers(3)">
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getUsers(3)"
+                      v-if="allPages >= 3"
+                    >
                       3
                     </button>
-                    <button class="theme-btn card-btn" @click="getUsers(4)">
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getUsers(4)"
+                      v-if="allPages >= 4"
+                    >
+                      4
+                    </button>
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getUsers(5)"
+                      v-if="allPages >= 5"
+                    >
+                      5
+                    </button>
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getUsers(6)"
+                      v-if="allPages >= 6"
+                    >
+                      6
+                    </button>
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getUsers(3)"
+                      v-if="allPages >= 3"
+                    >
                       Next
+                    </button>
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getUsers(allPages)"
+                    >
+                      Last
                     </button>
                   </td>
                 </tr>
                 <tr v-if="page - 1 == 3 && users.length >= 30">
-                  <td colspan="11">
-                    <button class="theme-btn card-btn" @click="getUsers(1)">
+                  <td colspan="14">
+                    <button class="theme-btn card-btn disable-pagination">
+                      First
+                    </button>
+                    <button class="theme-btn card-btn" @click="getUsers(2)">
                       Previous
                     </button>
                     <button class="theme-btn card-btn" @click="getUsers(2)">
                       2
                     </button>
-                    <button
-                      class="theme-btn card-btn active-pagination"
-                      @click="getUsers(3)"
-                    >
+                    <button class="theme-btn card-btn active-pagination">
                       3
                     </button>
-                    <button class="theme-btn card-btn" @click="getUsers(4)">
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getUsers(4)"
+                      v-if="allPages >= 4"
+                    >
                       4
                     </button>
-                    <button class="theme-btn card-btn" @click="getUsers(5)">
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getUsers(5)"
+                      v-if="allPages >= 5"
+                    >
+                      5
+                    </button>
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getUsers(6)"
+                      v-if="allPages >= 6"
+                    >
+                      6
+                    </button>
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getUsers(4)"
+                      v-if="allPages >= 4"
+                    >
                       Next
+                    </button>
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getUsers(allPages)"
+                    >
+                      Last
                     </button>
                   </td>
                 </tr>
                 <tr v-if="page - 1 > 3 && users.length >= 30">
-                  <td colspan="11">
+                  <td colspan="14">
+                    <button class="theme-btn card-btn" @click="getUsers(1)">
+                      First
+                    </button>
                     <button
                       class="theme-btn card-btn"
                       @click="getUsers(page - 2)"
@@ -221,31 +343,92 @@
                     </button>
                     <button
                       class="theme-btn card-btn"
-                      @click="getUsers(page - 1)"
+                      @click="getUsers(page - 3)"
                     >
-                      {{ page - 1 }}
+                      {{ page - 3 }}
                     </button>
                     <button
-                      class="theme-btn card-btn active-pagination"
-                      @click="getUsers(page)"
+                      class="theme-btn card-btn"
+                      @click="getUsers(page - 2)"
                     >
+                      {{ page - 2 }}
+                    </button>
+                    <button class="theme-btn card-btn active-pagination">
+                      {{ page - 1 }}
+                    </button>
+                    <button class="theme-btn card-btn" @click="getUsers(page)">
                       {{ page }}
                     </button>
                     <button
                       class="theme-btn card-btn"
                       @click="getUsers(page + 1)"
+                      v-if="allPages >= page + 1"
                     >
                       {{ page + 1 }}
                     </button>
                     <button
                       class="theme-btn card-btn"
-                      @click="getUsers(page + 2)"
+                      v-if="allPages >= page"
+                      @click="getUsers(page)"
                     >
                       Next
                     </button>
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getUsers(allPages)"
+                    >
+                      Last
+                    </button>
                   </td>
                 </tr>
-              </tfoot> -->
+                <tr v-if="page - 1 == allPages">
+                  <td colspan="14">
+                    <button
+                      class="theme-btn card-btn disable-pagination"
+                      v-if="page - 1 == 1"
+                    >
+                      First
+                    </button>
+                    <button
+                      class="theme-btn card-btn disable-pagination"
+                      v-if="page - 1 == 1"
+                    >
+                      Previous
+                    </button>
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getUsers(1)"
+                      v-if="page - 1 != 1"
+                    >
+                      First
+                    </button>
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getUsers(page - 2)"
+                      v-if="page - 2 > 0"
+                    >
+                      Previous
+                    </button>
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getUsers(page - 2)"
+                      v-if="page - 2 > 0"
+                    >
+                      {{ page - 2 }}
+                    </button>
+                    <button class="theme-btn card-btn active-pagination">
+                      {{ page - 1 }}
+                    </button>
+
+                    <button class="theme-btn card-btn disable-pagination">
+                      Next
+                    </button>
+                    <button class="theme-btn card-btn disable-pagination">
+                      Last
+                    </button>
+                  </td>
+                </tr>
+              </tfoot>
             </table>
           </div>
         </div>
@@ -471,33 +654,35 @@ export default {
       setTimeout(() => this.usersSearch(), 500)
     }
   },
-  watch: {
-    users(val) {
-      if (val.length > 0) {
-        setTimeout(function () {
-          if (!$.fn.dataTable.isDataTable('#all-users-table')) {
-            $('#all-users-table').DataTable({
-              pageLength: 20,
-              oLanguage: { sSearch: '' },
-              aoColumnDefs: [
-                {
-                  bSortable: false,
-                  aTargets: [-1, -2, -3, -4, -5, -6, -7],
-                },
-              ],
-            })
-            $('.dataTables_filter input').attr('placeholder', 'Search')
-          }
-        }, 100)
-      }
-    },
-  },
+  // watch: {
+  //   users(val) {
+  //     if (val.length > 0) {
+  //       setTimeout(function () {
+  //         if (!$.fn.dataTable.isDataTable('#all-users-table')) {
+  //           $('#all-users-table').DataTable({
+  //             pageLength: 20,
+  //             oLanguage: { sSearch: '' },
+  //             aoColumnDefs: [
+  //               {
+  //                 bSortable: false,
+  //                 aTargets: [-1, -2, -3, -4, -5, -6, -7],
+  //               },
+  //             ],
+  //           })
+  //           $('.dataTables_filter input').attr('placeholder', 'Search')
+  //         }
+  //       }, 100)
+  //     }
+  //   },
+  // },
   data() {
     return {
       popUpTitle: '',
       users: [],
       user_id: '',
       page: 1,
+      allPages: 0,
+      currentPage: 1,
       requestInProcess: false,
       activeType: '',
       activeRole: 0,
@@ -522,7 +707,9 @@ export default {
               this.requestInProcess = false
               if (res.status == 200) {
                 this.users = res.data.data
-                // this.page = res.data.next
+                this.currentPage = page
+                this.page = res.data.next
+                this.allPages = res.data.all_pages
               }
               this.hideLoader()
             })
@@ -674,5 +861,13 @@ ul.my-card-listing {
 .card-link {
   line-height: 2;
   margin-top: 2px;
+}
+.badge-danger{
+  background-color: #f76573;
+  padding: 6px 6px 5px 7px !important;
+}
+.badge-success{
+  background-color: #1ce783;
+  padding: 6px 6px 5px 7px !important;
 }
 </style>

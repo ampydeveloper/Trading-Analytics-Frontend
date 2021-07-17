@@ -169,7 +169,7 @@
                       Positive Feedback</a
                     >
                   </p>
-                  <p>
+                  <p v-if="data.seller_info !=null && data.seller_info.seller_contact_link !=null">
                     <a
                       :href="
                         data.seller_info

@@ -482,7 +482,7 @@
           <div class="card-body">
             <h5 class="card-title">
               <button class="theme-btn card-btn">Wishlist</button>
-              <nuxt-link class="card-link float-right" to="/my-portfolio">
+              <nuxt-link class="card-link float-right" to="/my-portfolio" v-if="user != null && user.full_name != null">
                 View All
                 <font-awesome-icon :icon="['fas', 'chevron-right']" />
               </nuxt-link>
@@ -520,7 +520,7 @@
           <div class="card-body">
             <h5 class="card-title">
               <button class="theme-btn card-btn">Portfolio</button>
-              <nuxt-link class="card-link float-right" to="/my-portfolio">
+              <nuxt-link class="card-link float-right" to="/my-portfolio" v-if="user != null && user.full_name != null">
                 View All
                 <font-awesome-icon :icon="['fas', 'chevron-right']" />
               </nuxt-link>
