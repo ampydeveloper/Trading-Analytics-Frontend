@@ -39,15 +39,13 @@
                   <a href="javascript:;" @click="filterBy('ending_soon')"
                     >Ending Soon</a
                   >
-                  <a href="javascript:;" @click="filterBy('price_low_to_high')"
-                    >price low to high</a
+                 <a href="javascript:;" @click="filterBy('sx_high_to_low')"
+                    >SX High to Low</a
                   >
                   <a href="javascript:;" @click="filterBy('buy_it_now')"
                     >buy it now</a
                   >
-                  <a href="javascript:;" @click="filterBy('sx_high_to_low')"
-                    >SX High to Low</a
-                  >
+                  
                 </div>
               </div>
               <nuxt-link
