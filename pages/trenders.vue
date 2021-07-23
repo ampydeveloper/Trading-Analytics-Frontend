@@ -393,6 +393,11 @@ export default {
 .t-p-5 {
   padding: 5px;
 }
+.trender-cards-footer{
+  .card-btn{
+     cursor: pointer;
+  }
+}
 .search-page {
   .dataloader {
     text-align: center;

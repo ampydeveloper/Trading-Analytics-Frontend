@@ -187,7 +187,7 @@
       </div>
 <!-- <div class="social_share ss-h4">
         <h4>
-              <a class="embed-link" href="javascript:;"  @click="embedStatsCode()">EMBEDD CODE </>
+              <a class="embed-link" href="javascript:;"  @click="embedStatsCode()">EMBED CODE </>
               </a>
             </h4>
         </div> -->

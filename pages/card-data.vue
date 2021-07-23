@@ -1606,6 +1606,7 @@ ul.my-card-listing {
     .add-my-port1,
     .add-my-port2 {
       width: 100%;
+      cursor: pointer;
     }
   }
   .image-conatiner {
@@ -1671,6 +1672,7 @@ ul.my-card-listing {
     font-style: italic;
     line-height: 1;
         margin-bottom: 3px;
+        cursor: default;
   }
   .card-body {
     padding-bottom: 15px;
@@ -1692,6 +1694,7 @@ ul.my-card-listing {
       text-transform: uppercase;
       letter-spacing: 1px;
       margin-bottom: 13px !important;
+      cursor: default;
     }
     ul {
       padding: 0px;

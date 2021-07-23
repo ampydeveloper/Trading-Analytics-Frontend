@@ -141,6 +141,7 @@
                 v-for="item in items"
                 :key="item.id"
                 :itemdata="item"
+                 :orderBy="orderBy"
               />
             </ul>
           </div>
@@ -197,12 +198,12 @@ export default {
       sport: null,
       keyword: null,
       filterByKeword: null,
-      filterVal: 4,
+      filterVal: 2,
       showSmartSearch: false,
       smartKeyword: [],
       orderByPrice: 'up',
-      orderByPercent: 'up',
-      orderBy: null,
+      orderByPercent: 'down',
+      orderBy: 'percentup',
     }
   },
   methods: {
@@ -237,6 +238,8 @@ export default {
               take: 18,
               page: this.page,
               sport: this.sport,
+                orderby: this.orderBy,
+            filterval: this.filterVal,
             })
             .then((res) => {
               this.requestInProcess = false

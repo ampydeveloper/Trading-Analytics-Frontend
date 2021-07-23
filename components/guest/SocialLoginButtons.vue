@@ -4,14 +4,14 @@
       <button id="google-btn" class="social-login-btn google">
         <font-awesome-icon
           :icon="['fab', 'google']"
-        />&nbsp;&nbsp;&nbsp;&nbsp;Sign in with Google
+        />&nbsp;&nbsp;Continue with Google
       </button>
     </div>
     <div class="col-md-12 col-sm-12">
       <button @click="facebook()" class="social-login-btn facebook">
         <font-awesome-icon
           :icon="['fab', 'facebook-square']"
-        />&nbsp;&nbsp;Continue with facebook
+        />&nbsp;&nbsp;Continue with Facebook
       </button>
     </div>
   </div>

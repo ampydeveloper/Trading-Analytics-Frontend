@@ -164,9 +164,7 @@
                       >{{
                         data.seller_info
                           ? data.seller_info.positiveFeedbackPercent
-                          : 0
-                      }}
-                      Positive Feedback</a
+                          : '0'}}Positive Feedback</a
                     >
                   </p>
                   <p v-if="data.seller_info !=null && data.seller_info.seller_contact_link !=null">
@@ -253,28 +251,20 @@
                         : '0'
                     }}
                     standard shipping
-                    <!-- | <a href="javascript:;" class="see-deatils">see details</a> -->
                   </p>
-                  <p>
+                  <p v-if="data.location!=null">
                     <span>Location</span>
                     {{ data.location }}
                   </p>
-                  <p>
+                  <p v-if="data.shipping_info!=null && data.shipping_info.shipToLocations!=null">
                     <span>Shipping to</span>
                     {{
                       data.shipping_info
                         ? data.shipping_info.shipToLocations
                         : ''
                     }}
-                    <!-- <a href="javascript:;" class="see-exclusions"
-                      >See Exclusions</a
-                    > -->
                   </p>
-                  <!-- <p>
-                    <span>Delivery</span> Estimated on before Mon. Jun 29 to
-                    53072
-                  </p> -->
-                  <p>
+                  <p v-if="data.paymentMethod!=null">
                     <span>Payments</span>
                     {{ data.paymentMethod }}
                   </p>
@@ -282,8 +272,7 @@
                     <span>Return</span>
                     Seller
                     {{ data.returnsAccepted == 'true' ? '' : 'does not' }}
-                    accept return
-                    <!-- | <a href="javascript:;" class="see-deatils">see details</a> -->
+                    accept returns
                   </p>
                 </div>
               </div>
@@ -872,6 +861,7 @@ export default {
       font-size: 14px !important;
       // width: calc(33% - 3px);
       width: 100%;
+      cursor: pointer;
       // float: left;
       // margin: 0 2px;
       &.theme-green-btn {
@@ -961,6 +951,7 @@ export default {
 .vsd-btn {
   color: #212529;
   display: inline-block;
+  cursor: pointer;
   &:hover {
     text-decoration: none;
     color: #212529;

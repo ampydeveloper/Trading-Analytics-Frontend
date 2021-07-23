@@ -15,21 +15,6 @@
                   >
                   <div class="col-md-9 col-sm-9">
                     <v-select v-model="filters.sports" placeholder="Search" :options="attributes.sport"></v-select>
-                    <!-- <div class="select_wrap">
-                      <select
-                        class="form-control-select"
-                        
-                        :value="filters.sports"
-                        @change="update_index($event, 'sports')"
-                      >
-                        <option
-                          v-for="(sport, index) of attributes.sport"
-                          :key="index"
-                          :value="sport.value"
-                          >{{ sport.value }}</option
-                        >
-                      </select>
-                    </div> -->
                   </div>
                 </div>
                 <div class="form-group row">
@@ -40,20 +25,6 @@
                   >
                   <div class="col-md-9 col-sm-9">
                     <v-select v-model="filters.year" placeholder="Search" :options="attributes.year"></v-select>
-                    <!-- <div class="select_wrap">
-                      <select
-                        class="form-control-select"
-                        :value="filters.year"
-                        @change="update_index($event, 'year')"
-                      >
-                        <option
-                          v-for="(year, index) of attributes.year"
-                          :key="index"
-                          :value="year.value"
-                          >{{ year.value }}</option
-                        >
-                      </select>
-                    </div> -->
                   </div>
                 </div>
                 <div class="form-group row">
@@ -79,20 +50,6 @@
                   >
                   <div class="col-md-9 col-sm-9">
                     <v-select v-model="filters.team" placeholder="Search" :options="attributes.team"></v-select>
-                    <!-- <div class="select_wrap">
-                      <select
-                        class="form-control-select"
-                        :value="filters.team"
-                        @change="update_index($event, 'team')"
-                      >
-                        <option
-                          v-for="(team, index) of attributes.team"
-                          :key="index"
-                          :value="team.value"
-                          >{{ team.value }}</option
-                        >
-                      </select>
-                    </div> -->
                   </div>
                 </div>
                 <div class="form-group row">
@@ -125,20 +82,6 @@
                   >
                   <div class="col-md-9 col-sm-9">
                     <v-select v-model="filters.season" placeholder="Search" :options="attributes.season"></v-select>
-                    <!-- <div class="select_wrap">
-                      <select
-                        class="form-control-select"
-                        :value="filters.season"
-                        @change="update_index($event, 'season')"
-                      >
-                        <option
-                          v-for="(season, index) of attributes.season"
-                          :key="index"
-                          :value="season.value"
-                          >{{ season.value }}</option
-                        >
-                      </select>
-                    </div> -->
                   </div>
                 </div>
                 <div class="form-group row">
@@ -164,21 +107,6 @@
                   >
                   <div class="col-md-9 col-sm-9">
                     <v-select v-model="filters.card" placeholder="Search" :options="attributes.cardmanufacturer"></v-select>
-                    <!-- <div class="select_wrap">
-                      <select
-                        class="form-control-select"
-                        :value="filters.card"
-                        @change="update_index($event, 'card')"
-                      >
-                        <option
-                          v-for="(cardmanufacturer,
-                          index) of attributes.cardmanufacturer"
-                          :key="index"
-                          :value="cardmanufacturer.value"
-                          >{{ cardmanufacturer.value }}</option
-                        >
-                      </select>
-                    </div> -->
                   </div>
                 </div>
                 <div class="form-group row">
@@ -189,20 +117,6 @@
                   >
                   <div class="col-md-9 col-sm-9">
                     <v-select v-model="filters.type" placeholder="Search" :options="attributes.product"></v-select>
-                    <!-- <div class="select_wrap">
-                      <select
-                        class="form-control-select"
-                        :value="filters.type"
-                        @change="update_index($event, 'type')"
-                      >
-                        <option
-                          v-for="(product, index) of attributes.product"
-                          :key="index"
-                          :value="product.value"
-                          >{{ product.value }}</option
-                        >
-                      </select>
-                    </div> -->
                   </div>
                 </div>
               </div>
@@ -215,20 +129,6 @@
                   >
                   <div class="col-md-9 col-sm-9">
                     <v-select v-model="filters.series" placeholder="Search" :options="attributes.series"></v-select>
-                    <!-- <div class="select_wrap">
-                      <select
-                        class="form-control-select"
-                        :value="filters.series"
-                        @change="update_index($event, 'series')"
-                      >
-                        <option
-                          v-for="(series, index) of attributes.series"
-                          :key="index"
-                          :value="series.value"
-                          >{{ series.value }}</option
-                        >
-                      </select>
-                    </div> -->
                   </div>
                 </div>
                 <div class="form-group row">
@@ -239,20 +139,6 @@
                   >
                   <div class="col-md-9 col-sm-9">
                     <v-select v-model="filters.grade" placeholder="Search" :options="attributes.grade"></v-select>
-                    <!-- <div class="select_wrap">
-                      <select
-                        class="form-control-select"
-                        :value="filters.grade"
-                        @change="update_index($event, 'grade')"
-                      >
-                        <option
-                          v-for="(grade, index) of attributes.grade"
-                          :key="index"
-                          :value="grade.value"
-                          >{{ grade.value }}</option
-                        >
-                      </select>
-                    </div> -->
                   </div>
                 </div>
                 <div class="form-group row">
@@ -278,17 +164,7 @@
                     >Listing</label
                   >
                   <div class="col-md-9 col-sm-9">
-                    <v-select v-model="filters.listing" placeholder="Search" :options="[{'label': 'Buy it now', 'code' : 'buy_it_now'}, 'auction']"></v-select>
-                    <!-- <div class="select_wrap">
-                      <select
-                        class="form-control-select"
-                        :value="filters.grade"
-                        @change="update_index($event, 'listing')"
-                      >
-                        <option value="buy_it_now">Buy it now</option>
-                        <option value="auction">Auction</option>
-                      </select>
-                    </div> -->
+                    <v-select v-model="filters.listing" placeholder="Search" :options="[{'label': 'Buy it now', 'code' : 'buy_it_now'}, 'Auction']"></v-select>
                   </div>
                 </div>
               </div>

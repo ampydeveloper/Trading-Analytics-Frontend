@@ -435,7 +435,7 @@
         <!-- <div class="social_share ss-h4">
         <h4>
               <a class="embed-link" href="javascript:;"
-                @click="embedStoxtickerCode()" >EMBEDD CODE </>
+                @click="embedStoxtickerCode()" >EMBED CODE </>
               </a>
             </h4>
         </div> -->
@@ -1493,6 +1493,7 @@ ul.my-card-listing {
         border: 0;
         text-transform: uppercase;
         outline: none;
+        cursor: pointer;
       }
     }
   }

@@ -225,6 +225,7 @@ ul.my-requestSlab-listing {
 .requestSlab-btn {
   padding: 8px 12px 5px 12px;
   font-family: 'Nexabold', Helvetica, Arial, sans-serif;
+      cursor: pointer;
 }
 .form_column label {
   width: 30%;
@@ -265,6 +266,7 @@ ul.my-requestSlab-listing {
 .requestSlab-title {
   .requestSlab-btn {
     margin-bottom: 15px;
+        cursor: default;
   }
 }
 .form-control.form-input-bor{

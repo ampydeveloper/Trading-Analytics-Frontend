@@ -314,48 +314,17 @@ export default {
 ul.my-card-listing {
   list-style: none;
   padding: 0px;
-  // display: inline-block;
-  // width: 100%;
 }
 .no-result-found {
   text-transform: uppercase;
   text-align: center;
   color: #ffffff;
 }
-// .trender-cards-footer {
-//   display: inline-block;
-//   margin-left: 5px;
-//   // width: calc(100% - 453px);
-//   text-align: left;
-//   padding-left: 15px;
-//   .trender-cards-footer-month-filter {
-//     list-style: none;
-//     background: $theme-off-white;
-//     color: #000000;
-//     // width: 270px;
-//     padding: 3px 7px 6px 7px;
-//     margin: 0px;
-//     font-family: 'NexaBold', Helvetica, Arial, sans-serif;
-//     border-radius: 4px;
-//     text-align: center;
-//     display: inline-block;
-
-//     .trender-cards-footer-month-filter-item {
-//       display: inline;
-//       padding: 4px 6px 3px 6px;
-//       border-radius: 2px;
-//       letter-spacing: 1px;
-//       font-size: 11px;
-//       margin: 0 3px;
-//       cursor: pointer;
-
-//       &.active {
-//         background: $theme-btn-green;
-//       }
-//     }
-//   }
-// }
-
+.trender-cards-footer{
+  .card-btn{
+     cursor: pointer;
+  }
+}
 .custom-smart-search-player-name {
   .internal-search-container {
     width: 200px;

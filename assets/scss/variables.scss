@@ -16,10 +16,19 @@ $theme-nav-badge-color: #de3030;
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 2px;
+  transition: none;
+  cursor: inherit;
 
   &:focus {
     border: none;
     outline: none;
+  }
+  &:after {
+    display: none;
+  }
+
+  &:active:after {
+    transition: none;
   }
 }
 
@@ -30,10 +39,19 @@ $theme-nav-badge-color: #de3030;
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 2px;
+  transition: none;
+  cursor: inherit;
 
   &:focus {
     border: none;
     outline: none;
+  }
+  &:after {
+    display: none;
+  }
+
+  &:active:after {
+    transition: none;
   }
 }
 
@@ -62,10 +80,19 @@ $theme-nav-badge-color: #de3030;
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 2px;
+  transition: none;
+  cursor: inherit;
 
   &:focus {
     border: none;
     outline: none;
+  }
+  &:after {
+    display: none;
+  }
+
+  &:active:after {
+    transition: none;
   }
 }
 
@@ -77,11 +104,21 @@ $theme-nav-badge-color: #de3030;
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 2px;
+  transition: none;
+  cursor: inherit;
 
   &:focus {
     border: none;
     outline: none;
   }
+  &:after {
+    display: none;
+  }
+
+  &:active:after {
+    transition: none;
+  }
+
 }
 
 .theme-dark-grey-btn {
@@ -92,10 +129,19 @@ $theme-nav-badge-color: #de3030;
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 1px;
+  transition: none;
+  cursor: inherit;
 
   &:focus {
     border: none;
     outline: none;
+  }
+  &:after {
+    display: none;
+  }
+
+  &:active:after {
+    transition: none;
   }
 
   &.active {
@@ -126,10 +172,19 @@ $theme-nav-badge-color: #de3030;
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 1px;
+  transition: none;
+  cursor: inherit;
 
   &:focus {
     border: none;
     outline: none;
+  }
+  &:after {
+    display: none;
+  }
+
+  &:active:after {
+    transition: none;
   }
 }
 
@@ -406,7 +461,7 @@ html body .gift-cart-form .gift-cart-form-input {
   padding: 15px 40px;
   font-style: normal;
   font-family: "NexaBold", Helvetica, Arial, sans-serif;
-
+  cursor: pointer;
   @media (max-width: 768px) {
     padding: 15px 10px;
   }
@@ -1472,6 +1527,7 @@ html body #__nuxt .b-profileImage .dropdown-menu {
   bottom: 40px;
   left: 15px;
   font-size: 11px;
+  cursor: pointer;
 }
 
 // .payment-option-side-cards .card {

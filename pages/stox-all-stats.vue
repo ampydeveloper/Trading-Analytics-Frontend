@@ -125,7 +125,7 @@
         <div class="social_share ss-h4">
           <h4>
             <a class="embed-link" href="javascript:void(0);"
-              @click="embedStoxtickerCode()" >EMBEDD CODE </>
+              @click="embedStoxtickerCode()" >EMBED CODE </>
             </a>
           </h4>
         </div>

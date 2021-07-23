@@ -68,7 +68,7 @@
                     <b-form-group class="text-center">
                       <p class="fogot-password">
                         <nuxt-link to="/forgot-password"
-                          >Forgot Your Password ?</nuxt-link
+                          >Forgot Your Password?</nuxt-link
                         >
                       </p>
                       <button
@@ -76,7 +76,7 @@
                         type="submit"
                         class="btn-login"
                       >
-                        Login Now
+                        Log In
                         <font-awesome-icon :icon="['fas', 'chevron-right']" />
                       </button>
                     </b-form-group>
@@ -137,9 +137,9 @@
                 'with-qr-image': showLoginForm == false && twoFactor.qr != null,
               }"
             >
-              <p class="dont-have-account">Don't Have an Account ?</p>
+              <p class="dont-have-account">Don't Have an Account?</p>
               <nuxt-link to="/register" class="login-page-signup-btn"
-                >Sign up</nuxt-link
+                >Sign Up</nuxt-link
               >
             </div>
           </div>

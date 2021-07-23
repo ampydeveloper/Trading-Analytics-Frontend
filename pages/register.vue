@@ -102,7 +102,7 @@
                       id="input-register-password"
                       v-model="form.confirmpassword"
                       aria-describedby="input-register-password-help input-register-password-feedback"
-                      placeholder="Re-Enter Password"
+                      placeholder="Re-enter Password"
                       type="password"
                       trim
                       required
@@ -125,7 +125,7 @@
                     <div class="pretty p-default">
                       <input type="checkbox" v-model="form.agree" required />
                       <div class="state">
-                        <label>Agree to terms of use</label>
+                        <label>I agree to Slabstox's Terms & Conditions.</label>
                       </div>
                     </div>
                   </b-input-group>
@@ -134,18 +134,18 @@
 
                 <b-form-group class="text-center">
                   <button type="submit" class="btn-signup" :disabled="isSubmit">
-                    Signup now
+                    Sign up now
                     <font-awesome-icon :icon="['fas', 'chevron-right']" />
                   </button>
                 </b-form-group>
 
                 <b-form-group class="text-center have-an-account">
                   <span>
-                    By clicking Agree and sign up, you agree to our
+                    By checking the box above and creating a Slabstox account, you agree to our
                     <a
                       href="https://www.slabstox.com/terms-conditions/"
                       target="_blank"
-                      >Terms of Use Agreement</a
+                      >Terms & Conditions</a
                     >.
                   </span>
                 </b-form-group>

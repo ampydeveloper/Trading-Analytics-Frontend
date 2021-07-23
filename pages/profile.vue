@@ -919,6 +919,11 @@ export default {
     border-bottom: 1px solid #ffffff !important;
   }
 }
+.payment-option-left, .payment-option-side-cards{
+  .theme-green-btn{
+    cursor: pointer;
+  }
+}
 .edit-profile-input-link {
   cursor: pointer;
   &:hover {

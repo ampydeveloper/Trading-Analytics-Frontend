@@ -202,13 +202,13 @@
              
             </div>
           </div>
-          <div class="social_share ss-h4" style="margin-bottom: 0;">
+          <!-- <div class="social_share ss-h4" style="margin-bottom: 0;">
             <h4>
               <a class="embed-link" href="#" @click="embedSellsCode()"
-                >EMBEDD CODE </>
+                >EMBED CODE </>
               </a>
             </h4>
-          </div>
+          </div> -->
         </div>
       </div>
 
