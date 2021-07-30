@@ -9,7 +9,7 @@
             </h5>
           </div>
           <div class="card-body search-form">
-            <div class="row">
+            <div class="row row-5">
               <div class="col-3">
                 <v-select
                   label="name"
@@ -18,9 +18,7 @@
                   :options="users"
                   v-model="selUser"
                 >
-                  <template slot="no-options">
-                    Search Users</template
-                  >
+                  <template slot="no-options"> Search Users</template>
                 </v-select>
               </div>
               <div class="col-3">
@@ -49,10 +47,32 @@
                   ]"
                   v-model="selSt"
                 >
-                  <template slot="no-options">
-                    Select Approval Status</template
-                  >
+                  <template slot="no-options"> Select Approval Status</template>
                 </v-select>
+              </div>
+              <div class="col-3 custom-date-pick">
+                <b-form-datepicker
+                  class="profile_datepicker"
+                  v-model="start_date"
+                  placeholder="Start Date"
+                  :date-format-options="{
+                    year: 'numeric',
+                    month: 'numeric',
+                    day: '2-digit',
+                  }"
+                  locale="en"
+                ></b-form-datepicker>
+                <b-form-datepicker
+                  class="profile_datepicker"
+                  v-model="end_date"
+                  placeholder="End Date"
+                  :date-format-options="{
+                    year: 'numeric',
+                    month: 'numeric',
+                    day: '2-digit',
+                  }"
+                  locale="en"
+                ></b-form-datepicker>
               </div>
               <div class="col-1">
                 <button
@@ -132,23 +152,27 @@
                   <td colspan="6">
                     <button
                       class="theme-btn card-btn"
-                      :disabled="page.current-1 <= 0"
-                      @click="getActivityLogs(page.current-1)"
+                      :disabled="page.current - 1 <= 0"
+                      @click="getActivityLogs(page.current - 1)"
                     >
                       Previous
                     </button>
                     <button
-                      :class="[{'active-pagination': pg == page.current}, 'theme-btn card-btn ml-1']"
-                      v-for='pg in page.list'
+                      :class="[
+                        { 'active-pagination': pg == page.current },
+                        'theme-btn card-btn ml-1',
+                      ]"
+                      v-for="pg in page.list"
                       @click="getActivityLogs(pg)"
-                      v-text='pg'
-                      :key='"page"+pg'
-                    >{{pg}}
+                      v-text="pg"
+                      :key="'page' + pg"
+                    >
+                      {{ pg }}
                     </button>
                     <button
                       class="theme-btn card-btn"
-                      :disabled="page.current+1>page.last"
-                      @click="getActivityLogs(page.current+1)"
+                      :disabled="page.current + 1 > page.last"
+                      @click="getActivityLogs(page.current + 1)"
                     >
                       Next
                     </button>
@@ -166,7 +190,6 @@
 <script>
 import 'vue-select/dist/vue-select.css'
 import vSelect from 'vue-select'
-import $ from 'jquery'
 
 export default {
   transition: 'fade',
@@ -191,26 +214,29 @@ export default {
       users: [],
       models: [],
       logs: [],
+      start_date: null,
+      end_date: null,
       // page: 1,
       last_page: 0,
       requestInProcess: false,
-      dataTableSel:null,
-      allPages:0,
-      page:{
+      dataTableSel: null,
+      allPages: 0,
+      page: {
         current: 0,
         last: 0,
-        list: []
-      }
+        list: [],
+      },
     }
   },
-  methods: {    
-    getPages(){
-        let start = 1, end = 0
-        let current = this.page.current
-        if(current - 1 >= 4) start = current - 3
-        if(current + 3 > this.page.last) end = this.page.last
-        else end = current + 3
-        this.page.list = [...Array((end+1)-start).keys()].map(i => i + start)
+  methods: {
+    getPages() {
+      let start = 1,
+        end = 0
+      let current = this.page.current
+      if (current - 1 >= 4) start = current - 3
+      if (current + 3 > this.page.last) end = this.page.last
+      else end = current + 3
+      this.page.list = [...Array(end + 1 - start).keys()].map((i) => i + start)
     },
     getUsers() {
       if (!this.requestInProcess) {
@@ -238,19 +264,17 @@ export default {
       }
     },
     getActivityLogs(page = 1) {
-      // this.page.current != page //condition may be needed 
+      // this.page.current != page //condition may be needed
       if (!this.requestInProcess && this.selUser > 0) {
         try {
           this.showLoader()
           this.requestInProcess = true
           this.$axios
             .get(
-              `users/get-activity-logs-for-admin/${this.selUser}?model=${this.selModel}&sts=${this.selSt}&page=${page}`
+              `users/get-activity-logs-for-admin/${this.selUser}?model=${this.selModel}&sts=${this.selSt}&page=${page}&start_date=${this.start_date}&end_date=${this.end_date}`
             )
             .then((res) => {
               if (res.status == 200) {
-                console.log(res.data.data);
-                console.log(this.logs);
                 this.logs = res.data.data.data
                 this.page.current = res.data.data.current_page
                 this.page.last = res.data.data.last_page
@@ -288,11 +312,31 @@ ul.my-card-listing {
   line-height: 2;
   margin-top: 2px;
 }
-.active.theme-btn.card-btn{
-  border: 3px solid #1ce783
+.active.theme-btn.card-btn {
+  border: 3px solid #1ce783;
 }
 .active-pagination {
   color: #1ce783;
   background: #272d33;
+}
+.custom-date-pick .profile_datepicker > .btn{
+  width: 21px;
+}
+.custom-date-pick .profile_datepicker {
+  background: inherit !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    height: 28px !important;
+    font-size: 12px;
+    float: left;
+    width: 50%;
+}
+.row-5 {
+  margin-left: -5px;
+  margin-right: -5px;
+}
+.row-5 > div {
+  padding-left: 5px;
+  padding-right: 5px;
 }
 </style>

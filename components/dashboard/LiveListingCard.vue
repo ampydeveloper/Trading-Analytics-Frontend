@@ -98,6 +98,9 @@
                   <a href="javascript:;" @click="filterBy('sx_high_to_low')"
                     >SX High to Low</a
                   >
+                  <a href="javascript:;" @click="filterBy('sx_low_to_high')"
+                    >SX low to high</a
+                  >
                   <a href="javascript:;" @click="filterBy('buy_it_now')"
                     >buy it now</a
                   >                 

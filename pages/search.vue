@@ -1,14 +1,21 @@
 <template>
   <div class="col-md-12 col-sm-12 search-page">
-    <div class="row slab-result-search" v-if="slabItems.length >0 && showSlab">
+    <div class="row slab-result-search" v-if="slabItems.length > 0 && showSlab">
       <div class="col-12 no-padding">
         <div class="card transparent-bg">
           <div class="card-body">
             <h5 class="card-title">
-              <button class="theme-btn card-btn slab-result-title">Slabs Results</button>
+              <button class="theme-btn card-btn slab-result-title">
+                Slabs Results
+              </button>
             </h5>
             <ul class="my-card-listing slab-result-card-outer">
-              <CardSlabItem v-for="item in slabItems" :key="'slab-'+item.id" :itemdata="item" @clicked="selectSlabCard" />
+              <CardSlabItem
+                v-for="item in slabItems"
+                :key="'slab-' + item.id"
+                :itemdata="item"
+                @clicked="selectSlabCard"
+              />
             </ul>
           </div>
         </div>
@@ -21,36 +28,42 @@
             <h5 class="card-title">
               <button class="theme-green-btn card-btn">Listings Results</button>
               <input
-              v-model="keyword"
-              @keyup="searchInternalCards()"
-              class="card-title-search-field"
-              type="text"
-              placeholder="search"
-            />
-            <div class="custom-dropdown float-right">
-              <button class="dropbtn">Filter</button>
-              <div class="dropdown-content">
-                <a href="javascript:;" @click="filterBy('ending_soon')"
-                  >Ending Soon</a
-                >
-                <a href="javascript:;" @click="filterBy('price_low_to_high')"
-                  >price low to high</a
-                >
-                <a href="javascript:;" @click="filterBy('buy_it_now')"
-                  >buy it now</a
-                >
+                v-model="keyword"
+                @keyup="searchInternalCards()"
+                class="card-title-search-field"
+                type="text"
+                placeholder="search"
+              />
+              <div class="custom-dropdown float-right">
+                <button class="dropbtn">Filter</button>
+                <div class="dropdown-content">
+                  <a href="javascript:;" @click="filterBy('ending_soon')"
+                    >Ending Soon</a
+                  >
+                  <a href="javascript:;" @click="filterBy('sx_high_to_low')"
+                    >SX High to Low</a
+                  >
+                  <a href="javascript:;" @click="filterBy('sx_low_to_high')"
+                    >SX low to high</a
+                  >
+                  <a href="javascript:;" @click="filterBy('buy_it_now')"
+                    >buy it now</a
+                  >
+                </div>
               </div>
-            </div>
             </h5>
             <div class="dataloader" v-if="requestInProcess">
               <b-spinner variant="success" label="Spinning"></b-spinner>
             </div>
-            <p
-              v-if="items.length == 0"
-              class="no-result-found"
-            >{{ (requestInProcess) ? '' : 'No results found.'}}</p>
+            <p v-if="items.length == 0" class="no-result-found">
+              {{ requestInProcess ? '' : 'No results found.' }}
+            </p>
             <ul v-else class="my-card-listing">
-              <CardListItem v-for="item in items" :key="item.id" :itemdata="item" />
+              <CardListItem
+                v-for="item in items"
+                :key="item.id"
+                :itemdata="item"
+              />
             </ul>
           </div>
         </div>
@@ -68,10 +81,10 @@ import { BSpinner } from 'bootstrap-vue'
 export default {
   transition: 'fade',
   layout: 'guestOuter',
-   auth: 'guest',
+  auth: 'guest',
   head() {
     return {
-      title: 'Search - Slabstox'
+      title: 'Search - Slabstox',
     }
   },
   async mounted() {
@@ -79,7 +92,7 @@ export default {
     this.filter = this.filters_old_state
     if (this.$route.query.hasOwnProperty('id')) {
       this.searchCard = this.$route.query.id
-    }else{
+    } else {
       this.searchCard = null
       if (this.$route.query.hasOwnProperty('keyword')) {
         this.keyword = this.$route.query.keyword
@@ -91,7 +104,7 @@ export default {
   components: {
     CardListItem,
     CardSlabItem,
-    BSpinner
+    BSpinner,
   },
   computed: {
     ...mapGetters({
@@ -99,8 +112,8 @@ export default {
       filters_old_state: 'advancesearch/filters',
       cardid_old_state: 'advancesearch/cardid',
       showAdvanceSearch: 'advancesearch/show',
-      searchBtnClick_old_state: 'advancesearch/searchBtnClick'
-    })
+      searchBtnClick_old_state: 'advancesearch/searchBtnClick',
+    }),
   },
   data() {
     return {
@@ -120,28 +133,28 @@ export default {
   },
   watch: {
     keyword_old_state(newVal, oldVal) {
-      console.log('newVal',newVal)
+      console.log('newVal', newVal)
       this.keyword = newVal
-      this.filter = {};
+      this.filter = {}
       this.searchCard = null
       this.searchCards()
     },
     filters_old_state(newVal, oldVal) {
       this.filter = newVal
       this.searchCard = null
-      this.keyword = '';
+      this.keyword = ''
       this.searchCards()
     },
     cardid_old_state(newVal, oldVal) {
-      if(typeof newVal == 'number'){
+      if (typeof newVal == 'number') {
         this.searchCard = newVal
-        this.keyword = '';
+        this.keyword = ''
         this.searchCards()
       }
     },
     searchBtnClick_old_state(newVal, oldVal) {
       this.searchCards()
-    }
+    },
   },
   methods: {
     filterBy(data) {
@@ -153,7 +166,7 @@ export default {
       this.slabSearchCardId = id
       this.slabSearchCard()
     },
-    searchInternalCards(status = false,) {
+    searchInternalCards(status = false) {
       if (!this.requestInProcess) {
         try {
           if (!status) {
@@ -167,14 +180,14 @@ export default {
               filter: this.filter,
               page: this.page,
               filterBy: this.filterByKeword,
-              searchCard: this.searchCard
+              searchCard: this.searchCard,
             })
-            .then(res => {
+            .then((res) => {
               this.requestInProcess = false
               if (res.status == 200) {
                 if (res.items.data != null && res.items.data.length > 0) {
                   if (status) {
-                    res.items.data.map(item => {
+                    res.items.data.map((item) => {
                       this.items.push(item)
                     })
                   } else {
@@ -189,7 +202,8 @@ export default {
                   }
                 }
               }
-            }).catch(err => {
+            })
+            .catch((err) => {
               this.requestInProcess = false
             })
         } catch (err) {
@@ -198,42 +212,42 @@ export default {
         }
       }
     },
-    searchCards(status = false, hideSlab=true) {
+    searchCards(status = false, hideSlab = true) {
       if (!this.requestInProcess) {
         try {
           if (!status) {
             this.page = 1
             this.items = []
-            if(hideSlab){
+            if (hideSlab) {
               this.slabItems = []
             }
           }
           // console.log(this.user);
-          if(this.user == false){
-var callString = 'get-card-list';
-          }else{
-            var callString = 'get-card-list-user';
+          if (this.user == false) {
+            var callString = 'get-card-list'
+          } else {
+            var callString = 'get-card-list-user'
           }
           this.requestInProcess = true
           this.$axios
-            .$post('search/'+callString, {
+            .$post('search/' + callString, {
               search: this.keyword,
               filter: this.filter,
               page: this.page,
               // filterBy: this.filterByKeword,
               filterBy: '',
-              searchCard: this.searchCard
+              searchCard: this.searchCard,
             })
-            .then(res => {
+            .then((res) => {
               this.requestInProcess = false
               if (res.status == 200) {
-                if(hideSlab){
+                if (hideSlab) {
                   this.slabItems = res.cards
                 }
                 this.showSlab = true
                 if (res.items.data != null && res.items.data.length > 0) {
                   if (status) {
-                    res.items.data.map(item => {
+                    res.items.data.map((item) => {
                       this.items.push(item)
                     })
                   } else {
@@ -248,7 +262,8 @@ var callString = 'get-card-list';
                   }
                 }
               }
-            }).catch(err => {
+            })
+            .catch((err) => {
               this.requestInProcess = false
             })
         } catch (err) {
@@ -267,9 +282,11 @@ var callString = 'get-card-list';
           }
           this.requestInProcess = true
           this.$axios
-            .$post('card/get-card-list-using-card-id/' +this.slabSearchCardId,
-                {page: this.page})
-            .then(res => {
+            .$post(
+              'card/get-card-list-using-card-id/' + this.slabSearchCardId,
+              { page: this.page }
+            )
+            .then((res) => {
               this.requestInProcess = false
               this.showSlab = true
               if (res.status == 200) {
@@ -277,7 +294,7 @@ var callString = 'get-card-list';
                   this.noMoreData = true
                 }
                 if (status) {
-                  res.data.map(item => {
+                  res.data.map((item) => {
                     this.items.push(item)
                   })
                 } else {
@@ -310,8 +327,8 @@ var callString = 'get-card-list';
           }
         }
       }
-    }
-  }
+    },
+  },
 }
 </script>
 <style lang="scss" scoped>

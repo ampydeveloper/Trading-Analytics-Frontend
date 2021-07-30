@@ -15,7 +15,7 @@
               </button>
             </h5>
           </div>
-          <!-- <div class="card-body search-form">
+          <div class="card-body search-form">
             <div class="row">
               <div class="col-4">
                 <div class="input-group mb-3">
@@ -40,7 +40,7 @@
                 </div>
               </div>
             </div>
-          </div> -->
+          </div>
           <div class="table_wrapper ap">
             <table class="table table-striped" id="all-users-table">
               <thead>
@@ -50,8 +50,8 @@
                   <th>Email</th>
                   <th style="width: 85px">Role</th>
                   <th>Mobile</th>
-                   <th>Listing Requests</th>
-                    <th>Slab Requests</th>
+                  <th>Listing Requests</th>
+                  <th>Slab Requests</th>
                   <!-- <th>DOB</th>
                   <th>Address</th> -->
                   <th>Confirmed</th>
@@ -70,19 +70,47 @@
                   <td>{{ user.roles[0] ? user.roles[0].name : '' }}</td>
                   <td>{{ user.mobile }}</td>
                   <td>
-                    <span v-if="user.roles[0] != null && (user.roles[0].name == 'user' || user.roles[0].name == 'data entry')" class="badge badge-success btn-table-spec">
-                    {{ user.listingCountApproved }}
+                    <span
+                      v-if="
+                        user.roles[0] != null &&
+                        (user.roles[0].name == 'user' ||
+                          user.roles[0].name == 'data entry')
+                      "
+                      class="badge badge-success btn-table-spec"
+                    >
+                      {{ user.listingCountApproved }}
                     </span>
-                    <span v-if="user.roles[0] != null && (user.roles[0].name == 'user' || user.roles[0].name == 'data entry')" class="badge badge-danger btn-table-spec">
-                    {{ user.listingCountRejected }}
+                    <span
+                      v-if="
+                        user.roles[0] != null &&
+                        (user.roles[0].name == 'user' ||
+                          user.roles[0].name == 'data entry')
+                      "
+                      class="badge badge-danger btn-table-spec"
+                    >
+                      {{ user.listingCountRejected }}
                     </span>
                   </td>
                   <td>
-                    <span v-if="user.roles[0] != null && (user.roles[0].name == 'user' || user.roles[0].name == 'data entry')" class="badge badge-success btn-table-spec">
-                    {{ user.slabCountApproved }}
+                    <span
+                      v-if="
+                        user.roles[0] != null &&
+                        (user.roles[0].name == 'user' ||
+                          user.roles[0].name == 'data entry')
+                      "
+                      class="badge badge-success btn-table-spec"
+                    >
+                      {{ user.slabCountApproved }}
                     </span>
-                    <span  v-if="user.roles[0] != null && (user.roles[0].name == 'user' || user.roles[0].name == 'data entry')" class="badge badge-danger btn-table-spec">
-                    {{ user.slabCountRejected }}
+                    <span
+                      v-if="
+                        user.roles[0] != null &&
+                        (user.roles[0].name == 'user' ||
+                          user.roles[0].name == 'data entry')
+                      "
+                      class="badge badge-danger btn-table-spec"
+                    >
+                      {{ user.slabCountRejected }}
                     </span>
                   </td>
                   <!-- <td>{{ user.dob }}</td>
@@ -651,7 +679,7 @@ export default {
     this.getUsers(this.page)
     if (this.$route.query.hasOwnProperty('id')) {
       this.searchTerm = this.$route.query.id
-      setTimeout(() => this.usersSearch(), 500)
+      setTimeout(() => this.usersSearch(), 3000)
     }
   },
   // watch: {
@@ -735,7 +763,9 @@ export default {
               this.requestInProcess = false
               if (res.status == 200) {
                 this.users = res.data.data
+                this.currentPage = page
                 this.page = res.data.next
+                this.allPages = res.data.all_pages
               }
               this.hideLoader()
             })
@@ -862,11 +892,11 @@ ul.my-card-listing {
   line-height: 2;
   margin-top: 2px;
 }
-.badge-danger{
+.badge-danger {
   background-color: #f76573;
   padding: 6px 6px 5px 7px !important;
 }
-.badge-success{
+.badge-success {
   background-color: #1ce783;
   padding: 6px 6px 5px 7px !important;
 }
