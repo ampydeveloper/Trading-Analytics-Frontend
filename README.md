@@ -1,10 +1,9 @@
 # Slabstox-Frontend
 
-## Build Setup
+## Slabstox V1 files
 
 ```bash
 
-# Slabstox V1 files:
 
 # Checkout Process Pages (path where files is placed):
 - Cart: pages/cart.vue
@@ -17,7 +16,7 @@
 
 
 # Sell pages (path where files is placed):
-- Sellslabs: pages/sell-slabs.vue 
+- Sell Slabs: pages/sell-slabs.vue 
 - Single Watchlist: pages/watch-list.vue 
 
 ```
