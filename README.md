@@ -1,6 +1,27 @@
-# slabstox-vue
+# Slabstox-Frontend
 
-> My marvelous Nuxt.js project
+## Build Setup
+
+```bash
+
+# Slabstox V1 files:
+
+# Checkout Process Pages (path where files is placed):
+- Cart: pages/cart.vue
+- Checkout: pages/checkout.vue
+- Thank You: pages/thankyou.vue
+
+# User Pages (path where files is placed):
+- My Listing: pages/my-listing.vue
+- Analytics: pages/Analytics.vue
+
+
+# Sell pages (path where files is placed):
+- Sellslabs: pages/sell-slabs.vue 
+- Single Watchlist: pages/watch-list.vue 
+
+```
+
 
 ## Build Setup
 
