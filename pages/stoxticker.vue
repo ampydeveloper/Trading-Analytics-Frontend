@@ -812,7 +812,7 @@ slabstox.com
           </div>
  </div>
     </div>
-
+    
     <div class="row board-search-list-outer" style="display:none;">
       <div class="col-sm-12 col-md-12 col-lg-6 board-search-list"  v-for="(itemdata, key) in boardSearch" :key='`boardSearch-${key}`'>
 
@@ -923,10 +923,12 @@ slabstox.com
             </div>
       
       </div>
-      <div class="my-card-no-slab no-card-no-board" v-if="boardSearch.length ==0">
+      <div class="my-card-no-slab no-card-no-board" v-if="boardSearch.length ==0 && requestInProcess ==false">
         No board found.
       </div>
-
+          <div class="dataloader search-board-dataloader" v-if="requestInProcess">
+            <b-spinner variant="success" label="Spinning"></b-spinner>
+          </div>
           <div class="create-board-out my-card text-center" style="display:none">
                 <button class="my-card-view-listing create-board" @click="searchBoard()">
                   Load More Boards
@@ -1478,6 +1480,7 @@ export default {
   },
   methods: {
     searchBoard(days = 90) {
+      $('.board-search-list-outer').show()
       var sportList = []
       $('.cat-btn li.active').each(function () {
         var $this = $(this)
@@ -1498,7 +1501,7 @@ export default {
             this.requestInProcess = false
             if (res.status == 200) {
               // $('.search-name-out').show()
-              $('.board-search-list-outer').show()
+              // $('.board-search-list-outer').show()
               this.boardSearch = res.data
               this.boardPage = res.page
 
@@ -1753,7 +1756,7 @@ export default {
         this.$axios.$get('stoxticker/sold-listings').then((res) => {
           if (res.status == 200) {
             this.soldListing = res.data
-            //below keys added so the marque plugin can update the content when data comes 
+            //below keys added so the marque plugin can update the content when data comes
             this.soldListingbasketballMarqueeKey = 1
             this.soldListingfootballMarqueeKey = 2
             this.soldListingbaseballMarqueeKey = 3
@@ -1762,13 +1765,13 @@ export default {
             this.soldListinghockeyMarqueeKey = 6
           } else {
             this.$toast.error(
-          'There has been an error fetching SX Stoxticker. Please refresh your page.',
-          { timeOut: 10000 }
-        )
+              'There has been an error fetching SX Stoxticker. Please refresh your page.',
+              { timeOut: 10000 }
+            )
           }
         })
       } catch (error) {
-       this.$toast.error(
+        this.$toast.error(
           'There has been an error fetching SX Stoxticker. Please refresh your page.',
           { timeOut: 10000 }
         )
@@ -2989,5 +2992,10 @@ html body main .card.search-slabs-out .my-card-listing .my-card {
       margin-top: 21px;
     }
   }
+}
+.search-board-dataloader{
+  width: 100%;
+    padding: 50px 0;
+    text-align: center;
 }
 </style>
