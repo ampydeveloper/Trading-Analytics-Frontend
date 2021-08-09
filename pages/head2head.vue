@@ -1495,6 +1495,12 @@ export default {
 .butt-slab-out {
   float: left;
   width: 15%;
+  //  @media (max-width: 768px) {
+  //   width: 100%;
+  //   .my-card-view-listing2{
+  //         margin: 0;
+  //   }
+  // }
 }
 .my-card {
   float: left;
@@ -1845,6 +1851,10 @@ ul.my-card-listing {
         @media (max-width: 1200px) {
           border: 0 !important;
         }
+        @media (max-width: 767px) {
+        max-height: 200px !important;
+        padding: 5px !important;
+        }
       }
       .icons-container {
         position: absolute;
@@ -1921,14 +1931,8 @@ ul.my-card-listing {
     float: left;
   }
 }
-@media (max-width: 767px) {
-  html body #__nuxt .dashboard-nav-bar {
-    padding-left: 0;
-  }
-  .dashboard-nav-bar .nav-bar-form .nav-bar-form-input .slab-title {
-    font-size: 11px;
-  }
-  .vs-slab-out {
+@media (max-width: 768px) {
+.vs-slab-out {
     position: relative;
     width: 100%;
   }
@@ -1947,6 +1951,14 @@ ul.my-card-listing {
       padding: 15px 5px 11px 5px;
       font-size: 12px;
     }
+  }
+}
+@media (max-width: 767px) {
+  html body #__nuxt .dashboard-nav-bar {
+    padding-left: 0;
+  }
+  .dashboard-nav-bar .nav-bar-form .nav-bar-form-input .slab-title {
+    font-size: 11px;
   }
   .headtohead_serach {
     padding: 0;

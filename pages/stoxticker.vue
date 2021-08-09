@@ -1,5 +1,5 @@
 <template>
-  <div class="col-md-12 col-sm-12">
+  <div class="col-md-12 col-sm-12 stoxticker-page-exactout">
     <div class="row analytics_page" v-if="user != null && user.full_name != null">
       <div class="col-md-12">
         <div class="top-btn">
@@ -2993,9 +2993,16 @@ html body main .card.search-slabs-out .my-card-listing .my-card {
     }
   }
 }
-.search-board-dataloader{
+.search-board-dataloader {
   width: 100%;
-    padding: 50px 0;
-    text-align: center;
+  padding: 50px 0;
+  text-align: center;
+}
+.stoxticker-page-exactout {
+  @media (max-width: 767px) {
+    .dashboard-apex-top {
+      margin-bottom: 20px;
+    }
+  }
 }
 </style>

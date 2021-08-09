@@ -676,10 +676,12 @@ export default {
     }
   },
   mounted() {
-    this.getUsers(this.page)
-    if (this.$route.query.hasOwnProperty('id')) {
+   
+    if (this.$route.query.hasOwnProperty('id')!=null) {
       this.searchTerm = this.$route.query.id
-      setTimeout(() => this.usersSearch(), 3000)
+       this.usersSearch()
+    }else{
+ this.getUsers(this.page)
     }
   },
   // watch: {
