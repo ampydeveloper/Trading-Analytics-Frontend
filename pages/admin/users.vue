@@ -664,7 +664,6 @@
 </template>
 
 <script>
-import $ from 'jquery'
 import sellSlabs from '../sell-slabs.vue'
 export default {
   components: { sellSlabs },
@@ -676,35 +675,13 @@ export default {
     }
   },
   mounted() {
-   
-    if (this.$route.query.hasOwnProperty('id')!=null) {
+    if (this.$route.query.hasOwnProperty('id')) {
       this.searchTerm = this.$route.query.id
-       this.usersSearch()
-    }else{
- this.getUsers(this.page)
+      this.usersSearch()
+    } else {
+      this.getUsers(this.page)
     }
   },
-  // watch: {
-  //   users(val) {
-  //     if (val.length > 0) {
-  //       setTimeout(function () {
-  //         if (!$.fn.dataTable.isDataTable('#all-users-table')) {
-  //           $('#all-users-table').DataTable({
-  //             pageLength: 20,
-  //             oLanguage: { sSearch: '' },
-  //             aoColumnDefs: [
-  //               {
-  //                 bSortable: false,
-  //                 aTargets: [-1, -2, -3, -4, -5, -6, -7],
-  //               },
-  //             ],
-  //           })
-  //           $('.dataTables_filter input').attr('placeholder', 'Search')
-  //         }
-  //       }, 100)
-  //     }
-  //   },
-  // },
   data() {
     return {
       popUpTitle: '',

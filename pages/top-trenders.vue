@@ -134,7 +134,7 @@
               <b-spinner variant="success" label="Spinning"></b-spinner>
             </div>
             <p v-if="items.length == 0" class="no-result-found">
-              {{ requestInProcess ? '' : 'No result found' }}
+              {{ requestInProcess ? '' : 'There are no cards here. Check again soon.' }}
             </p>
             <ul v-else class="my-card-listing">
               <CardSlabItem
@@ -168,22 +168,19 @@ export default {
   },
   transition: 'fade',
   layout: 'guestOuter',
-  // auth: 'guest',
   head() {
     return {
       title: 'Top Trenders - Slabstox',
     }
   },
   mounted() {
-    this.searchCards()
-    this.scroll()
   },
   async mounted() {
     if (this.$route.query.hasOwnProperty('sport')) {
       this.sport = this.$route.query.sport
     }
     this.searchCards()
-    // this.search();
+    this.scroll()
   },
   components: {
     CardSlabItem,
@@ -244,8 +241,7 @@ export default {
             .then((res) => {
               this.requestInProcess = false
               if (res.status == 200) {
-                console.log(res.data.length);
-                if (res.data != null && res.data.length > 0) {
+                if (res.data != null) {
                   if (status) {
                     if (!Array.isArray(res.data)) {
                       Object.values(res.data).map((item) => {
@@ -262,7 +258,6 @@ export default {
                         this.items.push(item)
                       })
                     } else {
-                      //  console.log('array 2 always here');
                     this.items = res.data
                     }
                   }
@@ -333,7 +328,6 @@ export default {
         //this.requestInProcess = false
         console.log(err)
       }
-      console.log(this.keyword)
     },
     selectKeyword(value, cardId) {
       this.keyword = value
@@ -347,7 +341,6 @@ export default {
         const offsetHeight = document.documentElement.offsetHeight
         let bottomOfWindow =
           scrollTop >= offsetHeight - 10 && scrollTop <= offsetHeight + 10
-        // console.log(bottomOfWindow)
         if (bottomOfWindow) {
           if (!this.noMoreData) {
             this.searchCards(true)
