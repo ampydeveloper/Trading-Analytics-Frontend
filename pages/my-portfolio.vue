@@ -12,7 +12,7 @@
           </div>
           <div class="col-md-12 col-lg-7 text-right">
             <div class="top-card">
-              <button class="theme-light-grey-btn card-btn">
+              <button class="theme-light-grey-btn card-btn" v-b-tooltip.bottom  title="What’s it all worth? These figures will help you track the value of your portfolio on SlabStoxPro. You’ll find the total price you paid for all your items and what they’re currently worth based on their respective SX values, as well as percentage gains and losses on your portfolio as a whole. ">
                 Purchase ${{
                   apiData.total_purchases != null ? apiData.total_purchases : 0
                 }}

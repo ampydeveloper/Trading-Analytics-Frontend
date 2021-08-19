@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col-12 t-p-5">
+    <div class="col-12 t-p-5 " :id="card.replace(' ','-')+'-outor-div'">
       <div class="card card-single-row-outer my-card-listing-scroll-outer">
         <div class="card-body">
           <h5 class="card-title custom-smart-search-player-name">

@@ -3,12 +3,12 @@
     <div class="row analytics_page" v-if="user != null && user.full_name != null">
       <div class="col-md-12">
         <div class="top-btn">
-          <button class="card-btn custom-stox">
+          <button class="card-btn custom-stox" v-b-tooltip.bottom  title="Click here to create your own custom StoxTicker by adding any Slabs you want to the SlabStoxPro database.">
             <font-awesome-icon :icon="['fas', 'plus']" />
             create custom stoxticker
           </button>
 
-          <button class="card-btn search-stox">
+          <button class="card-btn search-stox" v-b-tooltip.bottom  title="Click here to search other SlabStoxPro users’ StoxTicker boards to see who they’re tracking. ">
             Search stoxticker board
             <span class="chevron-right">
             <font-awesome-icon :icon="['fas', 'chevron-right']" />
@@ -411,7 +411,7 @@
           <div class="card green_box stoxticker_page">
             <div class="card-body">
               <h5 class="card-title">
-                <button class="theme-btn card-btn">STOXTICKER</button>
+                <button class="theme-btn card-btn" v-b-tooltip.right  title="This combines every Slab housed on the SlabStoxPro database. You can see the total number of slabs, SX value for all of them, and percent change day-over-day.">STOXTICKER</button>
                 
                 <span class="float-right share-lk-top sb-data-values-out">
                 <span class="share-icon">
@@ -525,7 +525,7 @@ slabstox.com
           <div class="card stoxticker_page stoxticker_listing">
             <div class="card-body">
               <h5 class="card-title">
-                <button class="theme-btn card-btn">SX STOXTICKER</button>
+                <button class="theme-btn card-btn" v-b-tooltip.right  title="Similar to the New York Stock Exchange, our StoxTicker allows you tosee a running list of cards from all sports, including their respective values. If the card is in green, it’s trending up since the most recent sale. If it is in red, it’s trending down.">SX STOXTICKER</button>
                 <span class="float-right share-lk-top sb-data-values-out">
                 <span class="share-icon si-white">
                   Share

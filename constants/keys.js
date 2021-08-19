@@ -9,8 +9,8 @@ export const FACEBOOK_APP_ID_DEV = '2791823984386463';
 // export const FACEBOOK_APP_ID_PROD = '333135201460727';
 export const FACEBOOK_APP_ID_PROD = '2791823984386463';
 //export const DEV_API = 'https://slabstox-ssl.com/api/'
-export const DEV_API = 'http://api.slabstox.leagueofclicks.com/api/';
-export const PROD_API = 'http://api.slabstox.leagueofclicks.com/api/';
-export const STAGING_API = 'http://api.slabstox.leagueofclicks.com/api/';
+export const DEV_API = 'https://api.staging.slabstox.com/api/';
+export const PROD_API = 'https://api.staging.slabstox.com/api/';
+export const STAGING_API = 'https://api.staging.slabstox.com/api/';
 
 export const BASE_URL = 'https://pro.slabstox.com';

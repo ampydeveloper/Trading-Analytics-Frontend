@@ -12,7 +12,7 @@
           <div class="card-body">
             <h5 class="card-title">
               <div class="card-btn-head-outer">
-                <button class="theme-light-grey-btn card-btn">
+                <button class="theme-light-grey-btn card-btn" v-b-tooltip.right  title="These Slabs in the SlabStoxPro database are either trending up or down in price. You can filter by the time period, as well as toggle between the price and percentage trending in either direction, by simply clicking on the buttons. Below, you’ll seetrending cards for each individual sport, too.">
                   Top Trenders
                 </button>
               </div>

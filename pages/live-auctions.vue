@@ -1,5 +1,17 @@
 <template>
   <div class="col-md-12 col-sm-12 search-page live-auctions-page">
+    <div class="navbar">
+        <ul>
+            <li class="btn theme-green-btn" data-title="basketball-outor-div">BasketBall</li>
+            <li class="btn theme-green-btn" data-title="soccer-outor-div">Soccer</li>
+            <li class="btn theme-green-btn" data-title="baseball-outor-div">Baseball</li>
+            <li class="btn theme-green-btn" data-title="football-outor-div">football</li>
+            <li class="btn theme-green-btn" data-title="hockey-outor-div">Hockey</li>
+            <li class="btn theme-green-btn" data-title="pokemon-outor-div">Pokemon</li>
+            <li class="btn theme-green-btn" data-title="random-bin-outor-div">Random bin</li>
+        </ul>
+    </div>
+
     <EndingSoonListing />
 
     <LiveListingCard v-for="(card, key) in cards" :key="key" :card="card" />
@@ -7,8 +19,8 @@
     <RecentListing />
   </div>
 </template>
-
 <script>
+import $ from 'jquery'
 import CardListItem from '~/components/dashboard/CardListItem'
 import LiveListingCard from '~/components/dashboard/LiveListingCard'
 import EndingSoonListing from '~/components/dashboard/EndingSoonListing'
@@ -25,6 +37,13 @@ export default {
     // this.getEndingSoonListing()
     // this.getNormalRecentListing()
     // this.scroll()
+    $(".btn").click(function() {
+        var link = "#";
+        link += $(this).attr('data-title');
+        $('html, body').animate({
+            scrollTop: $(link).offset().top
+        }, 2000);
+    });
   },
   components: {
     CardListItem,
@@ -227,4 +246,27 @@ export default {
 .card-btn.ending-title {
   background: #f95050;
 }
+
+.navbar ul{
+    width: 100%;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+
+}
+
+.navbar ul li{
+            display:inline-block;
+            margin:10px 5px;
+            padding:6px 12px 4px 12px;
+        }
+        .games{
+            text-align: center;
+            color:#fff;
+        }
+        .games p{
+            font-size:20px;
+            line-height:40px;
+            padding:50px 10px;
+        }
 </style>

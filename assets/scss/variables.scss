@@ -4771,3 +4771,19 @@ html body main .my-card-listing-scroll {
   left: 32px;
   top: 25px;
 }
+
+
+body .tooltip .tooltip-inner{
+  color: #edecec !important;
+  text-transform: uppercase;
+  /* font-weight:bold; */
+  letter-spacing: 0.2px;
+  font-size: 9px;
+  font-family: "NexaBold", Helvetica, Arial, sans-serif;
+  padding:6px 4px 4px 4px;
+  background: #272d33;
+  border: 1px solid #39414a;
+}
+body .tooltip .arrow::before{
+  border-right-color: #39414a !important;
+}

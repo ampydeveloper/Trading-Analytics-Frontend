@@ -5,7 +5,7 @@
         <div class="requestSlab create_requestSlab">
           <div class="requestSlab-body">
             <h5 class="requestSlab-title">
-              <button class="theme-btn requestSlab-btn">
+              <button class="theme-btn requestSlab-btn" v-b-tooltip.right  title="Please fill out the information below to request a new Slab be added to the SlabStoxPro database. We will evaluate your submission and add in the Slabs we feel would provide value to our entire userbase. Please make sure all of the information is correct and that you submit a clear, cropped photo to make it easier to approve the Slab. Please crop the card so the graded card case doesn’t show. Thank you for taking the time to suggest a new Slab! ">
                 New Slab Request
               </button>
             </h5>

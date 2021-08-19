@@ -217,7 +217,8 @@
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">
-              <button class="theme-btn card-btn">SX Featured Slabs</button>
+              <button class="theme-btn card-btn" v-b-tooltip.right  title="Chosen on a daily basis by the SlabStox team, these are theSlabs to watch and track, due to recent performance or market trends.">SX Featured Slabs</button>
+              
               <nuxt-link class="card-link float-right" to="/trenders">
                 View All
                 <font-awesome-icon :icon="['fas', 'chevron-right']" />
@@ -1527,4 +1528,7 @@ ul.featured-listing {
     }
   }
 }
+
+
 </style>
+

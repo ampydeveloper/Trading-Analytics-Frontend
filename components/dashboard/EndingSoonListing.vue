@@ -4,7 +4,7 @@
       <div class="card card-single-row-outer my-card-listing-scroll-outer">
         <div class="card-body">
           <h5 class="card-title custom-smart-search-player-name">
-            <button class="card-btn theme-btn theme-green-btn ending-title">
+            <button class="card-btn theme-btn theme-green-btn ending-title" v-b-tooltip.right  title="Time’s almost up! These active eBay listings housed on SlabStoxPro have the shortest amount of time remaining on them.">
               Ending Soon
             </button>
             <div class="internal-search-container">

@@ -96,6 +96,7 @@
                   <th><input type="checkbox" class="main-checkbox" /></th>
                   <th style="width: 75px">Id</th>
                   <th>Sport</th>
+                  <th>image</th>
                   <th>player</th>
                   <th>year</th>
                   <th>brand</th>
@@ -120,6 +121,10 @@
                   </td>
                   <td>{{ card.id }}</td>
                   <td>{{ card.sport }}</td>
+                  <td class="image-box">
+                    <span>https://wallpapercave.com/wp/wp6369792.jpg</span>
+                    <img src="https://wallpapercave.com/wp/wp6369792.jpg" />
+                  </td>
                   <td>{{ card.player }}</td>
                   <td>{{ card.year }}</td>
                   <td>{{ card.brand }}</td>
@@ -134,7 +139,7 @@
                       v-if="card.active == 0"
                       @click="setCardStatus(card.id, 1)"
                     >
-                      <i class="fa fa-close" aria-hidden="true"></i> 
+                      <i class="fa fa-close" aria-hidden="true"></i>
                     </button>
                     <!-- Published -->
                     <button
@@ -142,7 +147,7 @@
                       v-if="card.active == 1"
                       @click="setCardStatus(card.id, 0)"
                     >
-                      <i class="fa fa-check" aria-hidden="true"></i> 
+                      <i class="fa fa-check" aria-hidden="true"></i>
                     </button>
                   </td>
                   <td class="text-center" v-if="!isDataEntry">
@@ -152,7 +157,7 @@
                       v-if="card.is_featured == 0"
                       @click="setFeaturedCard(card.id, 1)"
                     >
-                      <i class="fa fa-close" aria-hidden="true"></i> 
+                      <i class="fa fa-close" aria-hidden="true"></i>
                     </button>
                     <!-- Featured -->
                     <button
@@ -160,7 +165,7 @@
                       v-if="card.is_featured == 1"
                       @click="setFeaturedCard(card.id, 0)"
                     >
-                      <i class="fa fa-check" aria-hidden="true"></i> 
+                      <i class="fa fa-check" aria-hidden="true"></i>
                     </button>
                   </td>
                   <td class="text-center" v-if="!isDataEntry">
@@ -170,7 +175,7 @@
                       v-if="card.is_sx == 0"
                       @click="setCardSx(card.id, 1)"
                     >
-                      <i class="fa fa-close" aria-hidden="true"></i> 
+                      <i class="fa fa-close" aria-hidden="true"></i>
                     </button>
                     <!-- Active -->
                     <button
@@ -178,7 +183,7 @@
                       v-if="card.is_sx == 1"
                       @click="setCardSx(card.id, 0)"
                     >
-                      <i class="fa fa-check" aria-hidden="true"></i> 
+                      <i class="fa fa-check" aria-hidden="true"></i>
                     </button>
                   </td>
                   <td class="text-center" v-if="isDataEntry">
@@ -547,6 +552,16 @@ export default {
         $('.indi-checkbox').attr('checked', false)
       }
     })
+    $('.image-box span').hover(
+      function () {
+        var $this = $(this);
+        $this.siblings('img').stop(true, false).fadeIn();
+      },
+      function () {
+        var $this = $(this);
+        $this.siblings('img').stop(true, false).fadeOut();
+      }
+    )
   },
   components: {},
   data() {
@@ -866,5 +881,18 @@ ul.my-card-listing {
 }
 .g-download-out {
   margin: 20px 20px 0 20px;
+}
+.image-box {
+  position: relative;
+}
+.image-box img {
+  position: absolute;
+    top: 50%;
+    left: 100%;
+    transform: translate(0,-50%);
+    display: none ;
+    width: 100px;
+    border: 4px solid #272d33;
+    border-radius: 0.25rem;
 }
 </style>
