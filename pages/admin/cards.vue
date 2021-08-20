@@ -122,8 +122,8 @@
                   <td>{{ card.id }}</td>
                   <td>{{ card.sport }}</td>
                   <td class="image-box">
-                    <span>https://wallpapercave.com/wp/wp6369792.jpg</span>
-                    <img src="https://wallpapercave.com/wp/wp6369792.jpg" />
+                    <a :href="card.image" target="_blank">{{ card.image }}</a>
+                    <img :src="card.image" />
                   </td>
                   <td>{{ card.player }}</td>
                   <td>{{ card.year }}</td>
@@ -552,7 +552,7 @@ export default {
         $('.indi-checkbox').attr('checked', false)
       }
     })
-    $('.image-box span').hover(
+    $('.image-box a').hover(
       function () {
         var $this = $(this);
         $this.siblings('img').stop(true, false).fadeIn();

@@ -26,6 +26,7 @@
                   <option>Change Status</option>
                   <option value="0">Active</option>
                   <option value="2">Disable</option>
+                  <option value="3">Delete</option>
                 </select>
               </div>
               <div class="col-2">
@@ -138,6 +139,7 @@
                       <option>Change Status</option>
                       <option value="0">Active</option>
                       <option value="2">Disable</option>
+                      <option value="3">Delete</option>
                     </select>
                     <nuxt-link
                       class="card-btn btn btn-primary btn-table-spec"
@@ -365,6 +367,8 @@ export default {
   mounted() {
     if (this.$route.query.item != null) {
       this.searchItem(this.$route.query.item)
+    }else if(this.$route.query.page){
+      this.getItems(this.$route.query.page)
     } else {
       this.getItems(this.page)
     }
@@ -448,6 +452,7 @@ export default {
           this.showLoader()
           this.requestInProcess = true
           let payload = { page: page, search: this.searchTerm }
+          this.$router.push('/admin/ebay-items-listings?page='+page)
           // if (filter != null) payload['sport'] = filter.target.value
 
           if (filter != null) {

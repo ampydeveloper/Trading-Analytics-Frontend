@@ -10,6 +10,28 @@
           </div>
           <div class="table_wrapper ap">
             <form class="form-inline" v-on:submit.prevent="saveSettings">
+            <!-- <form class="form-inline row form-input-100" @change="assignImg" > -->
+                 <div class="row form-input-100">
+                <div class="form_column col-12">
+                  <label data-v-0a5a3a1c="">Categories</label>
+                </div>
+                <div class="form_column col-4" v-for='(sport, key) in settings.sports' :key="key">
+                  <input v-model="settings.sports[key]" type="text"  required="required" class="form-control" />
+                </div>
+               
+                <div class="form_column col-4">
+                  <input type="text" required="required" class="form-control" />
+                </div>
+                <div class="form_column col-4">
+                  <input type="text" required="required" class="form-control" />
+                </div>
+                <div class="form_column col-4">
+                  <input type="text" required="required" class="form-control" />
+                </div>
+                 </div>
+            <!-- </form> -->
+            <!-- <form class="form-inline form-input-none" v-on:submit.prevent="saveSettings"> -->
+                 <div class="form-input-none">
               <div class="form_column">
                 <label>Default Basketball Image</label>
                 <div class="input-file">
@@ -81,7 +103,6 @@
                 </div>
               </div>
               
-              
               <div class="form_column border-bottom py-3">
                 <label>Default Listing Image</label>
                 <div class="input-file">
@@ -96,7 +117,8 @@
                   />
                 </div>
               </div>
-              <small class="text-danger font-italic">Tip: Double click to select a sport block & drag to re-order</small>
+              </div>
+              <small class="text-danger font-italic">Double click to select a sport block & drag to re-order</small>
               <div class="row w-100">
                 <div class="col">
                   <div class="form_column mt-3 border-right">
@@ -155,6 +177,7 @@ export default {
         soccer_image: '',
         pokemon_image: '',
         listing_image: '',
+        sports: [],
         trenders_order: ['basketball', 'soccer','baseball', 'football', 'hockey', 'pokemon'],
         live_listings_order: ['basketball', 'soccer','baseball', 'football', 'hockey', 'pokemon', 'random bin']
       },
@@ -189,8 +212,8 @@ export default {
         }
         reader.readAsDataURL(event.target.files[0]); 
         this.settings[`${event.target.getAttribute('model')}_image`] = event.target.files[0]
-        console.log(this.settings);
       }
+   
     },
     viewImg(src){  
       window.open(src, '_blank')
@@ -280,7 +303,7 @@ ul.my-card-listing {
   opacity: 0.5;
   background: #c8ebfb;
 }
-input{
+.form-input-none input{
   background: none!important;
 }
 .list-group-item{
@@ -288,5 +311,8 @@ input{
   margin: 2px;
   padding-left: 2vw!important;
   cursor: move;
+}
+.form-input-100 input{
+  width: 100% !important;
 }
 </style>
