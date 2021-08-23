@@ -269,4 +269,30 @@ export default {
             line-height:40px;
             padding:50px 10px;
         }
+
+
+
+@media (max-width: 1100px) {
+  .navbar ul li{
+    padding:6px 10px 4px 10px;
+    font-size: 10px;
+    letter-spacing: 2px;
+  }
+  .navbar{
+    padding:0px;
+  }
+}
+@media (max-width: 1023px) {
+  .navbar ul li{
+    padding:6px 6px 4px 6px;
+    font-size: 8px;
+    letter-spacing: 1px;
+  }
+}
+@media (max-width: 767px) {
+  .navbar ul li{
+    padding:6px 7px 4px 7px;
+    font-size: 10px;
+  }
+}
 </style>

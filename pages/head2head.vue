@@ -629,7 +629,8 @@
         <div class="card no_bg">
           <div class="card-body">
             <h5 class="card-title">
-              <button class="card-btn theme-btn" v-b-tooltip.right  title="Choose wisely. These Slabs are most frequently chosen by other SlabStoxPro users to compare inHead 2 Head mode.">Popular picks</button>
+              <button class="card-btn theme-btn"  >Popular picks</button>
+              <span class="tooltip-text" v-b-tooltip.bottomleft  title="Choose wisely. These Slabs are most frequently chosen by other SlabStoxPro users to compare inHead 2 Head mode.">?</span>
             </h5>
             <div class="dataloader" v-if="requestInProcess">
               <b-spinner variant="success" label="Spinning"></b-spinner>
@@ -2049,4 +2050,6 @@ ul.my-card-listing {
 //   width: 85px;
 //   text-align: center;
 // }
+
+
 </style>

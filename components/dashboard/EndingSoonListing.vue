@@ -4,9 +4,10 @@
       <div class="card card-single-row-outer my-card-listing-scroll-outer">
         <div class="card-body">
           <h5 class="card-title custom-smart-search-player-name">
-            <button class="card-btn theme-btn theme-green-btn ending-title" v-b-tooltip.right  title="Time’s almost up! These active eBay listings housed on SlabStoxPro have the shortest amount of time remaining on them.">
+            <button class="card-btn theme-btn theme-green-btn ending-title" >
               Ending Soon
             </button>
+            <span class="tooltip-text" v-b-tooltip.bottomleft  title="Time’s almost up! These active eBay listings housed on SlabStoxPro have the shortest amount of time remaining on them.">?</span>
             <div class="internal-search-container">
               <input
                 v-model="keyword"

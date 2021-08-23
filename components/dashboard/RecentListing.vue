@@ -4,9 +4,10 @@
       <div class="card card-single-row-outer my-card-listing-scroll-outer">
         <div class="card-body">
           <h5 class="card-title custom-smart-search-player-name">
-            <button class="card-btn theme-btn theme-green-btn ending-title" v-b-tooltip.right  title="Hot off the press! Check out the most recently added listings on SlabStoxPro.">
+            <button class="card-btn theme-btn theme-green-btn ending-title" v-b-tooltip.right  >
               Recent Listings
             </button>
+            <span class="tooltip-text" v-b-tooltip.bottomleft  title="Hot off the press! Check out the most recently added listings on SlabStoxPro.">?</span>
             <div class="internal-search-container">
               <input
                 v-model="keyword"

@@ -13,11 +13,13 @@
             class="upper-links list-inline navbar-withlg-upper-links"
           >
             <li>
+              <nuxt-link class="" to="/">
               <img
                 class="nav-logo"
                 src="~/assets/img/dashboard-sidebar-middel-logo.png"
                 alt="Slabstox"
               />
+              </nuxt-link>
             </li>
             <li>
               <nuxt-link to="/login">

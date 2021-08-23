@@ -4777,13 +4777,44 @@ body .tooltip .tooltip-inner{
   color: #edecec !important;
   text-transform: uppercase;
   /* font-weight:bold; */
-  letter-spacing: 0.2px;
-  font-size: 9px;
+  letter-spacing: 0.8px;
+  font-size: 11px;
+  // max-width:500px;
   font-family: "NexaBold", Helvetica, Arial, sans-serif;
-  padding:6px 4px 4px 4px;
+  padding:10px 8px 8px 8px;
   background: #272d33;
-  border: 1px solid #39414a;
+  border: 1px solid #1ce783;
 }
-body .tooltip .arrow::before{
-  border-right-color: #39414a !important;
+.bs-tooltip-bottom .arrow::before, .bs-tooltip-auto[x-placement^="bottom"] .arrow::before {
+  bottom: 0;
+  border-width: 0 0.4rem 0.4rem;
+  border-bottom-color: #1ce783;
+}
+
+.bs-tooltip-top .arrow::before, .bs-tooltip-auto[x-placement^="top"] .arrow::before {
+  bottom: 0;
+  border-width: 0 0.4rem 0.4rem;
+  border-bottom-color: #1ce783;
+}
+
+.tooltip-text {
+  font-size: 10px; 
+  padding:1px 4px;
+  border-radius:50%;
+  box-shadow: 1px -0.2px 1px #1ce783;
+  color:#edecec !important;
+  position: relative;
+  text-align: center;
+  font-style: normal;
+  width: 20px;
+  border:1px solid #1ce783;
+  cursor: help;
+}
+.border-white{
+  box-shadow: 1px -0.2px 1px #fff;
+  border:1px solid #fff;
+}
+.set-tooltip{
+  padding: 4px 6px 2px 3px !important;
+  text-align: center;
 }

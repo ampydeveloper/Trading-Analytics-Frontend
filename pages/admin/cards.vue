@@ -95,13 +95,13 @@
                 <tr>
                   <th><input type="checkbox" class="main-checkbox" /></th>
                   <th style="width: 75px">Id</th>
-                  <th>Sport</th>
+                  <th style="width: 82px">Sport</th>
                   <th>image</th>
                   <th>player</th>
                   <th>year</th>
                   <th>brand</th>
                   <th>card</th>
-                  <th>rc</th>
+                  <th style="width: 40px">rc</th>
                   <th>variation</th>
                   <th>grade</th>
                   <th class="text-center" v-if="!isDataEntry">Published</th>
@@ -121,8 +121,8 @@
                   </td>
                   <td>{{ card.id }}</td>
                   <td>{{ card.sport }}</td>
-                  <td class="image-box">
-                    <a :href="card.image" target="_blank">{{ card.image }}</a>
+                  <td class="image-box ">
+                    <a :href="card.image" target="_blank">view</a>
                     <img :src="card.image" />
                   </td>
                   <td>{{ card.player }}</td>
@@ -894,5 +894,8 @@ ul.my-card-listing {
     width: 100px;
     border: 4px solid #272d33;
     border-radius: 0.25rem;
+}
+.image-box a{
+  color: #1ce783;
 }
 </style>

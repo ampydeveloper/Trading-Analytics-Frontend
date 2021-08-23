@@ -3,12 +3,13 @@
     <div class="row analytics_page" v-if="user != null && user.full_name != null">
       <div class="col-md-12">
         <div class="top-btn">
-          <button class="card-btn custom-stox" v-b-tooltip.bottom  title="Click here to create your own custom StoxTicker by adding any Slabs you want to the SlabStoxPro database.">
+          <button class="card-btn custom-stox">
             <font-awesome-icon :icon="['fas', 'plus']" />
             create custom stoxticker
           </button>
+          <span class="tooltip-text set-tooltip mr-xl-2" v-b-tooltip.bottomleft  title="Click here to create your own custom StoxTicker by adding any Slabs you want to the SlabStoxPro database.">?</span>
 
-          <button class="card-btn search-stox" v-b-tooltip.bottom  title="Click here to search other SlabStoxPro users’ StoxTicker boards to see who they’re tracking. ">
+          <button class="card-btn search-stox" >
             Search stoxticker board
             <span class="chevron-right">
             <font-awesome-icon :icon="['fas', 'chevron-right']" />
@@ -17,6 +18,7 @@
              <font-awesome-icon :icon="['fas', 'chevron-down']" />
              </span>
           </button>
+          <span class="tooltip-text set-tooltip mx-xl-2" v-b-tooltip.bottomleft title="Click here to search other SlabStoxPro users’ StoxTicker boards to see who they’re tracking.">?</span>
         </div>
       </div>
     </div>
@@ -411,8 +413,8 @@
           <div class="card green_box stoxticker_page">
             <div class="card-body">
               <h5 class="card-title">
-                <button class="theme-btn card-btn" v-b-tooltip.right  title="This combines every Slab housed on the SlabStoxPro database. You can see the total number of slabs, SX value for all of them, and percent change day-over-day.">STOXTICKER</button>
-                
+                <button class="theme-btn card-btn" >STOXTICKER</button>
+                <span class="tooltip-text d-inline border-white" v-b-tooltip.bottomleft  title="This combines every Slab housed on the SlabStoxPro database. You can see the total number of slabs, SX value for all of them, and percent change day-over-day.">?</span>
                 <span class="float-right share-lk-top sb-data-values-out">
                 <span class="share-icon">
                   Share
@@ -525,7 +527,8 @@ slabstox.com
           <div class="card stoxticker_page stoxticker_listing">
             <div class="card-body">
               <h5 class="card-title">
-                <button class="theme-btn card-btn" v-b-tooltip.right  title="Similar to the New York Stock Exchange, our StoxTicker allows you tosee a running list of cards from all sports, including their respective values. If the card is in green, it’s trending up since the most recent sale. If it is in red, it’s trending down.">SX STOXTICKER</button>
+                <button class="theme-btn card-btn" >SX STOXTICKER</button>
+                <span class="tooltip-text d-inline" v-b-tooltip.bottomleft  title="Similar to the New York Stock Exchange, our StoxTicker allows you tosee a running list of cards from all sports, including their respective values. If the card is in green, it’s trending up since the most recent sale. If it is in red, it’s trending down.">?</span>
                 <span class="float-right share-lk-top sb-data-values-out">
                 <span class="share-icon si-white">
                   Share
@@ -3005,4 +3008,5 @@ html body main .card.search-slabs-out .my-card-listing .my-card {
     }
   }
 }
+
 </style>
