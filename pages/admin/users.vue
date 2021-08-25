@@ -879,4 +879,8 @@ ul.my-card-listing {
   background-color: #1ce783;
   padding: 6px 6px 5px 7px !important;
 }
+.active-pagination {
+  color: #1ce783;
+  background: #272d33;
+}
 </style>

@@ -176,7 +176,6 @@ export default {
     }
   },
   mounted() {
-    // console.log(this.$route.query.user_login);
     if (this.$route.query.user_login) {
       this.user_login = this.$route.query.user_login
     }

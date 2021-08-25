@@ -122,7 +122,7 @@
                   <td>{{ card.id }}</td>
                   <td>{{ card.sport }}</td>
                   <td class="image-box ">
-                    <a :href="card.image" target="_blank">view</a>
+                    <a :href="card.image" target="_blank">Slab Thumbnail</a>
                     <img :src="card.image" />
                   </td>
                   <td>{{ card.player }}</td>
