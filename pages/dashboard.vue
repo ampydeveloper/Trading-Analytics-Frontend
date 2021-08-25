@@ -7,6 +7,7 @@
             <div class="card-body">
               <h5 class="card-title">
                 <button class="theme-btn card-btn">SX STOXTICKER</button>
+                <span class="tooltip-text d-inline" v-b-tooltip.bottomleft  title="Similar to the New York Stock Exchange, our StoxTicker allows you tosee a running list of cards from all sports, including their respective values. If the card is in green, it’s trending up since the most recent sale. If it is in red, it’s trending down.">?</span>
                 <span class="float-right share-lk-top sb-data-values-out">
                 <span class="share-icon si-white">
                   Share
@@ -218,7 +219,7 @@
           <div class="card-body">
             <h5 class="card-title">
               <button class="theme-btn card-btn">SX Featured Slabs</button>                             
-              <span class="tooltip-text" v-b-tooltip.bottomleft  title="Chosen on a daily basis by the SlabStox team, these are theSlabs to watch and track, due to recent performance or market trends.">?</span>             
+              <span class="tooltip-text mx-2" v-b-tooltip.bottomleft  title="Chosen on a daily basis by the SlabStox team, these are theSlabs to watch and track, due to recent performance or market trends.">?</span>             
               <nuxt-link class="card-link float-right" to="/trenders">
                 View All
                 <font-awesome-icon :icon="['fas', 'chevron-right']" />

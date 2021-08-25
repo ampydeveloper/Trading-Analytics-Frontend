@@ -8,7 +8,7 @@
               <button class="theme-btn requestSlab-btn" >
                 New Slab Request
               </button>
-              <span class="tooltip-text" v-b-tooltip.bottomleft  title="Please fill out the information below to request a new Slab be added to the SlabStoxPro database. We will evaluate your submission and add in the Slabs we feel would provide value to our entire userbase. Please make sure all of the information is correct and that you submit a clear, cropped photo to make it easier to approve the Slab. Please crop the card so the graded card case doesn’t show. Thank you for taking the time to suggest a new Slab! ">?</span>
+              <span class="tooltip-text mx-2" v-b-tooltip.center  title="Please fill out the information below to request a new Slab be added to the SlabStoxPro database. We will evaluate your submission and add in the Slabs we feel would provide value to our entire userbase. Please make sure all of the information is correct and that you submit a clear, cropped photo to make it easier to approve the Slab. Please crop the card so the graded card case doesn’t show. Thank you for taking the time to suggest a new Slab! ">?</span>
             </h5>
           </div>
           <div class="">

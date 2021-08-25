@@ -4811,8 +4811,9 @@ body .tooltip .tooltip-inner{
   cursor: help;
 }
 .border-white{
-  box-shadow: 1px -0.2px 1px #fff;
-  border:1px solid #fff;
+  box-shadow: 1px -0.2px 1px #000;
+  border:1px solid #000 !important;
+  color:#000 !important;
 }
 .set-tooltip{
   padding: 4px 6px 2px 3px !important;

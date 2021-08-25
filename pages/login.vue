@@ -176,6 +176,10 @@ export default {
     }
   },
   mounted() {
+    // console.log(this.$route.query.user_login);
+    if (this.$route.query.user_login) {
+      this.user_login = this.$route.query.user_login
+    }
     this.$nextTick(() => {
       this.$nuxt.$loading.start()
       setTimeout(() => this.$nuxt.$loading.finish(), 500)
@@ -204,6 +208,7 @@ export default {
         code: null,
         id: null,
       },
+      user_login: false,
     }
   },
   methods: {
@@ -234,7 +239,17 @@ export default {
                 this.user.roles[0].name.toLowerCase() != 'moderator' &&
                 this.user.roles[0].name.toLowerCase() != 'data entry'
               ) {
-                window.location.href = '/dashboard'
+                console.log(this.user_login);
+                console.log('REDDDD');
+                if (this.user_login == true || this.user_login == 'true') {
+                  window.location.href =
+                    'https://www.slabstox.com/auto-login?email=' +
+                    this.form.email +
+                    '&password=' +
+                    this.form.password
+                } else {
+                  window.location.href = '/dashboard'
+                }
               } else {
                 window.location.href = '/admin'
               }
