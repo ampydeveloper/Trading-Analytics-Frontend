@@ -1,8 +1,13 @@
 <template>
   <li class="my-card" v-if="itemdata">
+    <nuxt-link
+      class=""
+      :to="'/product?id=' + itemdata.id + '&slag=' + itemdata.title"
+    >
     <h4 class="my-card-title" :title="itemdata.title">
       {{ itemdata.title != '' ? trimTitle(itemdata.title) : '' }}
     </h4>
+    </nuxt-link>
     <!-- <button class="theme-btn my-card-current-bid-btn" :class="[(valueDifference>0) ? 'green' : (valueDifference<0) ? 'red' : '']">
       current Bid: <span>${{ itemdata.price }}</span>
     </button> -->

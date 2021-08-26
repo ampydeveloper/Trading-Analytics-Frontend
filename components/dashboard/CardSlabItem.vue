@@ -6,9 +6,14 @@
     v-bind:class="{ active: isActive }"
   >
     <div class="bor-left"></div>
+    <nuxt-link
+      class=""
+      :to="'/card-data/?id=' + itemdata.id"
+    >
     <h4 class="my-card-title" :title="itemdata.title">
       {{ itemdata.title != '' ? trimTitle(itemdata.title) : '' }}
     </h4>
+    </nuxt-link>
     <button class="theme-btn sxvalue">
       <span class="sxvalue-text">
         SX $:{{ itemdata.price != null ? itemdata.price : 0 }}</span
@@ -120,6 +125,11 @@ export default {
   padding: 0px 8px;
   margin-bottom: 30px;
   text-transform: uppercase;
+  &:hover {
+    .my-card-title {
+      color: #1ce783;
+    }
+  }
   .my-card-title {
     font-family: 'CocogoosePro-SemiLightItalic', Helvetica, Arial, sans-serif;
     color: $theme-off-white;

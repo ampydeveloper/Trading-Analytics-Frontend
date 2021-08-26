@@ -4799,13 +4799,14 @@ body .tooltip .tooltip-inner{
 
 .tooltip-text {
   font-size: 10px; 
-  padding:1px 4px;
+  padding:1.5px 4px 0px 4px !important;
   border-radius:50%;
-  box-shadow: 1px -0.2px 1px #1ce783;
+  box-shadow: 0.2px -0.2px 1px #1ce783;
+  // padding: 4px 6px 2px 3px !important;
   color:#edecec !important;
   position: relative;
   text-align: center;
-  font-style: normal;
+  font-style: normal !important;
   width: 20px;
   border:1px solid #1ce783;
   cursor: help;
@@ -4816,6 +4817,6 @@ body .tooltip .tooltip-inner{
   color:#000 !important;
 }
 .set-tooltip{
-  padding: 4px 6px 2px 3px !important;
+  padding: 3.4px 5.7px 2.4px 3.2px !important;
   text-align: center;
 }

@@ -1,7 +1,7 @@
 <template>
   <footer>
       <p class="dashbord-footer-para">
-        <a href="https://www.slabstox.com/" target="_blank">Slabstox.com</a>
+        <a href="https://www.slabstox.com" target="_blank">Slabstox.com</a>
       </p>
   </footer>
 </template>
