@@ -1,7 +1,7 @@
 <template>
   <footer>
       <p class="dashbord-footer-para">
-        <a href="https://www.slabstox.com" target="_blank">Slabstox.com</a>
+        &copy; 2019-2021 Slabstox All rights reserved. | <a href="https://www.slabstox.com" target="_blank">Slabstox.com</a> | <a href="https://www.slabstox.com/terms-conditions/" target="_blank">Terms & Conditions </a> | Privacy Policy
       </p>
   </footer>
 </template>
