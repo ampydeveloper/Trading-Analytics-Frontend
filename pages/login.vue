@@ -176,8 +176,11 @@ export default {
     }
   },
   mounted() {
-    if (this.$route.query.user_login) {
-      this.user_login = this.$route.query.user_login
+    if (this.$route.query.parent_site) {
+      this.parent_site = this.$route.query.parent_site
+      window.localStorage.setItem('parent_site', 1)
+    } else if (window.localStorage.getItem('parent_site') == 1 || window.localStorage.getItem('parent_site') == '1') {
+      this.parent_site = true
     }
     this.$nextTick(() => {
       this.$nuxt.$loading.start()
@@ -207,7 +210,7 @@ export default {
         code: null,
         id: null,
       },
-      user_login: false,
+      parent_site: false,
     }
   },
   methods: {
@@ -238,16 +241,21 @@ export default {
                 this.user.roles[0].name.toLowerCase() != 'moderator' &&
                 this.user.roles[0].name.toLowerCase() != 'data entry'
               ) {
-                console.log(this.user_login);
-                console.log('REDDDD');
-                if (this.user_login == true || this.user_login == 'true') {
+                if (this.parent_site == true || this.parent_site == 'true') {
+                  window.localStorage.setItem('parent_site', 0);
+                  window.location.href =
+                    'https://www.slabstox.com/auto-login?email=' +
+                    this.form.email +
+                    '&password=' +
+                    this.form.password +
+                    '&parent_site=1'
+                } else {
+                  // window.location.href = '/dashboard'
                   window.location.href =
                     'https://www.slabstox.com/auto-login?email=' +
                     this.form.email +
                     '&password=' +
                     this.form.password
-                } else {
-                  window.location.href = '/dashboard'
                 }
               } else {
                 window.location.href = '/admin'

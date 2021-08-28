@@ -173,17 +173,20 @@ export default {
   layout: 'guest',
   head() {
     return {
-      title: 'Register - Slabstox',
+      title: 'Signup - Slabstox',
       meta: [
         {
-          hid: 'register',
-          name: 'Register - Slabstox',
-          content: 'Register - Slabstox',
+          hid: 'signup',
+          name: 'Signup - Slabstox',
+          content: 'Signup - Slabstox',
         },
       ],
     }
   },
   mounted() {
+    if (this.$route.query.parent_site) {
+      window.localStorage.setItem('parent_site', 1);
+    }
     this.$nextTick(() => {
       this.$nuxt.$loading.start()
       setTimeout(() => this.$nuxt.$loading.finish(), 500)
