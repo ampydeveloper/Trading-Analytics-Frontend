@@ -45,6 +45,7 @@
               <div class="left_btn">
                 <button
                   @click="back()"
+                  type="button"
                   class="theme-green-btn card-btn btn-cancel"
                   style="margin-bottom: 17px"
                 >

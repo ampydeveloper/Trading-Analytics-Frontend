@@ -193,6 +193,7 @@
                 <div class="left_btn">
                   <button
                     @click="back()"
+                    type="button"
                     class="theme-green-btn card-btn btn-cancel"
                   >
                     Cancel

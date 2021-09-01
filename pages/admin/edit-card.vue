@@ -146,7 +146,7 @@
               </div>
               <div class="form_btns">
                 <div class="left_btn">
-                  <button @click="back()" class="theme-green-btn card-btn btn-cancel">Cancel</button>
+                  <button @click="back()" type="button" class="theme-green-btn card-btn btn-cancel">Cancel</button>
                 </div>
                 <div class="right_btn">
                   <button type="submit" class="theme-green-btn card-btn btn-save" :disabled="requestInProcess">Update</button>
