@@ -24,7 +24,7 @@
                   locale="en"
                 ></b-form-datepicker>
               </div>
-               <div class="form_column">
+              <div class="form_column">
                 <label>Type</label>
                 <select v-model="card.type" class="form-control">
                   <option value="bin">Bin</option>
@@ -61,7 +61,7 @@
                   required
                 />
               </div>
-              
+
               <div class="form_btns">
                 <div class="left_btn">
                   <button
@@ -103,7 +103,7 @@ export default {
     }
   },
   mounted() {
-     this.getData(this.$route.query.sale_id)
+    this.getData(this.$route.query.sale_id)
   },
   components: {},
   data() {
@@ -115,7 +115,7 @@ export default {
         quantity: '',
         cost: '',
         source: '',
-        type:''
+        type: '',
       },
       requestInProcess: false,
       statusMessage: null,
@@ -127,17 +127,17 @@ export default {
     },
     getData(sale_id) {
       try {
-        this.$axios.$get('get-edit-sales/' + sale_id).then(res => {
+        this.$axios.$get('get-edit-sales/' + sale_id).then((res) => {
           if (res.status == 200) {
             this.card = {
-                id: res.data.id,
-                card_id: res.data.card_id,
-                    timestamp: res.data.timestamp,
-                    quantity: res.data.quantity,
-                    cost: res.data.cost,
-                    source: res.data.source,
-                    type: res.data.type,
-                  };
+              id: res.data.id,
+              card_id: res.data.card_id,
+              timestamp: res.data.timestamp,
+              quantity: res.data.quantity,
+              cost: res.data.cost,
+              source: res.data.source,
+              type: res.data.type,
+            }
           }
         })
       } catch (err) {
@@ -147,26 +147,47 @@ export default {
     edit() {
       if (!this.requestInProcess) {
         try {
-          this.showLoader()
-          this.requestInProcess = true
-          this.$axios
-            .post('edit-sales-data', this.card)
-            .then((res) => {
-              if (res.status == 200) {
-                this.$toast.success(res.data.message)
+          new Promise((resolve, reject) => {
+            this.showLoader()
+            this.requestInProcess = true
+            this.$axios
+              .post('edit-sales-data', this.card)
+              .then((res) => {
+                if (res.status == 200) {
+                  this.$toast.success(res.data.message)
+                }
+                if (this.requestInProcess) {
+                  this.requestInProcess = false
+                  this.$router.push(
+                    'all-sales-data?card_id=' + this.card.card_id
+                  )
+                  this.hideLoader()
+                }
+              })
+              .catch((err) => {
+                this.$toast.error(
+                  'There has been an error saving sales data. Please try again.',
+                  { timeOut: 10000 }
+                )
+                this.requestInProcess = false
+                this.hideLoader()
+              })
+            setTimeout(() => {
+              if (this.requestInProcess) {
+                resolve('done')
+                this.requestInProcess = false
+                this.$router.push('all-sales-data?card_id=' + this.card.card_id)
+                this.hideLoader()
               }
-              this.requestInProcess = false
-               this.$router.push("all-sales-data?card_id="+this.card.card_id)
-              this.hideLoader()
-            })
-            .catch((err) => {
-              this.requestInProcess = false
-              this.hideLoader()
-            })
+            }, 3000)
+          })
         } catch (err) {
+          this.$toast.error(
+            'There has been an error saving sales data. Please try again.',
+            { timeOut: 10000 }
+          )
           this.hideLoader()
           this.requestInProcess = false
-          console.log(err)
         }
       }
     },
@@ -196,7 +217,6 @@ ul.my-card-listing {
   padding: 8px 12px 5px 12px !important;
   color: #212529;
 }
-
 
 .message {
   color: green;

@@ -49,7 +49,7 @@
               <div class="col-2">
                 <select
                   id="simpleFilter"
-                  @change="getItems(1,null,$event)"
+                  @change="getItems(1, null, $event)"
                   class="form-control text-capitalize"
                 >
                   <option selected>Filter By</option>
@@ -110,7 +110,9 @@
                   </td>
                   <td>{{ item.id }}</td>
                   <td>{{ item.title }}</td>
-                  <td>{{ (item.time_left!='0s'?item.time_left:'00:00') }}</td>
+                  <td>
+                    {{ item.time_left != '0s' ? item.time_left : '00:00' }}
+                  </td>
                   <td>${{ item.price }}</td>
                   <td class="search-form tabel-in">
                     <input
@@ -172,19 +174,39 @@
                     <button class="theme-btn card-btn active-pagination">
                       1
                     </button>
-                    <button class="theme-btn card-btn" @click="getItems(2)" v-if="allPages>=2">
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getItems(2)"
+                      v-if="allPages >= 2"
+                    >
                       2
                     </button>
-                    <button class="theme-btn card-btn" @click="getItems(3)" v-if="allPages>=3">
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getItems(3)"
+                      v-if="allPages >= 3"
+                    >
                       3
                     </button>
-                    <button class="theme-btn card-btn" @click="getItems(4)" v-if="allPages>=4">
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getItems(4)"
+                      v-if="allPages >= 4"
+                    >
                       4
                     </button>
-                    <button class="theme-btn card-btn" @click="getItems(5)" v-if="allPages>=5">
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getItems(5)"
+                      v-if="allPages >= 5"
+                    >
                       5
                     </button>
-                    <button class="theme-btn card-btn" @click="getItems(2)" v-if="allPages>=2">
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getItems(2)"
+                      v-if="allPages >= 2"
+                    >
                       Next
                     </button>
                     <button
@@ -206,19 +228,39 @@
                     <button class="theme-btn card-btn active-pagination">
                       2
                     </button>
-                    <button class="theme-btn card-btn" @click="getItems(3)" v-if="allPages>=3">
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getItems(3)"
+                      v-if="allPages >= 3"
+                    >
                       3
                     </button>
-                    <button class="theme-btn card-btn" @click="getItems(4)" v-if="allPages>=4">
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getItems(4)"
+                      v-if="allPages >= 4"
+                    >
                       4
                     </button>
-                    <button class="theme-btn card-btn" @click="getItems(5)" v-if="allPages>=5">
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getItems(5)"
+                      v-if="allPages >= 5"
+                    >
                       5
                     </button>
-                    <button class="theme-btn card-btn" @click="getItems(6)" v-if="allPages>=6">
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getItems(6)"
+                      v-if="allPages >= 6"
+                    >
                       6
                     </button>
-                    <button class="theme-btn card-btn" @click="getItems(3)" v-if="allPages>=3">
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getItems(3)"
+                      v-if="allPages >= 3"
+                    >
                       Next
                     </button>
                     <button
@@ -243,16 +285,32 @@
                     <button class="theme-btn card-btn active-pagination">
                       3
                     </button>
-                    <button class="theme-btn card-btn" @click="getItems(4)" v-if="allPages>=4">
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getItems(4)"
+                      v-if="allPages >= 4"
+                    >
                       4
                     </button>
-                    <button class="theme-btn card-btn" @click="getItems(5)" v-if="allPages>=5">
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getItems(5)"
+                      v-if="allPages >= 5"
+                    >
                       5
                     </button>
-                    <button class="theme-btn card-btn" @click="getItems(6)" v-if="allPages>=6">
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getItems(6)"
+                      v-if="allPages >= 6"
+                    >
                       6
                     </button>
-                    <button class="theme-btn card-btn" @click="getItems(4)" v-if="allPages>=4">
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getItems(4)"
+                      v-if="allPages >= 4"
+                    >
                       Next
                     </button>
                     <button
@@ -294,11 +352,16 @@
                     </button>
                     <button
                       class="theme-btn card-btn"
-                      @click="getItems(page + 1)" v-if="allPages>= (page + 1)"
+                      @click="getItems(page + 1)"
+                      v-if="allPages >= page + 1"
                     >
                       {{ page + 1 }}
                     </button>
-                    <button class="theme-btn card-btn" @click="getItems(page)" v-if="allPages>= page" >
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getItems(page)"
+                      v-if="allPages >= page"
+                    >
                       Next
                     </button>
                     <button
@@ -311,24 +374,36 @@
                 </tr>
                 <tr v-if="page - 1 == allPages">
                   <td colspan="14">
-                     <button class="theme-btn card-btn disable-pagination"  v-if="(page-1) == 1">
-                      First
-                    </button>
-                      <button class="theme-btn card-btn disable-pagination"  v-if="(page-1) == 1">
-                      Previous
-                    </button>
-                    <button class="theme-btn card-btn" @click="getItems(1)" v-if="(page-1) != 1">
+                    <button
+                      class="theme-btn card-btn disable-pagination"
+                      v-if="page - 1 == 1"
+                    >
                       First
                     </button>
                     <button
-                      class="theme-btn card-btn"
-                      @click="getItems(page - 2)" v-if="(page - 2) > 0"
+                      class="theme-btn card-btn disable-pagination"
+                      v-if="page - 1 == 1"
                     >
                       Previous
                     </button>
                     <button
                       class="theme-btn card-btn"
-                      @click="getItems(page - 2)" v-if="(page - 2) > 0"
+                      @click="getItems(1)"
+                      v-if="page - 1 != 1"
+                    >
+                      First
+                    </button>
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getItems(page - 2)"
+                      v-if="page - 2 > 0"
+                    >
+                      Previous
+                    </button>
+                    <button
+                      class="theme-btn card-btn"
+                      @click="getItems(page - 2)"
+                      v-if="page - 2 > 0"
                     >
                       {{ page - 2 }}
                     </button>
@@ -367,7 +442,7 @@ export default {
   mounted() {
     if (this.$route.query.item != null) {
       this.searchItem(this.$route.query.item)
-    }else if(this.$route.query.page){
+    } else if (this.$route.query.page) {
       this.getItems(this.$route.query.page)
     } else {
       this.getItems(this.page)
@@ -430,7 +505,7 @@ export default {
                 this.items = res.data.data
                 this.page = res.data.next
                 this.sportsList = res.data.sportsList
-                 this.allPages = res.data.all_pages
+                this.allPages = res.data.all_pages
               }
               this.requestInProcess = false
               this.hideLoader()
@@ -452,7 +527,7 @@ export default {
           this.showLoader()
           this.requestInProcess = true
           let payload = { page: page, search: this.searchTerm }
-          this.$router.push('/admin/ebay-items-listings?page='+page)
+          this.$router.push('/admin/ebay-items-listings?page=' + page)
           // if (filter != null) payload['sport'] = filter.target.value
 
           if (filter != null) {
@@ -467,7 +542,7 @@ export default {
           } else if (this.otherFilter != null) {
             payload['filter_by'] = this.otherFilter.target.value
           }
-          
+
           this.$axios
             .post('get-ebay-list', payload)
             .then((res) => {
@@ -492,36 +567,6 @@ export default {
         }
       }
     },
-    // getSportItems(page, filter = null) {
-    //   if (!this.requestInProcess) {
-    //     try {
-    //       this.showLoader()
-    //       this.requestInProcess = true
-    //       let payload = { page: page, search: this.searchTerm }
-    //       if (filter != null) payload['sport'] = filter.target.value
-    //       this.$axios
-    //         .post('get-ebay-list-for-sport', payload)
-    //         .then((res) => {
-    //           if (res.status == 200) {
-    //             this.currentPage = page
-    //             this.items = res.data.data
-    //             this.page = res.data.next
-    //             this.sportsList = res.data.sportsList
-    //           }
-    //           this.requestInProcess = false
-    //           this.hideLoader()
-    //         })
-    //         .catch((err) => {
-    //           this.requestInProcess = false
-    //           this.hideLoader()
-    //         })
-    //     } catch (err) {
-    //       this.hideLoader()
-    //       this.requestInProcess = false
-    //       console.log(err)
-    //     }
-    //   }
-    // },
     getStatus(status) {
       if (status == 0) {
         return 'Active'
@@ -567,22 +612,46 @@ export default {
     saveSoldPrice(item) {
       if (!this.requestInProcess) {
         try {
-          this.showLoader()
-          this.requestInProcess = true
-          this.$axios
-            .$post('save-sold-price', {
-              id: item.id,
-              sold_price: item.sold_price,
-            })
-            .then((res) => {
-              this.requestInProcess = false
-              this.hideLoader()
-              this.getItems(this.currentPage)
-            })
+          new Promise((resolve, reject) => {
+            this.showLoader()
+            this.requestInProcess = true
+            this.$axios
+              .$post('save-sold-price', {
+                id: item.id,
+                sold_price: item.sold_price,
+              })
+              .then((res) => {
+                this.$toast.success('Sold price saved successfully.')
+                if (this.requestInProcess) {
+                  this.requestInProcess = false
+                  this.hideLoader()
+                  this.getItems(this.currentPage)
+                }
+              })
+              .catch((err) => {
+                this.$toast.error(
+                  'There has been an error saving sold price. Please try again.',
+                  { timeOut: 10000 }
+                )
+                this.requestInProcess = false
+                this.hideLoader()
+              })
+            setTimeout(() => {
+              if (this.requestInProcess) {
+                resolve('done')
+                this.requestInProcess = false
+                this.getItems(this.currentPage)
+                this.hideLoader()
+              }
+            }, 4000)
+          })
         } catch (err) {
+          this.$toast.error(
+            'There has been an error saving sold price. Please try again.',
+            { timeOut: 10000 }
+          )
           this.hideLoader()
           this.requestInProcess = false
-          console.log(err)
         }
       }
     },

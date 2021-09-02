@@ -160,18 +160,43 @@ export default {
     statusChange(id) {
       if (!this.requestInProcess) {
         try {
-          this.showLoader()
-          this.requestInProcess = true
-          this.$axios
-            .$post('change-sales-status', {
-              id: id,
-            })
-            .then((res) => {
-              this.requestInProcess = false
-              this.hideLoader()
-              this.getItems(this.card_id)
-            })
+          new Promise((resolve, reject) => {
+            this.showLoader()
+            this.requestInProcess = true
+            this.$axios
+              .$post('change-sales-status', {
+                id: id,
+              })
+              .then((res) => {
+                this.$toast.success('Sales deleted successfully.')
+                if (this.requestInProcess) {
+                  this.requestInProcess = false
+                  this.hideLoader()
+                  this.getItems(this.card_id)
+                }
+              })
+              .catch((err) => {
+                this.$toast.error(
+                  'There has been an error deleting sales data. Please try again.',
+                  { timeOut: 10000 }
+                )
+                this.requestInProcess = false
+                this.hideLoader()
+              })
+            setTimeout(() => {
+              if (this.requestInProcess) {
+                resolve('done')
+                this.requestInProcess = false
+                this.getItems(this.card_id)
+                this.hideLoader()
+              }
+            }, 3000)
+          })
         } catch (err) {
+          this.$toast.error(
+            'There has been an error deleting sales data. Please try again.',
+            { timeOut: 10000 }
+          )
           this.hideLoader()
           this.requestInProcess = false
         }

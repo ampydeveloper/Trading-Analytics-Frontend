@@ -24,7 +24,7 @@
                   locale="en"
                 ></b-form-datepicker>
               </div>
-               <div class="form_column">
+              <div class="form_column">
                 <label>Type</label>
                 <select v-model="card.type" class="form-control">
                   <option value="bin">Bin</option>
@@ -61,7 +61,7 @@
                   required
                 />
               </div>
-              
+
               <div class="form_btns">
                 <div class="left_btn">
                   <button
@@ -114,7 +114,7 @@ export default {
         quantity: '',
         cost: '',
         source: '',
-        type:''
+        type: '',
       },
       requestInProcess: false,
       statusMessage: null,
@@ -127,34 +127,57 @@ export default {
     create() {
       if (!this.requestInProcess) {
         try {
-          this.showLoader()
-          this.requestInProcess = true
-          this.$axios
-            .post('sales-create', this.card)
-            .then((res) => {
-              if (res.status == 200) {
-                this.$toast.success(res.data.message)
-                this.card = {
-                  card_id: '',
-                  timestamp: '',
-                  quantity: '',
-                  cost: '',
-                  type:'',
-                   source: '',
+          new Promise((resolve, reject) => {
+            this.showLoader()
+            this.requestInProcess = true
+            this.$axios
+              .post('sales-create', this.card)
+              .then((res) => {
+                if (res.status == 200) {
+                  this.$toast.success(res.data.message)
+                  this.card = {
+                    card_id: '',
+                    timestamp: '',
+                    quantity: '',
+                    cost: '',
+                    type: '',
+                    source: '',
+                  }
                 }
+                if (this.requestInProcess) {
+                  this.requestInProcess = false
+                  this.$router.push(
+                    'all-sales-data?card_id=' + this.$route.query.item
+                  )
+                  this.hideLoader()
+                }
+              })
+              .catch((err) => {
+                this.$toast.error(
+                  'There has been an error saving sales data. Please try again.',
+                  { timeOut: 10000 }
+                )
+                this.requestInProcess = false
+                this.hideLoader()
+              })
+            setTimeout(() => {
+              if (this.requestInProcess) {
+                resolve('done')
+                this.requestInProcess = false
+                this.$router.push(
+                  'all-sales-data?card_id=' + this.$route.query.item
+                )
+                this.hideLoader()
               }
-              this.requestInProcess = false
-              this.$router.push("all-sales-data?card_id="+this.$route.query.item)
-              this.hideLoader()
-            })
-            .catch((err) => {
-              this.requestInProcess = false
-              this.hideLoader()
-            })
+            }, 3000)
+          })
         } catch (err) {
+          this.$toast.error(
+            'There has been an error saving sales data. Please try again.',
+            { timeOut: 10000 }
+          )
           this.hideLoader()
           this.requestInProcess = false
-          console.log(err)
         }
       }
     },
@@ -184,7 +207,6 @@ ul.my-card-listing {
 //   padding: 8px 12px 5px 12px !important;
 //   color: #212529;
 // }
-
 
 .message {
   color: green;
