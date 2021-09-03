@@ -245,17 +245,17 @@ export default {
                   window.localStorage.setItem('parent_site', 0);
                   window.location.href =
                     'https://www.slabstox.com/auto-login?email=' +
-                    this.form.email +
+                    encodeURIComponent(this.form.email) +
                     '&password=' +
-                    this.form.password +
+                    encodeURIComponent(this.form.password) +
                     '&parent_site=1'
                 } else {
                   // window.location.href = '/dashboard'
                   window.location.href =
                     'https://www.slabstox.com/auto-login?email=' +
-                    this.form.email +
+                    encodeURIComponent(this.form.email) +
                     '&password=' +
-                    this.form.password
+                    encodeURIComponent(this.form.password)
                 }
               } else {
                 window.location.href = '/admin'
