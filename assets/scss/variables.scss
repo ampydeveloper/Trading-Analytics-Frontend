@@ -4526,6 +4526,9 @@ html body #__nuxt .b-profileImage .dropdown-menu {
 
 .my-card-listing.rfive-columns {
   .my-card {
+    &:hover .my-card-title{
+      color: #39414a;
+    }
     .image-container {
       height: 21vw;
 
