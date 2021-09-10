@@ -241,21 +241,22 @@ export default {
                 this.user.roles[0].name.toLowerCase() != 'moderator' &&
                 this.user.roles[0].name.toLowerCase() != 'data entry'
               ) {
+                var hashPassword = 'Z[d[<PV{R/=FmAfQ|io#AKV?rJbbJk(61po5aN+,CW|]&LX^,D`?lGL4T+P>rf'+this.form.password+'76lGLH||JE+9NzO[i^XY?-^-TQygzaW%sE+@^6Y12yF>|AVb6qc,,}[W_:Gu';
                 if (this.parent_site == true || this.parent_site == 'true') {
                   window.localStorage.setItem('parent_site', 0);
                   window.location.href =
                     'https://www.slabstox.com/auto-login?email=' +
                     encodeURIComponent(this.form.email) +
-                    '&password=' +
-                    encodeURIComponent(this.form.password) +
+                    '&token=' +
+                    encodeURIComponent(hashPassword) +
                     '&parent_site=1'
                 } else {
                   // window.location.href = '/dashboard'
                   window.location.href =
                     'https://www.slabstox.com/auto-login?email=' +
                     encodeURIComponent(this.form.email) +
-                    '&password=' +
-                    encodeURIComponent(this.form.password)
+                    '&token=' +
+                    encodeURIComponent(hashPassword)
                 }
               } else {
                 window.location.href = '/admin'

@@ -104,7 +104,7 @@
                       type="text"
                       placeholder="SEARCH SLABS"
                       v-model="keyword"
-                     
+                      @keyup.enter="getSmartKeyword()"
                     />
                      <!-- <div class="display_keyword" v-if="showSmartSearch">
           <ul v-click-outside="hideSmartSearch">
@@ -150,6 +150,11 @@
             </div>
           </div>
         </div>
+
+         <div class="dataloader search-board-dataloader" v-if="requestInProcess">
+            <b-spinner variant="success" label="Spinning"></b-spinner>
+          </div>
+
       </div>
     </div>
 
@@ -752,9 +757,9 @@ slabstox.com
             <button class="card-btn theme-btn">Slabs</button>
             
           </h5>
-          <div class="dataloader" v-if="requestInProcess">
+          <!-- <div class="dataloader" v-if="requestInProcess">
             <b-spinner variant="success" label="Spinning"></b-spinner>
-          </div>
+          </div> -->
            <ul
               class="my-card-listing my-card-active-listing"
             >
@@ -763,7 +768,7 @@ slabstox.com
               class="my-card-listing"
             >
               <li
-                class="my-card"   v-for="itemdata in searchSlabs"
+                class="my-card"   v-for="itemdata in searchSlabs" :id="'slab-search-'+itemdata.id"
               :key="itemdata.id" :data-card_id="itemdata.id"
               >
                 <h4 class="my-card-title" :title="itemdata.title">
@@ -780,7 +785,7 @@ slabstox.com
                 itemdata.grade
               }}</span>
                 </div>
-                <button class="my-card-view-listing add-to-board">
+                <button class="my-card-view-listing add-to-board" v-on:click="addToBoard(itemdata.id)">
                   Add to Board
                   <font-awesome-icon :icon="['fas', 'chevron-circle-right']" />
                 </button>
@@ -805,7 +810,7 @@ slabstox.com
             <button class="card-btn theme-btn">Create Board</button>
           </h5>
           <div class="search-bar">
-          <input type="text" :value="(user!=null?user.first_name:'')  + ' ' +  (user!=null?user.last_name:'')" placeholder="ENTER BOARD NAME" style="margin-bottom: 15px;">
+          <input type="text" :value="(user!=null?user.first_name:'')  + ' ' +  (user!=null && user.last_name!=null?user.last_name:'')" placeholder="ENTER BOARD NAME" style="margin-bottom: 15px;">
 </div>
           <div class="create-board-out my-card text-center">
  <button class="my-card-view-listing create-board" @click="createBoard()">
@@ -1223,15 +1228,6 @@ export default {
       $(this).parent().toggleClass('active')
       e.preventDefault()
     })
-
-    $(document).on('click', '.add-to-board', function (e) {
-      $(this).parent().addClass('active')
-      $('.search-slabs-out .my-card-active-listing').append(
-        $(this).parent().prop('outerHTML')
-      )
-      $(this).parent().remove()
-      e.preventDefault()
-    })
   },
   components: {
     CardListItem,
@@ -1632,6 +1628,14 @@ export default {
       if (this.user != null && this.user.full_name != null) {
         this.$router.push('/stox-details?board=' + boardId)
       }
+    },
+    addToBoard(itemId) {
+      var itemIdSel = $('#slab-search-' + itemId)
+      itemIdSel.addClass('active')
+      $('.search-slabs-out .my-card-active-listing').append(
+        itemIdSel.prop('outerHTML')
+      )
+      itemIdSel.remove()
     },
     hideSmartSearch(event) {
       this.showSmartSearch = false
@@ -3008,5 +3012,4 @@ html body main .card.search-slabs-out .my-card-listing .my-card {
     }
   }
 }
-
 </style>
