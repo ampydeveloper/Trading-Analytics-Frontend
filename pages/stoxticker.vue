@@ -56,21 +56,10 @@
                   </div>
                 </div>
                 <div class="cat-wrap">
-                  <div class="cat-btn">
+                  <div class="cat-btn"> 
                     <ul>
-                      <li>
-                        <a href="#" class="theme-btn card-btn" data-sport="basketball">BASKETBALL</a>
-                      </li>
-                      <li class="">
-                        <a href="#" class="theme-btn card-btn" data-sport="baseball">Baseball</a>
-                      </li>
-                      <li>
-                        <a href="#" class="theme-btn card-btn" data-sport="football">Football</a>
-                      </li>
-                      <li><a href="#" class="theme-btn card-btn" data-sport="hockey">Hockey</a></li>
-                      <li><a href="#" class="theme-btn card-btn" data-sport="soccer">Soccer</a></li>
-                      <li>
-                        <a href="#" class="theme-btn card-btn" data-sport="pokemon">Pokémon</a>
+                      <li v-for="sport in attributes.sport" :key="sport">
+                        <a href="#" class="theme-btn card-btn" :data-sport="sport">{{sport}}</a>
                       </li>
                     </ul>
                   </div>
@@ -106,20 +95,6 @@
                       v-model="keyword"
                       @keyup.enter="getSmartKeyword()"
                     />
-                     <!-- <div class="display_keyword" v-if="showSmartSearch">
-          <ul v-click-outside="hideSmartSearch">
-            <li
-              v-for="(item, key) of smartKeyword"
-              :key="key"
-              @click="selectKeyword(item.id)"
-            >
-              {{ item.player + ' ' + item.title }}
-            </li>
-            <li v-if="smartKeyword.length == 0">
-              No results found for this search
-            </li>
-          </ul>
-              </div> -->
                   </div>
                 </div>
                 <div class="col-md-2">
@@ -242,9 +217,6 @@
                 />&nbsp;{{ stoxtickerData1d.perc_diff }}%
               </button>
              
-              <!-- <span class="total_sales" style="display: none">{{
-                stoxtickerData.total_sales
-              }}</span> -->
              <span class="float-right share-lk-top">
                 <span class="share-icon">
                   Share
@@ -406,7 +378,7 @@
     <b-modal id="embedStoxtickerCode" title="" size="xl" hide-footer>
           <h5>Copy code and paste to your website.</h5>
           <p class="code-text">
-            <textarea cols="3" rows="10"><iframe src="http://pro.slabstox.com/stox-all-stats" width="1400" height="260" style="border:none;" frameborder="0"></iframe>
+            <textarea cols="3" rows="10"><iframe src="http://pro.slabstox.com/stox-all-stats" width="1400" height="260" style="border:none;" frameborder="0"></iframe>  
           </textarea
             >
           </p>
@@ -587,148 +559,57 @@ slabstox.com
               </span>
               </h5>
               <ul>
-                <li>
-                  <h3 class="h3-title">BASKETBALL</h3>
+                <li v-for="sport in attributes.sport" :key="sport">
+                  <h3 class="h3-title">{{sport}}</h3>
 
-                  <marquee-text :duration="30" :paused="paused" :key="soldListingbasketballMarqueeKey" v-if="soldListing.basketball!=0">
-                    <div @mouseenter="paused = !paused" @mouseleave="paused = false">
-  <template v-for="list in soldListing.basketball">
-                    <h4>
-                       <nuxt-link
-      class="sx-stox-card-link"
-      :to="'/card-data/?id=' + list.card.id"
-      :class="(list.slab_sold_flag == true?'listing-rise':'listing-fall')"
-    >{{list.card.title}} - ${{list.sold_price}}
-     </nuxt-link> &nbsp;&nbsp;</h4>
+                  <marquee-text
+                    :duration="30"
+                    :paused="paused"
+                    :key="'soldListing' + sport + 'MarqueeKey'"
+                    :v-if="soldListing[sport] != 0"
+                  >
+                    <div
+                      
+                      @mouseenter="paused = !paused"
+                      @mouseleave="paused = false"
+                      v-for="(value,key) in soldListing"
+                      :key="key"                    
+                    >
+                    <div v-if="key == sport">
+                      <template v-for="list in value">
+                        <h4>
+                          <nuxt-link
+                            class="sx-stox-card-link"
+                            :to="'/card-data/?id=' + list.card.id"
+                            :class="
+                              list.slab_sold_flag == true
+                                ? 'listing-rise'
+                                : 'listing-fall'
+                            "
+                            >{{ list.card.title }} - ${{ list.sold_price }}
+                          </nuxt-link>
+                          &nbsp;&nbsp;
+                        </h4>
                       </template>
+                    </div>
                     </div>
                   </marquee-text>
 
-                  <marquee-text :duration="30" :paused="paused" :repeat="1" v-if="soldListing.basketball==0">
-                    <div @mouseenter="paused = !paused" @mouseleave="paused = false">
-                      <h4 style="padding: 0 50px;">No recently sold listings.</h4>
+                  <marquee-text
+                    :duration="30"
+                    :paused="paused"
+                    :repeat="1"
+                    v-if="soldListing.basketball == 0"
+                  >
+                    <div
+                      @mouseenter="paused = !paused"
+                      @mouseleave="paused = false"
+                    >
+                      <h4 style="padding: 0 50px">No recently sold listings.</h4>
                     </div>
                   </marquee-text>
                 </li>
-                 <li>
-                  <h3 class="h3-title">SOCCER</h3>
-                 
-                 <marquee-text :duration="30" :paused="paused" :key="soldListingsoccerMarqueeKey" v-if="soldListing.soccer!=0">
-                    <div @mouseenter="paused = !paused" @mouseleave="paused = false">
-                   <template v-for="list in soldListing.soccer">
-                    <h4>
-                      <nuxt-link
-      class="sx-stox-card-link"
-      :to="'/card-data/?id=' + list.card.id"
-          :class="(list.slab_sold_flag == true?'listing-rise':'listing-fall')"
-    >{{list.card.title}} - ${{list.sold_price}}
-     </nuxt-link>&nbsp;&nbsp;</h4>
-                      </template>
-               </div>
-                  </marquee-text>
-
-                  <marquee-text :duration="30" :paused="paused" :repeat="1" v-if="soldListing.soccer==0">
-                    <div @mouseenter="paused = !paused" @mouseleave="paused = false">
-                    <h4 style="padding: 0 50px;">No recently sold listings.</h4>
-               </div>
-                  </marquee-text>
-                </li>
-                 <li>
-                  <h3 class="h3-title">BASEBALL</h3>
-                
-                <marquee-text :duration="30" :paused="paused" :key="soldListingbaseballMarqueeKey" v-if="soldListing.baseball!=0">
-                    <div @mouseenter="paused = !paused" @mouseleave="paused = false">
-                    <template v-for="list in soldListing.baseball">
-                    <h4>
-                      <nuxt-link
-      class="sx-stox-card-link"
-      :to="'/card-data/?id=' + list.card.id"
-          :class="(list.slab_sold_flag == true?'listing-rise':'listing-fall')"
-    >{{list.card.title}} - ${{list.sold_price}}
-     </nuxt-link>&nbsp;&nbsp;</h4>
-                      </template>
-                </div>
-                  </marquee-text>
-
-                  <marquee-text :duration="30" :paused="paused" :repeat="1" v-if="soldListing.baseball==0">
-                    <div @mouseenter="paused = !paused" @mouseleave="paused = false">
-                    <h4 style="padding: 0 50px;">No recently sold listings.</h4>
-                </div>
-                  </marquee-text>
-
-                </li>
-                <li>
-                  <h3 class="h3-title">FOOTBALL</h3>
-                
-                <marquee-text :duration="30" :paused="paused" :key="soldListingfootballMarqueeKey" v-if="soldListing.football!=0">
-                    <div @mouseenter="paused = !paused" @mouseleave="paused = false">
-                   <template v-for="list in soldListing.football">
-                    <h4>
-                      <nuxt-link
-      class="sx-stox-card-link"
-      :to="'/card-data/?id=' + list.card.id"
-          :class="(list.slab_sold_flag == true?'listing-rise':'listing-fall')"
-    >{{list.card.title}} - ${{list.sold_price}}
-     </nuxt-link>&nbsp;&nbsp;</h4>
-                      </template>
-           </div>
-                  </marquee-text>
-
-                  <marquee-text :duration="30" :paused="paused" :repeat="1" v-if="soldListing.football==0">
-                    <div @mouseenter="paused = !paused" @mouseleave="paused = false">
-                    <h4 style="padding: 0 50px;">No recently sold listings.</h4>
-           </div>
-                  </marquee-text>
-                </li>
-               <li>
-                  <h3 class="h3-title">HOCKEY</h3> 
-                
-                <marquee-text :duration="30" :paused="paused" :key="soldListinghockeyMarqueeKey" v-if="soldListing.hockey!=0">
-                    <div @mouseenter="paused = !paused" @mouseleave="paused = false">
-                   <template v-for="list in soldListing.hockey">
-                    <h4>
-                      <nuxt-link
-      class="sx-stox-card-link"
-      :to="'/card-data/?id=' + list.card.id"
-          :class="(list.slab_sold_flag == true?'listing-rise':'listing-fall')"
-    >{{list.card.title}} - ${{list.sold_price}}
-     </nuxt-link>&nbsp;&nbsp;</h4>
-                      </template>
-                </div>
-                  </marquee-text>
-
-                  <marquee-text :duration="30" :paused="paused" :repeat="1" v-if="soldListing.hockey==0">
-                    <div @mouseenter="paused = !paused" @mouseleave="paused = false">
-                    <h4 style="padding: 0 50px;">No recently sold listings.</h4>
-                </div>
-                  </marquee-text>
-                </li>               
-                <li>
-                  <h3 class="h3-title">POKÉMON</h3> 
-                
-                <marquee-text :duration="30" :paused="paused" :key="soldListingpokemonMarqueeKey" v-if="soldListing.pokemon!=0">
-                    <div @mouseenter="paused = !paused" @mouseleave="paused = false">
-                   <template v-for="list in soldListing.pokemon">
-                    <h4>
-                      <nuxt-link
-      class="sx-stox-card-link"
-      :to="'/card-data/?id=' + list.card.id"
-          :class="(list.slab_sold_flag == true?'listing-rise':'listing-fall')"
-    >{{list.card.title}} - ${{list.sold_price}}
-     </nuxt-link>&nbsp;&nbsp;</h4>
-                      </template>
-                </div>
-                  </marquee-text>
-
-                  <marquee-text :duration="30" :paused="paused" :repeat="1" v-if="soldListing.pokemon==0">
-                    <div @mouseenter="paused = !paused" @mouseleave="paused = false">
-                    <h4 style="padding: 0 50px;">No recently sold listings.</h4>
-                </div>
-                  </marquee-text>
-                </li>
-                
               </ul>
-             
             </div>
           </div>
           <div class="social_share ss-h4">
@@ -757,9 +638,6 @@ slabstox.com
             <button class="card-btn theme-btn">Slabs</button>
             
           </h5>
-          <!-- <div class="dataloader" v-if="requestInProcess">
-            <b-spinner variant="success" label="Spinning"></b-spinner>
-          </div> -->
            <ul
               class="my-card-listing my-card-active-listing"
             >
@@ -1144,6 +1022,9 @@ import CardListItem from '~/components/dashboard/CardListItem'
 import $ from 'jquery'
 import vClickOutside from 'v-click-outside'
 import MarqueeText from 'vue-marquee-text-component'
+import { mapGetters } from 'vuex'
+import { FILTERS } from '../constants/advance_search_filter'
+
 
 export default {
   transition: 'fade',
@@ -1475,7 +1356,15 @@ export default {
           },
         },
       },
+      filters: { ...FILTERS },
     }
+  },
+  computed:{
+    ...mapGetters({
+      showAdvanceSearch: 'advancesearch/show',
+      filters_old_state: 'advancesearch/filters',
+      attributes: 'advancesearch/attributes'
+    })
   },
   methods: {
     searchBoard(days = 90) {
@@ -1499,18 +1388,9 @@ export default {
           .then((res) => {
             this.requestInProcess = false
             if (res.status == 200) {
-              // $('.search-name-out').show()
-              // $('.board-search-list-outer').show()
               this.boardSearch = res.data
               this.boardPage = res.page
-
-              // this.activeDaysGraph = 2
-              //  var percDiff = res.data.perc_diff
-              // var dollerDiff = String(res.data.doller_diff)
-
               $('.create-board-out').hide()
-              // var bpage = (res.page - 1) * 4
-              // if (res.data.length > bpage) {
               if (res.data.length < res.boards_count) {
                 $('.create-board-out').show()
               }
@@ -1518,7 +1398,6 @@ export default {
                 res.data.map((item, key) => {
                   if (typeof item != 'undefined') {
                     this.boardActiveDay[key] = days
-                    // this.boardSearch[key] = item
                     this.searchSeries[key] = [
                       {
                         name: 'SX',
@@ -1610,9 +1489,6 @@ export default {
                   }
                 })
               }
-
-              // this.last_timestamp = res.data.last_timestamp
-              // this.initGraphLabelLength = res.card_data.labels.length
             }
           })
           .catch((err) => {
@@ -1675,22 +1551,6 @@ export default {
             this.requestInProcess = false
             console.log(err)
           })
-
-        // this.$axios
-        //   .$post('search/get-smart-keyword', { keyword: this.keyword })
-        //   .then((res) => {
-        //     this.requestInProcess = false
-        //     if (res.status == 200) {
-        //       if (this.keyword == res.keyword) {
-        //         this.smartKeyword = res.data
-        //         this.showSmartSearch = true
-        //       }
-        //     }
-        //   })
-        //   .catch((err) => {
-        //     this.requestInProcess = false
-        //     console.log(err)
-        //   })
       } catch (err) {
         this.requestInProcess = false
         console.log(err)
@@ -1727,7 +1587,6 @@ export default {
               this.searchSlabs = res.data
               this.$toast.success('Stoxticker board created successfully.')
               this.allBoardGraphFunc(90)
-              // this.$router.push('/stoxticker')
             }
           })
           .catch((err) => {
@@ -1828,7 +1687,6 @@ export default {
         this.$axios.$get(`get-sx-dashboard-graph/${days}`).then((res) => {
           if (res.status == 200) {
             this.stoxtickerData.total = res.data.total_sales
-            // this.stoxtickerData.sale = res.data.total_sales
             this.stoxtickerData.perc_diff = res.data.perc_diff
             this.stoxtickerData.doller_diff = res.data.doller_diff
             this.stoxtickerData.change_arrow = res.data.change_arrow
@@ -1874,10 +1732,6 @@ export default {
                 },
               },
             }
-
-            // setTimeout(() => {
-            //   this.generateImageOfGraph(this.$refs.sxDashChart.chart.dataURI())
-            // }, 3000)
           } else {
             this.$toast.error(
               'There has been an error loading Slabstox graphs. Please refresh your page.',
@@ -1913,8 +1767,6 @@ export default {
               this.sxSalesQty1d = res.data.qty
               this.sxChartOptions1d = {
                 xaxis: {
-                  // type: 'datetime',
-                  // tickAmount: days == 2 ? 24 : 6,
                   categories: res.data.labels,
                   labels: {
                     formatter: function (value) {
@@ -1963,12 +1815,6 @@ export default {
                   },
                 },
               }
-
-              // setTimeout(() => {
-              //   this.generateImageOfGraph(
-              //     this.$refs.sxDashChart.chart.dataURI()
-              //   )
-              // }, 1000)
             } else {
               this.$toast.error(
                 'There has been an error loading Slabstox graphs. Please refresh your page.',
@@ -2201,8 +2047,6 @@ export default {
           .$get(`stoxticker/single-graph-board/${days}/${board}`)
           .then((res) => {
             if (res.status == 200) {
-              // this.allBoardsShow1dGraph = false
-              // this.allBoardsShowalldGraph = true
               $('.sx-allboards-apex-top-alld' + board).show()
               $('.sx-allboards-apex-top-1d' + board).hide()
 
@@ -2214,71 +2058,9 @@ export default {
               ])
               this.boardSalesQty.splice(boardKey, 1, res.data.sales_graph.qty)
               this.boardChartOptions.splice(boardKey, 1, {
-                // chart: {
-                //   toolbar: {
-                //     show: false,
-                //   },
-                //   height: 350,
-                //   type: 'area',
-                //   background: 'transparent',
-                //   zoom: {
-                //     enabled: false,
-                //   },
-                // },
-                // colors: ['#14f078'],
-                // dataLabels: {
-                //   enabled: false,
-                // },
-                // stroke: {
-                //   curve: 'smooth',
-                // },
                 xaxis: {
-                  // labels: {
-                  //   style: {
-                  //     colors: '#edecec',
-                  //     fontSize: '10px',
-                  //     fontFamily: 'NexaBold',
-                  //   },
-                  // },
-                  // type: 'datetime',
-                  // tickAmount: 6,
                   categories: res.data.sales_graph.labels,
                 },
-                // yaxis: {
-                //   labels: {
-                //     style: {
-                //       colors: '#edecec',
-                //       fontSize: '10px',
-                //       fontFamily: 'NexaBold',
-                //     },
-                //     formatter: (value, ind) => {
-                //       let valCheck = value
-                //       if (Number(value) === value && value % 1 !== 0) {
-                //         let valCheck = Number(value).toFixed(2)
-                //       }
-
-                //       let lblStr = `$${valCheck}`
-                //       return lblStr
-                //     },
-                //   },
-                // },
-                // tooltip: {
-                //   enabled: true,
-                //   x: {
-                //     format:  'MM/dd/yy',
-                //   },
-                //   y: {
-                //     formatter: (value, ind) => {
-                //       let lblStr = `$${value}`
-                //       if (typeof ind == 'object')
-                //         lblStr = `$${value} (${
-                //           this.boardSalesQty[ind.dataPointIndex]
-                //         })`
-                //       else lblStr = `$${value} (${this.boardSalesQty[ind]})`
-                //       return lblStr
-                //     },
-                //   },
-                // },
               })
             }
           })
@@ -2291,110 +2073,6 @@ export default {
         this.boardDaysGraph.splice(boardKey, 1, days)
         $('.sx-allboards-apex-top-alld' + board).hide()
         $('.sx-allboards-apex-top-1d' + board).show()
-
-        // this.$axios
-        //   .$get(`stoxticker/single-graph-board/${days}/${board}`)
-        //   .then((res) => {
-        //     if (res.status == 200) {
-        //       //  this.allBoardsShow1dGraph = true
-        //       // this.allBoardsShowalldGraph = false
-        //       $('.sx-allboards-apex-top-alld' + board).hide()
-        //       $('.sx-allboards-apex-top-1d' + board).show()
-        //       // console.log(this.boardChartOptions);
-        //       this.boardDaysGraph.splice(boardKey, 1, days)
-        //       this.allBoardGraph1d.splice(boardKey, 1, res.data)
-
-        //       this.boardSeries1d.splice(boardKey, 1, [
-        //         { name: 'SX', data: res.data.sales_graph.values },
-        //       ])
-        //       this.boardSalesQty1d.splice(boardKey, 1, res.data.sales_graph.qty)
-
-        //       this.boardChartOptions1d.splice(boardKey, 1, {
-        //         chart: {
-        //           toolbar: {
-        //             show: false,
-        //           },
-        //           height: 350,
-        //           type: 'area',
-        //           background: 'transparent',
-        //           zoom: {
-        //             enabled: false,
-        //           },
-        //         },
-        //         colors: ['#14f078'],
-        //         dataLabels: {
-        //           enabled: false,
-        //         },
-        //         stroke: {
-        //           curve: 'smooth',
-        //         },
-        //         xaxis: {
-        //           labels: {
-        //             style: {
-        //               colors: '#edecec',
-        //               fontSize: '10px',
-        //               fontFamily: 'NexaBold',
-        //             },
-        //           },
-        //           type: 'category',
-        //           tickAmount: 24,
-        //           tickPlacement: 'on',
-        //           categories: res.data.sales_graph.labels,
-        //           labels: {
-        //             formatter: function (value) {
-        //               if (value !== undefined) {
-        //                 var splittedCategories = value.split(':')
-        //                 var mins = splittedCategories[1]
-        //                 if (mins == '00') {
-        //                   return value
-        //                 } else {
-        //                   return ''
-        //                 }
-        //               }
-        //               return ''
-        //             },
-        //           },
-        //         },
-        //         yaxis: {
-        //           labels: {
-        //             style: {
-        //               colors: '#edecec',
-        //               fontSize: '10px',
-        //               fontFamily: 'NexaBold',
-        //             },
-        //             formatter: (value, ind) => {
-        //               let valCheck = value
-        //               if (Number(value) === value && value % 1 !== 0) {
-        //                 let valCheck = Number(value).toFixed(2)
-        //               }
-
-        //               let lblStr = `$${valCheck}`
-        //               return lblStr
-        //             },
-        //           },
-        //         },
-        //         tooltip: {
-        //           enabled: true,
-        //           x: {
-        //             formatter: (value, ind) => {
-        //               return res.data.sales_graph.labels[ind.dataPointIndex]
-        //             },
-        //           },
-        //           y: {
-        //             formatter: (value, ind) => {
-        //               let lblStr = `$${value}`
-        //               if (typeof ind == 'object')
-        //                 lblStr = `$${value} (${
-        //                   this.boardSalesQty1d[ind.dataPointIndex]
-        //                 })`
-        //               else lblStr = `$${value} (${this.boardSalesQty1d[ind]})`
-        //               return lblStr
-        //             },
-        //           },
-        //         },
-        //       })
-        //     }
-        //   })
       } catch (error) {
         // console.log(error)
       }
@@ -2490,10 +2168,6 @@ ul.my-card-listing {
 .embed-link {
   color: #fff;
 }
-
-// .top-btn {
-//   margin-bottom: 20px;
-// }
 .thb-btn {
   color: #000;
   &:hover {
@@ -2694,7 +2368,7 @@ ul.my-card-listing {
     li {
       width: auto;
       display: inline-block;
-      margin-right: 1px;
+      margin-right: 5px;
       margin-left: 1px;
       margin-bottom: 5px;
       a {
@@ -2702,7 +2376,7 @@ ul.my-card-listing {
         font-weight: 400;
         border-radius: 2px;
         background-color: #f5f5f5;
-        padding: 12px 30px 10px 30px;
+        padding: 12px 20px 10px 20px;
         color: #000;
         font-size: 11px;
         text-decoration: none;

@@ -1,46 +1,44 @@
 <template>
   <div class="col-md-12 col-sm-12">
     <div class="row analytics_page">
-
-        <div class="stoxticker_page-outer">
-          <div class="card green_box stoxticker_page">
-            <div class="card-body" style="    padding-bottom: 0;">
-              <h5 class="card-title">
-                <button class="theme-btn card-btn">STOXTICKER</button>
-              </h5>
-              <div class="row">
-                <div class="col-md-2 bs-stats">
-                  <h2>SX</h2>
-                </div>
-                <div class="col-md-2 bs-stats">
-                  <h3>{{ intToString(data.total) }}@</h3>
-                  <span class="tot-sla">TOTAL SLABS</span>
-                </div>
-                <div class="col-md-5 bs-stats">
-                  <h2>{{ data.sale ? data.sale : '' }}</h2>
-                  <span class="avg-sla">AVG. SLAB SALE</span>
-                </div>
-                <div class="col-md-3 bs-stats">
-                  <div class="up_img">
-                    <font-awesome-icon
-                      :icon="['fas', 'caret-' + data.change_arrow]"
-                    />
-                  </div>
-                  <h2>{{ data.change }}</h2>
-                  <span class="cha-amo">CHANGE AMOUNT</span>
-                </div>
+      <div class="stoxticker_page-outer">
+        <div class="card green_box stoxticker_page">
+          <div class="card-body" style="padding-bottom: 0">
+            <h5 class="card-title">
+              <button class="theme-btn card-btn">STOXTICKER</button>
+            </h5>
+            <div class="row">
+              <div class="col-md-2 bs-stats">
+                <h2>SX</h2>
               </div>
-
-              <span class="date">
-                <i class="float-left"> slabstox.com </i>
-                <i class="float-right">
-                  LAST UPDATED - {{ data.last_updated }}
-                </i>
-              </span>
+              <div class="col-md-2 bs-stats">
+                <h3>{{ intToString(data.total) }}@</h3>
+                <span class="tot-sla">TOTAL SLABS</span>
+              </div>
+              <div class="col-md-5 bs-stats">
+                <h2>{{ data.sale ? data.sale : '' }}</h2>
+                <span class="avg-sla">AVG. SLAB SALE</span>
+              </div>
+              <div class="col-md-3 bs-stats">
+                <div class="up_img">
+                  <font-awesome-icon
+                    :icon="['fas', 'caret-' + data.change_arrow]"
+                  />
+                </div>
+                <h2>{{ data.change }}</h2>
+                <span class="cha-amo">CHANGE AMOUNT</span>
+              </div>
             </div>
+
+            <span class="date">
+              <i class="float-left"> slabstox.com </i>
+              <i class="float-right">
+                LAST UPDATED - {{ data.last_updated }}
+              </i>
+            </span>
           </div>
         </div>
-   
+      </div>
     </div>
   </div>
 </template>
@@ -52,29 +50,28 @@ export default {
   transition: 'fade',
   layout: 'default',
   auth: 'guest',
- 
+
   head() {
     return {
       title: 'Stoxticker - Slabstox',
       meta: [
-        {  hid: 'stoxticker-stats',name: 'Stoxticker - Slabstox', content: 'Slabstox - Check our StoxTicker' },
+        {
+          hid: 'stoxticker-stats',
+          name: 'Stoxticker - Slabstox',
+          content: 'Slabstox - Check our StoxTicker',
+        },
       ],
     }
   },
   mounted() {
     this.getData()
-     
   },
-  components: {
-
-  },
+  components: {},
   data() {
     return {
       logo: null,
       baseUrl: BASE_URL,
-   
       requestInProcess: false,
-     
       graphImage: '',
       sxGraphImage: '',
       perc_diff: 0,
@@ -82,7 +79,6 @@ export default {
       total_sales: 0,
       last_timestamp: 'N/A',
       currentUrl: location.href,
-    
       data: {
         total: 0,
         sale: 0,
@@ -90,14 +86,9 @@ export default {
         change_icon: 'up',
         last_updated: '',
       },
-    
-     
     }
   },
   methods: {
-
-   
-    
     getData() {
       try {
         this.$axios.$get('get-stoxticker-data').then((res) => {
@@ -111,7 +102,6 @@ export default {
         this.$router.push('/404')
       }
     },
-   
     intToString(value) {
       var suffixes = ['', 'k', 'm', 'b', 't']
       var suffixNum = Math.floor(('' + value).length / 3)
@@ -126,24 +116,6 @@ export default {
       }
       return shortValue + suffixes[suffixNum]
     },
-    generateImageOfGraph(chartInstance) {
-      // const chartInstance = this.$refs.cardDataChart.chart.dataURI()
-      chartInstance.then((val) => {
-        let img = new Image()
-        img.src = val.imgURI
-        this.$axios
-          .$post('generate-graph-image', { image: img.src, prefix: 'cdc' })
-          .then((res) => {
-            if (res.status == 200) {
-              this.sxGraphImage = res.url
-              // console.log(res.url);
-            }
-          })
-      })
-    },
-  
-  
-    
   },
 }
 </script>
@@ -160,11 +132,12 @@ ul.my-card-listing {
   line-height: 2;
   margin-top: 2px;
 }
-.stoxticker_page-outer, .analytics_page .card{
-      width: 100%;
+.stoxticker_page-outer,
+.analytics_page .card {
+  width: 100%;
 }
 .analytics_page .card {
-     color: #212529;
+  color: #212529;
 }
 .stat_box {
   padding: 10px 15px;
@@ -200,16 +173,12 @@ ul.my-card-listing {
   color: #fff;
 }
 
-
 .thb-btn {
   color: #000;
   &:hover {
     text-decoration: none;
   }
 }
-
-
-
 
 .search-field .search .card-btn {
   padding: 9px 20px 8px 20px;
@@ -307,7 +276,7 @@ html body main .card.search-slabs-out .my-card-listing .my-card {
     text-decoration: underline;
     font-size: 11px;
     letter-spacing: 1px;
-       height: 38px;
+    height: 38px;
     overflow: hidden;
   }
   .image-container {
