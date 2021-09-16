@@ -1,6 +1,6 @@
 <template>
   <div class="col-md-10 col-sm-10 profile_page">
-    <div class="row" v-if="requestCount!=null">
+    <div class="row" v-if="requestCount != null">
       <div class="col-md-6 col-sm-6 profile_stat_outer">
         <div class="card">
           <div class="card-body">
@@ -10,12 +10,14 @@
             <div class="profile_stat_box">
               <div class="row">
                 <div class="col-md-6 col-sm-6">
-                  <p class="count count-green">{{requestCount.listingCountApproved}}</p>
+                  <p class="count count-green">
+                    {{ requestCount.listingCountApproved }}
+                  </p>
                   <p class="display-title">Approved</p>
                 </div>
 
                 <div class="col-md-6 col-sm-6">
-                  <p class="count">{{requestCount.listingCountRejected}}</p>
+                  <p class="count">{{ requestCount.listingCountRejected }}</p>
                   <p class="display-title">Rejected</p>
                 </div>
               </div>
@@ -32,12 +34,14 @@
             <div class="profile_stat_box">
               <div class="row">
                 <div class="col-md-6 col-sm-6">
-                  <p class="count count-green">{{requestCount.slabCountApproved}}</p>
+                  <p class="count count-green">
+                    {{ requestCount.slabCountApproved }}
+                  </p>
                   <p class="display-title">Approved</p>
                 </div>
 
                 <div class="col-md-6 col-sm-6">
-                  <p class="count">{{requestCount.slabCountRejected}}</p>
+                  <p class="count">{{ requestCount.slabCountRejected }}</p>
                   <p class="display-title">Rejected</p>
                 </div>
               </div>
@@ -72,7 +76,12 @@
                       alt
                     />
                   </div>
-                  <!-- <button v-b-modal.changeProfileImage class="theme-btn card-btn">Change</button> -->
+                  <button
+                    v-b-modal.changeProfileImage
+                    class="theme-btn card-btn change-btn"
+                  >
+                    UPDATE
+                  </button>
                 </div>
                 <div class="col-md-8 row">
                   <div class="col-md-6">
@@ -275,90 +284,6 @@
                       </div>
                     </div>
                   </div>
-
-                  <!-- <div class="col-md-12 row">
-                    <div class="profile_info col-md-6">
-                      <span>MY LISTINGS NOTIFICATIONS</span>
-                      <div class="notification_title">
-                        <h5>LISTING PURCHASE</h5>
-                      </div>
-                      <div class="notification_title">
-                        <h5>LISTING ENDING SOON</h5>
-                      </div>
-                    </div>
-                    <div class="profile_info col-md-3">
-                      <div class="notification_title">
-                        <div class="custom-control custom-switch">
-                          <input
-                            type="checkbox"
-                            v-model="
-                              myListingNotification.listingPurchase.email
-                            "
-                            class="custom-control-input"
-                            id="switch7"
-                          />
-                          <label
-                            class="custom-control-label"
-                            for="switch7"
-                            @click="changeNotification()"
-                          ></label>
-                        </div>
-                      </div>
-                      <div class="notification_title">
-                        <div class="custom-control custom-switch">
-                          <input
-                            type="checkbox"
-                            v-model="
-                              myListingNotification.listingEndingSoon.email
-                            "
-                            class="custom-control-input"
-                            id="switch8"
-                          />
-                          <label
-                            class="custom-control-label"
-                            for="switch8"
-                            @click="changeNotification()"
-                          ></label>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="profile_info col-md-3">
-                      <div class="notification_title">
-                        <div class="custom-control custom-switch">
-                          <input
-                            type="checkbox"
-                            v-model="
-                              myListingNotification.listingPurchase.browser
-                            "
-                            class="custom-control-input"
-                            id="switch9"
-                          />
-                          <label
-                            class="custom-control-label"
-                            for="switch9"
-                            @click="changeNotification()"
-                          ></label>
-                        </div>
-                      </div>
-                      <div class="notification_title">
-                        <div class="custom-control custom-switch">
-                          <input
-                            type="checkbox"
-                            v-model="
-                              myListingNotification.listingEndingSoon.browser
-                            "
-                            class="custom-control-input"
-                            id="switch10"
-                          />
-                          <label
-                            class="custom-control-label"
-                            for="switch10"
-                            @click="changeNotification()"
-                          ></label>
-                        </div>
-                      </div>
-                    </div>
-                  </div> -->
                 </div>
               </div>
             </div>
@@ -373,114 +298,6 @@
           </div>
         </div>
       </div>
-
-      <!-- <div class="col-md-6 col-sm-6 payment-option-left">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">
-              <button class="theme-btn card-btn">Ebay Account</button>
-              <img
-                class="gift-cart-title-ebay-img"
-                src="~/assets/img/ebay-sibar-footer.png"
-                alt
-              />
-            </h5>
-            <div class="box_info">
-              <p>
-                The SlabStox Pro + eBay integration allows you to buy and sell
-                sportcard listings, track analytics, and more directly from your
-                SlabStox Pro account.
-              </p>
-            </div>
-            <button class="theme-green-btn card-btn btn-post-bottom">
-              CONNECT TO EBAY
-            </button>
-          </div>
-        </div>
-      </div> -->
-      <!-- <div class="col-md-6 col-sm-6 payment-option-side-cards"> -->
-      <!-- <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">
-              <button class="theme-btn card-btn">Payment Info</button>
-            </h5>
-            <div class="payment-option-continer">
-              <h5
-                :class="collapsePaymentModeActiveTab == 1 ? null : 'collapsed'"
-                :aria-expanded="
-                  collapsePaymentModeActiveTab == 1 ? 'true' : 'false'
-                "
-                aria-controls="pay-with-paypal"
-                @click="activePaymentModeChange(1)"
-              >
-                <font-awesome-icon
-                  v-if="collapsePaymentModeActiveTab == 1"
-                  :icon="['fas', 'chevron-down']"
-                />
-                <font-awesome-icon
-                  v-if="collapsePaymentModeActiveTab != 1"
-                  :icon="['fas', 'chevron-right']"
-                />Connect paypal
-                <img
-                  class="payment-option-paypal-img"
-                  src="~/assets/img/paypal.png"
-                  alt
-                />
-              </h5>
-              <b-collapse
-                v-model="collapsePaymentModePaypal"
-                id="pay-with-paypal"
-                class="mt-2"
-              >
-                <b-card>
-                  <p class="paypal-account-details-title-text">
-                    Paypal account details
-                  </p>
-                  <p class="paypal-account-details-text">
-                    EMAIL@HOST.COM
-                    <span>Choose bank visa x3214</span>
-                    <a href="javascript:;">Change</a>
-                  </p>
-                </b-card>
-              </b-collapse>
-
-              <hr />
-              <h5
-                :class="collapsePaymentModeActiveTab == 2 ? null : 'collapsed'"
-                :aria-expanded="
-                  collapsePaymentModeActiveTab == 2 ? 'true' : 'false'
-                "
-                aria-controls="pay-with-cc"
-                @click="activePaymentModeChange(2)"
-              >
-                <font-awesome-icon
-                  v-if="collapsePaymentModeActiveTab == 2"
-                  :icon="['fas', 'chevron-down']"
-                />
-                <font-awesome-icon
-                  v-if="collapsePaymentModeActiveTab != 2"
-                  :icon="['fas', 'chevron-right']"
-                />User Credit Card
-                <img
-                  class="payment-option-cc-img"
-                  src="~/assets/img/cc-icons.png"
-                  alt
-                />
-              </h5>
-              <b-collapse
-                v-model="collapsePaymentModeCC"
-                id="pay-with-cc"
-                class="mt-2"
-              >
-                <b-card></b-card>
-              </b-collapse>
-              <button class="theme-green-btn card-btn btn-post-bottom">
-                SAVE PAYMENT INFO
-              </button>
-            </div>
-          </div>
-        </div> -->
-      <!-- </div> -->
       <div class="col-md-6 col-sm-6 payment-option-side-cards">
         <div class="card">
           <div class="card-body">
@@ -497,7 +314,6 @@
                 The SlabStox Pro + Facebook integration allows you to share your
                 slabs, listings, and portfolio directly to your Facebook feed.
               </p>
-              <!-- <p>The SlabStox Pro + Facebook integration allows you to connect your account to your Facebook account.</p> -->
             </div>
             <button
               class="theme-green-btn card-btn"
@@ -532,10 +348,6 @@
                 The SlabStox Pro + Google integration allows you to share your
                 slabs, listings, and portfolio directly to your Google feed.
               </p>
-              <!-- <p>
-                The SlabStox Pro + Google integration allows you to connect your
-                account to your Google account.
-              </p> -->
             </div>
             <button
               class="theme-green-btn card-btn"
@@ -582,12 +394,18 @@
       </div>
     </b-modal>
 
-    <b-modal
-      id="changeProfileImage"
-      title="Change Profile Image"
-      size="lg"
-      hide-footer
-    >
+    <b-modal id="changeProfileImage" size="lg" hide-footer>
+      <template #modal-header>
+        <h5 class="modal-title">UPDATE PROFILE IMAGE</h5>
+        <button
+          type="button"
+          @click="$bvModal.hide('changeProfileImage')"
+          aria-label="Close"
+          class="close"
+        >
+          ×
+        </button>
+      </template>
       <div class="row">
         <ProfileCropper :profileImage="user.picture" />
       </div>
@@ -676,7 +494,7 @@ export default {
       },
       facebook: null,
       google: null,
-      requestCount:null,
+      requestCount: null,
       disconnect: {
         provider: null,
         id: null,
@@ -919,8 +737,9 @@ export default {
     border-bottom: 1px solid #ffffff !important;
   }
 }
-.payment-option-left, .payment-option-side-cards{
-  .theme-green-btn{
+.payment-option-left,
+.payment-option-side-cards {
+  .theme-green-btn {
     cursor: pointer;
   }
 }
@@ -930,12 +749,6 @@ export default {
     color: #1ce783;
   }
 }
-// .payment-option-side-cards {
-//   padding-left: 0px;
-//   .card {
-//     margin-bottom: 25px;
-//   }
-// }
 .dropdown-menu.show {
   background: #39414a;
   font-style: normal;
@@ -1148,12 +961,12 @@ export default {
     }
   }
 }
-.profile_stat_outer{
-  .card{
-            height: auto;
+.profile_stat_outer {
+  .card {
+    height: auto;
     margin-bottom: 30px;
     min-height: auto;
-    .card-body{
+    .card-body {
       padding-bottom: 30px;
     }
   }
@@ -1177,7 +990,10 @@ export default {
     display: block;
     text-align: center;
     text-transform: uppercase;
-        margin-bottom: 0;
+    margin-bottom: 0;
   }
+}
+.change-btn {
+  margin: 20px 26px 5px 26px;
 }
 </style>
