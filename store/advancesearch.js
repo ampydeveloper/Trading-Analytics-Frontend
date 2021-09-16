@@ -3,6 +3,7 @@ export const state = () => ({
     show: false,
     searchBtnClick: false,
     keyword: '',
+    // searchPage: 1,
     card_id: null,
     filters: {...FILTERS},
     attributes: []
@@ -15,6 +16,9 @@ export const getters = {
     searchBtnClick(state) {
         return state.searchBtnClick;
     },
+    // searchPage(state) {
+    //     return state.searchPage;
+    // },
     keyword(state) {
         return state.keyword;
     },
@@ -41,6 +45,9 @@ export const mutations = {
         state.keyword = keyword
         state.card_id = null
     },
+    // UPDATE_SEARCH_PAGE(state, page) {
+    //     state.searchPage = page
+    // },
     UPDATE_CARD_ID(state, id) {
         state.card_id = id
         state.keyword = ''
@@ -70,6 +77,12 @@ export const actions = {
             setTimeout(() => resolve(keyword), 100);
         });
     },
+    // UPDATE_SEARCH_PAGE({ commit }, searchPage) {
+    //     return new Promise((resolve, reject) => {
+    //         commit('UPDATE_SEARCH_PAGE', searchPage);
+    //         setTimeout(() => resolve(searchPage), 100);
+    //     });
+    // },
     update_search_card_id({ commit }, id) {
         return new Promise((resolve, reject) => {
             commit('UPDATE_CARD_ID', id);

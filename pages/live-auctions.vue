@@ -1,15 +1,19 @@
 <template>
   <div class="col-md-12 col-sm-12 search-page live-auctions-page">
     <div class="navbar">
-        <ul>
-            <li class="btn theme-green-btn" data-title="basketball-outor-div">BasketBall</li>
-            <li class="btn theme-green-btn" data-title="soccer-outor-div">Soccer</li>
-            <li class="btn theme-green-btn" data-title="baseball-outor-div">Baseball</li>
-            <li class="btn theme-green-btn" data-title="football-outor-div">football</li>
-            <li class="btn theme-green-btn" data-title="hockey-outor-div">Hockey</li>
-            <li class="btn theme-green-btn" data-title="pokemon-outor-div">Pokemon</li>
-            <li class="btn theme-green-btn" data-title="random-bin-outor-div">Random bin</li>
-        </ul>
+      <ul>
+        <li
+          v-for="sport in attributes.sport"
+          :key="sport"
+          class="btn theme-green-btn 4567890"
+          :data-title="sport + '-outor-div'"
+        >
+          {{ sport }}
+        </li>
+        <li class="btn theme-green-btn" data-title="random-bin-outor-div">
+          Random bin
+        </li>
+      </ul>
     </div>
 
     <EndingSoonListing />
@@ -25,6 +29,8 @@ import CardListItem from '~/components/dashboard/CardListItem'
 import LiveListingCard from '~/components/dashboard/LiveListingCard'
 import EndingSoonListing from '~/components/dashboard/EndingSoonListing'
 import RecentListing from '~/components/dashboard/RecentListing'
+import { mapGetters } from 'vuex'
+import { FILTERS } from '../constants/advance_search_filter'
 export default {
   transition: 'fade',
   layout: 'guestOuter',
@@ -34,16 +40,19 @@ export default {
     }
   },
   mounted() {
-    // this.getEndingSoonListing()
-    // this.getNormalRecentListing()
-    // this.scroll()
-    $(".btn").click(function() {
-        var link = "#";
-        link += $(this).attr('data-title');
-        $('html, body').animate({
-            scrollTop: $(link).offset().top
-        }, 2000);
-    });
+    var cardsModif = typeof attributes != 'undefined' ? attributes.sport : ''
+    this.cards = [...cardsModif, 'random bin']
+
+    $('.btn').click(function () {
+      var link = '#'
+      link += $(this).attr('data-title')
+      $('html, body').animate(
+        {
+          scrollTop: $(link).offset().top,
+        },
+        2000
+      )
+    })
   },
   components: {
     CardListItem,
@@ -53,95 +62,25 @@ export default {
   },
   data() {
     return {
-      // normalListingItems: [],
-      // endingSoonListingItems: [],
       page: 1,
       requestInProcess: false,
-      // requestInProcessEndingSoon: false,
+      filters: { ...FILTERS },
       noMoreData: false,
-      cards: [
-        'basketball',
-        'soccer',
-        'baseball',
-        'football',
-        'hockey',
-        'pokemon',
-        'random bin',
-      ],
+      cards: [],
     }
   },
-  methods: {
-    // getEndingSoonListing() {
-    //   //getting order only by this API
-    //   try {
-    //     this.$axios
-    //       .$post('search/ending-soon-listing', {
-    //         take: 1,
-    //         filterBy: 'ending_soon',
-    //       })
-    //       .then((res) => {
-    //         if (res.status == 200) {
-    //           this.cards = [...res.order, ...['hockey','random bin']]
-    //         }
-    //       })
-    //   } catch (err) {
-    //     console.log(err)
-    //   }
-    // },
-    // getNormalRecentListing(status = false) {
-    //   if (!this.requestInProcess) {
-    //     try {
-    //       if (!status) {
-    //         this.page = 1
-    //         this.normalListingItems = []
-    //       }
-    //       this.requestInProcess = true
-    //       this.$axios
-    //         .$post('search/get-recent-auction-list', {
-    //           take: 6,
-    //           page: this.page,
-    //         })
-    //         .then((res) => {
-    //           this.requestInProcess = false
-    //           if (res.status == 200) {
-    //             if (res.items != null && res.items.length > 0) {
-    //               // if (status) {
-    //               //   res.items.data.map(item => {
-    //               //     this.normalListingItems.push(item)
-    //               //   })
-    //               // } else {
-    //               this.normalListingItems = res.items
-    //               // }
-    //               this.page = 1
-    //             } else {
-    //               if (!status) {
-    //                 this.normalListingItems = []
-    //               } else {
-    //                 this.noMoreData = true
-    //               }
-    //             }
-    //           }
-    //         })
-    //     } catch (err) {
-    //       this.requestInProcess = false
-    //       console.log(err)
-    //     }
-    //   }
-    // },
-    // scroll() {
-    //   window.onscroll = () => {
-    //     const scrollTop =
-    //       document.documentElement.scrollTop + window.innerHeight
-    //     const offsetHeight = document.documentElement.offsetHeight
-    //     let bottomOfWindow =
-    //       scrollTop >= offsetHeight - 15 && scrollTop <= offsetHeight + 15
-    //     if (bottomOfWindow) {
-    //       if (!this.noMoreData) {
-    //         this.getNormalRecentListing(true)
-    //       }
-    //     }
-    //   }
-    // },
+  computed: {
+    ...mapGetters({
+      showAdvanceSearch: 'advancesearch/show',
+      filters_old_state: 'advancesearch/filters',
+      attributes: 'advancesearch/attributes',
+    }),
+  },
+  methods: {},
+  watch: {
+    attributes(attributes) {
+      this.cards = [...attributes.sport, 'random bin']
+    },
   },
 }
 </script> 
@@ -247,51 +186,48 @@ export default {
   background: #f95050;
 }
 
-.navbar ul{
-    width: 100%;
-    text-align: center;
-    margin: 0;
-    padding: 0;
-
+.navbar ul {
+  width: 100%;
+  text-align: center;
+  margin: 0;
+  padding: 0;
 }
 
-.navbar ul li{
-            display:inline-block;
-            margin:10px 5px;
-            padding:6px 12px 4px 12px;
-        }
-        .games{
-            text-align: center;
-            color:#fff;
-        }
-        .games p{
-            font-size:20px;
-            line-height:40px;
-            padding:50px 10px;
-        }
-
-
+.navbar ul li {
+  display: inline-block;
+  margin: 10px 5px;
+  padding: 6px 12px 4px 12px;
+}
+.games {
+  text-align: center;
+  color: #fff;
+}
+.games p {
+  font-size: 20px;
+  line-height: 40px;
+  padding: 50px 10px;
+}
 
 @media (max-width: 1100px) {
-  .navbar ul li{
-    padding:6px 10px 4px 10px;
+  .navbar ul li {
+    padding: 6px 10px 4px 10px;
     font-size: 10px;
     letter-spacing: 2px;
   }
-  .navbar{
-    padding:0px;
+  .navbar {
+    padding: 0px;
   }
 }
 @media (max-width: 1023px) {
-  .navbar ul li{
-    padding:6px 6px 4px 6px;
+  .navbar ul li {
+    padding: 6px 6px 4px 6px;
     font-size: 8px;
     letter-spacing: 1px;
   }
 }
 @media (max-width: 767px) {
-  .navbar ul li{
-    padding:6px 7px 4px 7px;
+  .navbar ul li {
+    padding: 6px 7px 4px 7px;
     font-size: 10px;
   }
 }
