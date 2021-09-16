@@ -32,7 +32,7 @@
           </div>
           <div class="card-body search-form">
             <div class="row">
-              <div class="col-4">
+              <div class="col-3">
                 <select class="form-control text-capitalize main-sel-all">
                   <option>Change Status</option>
                   <option value="1">Published</option>
@@ -64,7 +64,7 @@
                   ></option>
                 </select>
               </div>
-              <div class="col-4">
+              <div class="col-3">
                 <div class="input-group mb-3">
                   <input
                     type="text"
@@ -82,7 +82,31 @@
                       type="button"
                       id="button-addon2"
                     >
-                      Search
+                      <i class="fa serach-icon fa-search"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-2">
+                <div class="input-group mb-3">
+                  <input
+                    type="number"
+                    class="form-control disable-arrow"
+                    v-model="searchPage"
+                    placeholder="Search Page"
+                    aria-label="Search page..."
+                    aria-describedby="button-addon2"
+                    @keyup.enter="getCards(searchPage)"
+                  />
+                  <div class="input-group-append">
+                    <button
+                      class="btn btn-outline-secondary"
+                      @click="getCards(searchPage)"
+                      type="button"
+                      id="button-addon2"
+                    >
+                     <i class="fa serach-icon fa-search"></i>
                     </button>
                   </div>
                 </div>
@@ -542,7 +566,12 @@ export default {
     }
   },
   mounted() {
-    this.getCards(this.page)
+    // this.getCards(this.page)
+     if (this.$route.query.page) {
+      this.getCards(this.$route.query.page)
+    } else {
+      this.getCards(this.page)
+    }
   },
   updated() {
     $('.main-checkbox').change(function () {
@@ -567,6 +596,7 @@ export default {
   data() {
     return {
       searchTerm: '',
+      searchPage:'',
       cards: [],
       page: 1,
       allPages: 0,
@@ -635,6 +665,7 @@ export default {
           this.showLoader()
           this.requestInProcess = true
           let payload = { page: page, search: this.searchTerm }
+          this.$router.push('/admin/cards?page=' + page)
           if (filter != null) {
             payload['sport'] = filter.target.value
             this.sportFilter = filter
@@ -897,5 +928,13 @@ ul.my-card-listing {
 }
 .image-box a{
   color: #1ce783;
+}
+.serach-icon{
+  font-size: 16px;
+}
+input.disable-arrow::-webkit-outer-spin-button,
+input.disable-arrow::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 </style>

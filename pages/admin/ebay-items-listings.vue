@@ -76,7 +76,31 @@
                       type="button"
                       id="button-addon2"
                     >
-                      Search
+                     <i class="fa serach-icon fa-search"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-2">
+                <div class="input-group mb-3">
+                  <input
+                    type="number"
+                    class="form-control disable-arrow"
+                    v-model="searchPage"
+                    placeholder="Search Page"
+                    aria-label="Search term..."
+                    aria-describedby="button-addon2"
+                    @keyup.enter="getItems(searchPage)"
+                  />
+                  <div class="input-group-append">
+                    <button
+                      class="btn btn-outline-secondary"
+                      @click="getItems(searchPage)"
+                      type="button"
+                      id="button-addon2"
+                    >
+                     <i class="fa serach-icon fa-search"></i>
                     </button>
                   </div>
                 </div>
@@ -135,8 +159,8 @@
                   <td>{{ item.status == 0 ? 'Active' : 'Inactive' }}</td>
                   <td v-if="!isDataEntry">
                     <select
-                      @change="statusChange($event, item.id, key)"
-                      class="form-control text-capitalize"
+                      @change="deleteListing($event, item.id, key)"
+                      class="form-control text-capitalize change-status"
                     >
                       <option>Change Status</option>
                       <option value="0">Active</option>
@@ -422,6 +446,29 @@
               </tfoot>
             </table>
           </div>
+
+          <b-modal id="DeletePopup" title="Delete Listing" hide-footer>
+            <section class="ap p-4">
+              <h6 class="text-capitalize">
+                Do you really want to delete this Listing?
+              </h6>
+              </section>
+              <div class="ap clearfix text-right">
+                <a
+                  href="javascript:void(0);"
+                  @click="deleteProceed()"
+                  class="btn btn-success btn-table-spec mr-2"
+                  >Proceed</a
+                >
+                <a
+                  href="javascript:void(0);"
+                  @click="cancelListing()"
+                  class="btn btn-outline-danger btn-table-spec mr-4"
+                  >Cancel</a
+                >
+              </div>
+            
+          </b-modal>
         </div>
       </div>
     </div>
@@ -462,6 +509,7 @@ export default {
   data() {
     return {
       searchTerm: '',
+      searchPage: '',
       items: [],
       requestInProcess: false,
       page: 1,
@@ -472,6 +520,9 @@ export default {
       otherFilter: null,
       filter: null,
       allPages: 0,
+      popup:false,
+      status_from:'',
+      item_id:'',
       // card: {
       //   soldPrice: '',
       // },
@@ -488,8 +539,16 @@ export default {
           listingArr.push($thisCheck.val())
         }
       })
+      if(this.popup != false){
+        this.statusChange(statusVal, listingArr, false)
+        this.$bvModal.hide('DeletePopup')
+        $('.main-sel-all').val($('.main-sel-all option:first').val())
+        this.popup = false
+      }else{
+        this.$bvModal.show('DeletePopup')
+        this.status_from = 0
+      }
 
-      this.statusChange(statusVal, listingArr, false)
     },
     searchItem(searchItem) {
       if (!this.requestInProcess) {
@@ -576,6 +635,36 @@ export default {
         return 'Disabled manually'
       }
     },
+    cancelListing() {
+      this.$bvModal.hide('DeletePopup')
+      $('.main-sel-all').val($('.main-sel-all option:first').val())
+      $('.change-status').val($('.change-status option:first').val())
+      this.popup = false
+    },
+    deleteListing(event, id, key){
+      var statusVal = $('.change-status').val()
+      var d_id = this.item_id
+      if(this.popup != false){
+        this.statusChange(statusVal, d_id, false)
+        this.$bvModal.hide('DeletePopup')
+        $('.change-status').val($('.change-status option:first').val())
+        this.popup = false
+      }else{
+        this.$bvModal.show('DeletePopup')
+        this.status_from = 1
+        this.item_id = id
+      }
+
+    },
+    deleteProceed(){
+        this.popup = true
+        if(this.status_from == 0){
+          this.updateStatus()
+        }else{
+          this.deleteListing()
+        }
+
+    },
     statusChange(event, id, key) {
       if (!this.requestInProcess) {
         if (typeof key == 'boolean' && key == false) {
@@ -598,6 +687,7 @@ export default {
                 this.items[key].status = event.target.value
               }
               this.getItems(this.currentPage)
+              this.item_id = ''
               // else {
               //   location.reload()
               // }
@@ -690,5 +780,13 @@ ul.my-card-listing {
     line-height: 8px;
     display: inline-block;
   }
+}
+.serach-icon{
+  font-size: 16px;
+}
+input.disable-arrow::-webkit-outer-spin-button,
+input.disable-arrow::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 </style>
