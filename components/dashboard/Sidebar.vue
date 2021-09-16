@@ -44,13 +44,7 @@
             <div class="icon head-to-head-icon"></div>
             <div class="link-text">Head 2 Head</div>
           </span>
-        </li>
-        <!-- <li class="nav-item">
-          <nuxt-link class="nav-link" to="/watch-list">
-            <div class="icon watch-list-icon"></div>
-            <div class="link-text">Watch List</div>
-          </nuxt-link>
-        </li> -->
+        </li>        
         <li class="nav-item" v-if="user != null && user.full_name != null">
           <nuxt-link class="nav-link" to="/my-portfolio">
             <div class="icon my-listing-icon"></div>
@@ -67,38 +61,12 @@
             <div class="link-text">My Portfolio</div>
           </span>
         </li>
-        <!--<li class="nav-item">
-          <nuxt-link class="nav-link" to="/sell-slabs">
-            <div class="icon sell-card-icon"></div>
-            <div class="link-text">Sell Slabs</div>
-          </nuxt-link>
-        </li>-->
-        <!-- <li class="nav-item">
-          <nuxt-link class="nav-link" to="/my-listing">
-            <div class="icon top-pick-icon"></div>
-            <div class="link-text">My Listing</div>
-          </nuxt-link>
-        </li> -->
-        <!-- <li class="nav-item">
-          <nuxt-link class="nav-link" to="/Analytics">
-            <div class="icon analytics-icon"></div>
-            <div class="link-text">My Analytics</div>
-          </nuxt-link>
-        </li>-->
         <li class="nav-item">
           <nuxt-link class="nav-link" to="/stoxticker">
             <div class="icon stoxticker-icon"></div>
             <div class="link-text">Stoxticker</div>
           </nuxt-link>
         </li>
-
-        <!-- <li class="nav-item">
-          <nuxt-link class="nav-link" to="/stoxticker-board-details">
-            <div class="icon stoxticker-icon"></div>
-            <div class="link-text">Stoxticker</div>
-          </nuxt-link>
-        </li> -->
-
         <li class="nav-item">
           <nuxt-link
             class="nav-link"
@@ -132,27 +100,15 @@
             <div class="link-text">Admin Panel</div>
           </a>
         </li>
-      </ul>
-      <!-- <div class="sibar-logo-middel">
-        <img src="~/assets/img/dashboard-sidebar-middel-logo.png" alt="Slabstox" />
-      </div>
-      <ul class="nav flex-column mb-2">
         <li class="nav-item">
-          <nuxt-link class="nav-link" to="/live-auctions">
-            <div class="icon my-stoxpro-icon"></div>
-            <div class="link-text">My Stoxpro</div>
-          </nuxt-link>
-        </li>
-        
-      </ul>-->
-      <!-- <p class="sidebar-footer">
-        Powered by
-        <img
-          class="sibar-footer-ebay"
-          src="~/assets/img/ebay-sibar-footer.png"
-          alt
-        />
-      </p> -->
+          <a class="nav-link" href="#">
+            <div class="icon my-listing-icon"></div>
+            <div class="link-text">Blog</div>
+          </a>
+        </li>  
+          
+      </ul>
+
     </div>
 
     <b-modal id="loginTopPopup" title="ADDITIONAL SX PRO FEATURES" hide-footer>
@@ -204,7 +160,6 @@ export default {}
    * Style for icons
    */
   .nav {
-    //font-family: 'NexaBold', Helvetica, Arial, sans-serif;
     font-family: 'CocogoosePro-Italic', Helvetica, Arial, sans-serif;
     .nav-item {
       .nav-link {
@@ -223,7 +178,6 @@ export default {}
           margin-top: 4px;
         }
         &.nuxt-link-exact-active {
-          //background-color: $theme-sidebar-link-hover;
           background: #25b56f;
           color: #ffffff;
         }
@@ -315,7 +269,6 @@ export default {}
 
         &:hover {
           color: #ffffff;
-          //background-color: $theme-sidebar-link-hover;
           background: #25b563;
           background: #25b56f;
 
