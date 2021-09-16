@@ -18,13 +18,10 @@
             <form class="form-inline" v-on:submit.prevent="create">
               <div class="form_column">
                 <label>Sport</label>
-                <input
-                  v-model="requestSlab.sport"
-                  type="text"
-                  class="form-control"
-                  placeholder="Enter Sport"
-                  required
-                />
+                <select v-model="requestSlab.sport" class="form-control">
+                  <option selected value="0">Select Sports</option>
+                  <option v-for="sport in attributes.sport" :key="sport"  :value="sport">{{sport}}</option>
+                </select>
               </div>
               <div class="form_column">
                 <label>Player</label>
@@ -66,7 +63,7 @@
               <div class="form_column">
                 <label>Rookie Card</label>
                 <select v-model="requestSlab.rc" class="form-control">
-                  <option value="yes">Select Rookie</option>
+                  <option value="0">Select Rookie</option>
                   <option value="yes">YES</option>
                   <option value="No">NO</option>
                 </select>
@@ -125,6 +122,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+import { FILTERS } from '../constants/advance_search_filter'
 export default {
   transition: 'fade',
   layout: 'dashboard',
@@ -139,19 +138,27 @@ export default {
     return {
       requestSlab: {
         player: '',
-        sport: '',
+        sport: 0,
         year: '',
         brand: '',
         requestSlab: '',
-        rc: 'yes',
+        rc: 0,
         variation: '',
         grade: '',
         image: ''
       },
       imgSrc: '',
       requestInProcess: false,
-      statusMessage: null
+      statusMessage: null,
+      filters: { ...FILTERS }
     }
+  },
+  computed: {
+    ...mapGetters({
+      showAdvanceSearch: 'advancesearch/show',
+      filters_old_state: 'advancesearch/filters',
+      attributes: 'advancesearch/attributes'
+    })
   },
   methods: {
     assignFileObj(event){
