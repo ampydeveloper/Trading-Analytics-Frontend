@@ -14,8 +14,9 @@ export default {
 .dashbord-footer-para{
   text-align: right;
   line-height: 4;
+  color: $theme-off-white !important;
   a{
-    color: $theme-off-white;
+    color: $theme-off-white !important;
     text-transform: uppercase;
     font-size: 12px;
     font-weight: bolder;
