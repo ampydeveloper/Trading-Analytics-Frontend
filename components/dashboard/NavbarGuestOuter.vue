@@ -9,7 +9,10 @@
     <span class="toggle_topnav">+</span>
     <div class="header-top-mobile d-none clearfix">
       <div class="sibar-logo-top">
-        <img src="~/assets/img/dashboard-sidebar-middel-logo.png" alt="Slabstox" />
+        <img
+          src="~/assets/img/dashboard-sidebar-middel-logo.png"
+          alt="Slabstox"
+        />
       </div>
 
       <ul
@@ -45,7 +48,10 @@
             cartItemsCount
           }}</span>
         </b-nav-item> -->
-       <b-nav-item-dropdown right v-if="user != null && user.full_name != null">
+        <b-nav-item-dropdown
+          right
+          v-if="user != null && user.full_name != null"
+        >
           <template v-slot:button-content>
             <b-avatar variant="info" :src="user.picture" class></b-avatar>
             <em>{{ user.full_name }}</em>
@@ -61,7 +67,7 @@
               src="~/assets/img/icons/logout_icon.png"
             />Logout</b-dropdown-item
           >
-        </b-nav-item-dropdown> 
+        </b-nav-item-dropdown>
       </b-navbar-nav>
     </div>
 
@@ -284,6 +290,7 @@ export default {
   data() {
     return {
       keyword: '',
+      searchPage: 1,
       shownotification: false,
       mobileNavShow: false,
       smartKeyword: [],
@@ -315,10 +322,13 @@ export default {
     },
     searchNow() {
       this.$store.dispatch('advancesearch/reset_filter')
-      this.$store
-        .dispatch('advancesearch/update_keyword', this.keyword)
+      this.$store.dispatch('advancesearch/update_keyword', this.keyword)
+      // this.$store
+      //   .dispatch('advancesearch/update_search_page', this.searchPage)
         .then((res) => {
-          this.$router.push('/search/?keyword=' + res)
+          this.$router.push(
+            '/search/?keyword=' + res + '&page=' + this.searchPage
+          )
         })
     },
     toggleAdvanceSearch() {
@@ -360,6 +370,14 @@ export default {
         })
       this.showSmartSearch = false
     },
+    // nextPage() {
+    //   this.searchPage = this.searchPage + 1
+    // },
+    // previousPage() {
+    //   if (this.searchPage != 1) {
+    //     this.searchPage = this.searchPage - 1
+    //   }
+    // },
   },
   mounted() {
     if (this.user == null) {
@@ -408,7 +426,7 @@ export default {
   .nav-bar-form {
     width: calc(100% - 150px);
     margin-top: 25px;
-    @media (max-width: 991px) {
+    @media (max-width: 1120px) {
       padding-left: 17px;
     }
 
@@ -473,6 +491,21 @@ export default {
         outline: none;
       }
     }
+    @media (max-width: 1050px) {
+      .nav-bar-search-btn{
+          padding:7px 5px 5px;
+      }
+    }
+    @media (min-width: 1050px) {
+      .nav-bar-search-btn{
+          padding:7px 10px 5px;
+      }
+    }
+    @media (min-width: 1135px) {
+      .nav-bar-search-btn{
+          padding:7px 20px 5px;
+      }
+    }
     .search_bar_open {
       border-color: #39414a !important;
       color: #39414a !important;
@@ -516,7 +549,7 @@ export default {
       color: $theme-off-white !important;
       margin-left: 10px;
       font-size: 14px;
-     
+
       em {
         padding: 0px 15px 0px 5px;
         font-size: 10px;
@@ -930,7 +963,7 @@ export default {
 @media (max-width: 767px) {
   .header-top-mobile {
     display: block !important;
-    background:#fff;
+    background: #fff;
     .sibar-logo-top {
       display: inline-block;
       padding: 18px 15px 15px 15px;
@@ -949,16 +982,16 @@ export default {
       margin-top: 21px;
       li {
         color: #000;
-        a{
-        color: #000;
+        a {
+          color: #000;
         }
       }
     }
   }
 }
- @media (max-width: 767px) {
-   .dashboard-nav-bar .top-nav-navbar .nav-item .nav-link{
+@media (max-width: 767px) {
+  .dashboard-nav-bar .top-nav-navbar .nav-item .nav-link {
     color: #39414a !important;
-   }
-      }
+  }
+}
 </style>

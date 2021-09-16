@@ -252,6 +252,7 @@ export default {
   data() {
     return {
       keyword: '',
+      searchPage: 1,
       shownotification: false,
       mobileNavShow: false,
       smartKeyword: [],
@@ -287,7 +288,8 @@ export default {
       this.$store
         .dispatch('advancesearch/update_keyword', this.keyword)
         .then((res) => {
-          this.$router.push('/search/?keyword=' + res)
+          // console.log(this.searchPage);
+          this.$router.push('/search/?keyword='+ res +'&page='+ this.searchPage)
         })
     },
     toggleAdvanceSearch() {
@@ -343,6 +345,14 @@ export default {
         })
       this.showSmartSearch = false
     },
+    nextPage(){      
+      this.searchPage = this.searchPage + 1
+    },
+    previousPage(){
+      if(this.searchPage != 1){
+        this.searchPage = this.searchPage - 1
+      }
+    },
   },
   mounted() {
     if (this.user == null) {
@@ -391,7 +401,7 @@ export default {
   .nav-bar-form {
  width: calc(100% - 150px);
     margin-top: 25px;
-    @media (max-width: 991px) {
+    @media (max-width: 1120px) {
       padding-left: 17px;
     }
     .advance-search-label {
@@ -453,6 +463,21 @@ export default {
       &:focus,
       &:active {
         outline: none;
+      }
+    }
+    @media (max-width: 1050px) {
+      .nav-bar-search-btn{
+          padding:7px 5px 5px;
+      }
+    }
+    @media (min-width: 1050px) {
+      .nav-bar-search-btn{
+          padding:7px 10px 5px;
+      }
+    }
+    @media (min-width: 1135px) {
+      .nav-bar-search-btn{
+          padding:7px 20px 5px;
       }
     }
     .search_bar_open {

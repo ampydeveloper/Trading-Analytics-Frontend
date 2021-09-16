@@ -18,6 +18,28 @@
               />
             </ul>
           </div>
+          <table class="pagination">
+            <tr>
+              <td>
+                <button
+                  class="theme-btn card-btn"
+                  :disabled="this.currentPage <= 1 ? '' : disabled"
+                  @click="previousPage()"
+                >
+                  Previous
+                </button>
+                <button
+                  :disabled="
+                    this.searchPage == this.currentPage ? '' : disabled
+                  "
+                  class="theme-btn card-btn"
+                  @click="nextPage()"
+                >
+                  Next
+                </button>
+              </td>
+            </tr>
+          </table>
         </div>
       </div>
     </div>
@@ -88,18 +110,21 @@ export default {
     }
   },
   async mounted() {
-    this.keyword = this.keyword_old_state
+    // this.keyword = this.keyword_old_state
     this.filter = this.filters_old_state
+    // this.searchPage = this.searchPage_old_state
+    // this.keyword = this.keyword_old_state
     if (this.$route.query.hasOwnProperty('id')) {
       this.searchCard = this.$route.query.id
-    } else {
+    } else if (this.$route.query.hasOwnProperty('keyword')) {
       this.searchCard = null
-      if (this.$route.query.hasOwnProperty('keyword')) {
-        this.keyword = this.$route.query.keyword
-      }
+      this.keyword = this.$route.query.keyword
+      this.searchPage = this.$route.query.hasOwnProperty('page')
     }
     this.searchCards()
     this.scroll()
+    // console.log(this.keyword)
+    // console.log(this.page)
   },
   components: {
     CardListItem,
@@ -109,6 +134,7 @@ export default {
   computed: {
     ...mapGetters({
       keyword_old_state: 'advancesearch/keyword',
+      // searchPage_old_state: 'advancesearch/searchPage',
       filters_old_state: 'advancesearch/filters',
       cardid_old_state: 'advancesearch/cardid',
       showAdvanceSearch: 'advancesearch/show',
@@ -118,11 +144,14 @@ export default {
   data() {
     return {
       keyword: '',
+      // newkeyword: '',
       filter: {},
       items: [],
       slabItems: [],
       requestInProcess: false,
       page: 1,
+      searchPage: 1,
+      currentPage: 1,
       noMoreData: false,
       slabSearchActive: false,
       slabSearchCardId: null,
@@ -133,28 +162,45 @@ export default {
   },
   watch: {
     keyword_old_state(newVal, oldVal) {
-      console.log('newVal', newVal)
-      this.keyword = newVal
-      this.filter = {}
-      this.searchCard = null
-      this.searchCards()
+      if (newVal != '') {
+        console.log('keyword', newVal)
+        this.keyword = newVal
+        this.filter = {}
+        this.searchPage = 1
+        this.currentPage = 1
+        this.searchCard = null
+        this.searchCards()
+      }
     },
+    //  searchPage_old_state(newVal, oldVal) {
+    //   // console.log('searchPage', newVal)
+    //   this.page = newVal
+    //   this.filter = {}
+    //   this.searchCard = null
+    //   this.searchCards()
+    // },
     filters_old_state(newVal, oldVal) {
-      this.filter = newVal
-      this.searchCard = null
-      this.keyword = ''
-      this.searchCards()
+      if (this.keyword == '') {
+        console.log('filters_old_state')
+        this.filter = newVal
+        // this.searchPage = 1
+        this.searchCard = null
+        this.keyword = ''
+        this.searchCards()
+      }
     },
     cardid_old_state(newVal, oldVal) {
-      if (typeof newVal == 'number') {
+      if (typeof newVal == 'number' && this.keyword == '') {
+        console.log('cardid_old_state')
         this.searchCard = newVal
         this.keyword = ''
         this.searchCards()
       }
     },
-    searchBtnClick_old_state(newVal, oldVal) {
-      this.searchCards()
-    },
+    // searchBtnClick_old_state(newVal, oldVal) {
+    //   console.log('test23')
+    //   this.searchCards()
+    // },
   },
   methods: {
     filterBy(data) {
@@ -170,9 +216,12 @@ export default {
       if (!this.requestInProcess) {
         try {
           if (!status) {
-            this.page = 1
             this.items = []
           }
+          // if (this.keyword != this.newkeyword) {
+          //   this.newkeyword = this.keyword
+          //   this.page = 1
+          // }
           this.requestInProcess = true
           this.$axios
             .$post('search/get-internal-card-list', {
@@ -193,7 +242,7 @@ export default {
                   } else {
                     this.items = res.items.data
                   }
-                  this.page = res.items.next
+                  this.searchPage = res.next
                 } else {
                   if (!status) {
                     this.items = []
@@ -213,38 +262,47 @@ export default {
       }
     },
     searchCards(status = false, hideSlab = true) {
+      console.log('searchCards running')
       if (!this.requestInProcess) {
         try {
           if (!status) {
-            this.page = 1
             this.items = []
             if (hideSlab) {
               this.slabItems = []
             }
           }
+          // if (this.keyword != this.newkeyword) {
+          //   this.newkeyword = this.keyword
+          //   this.page = 1
+          // }
           // console.log(this.user);
           if (this.user == false) {
             var callString = 'get-card-list'
           } else {
             var callString = 'get-card-list-user'
           }
+          // this.$router.push(
+          //   '/search/?keyword=' + this.keyword + '&page=' + this.searchPage
+          // )
           this.requestInProcess = true
           this.$axios
             .$post('search/' + callString, {
               search: this.keyword,
               filter: this.filter,
-              page: this.page,
+              page: this.searchPage,
               // filterBy: this.filterByKeword,
               filterBy: '',
               searchCard: this.searchCard,
             })
             .then((res) => {
               this.requestInProcess = false
+              // console.log(res)
               if (res.status == 200) {
                 if (hideSlab) {
                   this.slabItems = res.cards
                 }
                 this.showSlab = true
+                // console.log(this.keyword)
                 if (res.items.data != null && res.items.data.length > 0) {
                   if (status) {
                     res.items.data.map((item) => {
@@ -253,13 +311,16 @@ export default {
                   } else {
                     this.items = res.items.data
                   }
-                  this.page = res.items.next
                 } else {
                   if (!status) {
                     this.items = []
                   } else {
                     this.noMoreData = true
                   }
+                }
+                //wrong need card next page
+                if (res.next != false) {
+                  this.searchPage = res.next
                 }
               }
             })
@@ -277,9 +338,12 @@ export default {
         try {
           if (!status) {
             this.showSlab = false
-            this.page = 1
             this.items = []
           }
+          // if (this.keyword != this.newkeyword) {
+          //   this.newkeyword = this.keyword
+          //   this.page = 1
+          // }
           this.requestInProcess = true
           this.$axios
             .$post(
@@ -306,7 +370,7 @@ export default {
         } catch (err) {
           this.requestInProcess = false
           this.showSlab = true
-          console.log(err)
+          // console.log(err)
         }
       }
     },
@@ -326,6 +390,30 @@ export default {
             }
           }
         }
+      }
+    },
+    previousPage() {
+      if (this.currentPage != 1) {
+        this.searchPage = this.currentPage
+        this.searchPage = this.searchPage - 1
+        this.$router.push(
+          '/search/?keyword=' + this.keyword + '&page=' + this.searchPage
+        )
+        this.currentPage = this.searchPage
+        // console.log("Current Page = "+this.currentPage)
+        this.searchCards()
+        this.scroll()
+      }
+    },
+    nextPage() {
+      if (this.searchPage != this.currentPage) {
+        this.$router.push(
+          '/search/?keyword=' + this.keyword + '&page=' + this.searchPage
+        )
+        this.currentPage = this.searchPage
+        // console.log("Current Page = "+this.currentPage)
+        this.searchCards()
+        this.scroll()
       }
     },
   },
@@ -386,5 +474,12 @@ export default {
     text-align: center;
     color: #ffffff;
   }
+}
+.theme-btn {
+  padding: 7px 10px 5px 10px;
+}
+.pagination tr {
+  margin-left: auto;
+  margin-right: 17px;
 }
 </style>
