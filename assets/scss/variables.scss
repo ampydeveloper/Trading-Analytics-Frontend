@@ -4315,6 +4315,7 @@ html body #__nuxt .b-profileImage .dropdown-menu {
   }
 }
 
+#changeProfileImage,
 #openSeeProblemPopup,
 #viewSalesHistory,
 #specsDetails,
@@ -4821,4 +4822,7 @@ body .tooltip .tooltip-inner{
 .set-tooltip{
   padding: 3.4px 5.7px 2.4px 3.2px !important;
   text-align: center;
+}
+.h3-title{
+  text-transform: uppercase;
 }
