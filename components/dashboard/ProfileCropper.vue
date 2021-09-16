@@ -9,7 +9,8 @@
     />
 
     <div class="content">
-      <section class="cropper-area">
+      <section class="cropper-area p-2">
+        <p>Your Image</p>
         <div class="img-cropper">
           <vue-cropper
             ref="cropper"
@@ -18,77 +19,37 @@
             preview=".preview"
           />
         </div>
-        <div class="actions">
-          <a href="javascript:;" role="button" @click.prevent="showFileChooser">
-            Choose image
-          </a>
-          <a href="javascript:;" v-if="imageSelected" role="button" @click.prevent="cropImage">
-            Save
-          </a> 
-          <a href="javascript:;" v-if="imageSelected" role="button" @click.prevent="reset">
-            Reset
-          </a>
-          <a href="javascript:;" v-if="cropImg!=''" role="button" @click.prevent="updateProfile">
-            Update Now
-          </a>
-          <!-- <a href="javascript:;" role="button" @click.prevent="zoom(0.2)">
-            Zoom In
-          </a>
-          <a href="javascript:;" role="button" @click.prevent="zoom(-0.2)">
-            Zoom Out
-          </a>
-          <a href="javascript:;" role="button" @click.prevent="move(-10, 0)">
-            Move Left
-          </a>
-          <a href="javascript:;" role="button" @click.prevent="move(10, 0)">
-            Move Right
-          </a>
-          <a href="javascript:;" role="button" @click.prevent="move(0, -10)">
-            Move Up
-          </a>
-          <a href="javascript:;" role="button" @click.prevent="move(0, 10)">
-            Move Down
-          </a>
-          <a href="javascript:;" role="button" @click.prevent="rotate(90)">
-            Rotate +90deg
-          </a>
-          <a href="javascript:;" role="button" @click.prevent="rotate(-90)">
-            Rotate -90deg
-          </a>
-          <a ref="flipX" href="javascript:;" role="button" @click.prevent="flipX">
-            Flip X
-          </a>
-          <a ref="flipY" href="javascript:;" role="button" @click.prevent="flipY">
-            Flip Y
-          </a>-->
-          
-          <!-- <a href="javascript:;" role="button" @click.prevent="getData">
-            Get Data
-          </a>
-          <a href="javascript:;" role="button" @click.prevent="setData">
-            Set Data
-          </a>
-          <a href="javascript:;" role="button" @click.prevent="getCropBoxData">
-            Get CropBox Data
-          </a>
-          <a href="javascript:;" role="button" @click.prevent="setCropBoxData">
-            Set CropBox Data
-          </a> -->
-          
-        </div>
-
         <!-- <textarea v-model="data" /> -->
       </section>
-      <section class="preview-area">
+      <section class="preview-area p-2">
         <p>Preview</p>
         <div class="preview" />
-        <p>Cropped Image</p>
+      </section>
+      <section class="cropped-area p-2">
+        <p>Cropped</p>
         <div class="cropped-image">
           <img v-if="cropImg" :src="cropImg" alt="Cropped Image" />
           <div v-else class="crop-placeholder" />
         </div>
       </section>
     </div>
+    <section class="action-area">
+        <div class="actions">
+          <a href="javascript:;" class="modal-title" role="button" @click.prevent="showFileChooser">
+            Choose image
+          </a>
+          <a href="javascript:;" class="modal-title" v-if="imageSelected" role="button" @click.prevent="reset">
+            Reset
+          </a>
+          <a href="javascript:;" class="modal-title" v-if="imageSelected" role="button" @click.prevent="cropImage">
+            Save
+          </a> 
+          <a href="javascript:;" class="modal-title update-now" v-if="cropImg!=''" role="button" @click.prevent="updateProfile">
+            Update Now
+          </a>
+          
+        </div>
+      </section>
   </div>
 </template>
 
@@ -103,7 +64,7 @@ export default {
   },
   data() {
     return {
-      imgSrc: 'https://suryahospitals.com/jaipur/wp-content/uploads/sites/3/2020/07/user-dummy-200x200-1.png',
+      imgSrc: '',  
       cropImg: '',
       data: null,
       imageSelected: false,
@@ -170,8 +131,9 @@ export default {
     },
     setImage(e) {
       const file = e.target.files[0]
+      console.log(file)
 
-      if (file.type.indexOf('image/') === -1) {
+      if (file == undefined || file.type.indexOf('image/') === -1) {
         alert('Please select an image file')
         return
       }
@@ -204,6 +166,10 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 .profileCropper {
+  font-family: "NexaBold", Helvetica, Arial, sans-serif;
+  text-transform: uppercase;
+  width:100%;
+  margin:0px 20px;
   input[type=file] {
     display: none;
   }
@@ -212,21 +178,28 @@ export default {
     justify-content: space-between;
   }
 
-  .cropper-area {
-    width: 390px;
+  .cropper-area ,.preview-area,.cropped-area{
+    width: 33%;
+  }
+
+  .action-area{
+    width:100%;
   }
 
   .actions {
-    margin-top: 1rem;
+    margin: 1rem 20px 0px 5px;
   }
 
   .actions a {
     display: inline-block;
-    padding: 5px 15px;
-    background: #0062cc;
-    color: white;
+    padding: 5px 10px;
+    background: #1ce783;
+    color: #343a40;
     text-decoration: none;
     border-radius: 3px;
+    font-size:11px !important;
+    letter-spacing: 1px;
+    margin:0px 5px;
   }
 
   textarea {
@@ -234,34 +207,43 @@ export default {
     height: 100px;
   }
 
-  .preview-area {
-    width: 390px;
-  }
-
   .preview-area p {
-    font-size: 1.25rem;
     margin: 0;
     margin-bottom: 1rem;
   }
 
-  .preview-area p:last-of-type {
-    margin-top: 1rem;
-  }
-
   .preview {
     width: 100%;
-    height: calc(372px * (9 / 16));
     overflow: hidden;
   }
 
   .crop-placeholder {
     width: 100%;
-    height: 200px;
-    background: #ccc;
   }
 
   .cropped-image img {
     max-width: 100%;
+  }
+
+  .cropper-area{
+    overflow: hidden;
+  }
+  .cropper-area,.cropped-area,.preview-area{
+    height:300px;
+  }
+
+  .cropped-area .cropped-image{
+    width: 100%;
+  }
+
+  .cropped-image,.preview,.img-cropper{
+    border:2px dashed #272d33;
+    height:244px;
+    overflow: hidden;
+  }
+  .update-now{
+    background: #1ce783 !important;
+    color:#000 !important;
   }
 }
 </style>
