@@ -397,6 +397,7 @@ export default {
           this.showLoader()
           this.requestInProcess = true
           let payload = { page: page, search: this.searchTerm }
+          // this.$router.push('/admin/sold-listings?page=' + page)
           // if(filter != null) payload['sport'] = filter.target.value
 
           if (filter != null) {

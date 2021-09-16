@@ -16,14 +16,14 @@
                   <th>User</th>
                   <th>Sport</th>
                   <th>player</th>
-                  <th>year</th>
+                  <th style="width:45px">year</th>
                   <th>brand</th>
                   <th>card</th>
-                  <th>rc</th>
+                  <th style="width:28px">rc</th>
                   <th>variation</th>
                   <th>grade</th>
                   <th>image</th>
-                  <th>Actions</th>
+                  <th style="width:88px">Actions</th>
                 </tr>
               </thead>
               <tbody v-if="cards.length > 0">
@@ -83,128 +83,7 @@
                     No requested slab available.
                   </td>
                 </tr>
-              </tbody>
-              <!-- <tfoot>
-            
-                <tr v-if="page - 1 == 1 && cards.length >= 30">
-                  <td colspan="9">
-                    <button
-                      class="theme-btn card-btn active-pagination"
-                      @click="getRequestedSlab(1)"
-                    >
-                      1
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getRequestedSlab(2)"
-                    >
-                      2
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getRequestedSlab(3)"
-                    >
-                      Next
-                    </button>
-                  </td>
-                </tr>
-                <tr v-if="page - 1 == 2 && cards.length >= 30">
-                  <td colspan="9">
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getRequestedSlab(1)"
-                    >
-                      1
-                    </button>
-                    <button
-                      class="theme-btn card-btn active-pagination"
-                      @click="getRequestedSlab(2)"
-                    >
-                      2
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getRequestedSlab(3)"
-                    >
-                      3
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getRequestedSlab(4)"
-                    >
-                      Next
-                    </button>
-                  </td>
-                </tr>
-                <tr v-if="page - 1 == 3 && cards.length >= 30">
-                  <td colspan="9">
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getRequestedSlab(1)"
-                    >
-                      Previous
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getRequestedSlab(2)"
-                    >
-                      2
-                    </button>
-                    <button
-                      class="theme-btn card-btn active-pagination"
-                      @click="getRequestedSlab(3)"
-                    >
-                      3
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getRequestedSlab(4)"
-                    >
-                      4
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getRequestedSlab(5)"
-                    >
-                      Next
-                    </button>
-                  </td>
-                </tr>
-                <tr v-if="page - 1 > 3 && cards.length >= 30">
-                  <td colspan="9">
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getRequestedSlab(page - 2)"
-                    >
-                      Previous
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getRequestedSlab(page - 1)"
-                    >
-                      {{ page - 1 }}
-                    </button>
-                    <button
-                      class="theme-btn card-btn active-pagination"
-                      @click="getRequestedSlab(page)"
-                    >
-                      {{ page }}
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getRequestedSlab(page + 1)"
-                    >
-                      {{ page + 1 }}
-                    </button>
-                    <button
-                      class="theme-btn card-btn"
-                      @click="getRequestedSlab(page + 2)"
-                    >
-                      Next
-                    </button>
-                  </td>
-                </tr>
-              </tfoot> -->
+              </tbody>              
             </table>
           </div>
         </div>
@@ -271,7 +150,6 @@ export default {
             .then((res) => {
               if (res.status == 200) {
                 this.cards = res.data.data
-                // this.page = res.data.next
               }
               this.requestInProcess = false
               this.hideLoader()

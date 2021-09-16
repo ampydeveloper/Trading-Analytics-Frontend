@@ -31,13 +31,21 @@
                       {{ card.card.title }}
                     </a>
                   </td>
-                  <td class="text-lowercase">
+                  <td class="text-lowercase card-header">
                     <a
                       target="_blank"
                       style="color: #28a745"
                       :href="card.link"
-                      >{{ card.link }}</a
-                    >
+                      >{{ card.link }}</a>
+
+                      <div class="image-card" v-if="card.ebay_short_item != null">
+                        <p v-if="card.ebay_short_item.title != null">{{card.ebay_short_item.title}}</p>
+                        <img v-if="card.ebay_short_item.image != null" :src="card.ebay_short_item.image"  />
+                        <b-row align-h="between">
+                          <b-col cols="6" class="desc" v-if="card.ebay_short_item.price != null">${{card.ebay_short_item.price}}</b-col>
+                          <b-col cols="6" class="desc" v-if="card.ebay_short_item.time_left != null">{{ card.ebay_short_item.time_left != '0s' ? card.ebay_short_item.timeLeft : '00:00' }}</b-col>
+                        </b-row>
+                      </div>
                   </td>
                   <td>
                     <nuxt-link
@@ -152,6 +160,18 @@ export default {
   mounted() {
     this.getRequestedListing(this.page)
   },
+  updated(){
+    $('.card-header a').hover(
+      function () {
+        var $this = $(this);
+        $this.siblings('.image-card').stop(true, false).fadeIn();
+      },
+      function () {
+        var $this = $(this);
+        $this.siblings('.image-card').stop(true, false).fadeOut();
+      }
+    )
+  },
   watch: {
     cards(val) {
       if (val.length > 0) {
@@ -195,6 +215,7 @@ export default {
             .then((res) => {
               if (res.status == 200) {
                 this.cards = res.data.data
+                console.log(this.cards[0].ebay_short_item)
                 // this.page = res.data.next
               }
               this.requestInProcess = false
@@ -296,5 +317,47 @@ ul.my-card-listing {
 .card-link {
   line-height: 2;
   margin-top: 2px;
+}
+.card-header{
+  position: relative;
+  color:#edecec !important;
+  font-family: "Nexa", Helvetica, Arial, sans-serif;
+  letter-spacing: 1px;
+  font-size:14px;
+}
+.card-header p{
+  font-size: 11px !important;
+  text-decoration: underline;
+  padding:0px 1px;
+  margin-bottom:7px !important;
+  font-family: 'CocogoosePro-SemiLightItalic', Helvetica, Arial, sans-serif !important;
+  text-transform: uppercase !important;
+}
+.image-card{
+  position: absolute;
+  display: none;
+  z-index: 1;
+  padding:5px 3px 3px 3px;
+  top: 50%;
+  left: 67%;
+  transform: translate(0,-50%);
+  width: 210px;
+  border: 2px solid #39414a;
+  border-radius: 0.25rem;
+  background: #272d33;
+}
+.image-card h3{
+  margin:0px 5px;
+}
+.desc{
+  padding:5px 18px 3px 18px;
+  font-size: 12px !important;
+  font-family: "NexaBold", Helvetica, Arial, sans-serif;
+}
+.desc:last-child{
+  text-align: right;
+}
+.image-card img{
+  width:100%;
 }
 </style>
