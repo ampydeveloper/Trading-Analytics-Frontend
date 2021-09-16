@@ -10,7 +10,6 @@
           </div>
           <div class="table_wrapper ap">
             <form class="form-inline" v-on:submit.prevent="saveSettings">
-              <!-- <form class="form-inline row form-input-100" @change="assignImg" > -->
               <div class="row form-input-100">
                 <div class="form_column col-12">
                   <label data-v-0a5a3a1c="">Sports</label>
@@ -23,149 +22,45 @@
                   <input
                     v-model="settings.sports[key]"
                     type="text"
-                    required="required"
                     class="form-control"
                   />
                 </div>
-
-                <!-- <div class="form_column col-4">
-                  <input type="text" required="required" class="form-control" />
-                </div>
-                <div class="form_column col-4">
-                  <input type="text" required="required" class="form-control" />
-                </div>
-                <div class="form_column col-4">
-                  <input type="text" required="required" class="form-control" />
-                </div> -->
               </div>
-              <!-- </form> -->
-              <!-- <form class="form-inline form-input-none" v-on:submit.prevent="saveSettings"> -->
-
-              <div class="form-input-none row">
+              <div class="form-input-none row" >
                 <div class="form_column col-12" style="margin-top: 30px">
                   <label data-v-0a5a3a1c="">Default Images</label>
                 </div>
-                <div class="form_column col-6">
-                  <label>Basketball</label>
-                  <div class="input-file">
-                    <img
-                      :src="src.basketball"
-                      alt="Card-image"
-                      v-if="src.basketball.length > 0"
-                      width="60"
-                      @click="viewImg(src.basketball)"
-                    />
-                    <input
-                      type="file"
-                      model="basketball"
-                      placeholder="Image"
-                      class="form-control"
-                      accept="image/jpg"
-                      @change="assignImg"
-                    />
-                  </div>
-                </div>
-                <div class="form_column col-6">
-                  <label>Soccer</label>
-                  <div class="input-file">
-                    <img
-                      :src="src.soccer"
-                      alt="Card-image"
-                      v-if="src.soccer.length > 0"
-                      width="60"
-                      @click="viewImg(src.soccer)"
-                    />
-                    <input
-                      type="file"
-                      model="soccer"
-                      placeholder="Image"
-                      class="form-control"
-                      accept="image/jpg"
-                      @change="assignImg"
-                    />
-                  </div>
-                </div>
-                <div class="form_column col-6">
-                  <label>Baseball</label>
-                  <div class="input-file">
-                    <img
-                      :src="src.baseball"
-                      alt="Card-image"
-                      v-if="src.baseball.length > 0"
-                      width="60"
-                      @click="viewImg(src.baseball)"
-                    />
-                    <input
-                      type="file"
-                      model="baseball"
-                      placeholder="Image"
-                      class="form-control"
-                      accept="image/jpg"
-                      @change="assignImg"
-                    />
-                  </div>
-                </div>
-                <div class="form_column col-6">
-                  <label>Football</label>
-                  <div class="input-file">
-                    <img
-                      :src="src.football"
-                      alt="Card-image"
-                      v-if="src.football.length > 0"
-                      width="60"
-                      @click="viewImg(src.slab)"
-                    />
-                    <input
-                      type="file"
-                      model="football"
-                      placeholder="Image"
-                      class="form-control"
-                      accept="image/jpg"
-                      @change="assignImg"
-                    />
-                  </div>
-                </div>
-                <div class="form_column col-6">
-                  <label>Hockey</label>
-                  <div class="input-file">
-                    <img
-                      :src="src.hockey"
-                      alt="Card-image"
-                      v-if="src.hockey.length > 0"
-                      width="60"
-                      @click="viewImg(src.slab)"
-                    />
-                    <input
-                      type="file"
-                      model="hockey"
-                      placeholder="Image"
-                      class="form-control"
-                      accept="image/jpg"
-                      @change="assignImg"
-                    />
-                  </div>
-                </div>
-                <div class="form_column col-6">
-                  <label>Pokémon</label>
-                  <div class="input-file">
-                    <img
-                      :src="src.pokemon"
-                      alt="Card-image"
-                      v-if="src.pokemon.length > 0"
-                      width="60"
-                      @click="viewImg(src.pokemon)"
-                    />
-                    <input
-                      type="file"
-                      model="pokemon"
-                      placeholder="Image"
-                      class="form-control"
-                      accept="image/jpg"
-                      @change="assignImg"
-                    />
+                <div class="form_column col-6" v-for="(sport, key) in settings.sports"
+                  :key="key">
+                  <label v-if="settings.sports[key] != ''">
+                   {{ currentSport =  settings.sports[key] }}
+             
+                  </label>
+                                    
+
+                  <div class="input-file" v-if="settings.sports[key] != ''">
+                    <img  
+                    v-if="settings[currentSport+'_image'] != null"
+                        :src="settings[currentSport+'_image']"
+                        alt="Card-image"
+                        
+                        width="60"
+                        @click="viewImg(src[key])"
+                      />
+
+                      <input
+                        type="file"
+                        :model="currentSport"
+                        placeholder="Image"
+                        class="form-control"
+                        accept="image/jpg"
+                        @change="assignImg"
+                      />
                   </div>
                 </div>
               </div>
+
+              
 
               <div class="form-input-none">
                 <div class="form_column py-3">
@@ -271,7 +166,7 @@
 </template>
 
 <script>
-// import $ from 'jquery'
+import $ from 'jquery'
 import draggable from 'vuedraggable'
 
 export default {
@@ -279,33 +174,12 @@ export default {
   layout: 'admin',
   data() {
     return {
+      newData:'',
       requestInProcess: false,
       settings: {
-        basketball_image: '',
-        baseball_image: '',
-        football_image: '',
-        soccer_image: '',
-        pokemon_image: '',
-        listing_image: '',
-        hockey_image: '',
         sports: [],
-        trenders_order: [
-          'basketball',
-          'soccer',
-          'baseball',
-          'football',
-          'hockey',
-          'pokemon',
-        ],
-        live_listings_order: [
-          'basketball',
-          'soccer',
-          'baseball',
-          'football',
-          'hockey',
-          'pokemon',
-          'random bin',
-        ],
+        trenders_order: [],
+        live_listings_order: [],
       },
       src: {
         basketball: '',
@@ -355,13 +229,7 @@ export default {
             .then((res) => {
               if (res.status == 200) {
                 this.settings = res.data.data
-                this.src.football = res.data.data.football_image
-                this.src.baseball = res.data.data.baseball_image
-                this.src.basketball = res.data.data.basketball_image
-                this.src.soccer = res.data.data.soccer_image
-                this.src.pokemon = res.data.data.pokemon_image
-                this.src.hockey = res.data.data.hockey_image
-
+                this.settings.sports.push('','','','')
                 this.src.listing = this.settings.listing_image
               }
               this.requestInProcess = false
@@ -383,6 +251,7 @@ export default {
         try {
           this.showLoader()
           this.requestInProcess = true
+          this.settings.sports = this.settings.sports.filter(val =>val!='')
           let data = new FormData()
           Object.keys(this.settings).forEach((key) => {
             if (
@@ -391,6 +260,7 @@ export default {
               data.append(key, JSON.stringify(this.settings[key]))
             else data.append(key, this.settings[key])
           })
+          // console.log(settings)
           this.$axios
             .post('settings', data)
             .then((res) => {
@@ -399,6 +269,8 @@ export default {
               }
               this.requestInProcess = false
               this.hideLoader()
+              this.getSettings()
+              $('input[type=file]').val('')
             })
             .catch((err) => {
               this.requestInProcess = false
