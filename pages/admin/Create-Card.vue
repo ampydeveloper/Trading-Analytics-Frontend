@@ -13,12 +13,7 @@
               <div class="form_column">
                 <label>Sport</label>
                 <select v-model="card.sport" class="form-control">
-                  <option value="Basketball">Basketball</option>
-                  <option value="Baseball">Baseball</option>
-                  <option value="Football">Football</option>
-                  <option value="Soccer">Soccer</option>
-                  <option value="Pokémon">Pokémon</option>
-                   <option value="Hockey">Hockey</option>
+                  <option v-for="sport in attributes.sport" :key="sport"  :value="sport">{{sport}}</option>
                 </select>
               </div>
               <div class="form_column">
@@ -221,6 +216,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+import { FILTERS } from '../../constants/advance_search_filter'
 export default {
   transition: 'fade',
   layout: 'admin',
@@ -259,7 +256,7 @@ export default {
   data() {
     return {
       card: {
-        sport: 'basketball',
+        sport: '',
         player: '',
         year: '',
         brand: '',
@@ -284,7 +281,15 @@ export default {
       imgSrc: '',
       requestInProcess: false,
       statusMessage: null,
+      filters: { ...FILTERS },
     }
+  },  
+  computed: {
+    ...mapGetters({
+      showAdvanceSearch: 'advancesearch/show',
+      filters_old_state: 'advancesearch/filters',
+      attributes: 'advancesearch/attributes'
+    })
   },
   methods: {
     assignFileObj(event){
