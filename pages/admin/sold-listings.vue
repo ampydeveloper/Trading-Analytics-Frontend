@@ -369,7 +369,11 @@ export default {
     }
   },
   mounted() {
-    this.getItems(this.page)
+    if (this.$route.query.page) {
+      this.getItems(this.$route.query.page)
+    } else {
+      this.getItems(this.page)
+    }
   },
   components: {},
   data() {
@@ -397,7 +401,7 @@ export default {
           this.showLoader()
           this.requestInProcess = true
           let payload = { page: page, search: this.searchTerm }
-          // this.$router.push('/admin/sold-listings?page=' + page)
+          this.$router.push('/admin/sold-listings?page=' + page)
           // if(filter != null) payload['sport'] = filter.target.value
 
           if (filter != null) {
@@ -517,5 +521,9 @@ ul.my-card-listing {
     line-height: 8px;
     display: inline-block;
   }
+}
+.active-pagination {
+  color: #1ce783;
+  background: #272d33;
 }
 </style>
