@@ -23,7 +23,7 @@
                   class="form-control text-capitalize main-sel-all"
                   @change="updateStatus"
                 >
-                  <option>Change Status</option>
+                  <option value="">Change Status</option>
                   <option value="0">Active</option>
                   <option value="2">Disable</option>
                   <option value="3">Delete</option>
@@ -162,7 +162,7 @@
                       @change="deleteListing($event, item.id, key)"
                       class="form-control text-capitalize change-status"
                     >
-                      <option>Change Status</option>
+                      <option value="">Change Status</option>
                       <option value="0">Active</option>
                       <option value="2">Disable</option>
                       <option value="3">Delete</option>
@@ -447,9 +447,9 @@
             </table>
           </div>
 
-          <b-modal id="DeletePopup" title="Delete Listing" hide-footer>
-            <section class="ap p-4">
-              <h6 class="text-capitalize">
+          <b-modal id="DeletePopup" @hide="cancelListing()" class="modal-content" title="Delete Listing" hide-footer>
+            <section class="ap">
+              <h6 class="text-capitalize p-4">
                 Do you really want to delete this Listing?
               </h6>
               </section>
@@ -539,16 +539,26 @@ export default {
           listingArr.push($thisCheck.val())
         }
       })
-      if(this.popup != false){
+      // if(this.popup != false){
+      //   this.statusChange(statusVal, listingArr, false)
+      //   this.$bvModal.hide('DeletePopup')
+      //   $('.main-sel-all').val($('.main-sel-all option:first').val())
+      //   this.popup = false
+      // }else{
+      //   this.$bvModal.show('DeletePopup')
+      //   this.status_from = 0
+      // }
+      if(this.popup != false && statusVal == 3){
         this.statusChange(statusVal, listingArr, false)
         this.$bvModal.hide('DeletePopup')
         $('.main-sel-all').val($('.main-sel-all option:first').val())
         this.popup = false
-      }else{
+      }else if(this.popup == false && statusVal == 3){
         this.$bvModal.show('DeletePopup')
         this.status_from = 0
+      }else{
+        this.statusChange(statusVal, listingArr, false)
       }
-
     },
     searchItem(searchItem) {
       if (!this.requestInProcess) {
@@ -644,15 +654,17 @@ export default {
     deleteListing(event, id, key){
       var statusVal = $('.change-status').val()
       var d_id = this.item_id
-      if(this.popup != false){
+      if(this.popup != false && statusVal == 3){
         this.statusChange(statusVal, d_id, false)
         this.$bvModal.hide('DeletePopup')
         $('.change-status').val($('.change-status option:first').val())
         this.popup = false
-      }else{
+      }else if(this.popup == false && statusVal == 3){
         this.$bvModal.show('DeletePopup')
         this.status_from = 1
         this.item_id = id
+      }else{
+        this.statusChange(statusVal, id, false)
       }
 
     },
@@ -672,30 +684,34 @@ export default {
         } else {
           var statusVal = event.target.value
         }
-        try {
-          this.showLoader()
-          this.requestInProcess = true
-          this.$axios
-            .$post('change-ebay-status', {
-              id: id,
-              status: statusVal,
-            })
-            .then((res) => {
-              this.requestInProcess = false
-              this.hideLoader()
-              if (key != false) {
-                this.items[key].status = event.target.value
-              }
-              this.getItems(this.currentPage)
-              this.item_id = ''
-              // else {
-              //   location.reload()
-              // }
-            })
-        } catch (err) {
-          this.hideLoader()
-          this.requestInProcess = false
-          console.log(err)
+        if(statusVal != ''){
+          try {
+            this.showLoader()
+            this.requestInProcess = true
+            this.$axios
+              .$post('change-ebay-status', {
+                id: id,
+                status: statusVal,
+              })
+              .then((res) => {
+                this.requestInProcess = false
+                this.hideLoader()
+                if (key != false) {
+                  this.items[key].status = event.target.value
+                }
+                this.getItems(this.currentPage)
+                $('.main-sel-all').val($('.main-sel-all option:first').val())
+                $('.change-status').val($('.change-status option:first').val())
+                this.item_id = ''
+                // else {
+                //   location.reload()
+                // }
+              })
+          } catch (err) {
+            this.hideLoader()
+            this.requestInProcess = false
+            console.log(err)
+          }
         }
       }
     },
