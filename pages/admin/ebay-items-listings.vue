@@ -36,13 +36,7 @@
                   class="form-control text-capitalize"
                 >
                   <option selected>Select Sport</option>
-                  <option
-                    :value="sport"
-                    v-for="sport in sportsList"
-                    :key="sport"
-                    v-text="sport"
-                    class="text-capitalize"
-                  ></option>
+                  <option class="text-capitalize" v-for="sport in attributes.sport" :key="sport"  :value="sport">{{sport}}</option>
                   <option value="random_bin">Random Bin</option>
                 </select>
               </div>
@@ -478,6 +472,8 @@
 <script>
 import $ from 'jquery'
 import { DEV_API } from '../../constants/keys'
+import { mapGetters } from 'vuex'
+import { FILTERS } from '../../constants/advance_search_filter'
 export default {
   transition: 'fade',
   layout: 'admin',
@@ -515,7 +511,7 @@ export default {
       page: 1,
       currentPage: 1,
       noMoreData: false,
-      sportsList: [],
+      // sportsList: [],
       sportFilter: null,
       otherFilter: null,
       filter: null,
@@ -526,7 +522,15 @@ export default {
       // card: {
       //   soldPrice: '',
       // },
+      filters: { ...FILTERS },
     }
+  }, 
+  computed: {
+    ...mapGetters({
+      showAdvanceSearch: 'advancesearch/show',
+      filters_old_state: 'advancesearch/filters',
+      attributes: 'advancesearch/attributes'
+    })
   },
   methods: {
     updateStatus() {
@@ -573,7 +577,7 @@ export default {
                 this.currentPage = 1
                 this.items = res.data.data
                 this.page = res.data.next
-                this.sportsList = res.data.sportsList
+                // this.sportsList = res.data.sportsList
                 this.allPages = res.data.all_pages
               }
               this.requestInProcess = false
@@ -619,7 +623,7 @@ export default {
                 this.currentPage = page
                 this.items = res.data.data
                 this.page = res.data.next
-                this.sportsList = res.data.sportsList
+                // this.sportsList = res.data.sportsList
                 this.allPages = res.data.all_pages
               }
               this.requestInProcess = false

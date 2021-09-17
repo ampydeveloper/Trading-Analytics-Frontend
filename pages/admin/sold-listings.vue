@@ -17,13 +17,7 @@
                   class="form-control text-capitalize"
                 >
                   <option selected>Select Sport</option>
-                  <option
-                    :value="sport"
-                    v-for="sport in sportsList"
-                    :key="sport"
-                    v-text="sport"
-                    class="text-capitalize"
-                  ></option>
+                  <option class="text-capitalize" v-for="sport in attributes.sport" :key="sport"  :value="sport">{{sport}}</option>
                   <option value="random_bin">Random Bin</option>
                 </select>
               </div>
@@ -360,6 +354,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+import { FILTERS } from '../../constants/advance_search_filter'
 export default {
   transition: 'fade',
   layout: 'admin',
@@ -385,14 +381,22 @@ export default {
       currentPage: 1,
       noMoreData: false,
       soldPrice: '',
-      sportsList: [],
+      // sportsList: [],
       sportFilter: null,
       filter: null,
       allPages: 0,
       // card: {
       //   soldPrice: '',
       // },
+      filters: { ...FILTERS },
     }
+  },   
+  computed: {
+    ...mapGetters({
+      showAdvanceSearch: 'advancesearch/show',
+      filters_old_state: 'advancesearch/filters',
+      attributes: 'advancesearch/attributes'
+    })
   },
   methods: {
     getItems(page, filter = null) {

@@ -55,13 +55,7 @@
                   class="form-control text-capitalize"
                 >
                   <option selected>Select Sport</option>
-                  <option
-                    :value="sport"
-                    v-for="sport in sportsList"
-                    :key="sport"
-                    v-text="sport"
-                    class="text-capitalize"
-                  ></option>
+                  <option class="text-capitalize" v-for="sport in attributes.sport" :key="sport"  :value="sport">{{sport}}</option>
                 </select>
               </div>
               <div class="col-3">
@@ -556,6 +550,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+import { FILTERS } from '../../constants/advance_search_filter'
 import $ from 'jquery'
 export default {
   transition: 'fade',
@@ -603,14 +599,22 @@ export default {
       currentPage: 1,
       requestInProcess: false,
       uploadExcelType: null,
-      sportsList: [],
+      // sportsList: [],
       sportFilter: null,
       filter: null,
       reqAList: {
         card_id: 0,
         link: '',
       },
+      filters: { ...FILTERS },
     }
+  },  
+  computed: {
+    ...mapGetters({
+      showAdvanceSearch: 'advancesearch/show',
+      filters_old_state: 'advancesearch/filters',
+      attributes: 'advancesearch/attributes'
+    })
   },
   methods: {
     updateStatus() {
@@ -681,7 +685,7 @@ export default {
                 this.cards = res.data.data
                 this.page = res.data.next
                 this.allPages = res.data.all_pages
-                this.sportsList = res.data.sportsList
+                // this.sportsList = res.data.sportsList
               }
               this.requestInProcess = false
               this.hideLoader()
