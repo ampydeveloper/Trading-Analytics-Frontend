@@ -23,14 +23,14 @@
               <td>
                 <button
                   class="theme-btn card-btn"
-                  :disabled="this.currentPage <= 1 ? '' : disabled"
+                  :disabled="this.$route.query.page <= 1 ? '' : disabled"
                   @click="previousPage()"
                 >
                   Previous
                 </button>
-                <button
+                <button :data-title="this.next"
                   :disabled="
-                    this.searchPage == this.currentPage ? '' : disabled
+                    this.next == false ? '' :disabled
                   "
                   class="theme-btn card-btn"
                   @click="nextPage()"
@@ -119,12 +119,20 @@ export default {
     } else if (this.$route.query.hasOwnProperty('keyword')) {
       this.searchCard = null
       this.keyword = this.$route.query.keyword
-      this.searchPage = this.$route.query.hasOwnProperty('page')
+      if(this.$route.query.hasOwnProperty('page')){
+        if(this.$route.query.page != 0 && this.$route.query.page != ""){
+          this.searchPage = this.$route.query.page
+        }else if(this.$route.query.page == 0 || this.$route.query.page == "" ){
+          this.$router.push(
+            '/search/?keyword=' + this.keyword + '&page=' + this.searchPage
+          )
+        }
+      }
     }
+    // console.log(this.$route.query.page)
     this.searchCards()
     this.scroll()
     // console.log(this.keyword)
-    // console.log(this.page)
   },
   components: {
     CardListItem,
@@ -151,7 +159,7 @@ export default {
       requestInProcess: false,
       page: 1,
       searchPage: 1,
-      currentPage: 1,
+      next : true,
       noMoreData: false,
       slabSearchActive: false,
       slabSearchCardId: null,
@@ -167,7 +175,6 @@ export default {
         this.keyword = newVal
         this.filter = {}
         this.searchPage = 1
-        this.currentPage = 1
         this.searchCard = null
         this.searchCards()
       }
@@ -321,6 +328,9 @@ export default {
                 //wrong need card next page
                 if (res.next != false) {
                   this.searchPage = res.next
+                  this.next = true
+                }else{
+                  this.next = false
                 }
               }
             })
@@ -393,25 +403,20 @@ export default {
       }
     },
     previousPage() {
-      if (this.currentPage != 1) {
-        this.searchPage = this.currentPage
-        this.searchPage = this.searchPage - 1
+      if (this.$route.query.page != 1) {
+        this.searchPage = this.$route.query.page - 1
         this.$router.push(
           '/search/?keyword=' + this.keyword + '&page=' + this.searchPage
         )
-        this.currentPage = this.searchPage
-        // console.log("Current Page = "+this.currentPage)
         this.searchCards()
         this.scroll()
       }
     },
     nextPage() {
-      if (this.searchPage != this.currentPage) {
+      if (this.next == true) {
         this.$router.push(
           '/search/?keyword=' + this.keyword + '&page=' + this.searchPage
         )
-        this.currentPage = this.searchPage
-        // console.log("Current Page = "+this.currentPage)
         this.searchCards()
         this.scroll()
       }
