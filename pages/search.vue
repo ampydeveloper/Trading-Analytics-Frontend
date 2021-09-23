@@ -5,9 +5,88 @@
         <div class="card transparent-bg">
           <div class="card-body">
             <h5 class="card-title">
-              <button class="theme-btn card-btn slab-result-title">
-                Slabs Results
-              </button>
+                      <button class="theme-btn card-btn slab-result-title">
+                        Slabs Results
+                      </button>
+              <div class="pagination" v-if="this.$route.query.page == 1 && searchPage <= 30">
+                    <button
+                      class="theme-btn card-btn"
+                      :disabled="this.$route.query.page <= 1 ? '' : disabled"
+                      @click="previousPage()"
+                    >
+                      Previous
+                    </button>
+                    <button class="theme-btn card-btn active-pagination">
+                      1
+                    </button>
+                    <button
+                      class="theme-btn card-btn"
+                      
+                    >
+                      2
+                    </button>
+                    <button
+                      class="theme-btn card-btn"
+                      
+                    >
+                      3
+                    </button>                    
+                    <button :data-title="this.next"
+                      :disabled="
+                        this.next == false ? '' :disabled
+                      "
+                      class="theme-btn card-btn"
+                      @click="nextPage()"
+                    >
+                      Next
+                    </button>
+              </div>
+
+              <div class="pagination" v-if="this.$route.query.page - 1 >= 1 && searchPage <= 30">
+                    <button
+                      class="theme-btn card-btn"
+                      :disabled="this.$route.query.page <= 1 ? '' : disabled"
+                      @click="previousPage()"
+                    > <i class="fa fa-chevron-left"></i> </button>
+
+                    <button class="theme-btn card-btn"
+                      disabled
+                    > 1 </button>
+
+                    <button class="theme-btn card-btn"
+                    :disabled="this.$route.query.page <= 1 ? '' : disabled"
+                      @click="previousPage()"
+                    >
+                      {{ this.$route.query.page - 1 }}
+                    </button>
+                    <button
+                      class="theme-btn card-btn active-pagination"                      
+                    >
+                      {{ this.$route.query.page }}
+                    </button>
+                    <button
+                      class="theme-btn card-btn" 
+                      :disabled="
+                        this.next == false ? '' :disabled
+                      "
+                      @click="nextPage()"                     
+                    >
+                      {{ parseInt(this.$route.query.page) + 1 }}
+                    </button> 
+                     
+                    <button class="theme-btn card-btn"
+                    disabled
+                    > 10 </button>    
+
+                    <button :data-title="this.next"
+                      :disabled="
+                        this.next == false ? '' :disabled
+                      "
+                      class="theme-btn card-btn"
+                      @click="nextPage()"
+                    ><i class="fa fa-chevron-right"></i></button>
+              </div>
+              
             </h5>
             <ul class="my-card-listing slab-result-card-outer">
               <CardSlabItem
@@ -18,28 +97,7 @@
               />
             </ul>
           </div>
-          <table class="pagination">
-            <tr>
-              <td>
-                <button
-                  class="theme-btn card-btn"
-                  :disabled="this.$route.query.page <= 1 ? '' : disabled"
-                  @click="previousPage()"
-                >
-                  Previous
-                </button>
-                <button :data-title="this.next"
-                  :disabled="
-                    this.next == false ? '' :disabled
-                  "
-                  class="theme-btn card-btn"
-                  @click="nextPage()"
-                >
-                  Next
-                </button>
-              </td>
-            </tr>
-          </table>
+          
         </div>
       </div>
     </div>
@@ -483,8 +541,13 @@ export default {
 .theme-btn {
   padding: 7px 10px 5px 10px;
 }
-.pagination tr {
-  margin-left: auto;
+.pagination{
+  display: inline-block;
+  float: right;
   margin-right: 17px;
+}
+.active-pagination {
+  color: #1ce783;
+  background: #39414a;
 }
 </style>

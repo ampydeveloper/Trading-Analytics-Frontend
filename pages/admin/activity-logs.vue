@@ -228,6 +228,30 @@ export default {
       },
     }
   },
+  watch: {
+    cards(val) {
+          if (val.length > 0) {
+     setTimeout(function () {
+      if (!$.fn.dataTable.isDataTable('#search-cards-table')) {
+        $('#search-cards-table').DataTable({
+          pageLength: 20,
+          dom: 'Bfrtip',
+          buttons: [{ extend: 'csv', text: 'Export as CSV' }],
+          oLanguage: { sSearch: '' },
+          "aaSorting": [],
+          aoColumnDefs: [
+            {
+              bSortable: false,
+              aTargets: [-2, -3, -4],
+            },
+          ],
+        })
+        $('.dataTables_filter input').attr('placeholder', 'Search Terms')
+      }
+    }, 100)
+          }
+    },
+  },
   methods: {
     getPages() {
       let start = 1,

@@ -132,7 +132,7 @@
           <b-modal id="embedSellsCode" title="" size="xl" hide-footer>
           <h5>Copy code and paste to your website.</h5>
           <p class="code-text">
-            <textarea cols="3" rows="10"><iframe src="http://pro.slabstox.com/stox-sells" width="1400" height="260" style="border:none;" frameborder="0"></iframe>
+            <textarea cols="3" rows="10"><iframe src="http://pro.slabstox.com/stox-feed" width="1400" height="260" style="border:none;" frameborder="0"></iframe>
           </textarea
             >
           </p>
@@ -600,7 +600,7 @@ export default {
     this.$store.dispatch('advancesearch/fetchAttributes')
     this.getSoldListing()
     var currentHref = location.href
-    this.sxStoxtickerUrl = currentHref.replace('dashboard', 'stox-sells')
+    this.sxStoxtickerUrl = currentHref.replace('dashboard', 'stox-feed')
   },
   updated() {
     this.featureHeight =

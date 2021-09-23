@@ -103,7 +103,7 @@
         <li class="nav-item">
           <a class="nav-link" href="#">
             <div class="icon my-listing-icon"></div>
-            <div class="link-text">Blog</div>
+            <div class="link-text">News Feed</div>
           </a>
         </li>  
           

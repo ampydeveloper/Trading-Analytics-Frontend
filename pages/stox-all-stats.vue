@@ -276,7 +276,7 @@ export default {
   },
   mounted() {
     var currentHref = location.href
-    this.sxStoxtickerUrl = currentHref.replace('stoxticker', 'stox-sells')
+    this.sxStoxtickerUrl = currentHref.replace('stoxticker', 'stox-feed')
 
     this.getData()
     this.slabstoxGraph(90, 1)

@@ -494,7 +494,7 @@ slabstox.com
         <b-modal id="embedStatsCode" title="" size="xl" hide-footer>
           <h5>Copy code and paste to your website.</h5>
           <p class="code-text">
-            <textarea cols="3" rows="10"><iframe src="http://pro.slabstox.com/stox-stats" width="1400" height="260" style="border:none;" frameborder="0"></iframe>
+            <textarea cols="3" rows="10"><iframe src="http://pro.slabstox.com/stox-ticker" width="1400" height="260" style="border:none;" frameborder="0"></iframe>
           </textarea
             >
           </p>
@@ -624,7 +624,7 @@ slabstox.com
         <b-modal id="embedSellsCode" title="" size="xl" hide-footer>
           <h5>Copy code and paste to your website.</h5>
           <p class="code-text">
-            <textarea cols="3" rows="10"><iframe src="http://pro.slabstox.com/stox-sells" width="1400" height="260" style="border:none;" frameborder="0"></iframe>
+            <textarea cols="3" rows="10"><iframe src="http://pro.slabstox.com/stox-feed" width="1400" height="260" style="border:none;" frameborder="0"></iframe>
           </textarea
             >
           </p>
@@ -925,6 +925,12 @@ slabstox.com
                   ]"
                 />&nbsp;&nbsp;{{ allBoardGraph[key].pert_diff }}%
               </button>
+              <button
+                class="theme-btn card-btn "
+                v-if="allBoardGraph[key].featured == 1"
+              >
+               Featured
+              </button>
             </h5>
             <div class="dashboard-apex-top">
                <div :class="'sx-allboards-apex-top-1d'+allBoardGraph[key].id" style="display: none">
@@ -1056,7 +1062,7 @@ export default {
   },
   mounted() {
     var currentHref = location.href
-    this.sxStoxtickerUrl = currentHref.replace('stoxticker', 'stox-sells')
+    this.sxStoxtickerUrl = currentHref.replace('stoxticker', 'stox-feed')
 
     this.getData()
     this.slabstoxGraph(90, 1)

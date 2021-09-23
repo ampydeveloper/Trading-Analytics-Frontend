@@ -43,6 +43,30 @@
                   </div>
                 </div>
               </div>
+
+              <div class="col-2">
+                <div class="input-group mb-3">
+                  <input
+                    type="number"
+                    class="form-control disable-arrow"
+                    v-model="searchPage"
+                    placeholder="Search Page"
+                    aria-label="Search term..."
+                    aria-describedby="button-addon2"
+                    @keyup.enter="getItems(searchPage)"
+                  />
+                  <div class="input-group-append">
+                    <button
+                      class="btn btn-outline-secondary"
+                      @click="getItems(searchPage)"
+                      type="button"
+                      id="button-addon2"
+                    >
+                     <i class="fa serach-icon fa-search"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <div class="table_wrapper ap">
@@ -375,6 +399,7 @@ export default {
   data() {
     return {
       searchTerm: '',
+      searchPage: '',
       items: [],
       requestInProcess: false,
       page: 1,
@@ -529,5 +554,10 @@ ul.my-card-listing {
 .active-pagination {
   color: #1ce783;
   background: #272d33;
+}
+input.disable-arrow::-webkit-outer-spin-button,
+input.disable-arrow::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 </style>
