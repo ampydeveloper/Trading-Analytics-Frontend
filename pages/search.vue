@@ -13,36 +13,73 @@
                       class="theme-btn card-btn"
                       :disabled="this.$route.query.page <= 1 ? '' : disabled"
                       @click="previousPage()"
-                    >
-                      Previous
-                    </button>
+                    > <i class="fa fa-chevron-left"></i> </button>
                     <button class="theme-btn card-btn active-pagination">
                       1
                     </button>
                     <button
                       class="theme-btn card-btn"
-                      
+                      :disabled="
+                        this.next == false ? '' :disabled
+                      "
+                      @click="nextPage()" 
                     >
                       2
                     </button>
                     <button
                       class="theme-btn card-btn"
-                      
+                      @click="changePage(3)"
                     >
                       3
-                    </button>                    
+                    </button> 
+                    <button class="theme-btn card-btn"
+                    disabled
+                    > 10 </button>                    
                     <button :data-title="this.next"
                       :disabled="
                         this.next == false ? '' :disabled
                       "
                       class="theme-btn card-btn"
                       @click="nextPage()"
-                    >
-                      Next
-                    </button>
+                    ><i class="fa fa-chevron-right"></i></button>
               </div>
 
-              <div class="pagination" v-if="this.$route.query.page - 1 >= 1 && searchPage <= 30">
+              <div class="pagination" v-if="this.$route.query.page == 2 && searchPage <= 30">
+                    <button
+                      class="theme-btn card-btn"
+                      :disabled="this.$route.query.page <= 1 ? '' : disabled"
+                      @click="previousPage()"
+                    > <i class="fa fa-chevron-left"></i> </button>
+                    <button class="theme-btn card-btn "
+                      :disabled="this.$route.query.page <= 1 ? '' : disabled"
+                      @click="previousPage()"
+                    >
+                      1
+                    </button>
+                    <button
+                      class="theme-btn card-btn active-pagination"
+                    >
+                      2
+                    </button>
+                    <button
+                      class="theme-btn card-btn"
+                      @click="changePage(3)"
+                    >
+                      3
+                    </button> 
+                    <button class="theme-btn card-btn"
+                    disabled
+                    > 10 </button>                    
+                    <button :data-title="this.next"
+                      :disabled="
+                        this.next == false ? '' :disabled
+                      "
+                      class="theme-btn card-btn"
+                      @click="nextPage()"
+                    ><i class="fa fa-chevron-right"></i></button>
+              </div>
+
+              <div class="pagination" v-if="this.$route.query.page - 1 >= 2 && searchPage <= 30">
                     <button
                       class="theme-btn card-btn"
                       :disabled="this.$route.query.page <= 1 ? '' : disabled"
@@ -50,7 +87,7 @@
                     > <i class="fa fa-chevron-left"></i> </button>
 
                     <button class="theme-btn card-btn"
-                      disabled
+                      @click="changePage(1)"
                     > 1 </button>
 
                     <button class="theme-btn card-btn"
@@ -478,6 +515,15 @@ export default {
         this.searchCards()
         this.scroll()
       }
+    },
+    changePage(page_number){
+      console.log(page_number)
+      this.searchPage = page_number
+        this.$router.push(
+          '/search/?keyword=' + this.keyword + '&page=' + this.searchPage
+        )
+      this.searchCards()
+      this.scroll()
     },
   },
 }

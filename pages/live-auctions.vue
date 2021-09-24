@@ -40,8 +40,9 @@ export default {
     }
   },
   mounted() {
-    var cardsModif = typeof attributes != 'undefined' ? attributes.sport : ''
-    this.cards = [...cardsModif, 'random bin']
+    this.getEndingSoonListing()
+    // var cardsModif = typeof attributes != 'undefined' ? attributes.sport : ''
+    // this.cards = [...cardsModif, 'random bin']
 
     $('.btn').click(function () {
       var link = '#'
@@ -76,12 +77,30 @@ export default {
       attributes: 'advancesearch/attributes',
     }),
   },
-  methods: {},
-  watch: {
-    attributes(attributes) {
-      this.cards = [...attributes.sport, 'random bin']
+  methods: {
+    getEndingSoonListing() {
+      //getting order only by this API
+      try {
+        this.$axios
+          .$post('search/ending-soon-listing', {
+            take: 1,
+            filterBy: 'ending_soon',
+          })
+          .then((res) => {
+            if (res.status == 200) {
+              this.cards = [...res.order, ...['random bin']]
+            }
+          })
+      } catch (err) {
+        console.log(err)
+      }
     },
   },
+  // watch: {
+  //   attributes(attributes) {
+  //     this.cards = [...attributes.sport, 'random bin']
+  //   },
+  // },
 }
 </script> 
 

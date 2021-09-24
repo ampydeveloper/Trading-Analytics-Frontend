@@ -1009,9 +1009,9 @@ slabstox.com
 
         <div class="social_share ss-h4">
           <h4>
-            <a class="embed-link" href="javascript:void(0);"
+            <!-- <a class="embed-link" href="javascript:void(0);"
               @click="embedStoxtickerCode()" >EMBED CODE </>
-            </a>
+            </a> -->
           </h4>
         </div>
       </div>

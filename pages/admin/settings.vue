@@ -60,11 +60,9 @@
                 </div>
               </div>
 
-              
-
-              <div class="form-input-none">
-                <div class="form_column py-3">
-                  <label>Listing</label>
+              <div class="form-input-none row" >
+                <div class="form_column col-12">
+                  <label style="width:25.5%">Listing</label>
                   <div class="input-file">
                     <img
                       :src="src.listing"
@@ -84,6 +82,31 @@
                   </div>
                 </div>
               </div>
+              <!-- <div class="form-input-none row">
+                <div class="form_column col-12" style="margin-top: 30px">
+                  <label data-v-0a5a3a1c="">Default Images</label>
+                </div>
+                <div class="form_column col-6">
+                  <label>Listing</label>
+                  <div class="input-file">
+                    <img
+                      :src="src.listing"
+                      alt="Card-image"
+                      v-if="src.listing.length > 0"
+                      width="60"
+                      @click="viewImg(src.listing)"
+                    />
+                    <input
+                      type="file"
+                      model="listing"
+                      placeholder="Image"
+                      class="form-control"
+                      accept="image/jpg"
+                      @change="assignImg"
+                    />
+                  </div>
+                </div>
+              </div> -->
 
               <!-- <small class="text-danger font-italic">Double click to select a sport block & drag to re-order</small> -->
               <div class="row w-100">
