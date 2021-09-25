@@ -101,8 +101,8 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">
-            <div class="icon my-listing-icon"></div>
+          <a class="nav-link" href="https://www.slabstox.com/category/sxnewsfeed/">
+            <div class="icon news-feed-icon"></div>
             <div class="link-text">News Feed</div>
           </a>
         </li>  
@@ -213,6 +213,9 @@ export default {}
 
         .my-listing-icon {
           background-image: url('~@/assets/img/icons/my-listing-black.png');
+        }
+        .news-feed-icon {
+          background-image: url('~@/assets/img/icons/news-feed-icon.png');
         }
         .analytics-icon {
           background-image: url('~@/assets/img/icons/analytics-black.png');

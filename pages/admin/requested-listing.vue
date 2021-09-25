@@ -48,7 +48,7 @@
                       </div>
                   </td>
                   <td>
-                    <nuxt-link
+                    <nuxt-link v-if="card.user != null"
                       style="color: #28a745"
                       :to="`users?id=${card.user.id}`"
                       >{{ card.user.full_name }} ({{
@@ -215,6 +215,7 @@ export default {
             .then((res) => {
               if (res.status == 200) {
                 this.cards = res.data.data
+                console.log(this.cards)
                 console.log(this.cards[0].ebay_short_item)
                 // this.page = res.data.next
               }

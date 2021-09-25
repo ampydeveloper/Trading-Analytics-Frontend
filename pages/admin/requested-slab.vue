@@ -30,7 +30,7 @@
                 <tr v-for="card of cards" :key="card.id">
                   <!-- <td>{{ key }}</td> -->
                   <td>
-                    <nuxt-link
+                    <nuxt-link v-if="card.user != null"
                       style="color: #28a745"
                       :to="`users?id=${card.user.id}`"
                       >{{ card.user.full_name }}</nuxt-link
