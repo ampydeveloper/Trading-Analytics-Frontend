@@ -87,6 +87,12 @@
             <div class="link-text">Slab Request</div>
           </span>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://www.slabstox.com/category/sxnewsfeed/" target="_blank">
+            <div class="icon news-feed-icon"></div>
+            <div class="link-text">News Feed</div>
+          </a>
+        </li>
         <li
           class="nav-item"
           v-if="
@@ -100,12 +106,7 @@
             <div class="link-text">Admin Panel</div>
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="https://www.slabstox.com/category/sxnewsfeed/">
-            <div class="icon news-feed-icon"></div>
-            <div class="link-text">News Feed</div>
-          </a>
-        </li>  
+          
           
       </ul>
 

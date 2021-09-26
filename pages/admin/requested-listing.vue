@@ -43,7 +43,7 @@
                         <img v-if="card.ebay_short_item.image != null" :src="card.ebay_short_item.image"  />
                         <b-row align-h="between">
                           <b-col cols="6" class="desc" v-if="card.ebay_short_item.price != null">${{card.ebay_short_item.price}}</b-col>
-                          <b-col cols="6" class="desc" v-if="card.ebay_short_item.time_left != null">{{ card.ebay_short_item.time_left != '0s' ? card.ebay_short_item.timeLeft : '00:00' }}</b-col>
+                          <b-col cols="6" class="desc" v-if="card.ebay_short_item.time_left != null">{{ card.ebay_short_item.time_left != '0s' ? card.ebay_short_item.time_left : '00:00' }}</b-col>
                         </b-row>
                       </div>
                   </td>

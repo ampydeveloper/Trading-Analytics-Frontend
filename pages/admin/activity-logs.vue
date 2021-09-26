@@ -89,6 +89,15 @@
             <span class="text-white"
               >Total Activity Count: {{ totalCount }}</span
             >
+            <span class="search-form ml-3">
+            <button
+              class="btn btn-outline-secondary"
+              @click="getActivityLogsCsv()"
+              type="button" v-if="logs.length > 0"
+            >
+              Export CSV
+            </button>
+              </span>
             <table class="table table-striped" id="all-activity-logs-table">
               <thead>
                 <tr>
@@ -228,30 +237,6 @@ export default {
       },
     }
   },
-  watch: {
-    cards(val) {
-          if (val.length > 0) {
-     setTimeout(function () {
-      if (!$.fn.dataTable.isDataTable('#search-cards-table')) {
-        $('#search-cards-table').DataTable({
-          pageLength: 20,
-          dom: 'Bfrtip',
-          buttons: [{ extend: 'csv', text: 'Export as CSV' }],
-          oLanguage: { sSearch: '' },
-          "aaSorting": [],
-          aoColumnDefs: [
-            {
-              bSortable: false,
-              aTargets: [-2, -3, -4],
-            },
-          ],
-        })
-        $('.dataTables_filter input').attr('placeholder', 'Search Terms')
-      }
-    }, 100)
-          }
-    },
-  },
   methods: {
     getPages() {
       let start = 1,
@@ -320,6 +305,45 @@ export default {
         }
       }
     },
+    getActivityLogsCsv() {
+      if (!this.requestInProcess && this.selUser > 0) {
+        try {
+          this.showLoader()
+          this.requestInProcess = true
+          this.$axios
+            .get(
+              `users/get-activity-logs-csv-for-admin/${this.selUser}?model=${this.selModel}&sts=${this.selSt}&start_date=${this.start_date}&end_date=${this.end_date}`
+            )
+            .then((res) => {
+              if (res.status == 200 && res.data.csv_link != null) {
+                window.open(res.data.csv_link, '_blank').focus()
+              } else {
+                this.$toast.error(
+                  'There has been an error creating csv file. Please try again.',
+                  { timeOut: 10000 }
+                )
+              }
+              this.requestInProcess = false
+              this.hideLoader()
+            })
+            .catch((err) => {
+              this.requestInProcess = false
+              this.hideLoader()
+              this.$toast.error(
+                'There has been an error creating csv file. Please try again.',
+                { timeOut: 10000 }
+              )
+            })
+        } catch (err) {
+          this.hideLoader()
+          this.requestInProcess = false
+          this.$toast.error(
+            'There has been an error creating csv file. Please try again.',
+            { timeOut: 10000 }
+          )
+        }
+      }
+    },
   },
 }
 </script>
@@ -343,17 +367,17 @@ ul.my-card-listing {
   color: #1ce783;
   background: #272d33;
 }
-.custom-date-pick .profile_datepicker > .btn{
+.custom-date-pick .profile_datepicker > .btn {
   width: 21px;
 }
 .custom-date-pick .profile_datepicker {
   background: inherit !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    height: 28px !important;
-    font-size: 12px;
-    float: left;
-    width: 50%;
+  padding: 0 !important;
+  margin: 0 !important;
+  height: 28px !important;
+  font-size: 12px;
+  float: left;
+  width: 50%;
 }
 .row-5 {
   margin-left: -5px;
