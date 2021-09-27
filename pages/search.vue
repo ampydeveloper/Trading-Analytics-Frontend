@@ -2,7 +2,7 @@
   <div class="col-md-12 col-sm-12 search-page">
     <div class="row slab-result-search" v-if="slabItems.length > 0 && showSlab">
       <div class="col-12 no-padding">
-        <div class="card transparent-bg">
+        <div class="card transparent-bg my-card-listing-scroll-outer">
           <div class="card-body">
             <h5 class="card-title">
                       <button class="theme-btn card-btn slab-result-title">
@@ -11,16 +11,16 @@
               <div class="pagination" v-if="this.$route.query.page == 1 && searchPage <= 30">
                     <button
                       class="theme-btn card-btn"
-                      :disabled="this.$route.query.page <= 1 ? '' : disabled"
+                      :disabled="this.$route.query.page <= 1 ? '' : 'disabled'"
                       @click="previousPage()"
                     > <i class="fa fa-chevron-left"></i> </button>
                     <button class="theme-btn card-btn active-pagination">
-                      1
+                      First
                     </button>
                     <button
                       class="theme-btn card-btn"
                       :disabled="
-                        this.next == false ? '' :disabled
+                        this.next == false ? '' :'disabled'
                       "
                       @click="nextPage()" 
                     >
@@ -34,10 +34,10 @@
                     </button> 
                     <button class="theme-btn card-btn"
                     disabled
-                    > 10 </button>                    
+                    > Last </button>                    
                     <button :data-title="this.next"
                       :disabled="
-                        this.next == false ? '' :disabled
+                        this.next == false ? '' :'disabled'
                       "
                       class="theme-btn card-btn"
                       @click="nextPage()"
@@ -47,14 +47,14 @@
               <div class="pagination" v-if="this.$route.query.page == 2 && searchPage <= 30">
                     <button
                       class="theme-btn card-btn"
-                      :disabled="this.$route.query.page <= 1 ? '' : disabled"
+                      :disabled="this.$route.query.page <= 1 ? '' : 'disabled'"
                       @click="previousPage()"
                     > <i class="fa fa-chevron-left"></i> </button>
                     <button class="theme-btn card-btn "
-                      :disabled="this.$route.query.page <= 1 ? '' : disabled"
+                      :disabled="this.$route.query.page <= 1 ? '' : 'disabled'"
                       @click="previousPage()"
                     >
-                      1
+                      First
                     </button>
                     <button
                       class="theme-btn card-btn active-pagination"
@@ -69,10 +69,10 @@
                     </button> 
                     <button class="theme-btn card-btn"
                     disabled
-                    > 10 </button>                    
+                    > Last </button>                    
                     <button :data-title="this.next"
                       :disabled="
-                        this.next == false ? '' :disabled
+                        this.next == false ? '' :'disabled'
                       "
                       class="theme-btn card-btn"
                       @click="nextPage()"
@@ -82,16 +82,16 @@
               <div class="pagination" v-if="this.$route.query.page - 1 >= 2 && searchPage <= 30">
                     <button
                       class="theme-btn card-btn"
-                      :disabled="this.$route.query.page <= 1 ? '' : disabled"
+                      :disabled="this.$route.query.page <= 1 ? '' : 'disabled'"
                       @click="previousPage()"
                     > <i class="fa fa-chevron-left"></i> </button>
 
                     <button class="theme-btn card-btn"
                       @click="changePage(1)"
-                    > 1 </button>
+                    > First </button>
 
                     <button class="theme-btn card-btn"
-                    :disabled="this.$route.query.page <= 1 ? '' : disabled"
+                    :disabled="this.$route.query.page <= 1 ? '' : 'disabled'"
                       @click="previousPage()"
                     >
                       {{ this.$route.query.page - 1 }}
@@ -104,7 +104,7 @@
                     <button
                       class="theme-btn card-btn" 
                       :disabled="
-                        this.next == false ? '' :disabled
+                        this.next == false ? '' :'disabled'
                       "
                       @click="nextPage()"                     
                     >
@@ -113,11 +113,11 @@
                      
                     <button class="theme-btn card-btn"
                     disabled
-                    > 10 </button>    
+                    > Last </button>    
 
                     <button :data-title="this.next"
                       :disabled="
-                        this.next == false ? '' :disabled
+                        this.next == false ? '' :'disabled'
                       "
                       class="theme-btn card-btn"
                       @click="nextPage()"
@@ -125,7 +125,8 @@
               </div>
               
             </h5>
-            <ul class="my-card-listing slab-result-card-outer">
+            <overlay-scrollbars>
+            <ul class="my-card-listing slab-result-card-outer my-card-listing-scroll">
               <CardSlabItem
                 v-for="item in slabItems"
                 :key="'slab-' + item.id"
@@ -133,6 +134,7 @@
                 @clicked="selectSlabCard"
               />
             </ul>
+            </overlay-scrollbars>
           </div>
           
         </div>
@@ -590,7 +592,7 @@ export default {
 .pagination{
   display: inline-block;
   float: right;
-  margin-right: 17px;
+  // margin-right: 17px;
 }
 .active-pagination {
   color: #1ce783;

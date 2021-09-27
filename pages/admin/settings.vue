@@ -30,15 +30,12 @@
                 <div class="form_column col-12" style="margin-top: 30px">
                   <label data-v-0a5a3a1c="">Default Images</label>
                 </div>
-                <div class="form_column col-6" v-for="(sport, key) in settings.sports"
-                  :key="key">
-                  <label v-if="settings.sports[key] != ''">
+                <template v-for="(sport, key) in settings.sports" >
+                <div class="form_column col-6" :key="key" v-if="settings.sports[key] != ''" >
+                  <label>
                    {{ currentSport =  settings.sports[key] }}
-             
                   </label>
-                                    
-
-                  <div class="input-file" v-if="settings.sports[key] != ''">
+                  <div class="input-file">
                     <img  
                     v-if="settings[currentSport+'_image'] != null"
                         :src="settings[currentSport+'_image']"
@@ -58,34 +55,8 @@
                       />
                   </div>
                 </div>
-              </div>
-
-              <div class="form-input-none row" >
-                <div class="form_column col-12">
-                  <label style="width:25.5%">Listing</label>
-                  <div class="input-file">
-                    <img
-                      :src="src.listing"
-                      alt="Card-image"
-                      v-if="src.listing.length > 0"
-                      width="60"
-                      @click="viewImg(src.listing)"
-                    />
-                    <input
-                      type="file"
-                      model="listing"
-                      placeholder="Image"
-                      class="form-control"
-                      accept="image/jpg"
-                      @change="assignImg"
-                    />
-                  </div>
-                </div>
-              </div>
-              <!-- <div class="form-input-none row">
-                <div class="form_column col-12" style="margin-top: 30px">
-                  <label data-v-0a5a3a1c="">Default Images</label>
-                </div>
+                </template>
+<div class="clearfix col-12"></div>
                 <div class="form_column col-6">
                   <label>Listing</label>
                   <div class="input-file">
@@ -106,9 +77,8 @@
                     />
                   </div>
                 </div>
-              </div> -->
+              </div>
 
-              <!-- <small class="text-danger font-italic">Double click to select a sport block & drag to re-order</small> -->
               <div class="row w-100">
                 <div class="col">
                   <div class="form_column mt-3 border-right">

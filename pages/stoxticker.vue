@@ -2378,7 +2378,8 @@ ul.my-card-listing {
       margin-left: 1px;
       margin-bottom: 5px;
       a {
-        font-family: 'CocogoosePro-Regular', Helvetica, Arial, sans-serif;
+        // font-family: 'CocogoosePro-Regular', Helvetica, Arial, sans-serif;
+        font-family: NexaBold,Helvetica,Arial,sans-serif;
         font-weight: 400;
         border-radius: 2px;
         background-color: #f5f5f5;

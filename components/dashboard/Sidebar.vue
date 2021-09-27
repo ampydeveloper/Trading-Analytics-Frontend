@@ -67,6 +67,12 @@
             <div class="link-text">Stoxticker</div>
           </nuxt-link>
         </li>
+         <li class="nav-item">
+          <a class="nav-link" href="https://www.slabstox.com/category/sxnewsfeed/" target="_blank">
+            <div class="icon news-feed-icon"></div>
+            <div class="link-text">Newsfeed</div>
+          </a>
+        </li>
         <li class="nav-item">
           <nuxt-link
             class="nav-link"
@@ -86,12 +92,6 @@
             <div class="icon stox-request-icon"></div>
             <div class="link-text">Slab Request</div>
           </span>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="https://www.slabstox.com/category/sxnewsfeed/" target="_blank">
-            <div class="icon news-feed-icon"></div>
-            <div class="link-text">News Feed</div>
-          </a>
         </li>
         <li
           class="nav-item"
