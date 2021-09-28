@@ -120,6 +120,11 @@
             <div class="icon stoxticker-icon"></div>
           </nuxt-link>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://www.slabstox.com/category/sxnewsfeed/" target="_blank">
+            <div class="icon news-feed-icon"></div>
+          </a>
+        </li>
         <li class="nav-item" v-if="user != null && user.full_name != null">
           <nuxt-link class="nav-link" to="/stox-requrest">
             <div class="icon stox-request-icon"></div>
@@ -671,6 +676,9 @@ export default {
         }
         .analytics-icon {
           background-image: url('~@/assets/img/icons/analytics-black.png');
+        }
+        .news-feed-icon {
+          background-image: url('~@/assets/img/icons/news-feed-icon.png');
         }
         .stoxticker-icon {
           background-image: url('~@/assets/img/icons/stoxticker-black.png');
