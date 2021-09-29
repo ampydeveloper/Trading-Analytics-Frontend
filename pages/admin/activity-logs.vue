@@ -91,7 +91,7 @@
             >
             <span class="search-form ml-3">
             <button
-              class="btn btn-outline-secondary"
+              class="btn btn-outline-secondary btn-export-csv"
               @click="getActivityLogsCsv()"
               type="button" v-if="logs.length > 0"
             >
@@ -386,5 +386,8 @@ ul.my-card-listing {
 .row-5 > div {
   padding-left: 5px;
   padding-right: 5px;
+}
+.btn-export-csv{
+  margin-bottom: 7px;
 }
 </style>

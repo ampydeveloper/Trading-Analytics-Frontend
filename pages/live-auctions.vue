@@ -3,15 +3,12 @@
     <div class="navbar">
       <ul>
         <li
-          v-for="sport in attributes.sport"
+          v-for="sport in cards"
           :key="sport"
-          class="btn theme-green-btn 4567890"
-          :data-title="sport + '-outor-div'"
+          class="sports-navbars btn theme-green-btn"
+          :data-title="sport.replace(' ', '-') + '-outor-div'"
         >
           {{ sport }}
-        </li>
-        <li class="btn theme-green-btn" data-title="random-bin-outor-div">
-          Random bin
         </li>
       </ul>
     </div>
@@ -41,10 +38,9 @@ export default {
   },
   mounted() {
     this.getEndingSoonListing()
-    // var cardsModif = typeof attributes != 'undefined' ? attributes.sport : ''
-    // this.cards = [...cardsModif, 'random bin']
-
-    $('.btn').click(function () {
+  },
+   updated() {
+   $('.sports-navbars').click(function () {
       var link = '#'
       link += $(this).attr('data-title')
       $('html, body').animate(
@@ -96,11 +92,6 @@ export default {
       }
     },
   },
-  // watch: {
-  //   attributes(attributes) {
-  //     this.cards = [...attributes.sport, 'random bin']
-  //   },
-  // },
 }
 </script> 
 
