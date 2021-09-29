@@ -1031,11 +1031,9 @@ import MarqueeText from 'vue-marquee-text-component'
 import { mapGetters } from 'vuex'
 import { FILTERS } from '../constants/advance_search_filter'
 
-
 export default {
   transition: 'fade',
   layout: 'guestOuter',
-  // auth: 'guest',
   directives: {
     clickOutside: vClickOutside.directive,
   },
@@ -1069,8 +1067,7 @@ export default {
 
     this.getSoldListing()
     // this.getAllBoards()
-    this.allBoardGraphFunc(90)
-    this.allBoardGraphFunc1d(2)
+
     this.logo = document.getElementById('sidebarLogo').src
 
     $('.custom-stox').on('click', function () {
@@ -1116,6 +1113,18 @@ export default {
       e.preventDefault()
     })
   },
+  updated() {
+    this.mountAppend = this.mountAppend + 1
+    if (
+      $.trim($('.all-public-boards-list-out').html()) == '' &&
+      this.mountAppend == 4
+    ) {
+      setTimeout(() => {
+        this.allBoardGraphFunc(90)
+        this.allBoardGraphFunc1d(2)
+      }, 10000)
+    }
+  },
   components: {
     CardListItem,
     CardSlabItem,
@@ -1125,6 +1134,7 @@ export default {
   data() {
     return {
       paused: false,
+      mountAppend: 0,
       logo: null,
       baseUrl: BASE_URL,
       keyword: null,
@@ -1365,12 +1375,12 @@ export default {
       filters: { ...FILTERS },
     }
   },
-  computed:{
+  computed: {
     ...mapGetters({
       showAdvanceSearch: 'advancesearch/show',
       filters_old_state: 'advancesearch/filters',
-      attributes: 'advancesearch/attributes'
-    })
+      attributes: 'advancesearch/attributes',
+    }),
   },
   methods: {
     searchBoard(days = 90) {
@@ -1592,7 +1602,8 @@ export default {
               $('.search-stox-box .search-bar input').val('')
               this.searchSlabs = res.data
               this.$toast.success('Stoxticker board created successfully.')
-              this.allBoardGraphFunc(90)
+              // this.allBoardGraphFunc(90)
+              // this.allBoardGraphFunc1d(2)
             }
           })
           .catch((err) => {
@@ -2379,7 +2390,7 @@ ul.my-card-listing {
       margin-bottom: 5px;
       a {
         // font-family: 'CocogoosePro-Regular', Helvetica, Arial, sans-serif;
-        font-family: NexaBold,Helvetica,Arial,sans-serif;
+        font-family: NexaBold, Helvetica, Arial, sans-serif;
         font-weight: 400;
         border-radius: 2px;
         background-color: #f5f5f5;
