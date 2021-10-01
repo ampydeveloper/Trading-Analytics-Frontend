@@ -235,7 +235,8 @@ export default {
               take: 18,
               page: this.page,
               sport: this.sport,
-                orderby: this.orderBy,
+              search: this.keyword,
+              orderby: this.orderBy,
             filterval: this.filterVal,
             })
             .then((res) => {
