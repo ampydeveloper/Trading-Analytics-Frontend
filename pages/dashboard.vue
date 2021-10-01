@@ -212,7 +212,7 @@
                 </nuxt-link>
 
                 <button class="theme-btn card-btn btn-sxvalue">
-                  Slabstox ${{ stoxtickerData.sale }}
+                  Slabstox ${{ stoxtickerData.sale.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}
                 </button>
               </div>
             </h4>
@@ -228,7 +228,7 @@
                   v-if="sxIcon && sxIcon !== undefined"
                   :icon="['fas', 'long-arrow-alt-' + sxIcon]"
                 />&nbsp;
-                <span class="g-dollar-d-val"> ${{ doller_diff }}</span>
+                <span class="g-dollar-d-val"> ${{ doller_diff.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</span>
               </button>
               <button
                 :class="

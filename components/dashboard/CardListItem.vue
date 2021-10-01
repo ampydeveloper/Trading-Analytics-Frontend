@@ -13,7 +13,7 @@
     </button> -->
     <button class="theme-btn sxvalue">
       <span class="sxvalue-text">
-        SX $:{{ itemdata.sx_value != null ? itemdata.sx_value : 0 }}</span
+        SX ${{ itemdata.sx_value != null ? itemdata.sx_value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 0 }}</span
       >
       <span
         :class="(itemdata.sx_icon == 'up' ? 'high' : 'low') + ' float-right'"
@@ -21,7 +21,7 @@
           v-if="itemdata.sx_icon !== undefined"
           :icon="['fas', 'long-arrow-alt-' + itemdata.sx_icon]"
         />
-        ${{ itemdata.price_diff != null ? itemdata.price_diff : 0 }}</span
+        ${{ itemdata.price_diff != null ? itemdata.price_diff.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 0 }}</span
       >
     </button>
     <button class="theme-btn timeLeft">Time left: {{ timeLeft.value }}</button>

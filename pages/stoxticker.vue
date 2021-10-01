@@ -9,16 +9,16 @@
           </button>
           <span class="tooltip-text set-tooltip mr-xl-2" v-b-tooltip.bottomleft  title="Click here to create your own custom StoxTicker by adding any Slabs you want to the SlabStoxPro database.">?</span>
 
-          <button class="card-btn search-stox" >
-            Search stoxticker board
-            <span class="chevron-right">
-            <font-awesome-icon :icon="['fas', 'chevron-right']" />
-            </span>
-             <span class="chevron-down">
-             <font-awesome-icon :icon="['fas', 'chevron-down']" />
-             </span>
-          </button>
-          <span class="tooltip-text set-tooltip mx-xl-2" v-b-tooltip.bottomleft title="Click here to search other SlabStoxPro users’ StoxTicker boards to see who they’re tracking.">?</span>
+            <button class="card-btn search-stox" >
+              Search stoxticker board
+              <span class="chevron-right">
+              <font-awesome-icon :icon="['fas', 'chevron-right']" />
+              </span>
+              <span class="chevron-down">
+              <font-awesome-icon :icon="['fas', 'chevron-down']" />
+              </span>
+            </button>
+            <span class="tooltip-text set-tooltip mx-xl-2" v-b-tooltip.bottomleft title="Click here to search other SlabStoxPro users’ StoxTicker boards to see who they’re tracking.">?</span>
         </div>
       </div>
     </div>
@@ -144,7 +144,7 @@
           
             <h5 class="card-title">
              <button class="theme-btn card-btn dashboard-apex-top-alld">
-                Slabstox ${{ stoxtickerData.total }}
+                Slabstox ${{ stoxtickerData.total ? stoxtickerData.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : '' }}
               </button>
               <button
                 :class="
@@ -161,7 +161,7 @@
                     'long-arrow-alt-' + stoxtickerData.change_arrow,
                   ]"
                 />&nbsp;
-                <span class="g-dollar-d-val"> ${{ stoxtickerData.doller_diff }}</span>
+                <span class="g-dollar-d-val"> ${{ stoxtickerData.doller_diff ? stoxtickerData.doller_diff.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","):'' }}</span>
               </button>
               <button
                 :class="
@@ -177,7 +177,7 @@
                     'fas',
                     'long-arrow-alt-' + stoxtickerData.change_arrow,
                   ]"
-                />&nbsp;{{ stoxtickerData.perc_diff }}%
+                />&nbsp;{{ stoxtickerData.perc_diff ? stoxtickerData.perc_diff.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","):'' }}%
               </button>
 
                <button class="theme-btn card-btn dashboard-apex-top-1d" style="display: none">
@@ -454,7 +454,7 @@
                   <span class="tot-sla">TOTAL SLABS</span>
                 </div>
                 <div class="bs-stats bs-stats3">
-                  <h2>${{ (data.sale?data.sale:0) }}</h2>
+                  <h2>${{ (data.sale?data.sale.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","):0) }}</h2>
                   <span class="avg-sla">TOTAL SX VALUE</span>
                 </div>
                 <div class="bs-stats bs-stats4">
@@ -837,13 +837,13 @@ slabstox.com
                 :to="`stox-details?board=${allBoardGraph[key].id}`"
                 style="margin-right: 4px;" v-if="user != null && user.full_name != null"
                 >{{ allBoardGraph[key].name }}
-                ${{ allBoardGraph[key].total_card_value }}
+                ${{ allBoardGraph[key].total_card_value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}
               </nuxt-link>
               <span
                 :class="'theme-btn card-btn thb-btn sx-allboards-apex-top-alld'+allBoardGraph[key].id"
                 style="margin-right: 4px;" v-if="user == null || user.full_name == null" v-b-modal.loginTopPopup
                 >{{ allBoardGraph[key].name }}
-                ${{ allBoardGraph[key].total_card_value }}
+                ${{ allBoardGraph[key].total_card_value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}
               </span>
               <button
                 :class="
@@ -860,7 +860,7 @@ slabstox.com
                     'long-arrow-alt-' + allBoardGraph[key].sx_icon,
                   ]"
                 />&nbsp;&nbsp;
-                <span class="g-dollar-d-val"> ${{ allBoardGraph[key].doller_diff }}</span>
+                <span class="g-dollar-d-val"> ${{ allBoardGraph[key].doller_diff.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</span>
               </button>
               <button
                 :class="
@@ -2394,7 +2394,7 @@ ul.my-card-listing {
         font-weight: 400;
         border-radius: 2px;
         background-color: #f5f5f5;
-        padding: 12px 20px 10px 20px;
+        padding: 12px 17px 10px 17px;
         color: #000;
         font-size: 11px;
         text-decoration: none;

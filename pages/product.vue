@@ -79,7 +79,7 @@
                 <h5 class="card-title sx-stats-all">
                   <button class="theme-cart-btn card-btn">Listing Info</button>
                   <button class="theme-btn card-btn" v-if="sx != null">
-                    SX Value ${{ sx != null ? sx : '0' }}
+                    SX Value ${{ sx != null ? sx.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : '0' }}
                   </button>
                   <button
                     class="theme-green-btn card-btn"
@@ -87,7 +87,7 @@
                   >
                     <font-awesome-icon
                       :icon="['fas', 'long-arrow-alt-up']"
-                    />&nbsp;&nbsp;{{ sx_value }}
+                    />&nbsp;&nbsp;{{ sx_value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}
                   </button>
                   <button
                     class="theme-red-btn card-btn"
@@ -95,7 +95,7 @@
                   >
                     <font-awesome-icon
                       :icon="['fas', 'long-arrow-alt-down']"
-                    />&nbsp;&nbsp;{{ sx_value }}
+                    />&nbsp;&nbsp;{{ sx_value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}
                   </button>
                   <button class="theme-btn card-btn" v-if="sx_icon == null">
                     {{ sx_value }}

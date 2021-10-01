@@ -96,7 +96,7 @@
               <div class="card-body dashboard-graph">
                 <h5 class="card-title_new">
                   <button class="theme-btn card-btn dashboard-apex-top-alld">
-                    *SX Value ${{ cardGraph.sx_value ? cardGraph.sx_value : 0 }}
+                    *SX Value ${{ cardGraph.sx_value ? cardGraph.sx_value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 0 }}
                   </button>
                   <button
                     :class="sx_icon_class + ' card-btn dashboard-apex-top-alld'"
@@ -108,7 +108,7 @@
                       :icon="['fas', 'long-arrow-alt-' + cardGraph.sx_icon]"
                     />
                     &nbsp;${{
-                      cardGraph.dollar_diff ? cardGraph.dollar_diff : 0
+                      cardGraph.dollar_diff ? cardGraph.dollar_diff.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 0
                     }}
                   </button>
                   <button
@@ -120,7 +120,7 @@
                       "
                       :icon="['fas', 'long-arrow-alt-' + cardGraph.sx_icon]"
                     />
-                    &nbsp;{{ cardGraph.pert_diff ? cardGraph.pert_diff : 0 }}%
+                    &nbsp;{{ cardGraph.pert_diff ? cardGraph.pert_diff.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 0 }}%
                   </button>
 
                   <button
@@ -128,7 +128,7 @@
                     style="display: none"
                   >
                     *SX Value ${{
-                      card1dGraph.sx_value ? card1dGraph.sx_value : 0
+                      card1dGraph.sx_value ? card1dGraph.sx_value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 0
                     }}
                   </button>
                   <button
@@ -143,7 +143,7 @@
                       :icon="['fas', 'long-arrow-alt-' + card1dGraph.sx_icon]"
                     />
                     &nbsp;${{
-                      card1dGraph.dollar_diff ? card1dGraph.dollar_diff : 0
+                      card1dGraph.dollar_diff ? card1dGraph.dollar_diff.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 0
                     }}
                   </button>
                   <button
@@ -158,7 +158,7 @@
                       :icon="['fas', 'long-arrow-alt-' + card1dGraph.sx_icon]"
                     />
                     &nbsp;{{
-                      card1dGraph.pert_diff ? card1dGraph.pert_diff : 0
+                      card1dGraph.pert_diff ? card1dGraph.pert_diff.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 0
                     }}%
                   </button>
 
@@ -400,11 +400,11 @@
             <div class="stat_box">
               <h3>stats</h3>
               <ul>
-                <li>SlabStox Value: ${{ slabstoxValue }}</li>
-                <li>Overall Rank: {{ rank }}</li>
+                <li>SlabStox Value: ${{ slabstoxValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</li>
+                <li>Overall Volume Rank: {{ rank }}</li>
                 <li>
                   Last Sale Price:
-                  {{ lastSalePrice ? '$' + lastSalePrice : 'N/A' }}
+                  {{ lastSalePrice ? '$' + lastSalePrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 'N/A' }}
                 </li>
                 <li>
                   Last Sale Date:
@@ -415,7 +415,7 @@
                   }}
                 </li>
                 <li>
-                  High Sale: {{ highestSale ? '$' + highestSale.cost : 'N/A' }}
+                  High Sale: {{ highestSale ? '$' + highestSale.cost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 'N/A' }}
                   {{
                     highestSale
                       ? '(' +
@@ -425,7 +425,7 @@
                   }}
                 </li>
                 <li>
-                  Low Sale: {{ lowestSale ? '$' + lowestSale.cost : 'N/A' }}
+                  Low Sale: {{ lowestSale ? '$' + lowestSale.cost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 'N/A' }}
                   {{
                     lowestSale
                       ? '(' +

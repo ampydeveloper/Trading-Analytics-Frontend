@@ -9,16 +9,16 @@
           </button>
           <span class="tooltip-text set-tooltip mr-xl-2" v-b-tooltip.bottomleft  title="Click here to create your own custom StoxTicker by adding any Slabs you want to the SlabStoxPro database.">?</span>
 
-          <button class="card-btn search-stox" >
-            Search stoxticker board
-            <span class="chevron-right">
-            <font-awesome-icon :icon="['fas', 'chevron-right']" />
-            </span>
-             <span class="chevron-down">
-             <font-awesome-icon :icon="['fas', 'chevron-down']" />
-             </span>
-          </button>
-          <span class="tooltip-text set-tooltip mx-xl-2" v-b-tooltip.bottomleft title="Click here to search other SlabStoxPro users’ StoxTicker boards to see who they’re tracking.">?</span>
+            <button class="card-btn search-stox" >
+              Search stoxticker board 
+              <span class="chevron-right">
+              <font-awesome-icon :icon="['fas', 'chevron-right']" />
+              </span>
+              <span class="chevron-down">
+              <font-awesome-icon :icon="['fas', 'chevron-down']" />
+              </span>
+            </button>
+            <span class="tooltip-text set-tooltip mx-xl-2" v-b-tooltip.bottomleft title="Click here to search other SlabStoxPro users’ StoxTicker boards to see who they’re tracking.">?</span>  
         </div>
       </div>
     </div>
@@ -210,7 +210,7 @@
                       :to="`stoxticker-details?board=${itemdata.id}`"
                       style="margin-right: 4px;"
                       >{{ itemdata.name }}
-                      ${{ boardSearch[key].total_card_value }}
+                      ${{ boardSearch[key].total_card_value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}
                       </nuxt-link
                     >
 
@@ -218,7 +218,7 @@
                       class="theme-btn card-btn"
                       style="margin-right: 4px;" v-if="user == null || user.full_name == null" v-b-modal.loginTopPopup
                       >{{ itemdata.name }}
-                      ${{ boardSearch[key].total_card_value }}
+                      ${{ boardSearch[key].total_card_value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}
                       </span
                     >
 
@@ -231,7 +231,7 @@
                   >
                     <font-awesome-icon
                       :icon="['fas', 'long-arrow-alt-' + boardSearch[key].sx_icon]"
-                    />&nbsp;${{ boardSearch[key].doller_diff }}
+                    />&nbsp;${{ boardSearch[key].doller_diff.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}
                   </button>
                   <button
                     :class="
@@ -242,7 +242,7 @@
                   >
                     <font-awesome-icon
                       :icon="['fas', 'long-arrow-alt-' + boardSearch[key].sx_icon]"
-                    />&nbsp;{{ boardSearch[key].pert_diff }}%
+                    />&nbsp;{{ boardSearch[key].pert_diff.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}%
                   </button>
                 </h5>
                 <div class="dashboard-apex-top">
@@ -312,9 +312,9 @@
       <div class="my-card-no-slab no-card-no-board" v-if="boardSearch.length ==0 && requestInProcess ==false">
         No board found.
       </div>
-          <div class="dataloader search-board-dataloader" v-if="requestInProcess">
+          <!-- <div class="dataloader search-board-dataloader" v-if="requestInProcess">
             <b-spinner variant="success" label="Spinning"></b-spinner>
-          </div>
+          </div> -->
           <div class="create-board-out my-card text-center" style="display:none">
                 <button class="my-card-view-listing create-board" @click="searchBoard()">
                   Load More Boards
@@ -337,13 +337,13 @@
                 :to="`stox-details?board=${allBoardGraph[key].id}`"
                 style="margin-right: 4px;" v-if="user != null && user.full_name != null"
                 >{{ allBoardGraph[key].name }}
-                ${{ allBoardGraph[key].total_card_value }}
+                ${{ allBoardGraph[key].total_card_value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}
               </nuxt-link>
               <span
                 :class="'theme-btn card-btn thb-btn sx-allboards-apex-top-alld'+allBoardGraph[key].id"
                 style="margin-right: 4px;" v-if="user == null || user.full_name == null" v-b-modal.loginTopPopup
                 >{{ allBoardGraph[key].name }}
-                ${{ allBoardGraph[key].total_card_value }}
+                ${{ allBoardGraph[key].total_card_value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}
               </span>
               <button
                 :class="
@@ -360,7 +360,7 @@
                     'long-arrow-alt-' + allBoardGraph[key].sx_icon,
                   ]"
                 />&nbsp;&nbsp;
-                <span class="g-dollar-d-val"> ${{ allBoardGraph[key].doller_diff }}</span>
+                <span class="g-dollar-d-val"> ${{ allBoardGraph[key].doller_diff.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</span>
               </button>
               <button
                 :class="
@@ -376,7 +376,7 @@
                     'fas',
                     'long-arrow-alt-' + allBoardGraph[key].sx_icon,
                   ]"
-                />&nbsp;&nbsp;{{ allBoardGraph[key].pert_diff }}%
+                />&nbsp;&nbsp;{{ allBoardGraph[key].pert_diff.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}%
               </button>
 
               <nuxt-link
@@ -384,7 +384,7 @@
                 :to="`stox-details?board=${allBoardGraph[key].id}`"
                 v-if="user != null && user.full_name != null"
                 >{{ allBoardGraph[key].name }}
-                ${{ allBoardGraph[key].total_card_value }}
+                ${{ allBoardGraph[key].total_card_value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}
               </nuxt-link>
               <span
                 :class="'theme-btn card-btn thb-btn sx-allboards-apex-top-1d'+allBoardGraph[key].id" style="display: none; margin-right: 4px;"
@@ -407,7 +407,7 @@
                     'long-arrow-alt-' + allBoardGraph[key].sx_icon,
                   ]"
                 />&nbsp;&nbsp;
-                <span class="g-dollar-d-val"> ${{ allBoardGraph[key].doller_diff }}</span>
+                <span class="g-dollar-d-val"> ${{ allBoardGraph[key].doller_diff.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</span>
               </button>
               <button
                 :class="
@@ -423,7 +423,7 @@
                     'fas',
                     'long-arrow-alt-' + allBoardGraph[key].sx_icon,
                   ]"
-                />&nbsp;&nbsp;{{ allBoardGraph[key].pert_diff }}%
+                />&nbsp;&nbsp;{{ allBoardGraph[key].pert_diff.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}%
               </button>
             </h5>
             <div class="dashboard-apex-top">
@@ -1882,7 +1882,7 @@ ul.my-card-listing {
         font-weight: 400;
         border-radius: 2px;
         background-color: #f5f5f5;
-        padding: 12px 20px 10px 20px;
+        padding: 12px 17px 10px 17px;
         color: #000;
         font-size: 11px;
         text-decoration: none;
