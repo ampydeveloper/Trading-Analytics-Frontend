@@ -19,6 +19,17 @@
               </span>
             </button>
             <span class="tooltip-text set-tooltip mx-xl-2" v-b-tooltip.bottomleft title="Click here to search other SlabStoxPro users’ StoxTicker boards to see who they’re tracking.">?</span>  
+
+            <button class="card-btn search-stox" >
+              Featured boards 
+              <span class="chevron-right">
+              <font-awesome-icon :icon="['fas', 'chevron-right']" />
+              </span>
+              <span class="chevron-down">
+              <font-awesome-icon :icon="['fas', 'chevron-down']" />
+              </span>
+            </button>
+            <span class="tooltip-text set-tooltip mx-xl-2" v-b-tooltip.bottomleft title="featured boards">?</span>
         </div>
       </div>
     </div>

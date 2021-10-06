@@ -9,14 +9,14 @@
             </h5>
             <div class="row">
               <div class="col-md-2 bs-stats">
-                <h2>SX</h2>
+                <h2 :class="sx_length && sx_length >= 16 ? 'small-font' : ''">SX</h2>
               </div>
               <div class="col-md-2 bs-stats">
                 <h3>{{ intToString(data.total) }}@</h3>
                 <span class="tot-sla">TOTAL SLABS</span>
               </div>
               <div class="col-md-5 bs-stats">
-                <h2>{{ data.sale ? data.sale : '' }}</h2>
+                <h2 :class="sx_length && sx_length >= 16 ? 'small-font' : ''">{{ data.sale ? data.sale : '' }}</h2>
                 <span class="avg-sla">AVG. SLAB SALE</span>
               </div>
               <div class="col-md-3 bs-stats">
@@ -25,7 +25,7 @@
                     :icon="['fas', 'caret-' + data.change_arrow]"
                   />
                 </div>
-                <h2>{{ data.change }}</h2>
+                <h2 :class="sx_length && sx_length >= 16 ? 'small-font' : ''">{{ data.change }}</h2>
                 <span class="cha-amo">CHANGE AMOUNT</span>
               </div>
             </div>
@@ -66,9 +66,14 @@ export default {
   mounted() {
     this.getData()
   },
+  updated() {
+      var sx = $('.bs-stats3 h2').text();
+      this.sx_length = sx.length;
+  },
   components: {},
   data() {
     return {
+      sx_length:'',
       logo: null,
       baseUrl: BASE_URL,
       requestInProcess: false,
@@ -390,5 +395,8 @@ html body main .card.search-slabs-out .my-card-listing .my-card {
       margin-top: 21px;
     }
   }
+}
+.small-font{
+  font-size:4vw !important;
 }
 </style>
