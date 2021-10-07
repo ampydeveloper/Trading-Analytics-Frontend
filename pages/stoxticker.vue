@@ -20,7 +20,7 @@
             </button>
             <span class="tooltip-text set-tooltip mx-xl-2" v-b-tooltip.bottomleft title="Click here to search other SlabStoxPro users’ StoxTicker boards to see who they’re tracking.">?</span>
 
-            <nuxt-link
+            <!-- <nuxt-link
               class=""
               to="/featured-boards"
             >
@@ -31,7 +31,7 @@
                 </span>
             </button>
             </nuxt-link>
-            <span class="tooltip-text set-tooltip mx-xl-2" v-b-tooltip.bottomleft title="featured boards">?</span>
+            <span class="tooltip-text set-tooltip mx-xl-2" v-b-tooltip.bottomleft title="Click here to fetch featured boards">?</span> -->
         </div>
       </div>
     </div>
@@ -837,199 +837,6 @@ slabstox.com
     </div>
    
 
-   <div class="row dashboard-graph-row all-public-boards-list-out">
-      <div class="col-md-12 col-sm-12" v-for="(itemdata, key) in allBoardGraph" :key='`allBoardGraph-${key}`'>
-        <div class="card">
-          <div
-            class="card-body dashboard-graph sx-stats-all"
-            id="dashboard-graph-outer"
-          >
-            <h5 class="card-title">
-              <nuxt-link
-                :class="'theme-btn card-btn thb-btn sx-allboards-apex-top-alld'+allBoardGraph[key].id"
-                :to="`stox-details?board=${allBoardGraph[key].id}`"
-                style="margin-right: 4px;" v-if="user != null && user.full_name != null"
-                >{{ allBoardGraph[key].name }}
-                ${{ allBoardGraph[key].total_card_value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}
-              </nuxt-link>
-              <span
-                :class="'theme-btn card-btn thb-btn sx-allboards-apex-top-alld'+allBoardGraph[key].id"
-                style="margin-right: 4px;" v-if="user == null || user.full_name == null" v-b-modal.loginTopPopup
-                >{{ allBoardGraph[key].name }}
-                ${{ allBoardGraph[key].total_card_value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}
-              </span>
-              <button
-                :class="
-                  (allBoardGraph[key].sx_icon &&
-                  allBoardGraph[key].sx_icon == 'up'
-                    ? 'theme-green-btn'
-                    : 'theme-red-btn') + ' card-btn sx-allboards-apex-top-alld'+allBoardGraph[key].id
-                "
-              >
-                <font-awesome-icon
-                  v-if="allBoardGraph[key].sx_icon !== undefined"
-                  :icon="[
-                    'fas',
-                    'long-arrow-alt-' + allBoardGraph[key].sx_icon,
-                  ]"
-                />&nbsp;&nbsp;
-                <span class="g-dollar-d-val"> ${{ allBoardGraph[key].doller_diff.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</span>
-              </button>
-              <button
-                :class="
-                  (allBoardGraph[key].sx_icon &&
-                  allBoardGraph[key].sx_icon == 'up'
-                    ? 'theme-green-btn'
-                    : 'theme-red-btn') + ' card-btn sx-allboards-apex-top-alld'+allBoardGraph[key].id
-                "
-              >
-                <font-awesome-icon
-                  v-if="allBoardGraph[key].sx_icon !== undefined"
-                  :icon="[
-                    'fas',
-                    'long-arrow-alt-' + allBoardGraph[key].sx_icon,
-                  ]"
-                />&nbsp;&nbsp;{{ allBoardGraph[key].pert_diff }}%
-              </button>
-
-              <nuxt-link
-                :class="'theme-btn card-btn thb-btn sx-allboards-apex-top-1d'+allBoardGraph[key].id" style="display: none; margin-right: 4px;"
-                :to="`stox-details?board=${allBoardGraph[key].id}`"
-                v-if="user != null && user.full_name != null"
-                >{{ allBoardGraph[key].name }}
-                ${{ allBoardGraph[key].total_card_value }}
-              </nuxt-link>
-              <span
-                :class="'theme-btn card-btn thb-btn sx-allboards-apex-top-1d'+allBoardGraph[key].id" style="display: none; margin-right: 4px;"
-               v-if="user == null || user.full_name == null" v-b-modal.loginTopPopup
-                >{{ allBoardGraph[key].name }}
-                ${{ allBoardGraph[key].total_card_value }}
-              </span>
-              <button
-                :class="
-                  (allBoardGraph[key].sx_icon &&
-                  allBoardGraph[key].sx_icon == 'up'
-                    ? 'theme-green-btn'
-                    : 'theme-red-btn') + ' card-btn sx-allboards-apex-top-1d'+allBoardGraph[key].id
-                " style="display: none"
-              >
-                <font-awesome-icon
-                  v-if="allBoardGraph[key].sx_icon !== undefined"
-                  :icon="[
-                    'fas',
-                    'long-arrow-alt-' + allBoardGraph[key].sx_icon,
-                  ]"
-                />&nbsp;&nbsp;
-                <span class="g-dollar-d-val"> ${{ allBoardGraph[key].doller_diff }}</span>
-              </button>
-              <button
-                :class="
-                  (allBoardGraph[key].sx_icon &&
-                  allBoardGraph[key].sx_icon == 'up'
-                    ? 'theme-green-btn'
-                    : 'theme-red-btn') + ' card-btn sx-allboards-apex-top-1d'+allBoardGraph[key].id
-                " style="display: none"
-              >
-                <font-awesome-icon
-                  v-if="allBoardGraph[key].sx_icon !== undefined"
-                  :icon="[
-                    'fas',
-                    'long-arrow-alt-' + allBoardGraph[key].sx_icon,
-                  ]"
-                />&nbsp;&nbsp;{{ allBoardGraph[key].pert_diff }}%
-              </button>
-              <button
-                class="theme-btn card-btn "
-                v-if="allBoardGraph[key].featured == 1"
-              >
-               Featured
-              </button>
-            </h5>
-            <div class="dashboard-apex-top">
-               <div :class="'sx-allboards-apex-top-1d'+allBoardGraph[key].id" style="display: none">
-              <VueApexCharts
-              ref="stoxtickerBoardChart"
-                type="area"
-                height="350"
-                :key="`vac-${key}-dashChart`"
-                :options="boardChartOptions1d[key]"
-                :series="boardSeries1d[key]"
-              ></VueApexCharts>
-                </div>
-                <div :class="'sx-allboards-apex-top-alld'+allBoardGraph[key].id">
-                  <VueApexCharts
-                    ref="stoxtickerBoardChart"
-                    type="area"
-                    height="350"
-                    :key="`vac-${key}-dashChart`"
-                    :options="boardChartOptions[key]"
-                    :series="boardSeries[key]"
-                  ></VueApexCharts>
-                </div>
-            </div>
-            <div class="dashboard-graph-footer" id='`boardGraphs-${key}`'>
-              <ul class="dashboard-graph-footer-month-filter" :id='`dc-${key}-ul`' :key='`dc-${key}-ul`'>
-                <li
-                  :class="[{'active': boardDaysGraph[key] == 2}, 'dashboard-graph-footer-month-filter-item']"
-                  @click="allBoardGraphSingleFunc1d(2,allBoardGraph[key].id,key)"
-                >
-                  1D
-                </li>
-                <li
-                  :class="[{'active': boardDaysGraph[key] == 7}, 'dashboard-graph-footer-month-filter-item']"
-                  @click="allBoardGraphSingleFunc(7,allBoardGraph[key].id,key)"
-                >
-                  1W
-                </li>
-                <li
-                  :class="[{'active': boardDaysGraph[key] == 30}, 'dashboard-graph-footer-month-filter-item']"
-                  @click="allBoardGraphSingleFunc(30,allBoardGraph[key].id,key)"
-                >
-                  1M
-                </li>
-                <li
-                  :class="[{'active': boardDaysGraph[key] == 90}, 'dashboard-graph-footer-month-filter-item']"
-                  @click="allBoardGraphSingleFunc(90,allBoardGraph[key].id,key)"
-                >
-                  3M
-                </li>
-                <li
-                  :class="[{'active': boardDaysGraph[key] == 180}, 'dashboard-graph-footer-month-filter-item']"
-                  @click="allBoardGraphSingleFunc(180,allBoardGraph[key].id,key)"
-                >
-                  6M
-                </li>
-                <li
-                  :class="[{'active': boardDaysGraph[key] == 365}, 'dashboard-graph-footer-month-filter-item']"
-                  @click="allBoardGraphSingleFunc(365,allBoardGraph[key].id,key)"
-                >
-                  1Y
-                </li>
-                <li
-                  :class="[{'active': boardDaysGraph[key] == 1825}, 'dashboard-graph-footer-month-filter-item']"
-                  @click="allBoardGraphSingleFunc(1825,allBoardGraph[key].id,key)"
-                >
-                  5Y
-                </li>
-              </ul>
-              <p class="dashboard-graph-footer-update-at float-right">
-                Last Updated - 
-                {{ (allBoardGraph[key].sales_graph.last_timestamp?allBoardGraph[key].sales_graph.last_timestamp:'') }}
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div class="social_share ss-h4">
-          <h4>
-            <!-- <a class="embed-link" href="javascript:void(0);"
-              @click="embedStoxtickerCode()" >EMBED CODE </>
-            </a> -->
-          </h4>
-        </div>
-      </div>
-      
-    </div>
 
   </div>
 </template>
@@ -1125,19 +932,18 @@ export default {
       $(this).parent().toggleClass('active')
       e.preventDefault()
     })
-    
   },
   updated() {
-    this.mountAppend = this.mountAppend + 1
-    if (
-      $.trim($('.all-public-boards-list-out').html()) == '' &&
-      this.mountAppend == 4
-    ) {
-      setTimeout(() => {
-        this.allBoardGraphFunc(90)
-        this.allBoardGraphFunc1d(2)
-      }, 10000)
-    }
+    // this.mountAppend = this.mountAppend + 1
+    // if (
+    //   $.trim($('.all-public-boards-list-out').html()) == '' &&
+    //   this.mountAppend == 4
+    // ) {
+    //   setTimeout(() => {
+    //     this.allBoardGraphFunc(90)
+    //     this.allBoardGraphFunc1d(2)
+    //   }, 10000)
+    // }
       var sx = $('.bs-stats3 h2').text();
       this.sx_length = sx.length;
   },
@@ -1149,9 +955,9 @@ export default {
   },
   data() {
     return {
-      sx_length:'',
+      sx_length: '',
       paused: false,
-      mountAppend: 0,
+      // mountAppend: 0,
       logo: null,
       baseUrl: BASE_URL,
       keyword: null,
@@ -1179,13 +985,12 @@ export default {
       soldListingpokemonMarqueeKey: 0,
       soldListinghockeyMarqueeKey: 0,
       // allBoards: '',
-      allBoardGraph: [],
+  
       boardDaysGraph: [],
       boardChartOptions: [],
       boardSeries: [],
       boardSalesQty: [],
 
-      allBoardGraph1d: [],
       boardChartOptions1d: [],
       boardSeries1d: [],
       boardSalesQty1d: [],
@@ -1619,8 +1424,6 @@ export default {
               $('.search-stox-box .search-bar input').val('')
               this.searchSlabs = res.data
               this.$toast.success('Stoxticker board created successfully.')
-              // this.allBoardGraphFunc(90)
-              // this.allBoardGraphFunc1d(2)
             }
           })
           .catch((err) => {
@@ -1870,247 +1673,8 @@ export default {
         this.sxActiveDaysGraph = days
       }
     },
-    allBoardGraphFunc(days = 90) {
-      try {
-        this.$axios.$get(`stoxticker/all-boards/${days}`).then((res) => {
-          if (res.status == 200) {
-            if (res.data != null && res.data.length > 0) {
-              res.data.map((item, key) => {
-                this.boardDaysGraph[key] = days
-                if (typeof item != 'undefined') {
-                  this.allBoardGraph[key] = item
-                  this.boardSeries[key] = [
-                    {
-                      name: 'SX',
-                      data: item.sales_graph.values,
-                    },
-                  ]
-                  this.boardDaysGraph.push(90)
-                  this.boardSalesQty.push(item.sales_graph.qty)
-                  this.boardChartOptions.push({
-                    chart: {
-                      toolbar: {
-                        show: false,
-                      },
-                      height: 350,
-                      type: 'area',
-                      background: 'transparent',
-                      zoom: {
-                        enabled: false,
-                      },
-                    },
-                    colors: ['#14f078'],
-                    dataLabels: {
-                      enabled: false,
-                    },
-                    stroke: {
-                      curve: 'smooth',
-                    },
-                    xaxis: {
-                      labels: {
-                        style: {
-                          colors: '#edecec',
-                          fontSize: '10px',
-                          fontFamily: 'NexaBold',
-                        },
-                      },
-                      type: 'datetime',
-                      tickAmount: 6,
-                      categories: item.sales_graph.labels,
-                    },
-                    yaxis: {
-                      labels: {
-                        style: {
-                          colors: '#edecec',
-                          fontSize: '10px',
-                          fontFamily: 'NexaBold',
-                        },
-                        formatter: (value, ind) => {
-                          let valCheck = value
-                          if (Number(value) === value && value % 1 !== 0) {
-                            let valCheck = Number(value).toFixed(2)
-                          }
-
-                          let lblStr = `$${valCheck}`
-                          return lblStr
-                        },
-                      },
-                    },
-                    tooltip: {
-                      enabled: true,
-                      x: {
-                        format: 'MM/dd/yy',
-                      },
-                      y: {
-                        formatter: (value, ind) => {
-                          let lblStr = `$${value}`
-                          if (typeof ind == 'object')
-                            lblStr = `$${value} (${
-                              this.boardSalesQty[key][ind.dataPointIndex]
-                            })`
-                          else
-                            lblStr = `$${value} (${this.boardSalesQty[key][ind]})`
-                          return lblStr
-                        },
-                      },
-                    },
-                  })
-                }
-              })
-            }
-          }
-        })
-      } catch (error) {
-        // console.log(error)
-      }
-    },
-    allBoardGraphFunc1d(days = 90) {
-      try {
-        this.$axios.$get(`stoxticker/all-boards/${days}`).then((res) => {
-          if (res.status == 200) {
-            if (res.data != null && res.data.length > 0) {
-              res.data.map((item, key) => {
-                // this.boardDaysGraph[key] = days
-                if (typeof item != 'undefined') {
-                  this.allBoardGraph1d[key] = item
-                  this.boardSeries1d[key] = [
-                    {
-                      name: 'SX',
-                      data: item.sales_graph.values,
-                    },
-                  ]
-                  // this.boardDaysGraph.push(90)
-                  this.boardSalesQty1d.push(item.sales_graph.qty)
-                  this.boardChartOptions1d.push({
-                    chart: {
-                      toolbar: {
-                        show: false,
-                      },
-                      height: 350,
-                      type: 'area',
-                      background: 'transparent',
-                      zoom: {
-                        enabled: false,
-                      },
-                    },
-                    colors: ['#14f078'],
-                    dataLabels: {
-                      enabled: false,
-                    },
-                    stroke: {
-                      curve: 'smooth',
-                    },
-                    xaxis: {
-                      labels: {
-                        style: {
-                          colors: '#edecec',
-                          fontSize: '10px',
-                          fontFamily: 'NexaBold',
-                        },
-                      },
-                      type: 'category',
-                      tickAmount: 24,
-                      tickPlacement: 'on',
-                      categories: item.sales_graph.labels,
-                      labels: {
-                        formatter: function (value) {
-                          if (value !== undefined) {
-                            var splittedCategories = value.split(':')
-                            var mins = splittedCategories[1]
-                            if (mins == '00') {
-                              return value
-                            } else {
-                              return ''
-                            }
-                          }
-                          return ''
-                        },
-                      },
-                    },
-                    yaxis: {
-                      labels: {
-                        style: {
-                          colors: '#edecec',
-                          fontSize: '10px',
-                          fontFamily: 'NexaBold',
-                        },
-                        formatter: (value, ind) => {
-                          let valCheck = value
-                          if (Number(value) === value && value % 1 !== 0) {
-                            let valCheck = Number(value).toFixed(2)
-                          }
-
-                          let lblStr = `$${valCheck}`
-                          return lblStr
-                        },
-                      },
-                    },
-                    tooltip: {
-                      enabled: true,
-                      x: {
-                        formatter: (value, ind) => {
-                          return item.sales_graph.labels[ind.dataPointIndex]
-                        },
-                      },
-                      y: {
-                        formatter: (value, ind) => {
-                          let lblStr = `$${value}`
-                          if (typeof ind == 'object')
-                            lblStr = `$${value} (${
-                              this.boardSalesQty1d[key][ind.dataPointIndex]
-                            })`
-                          else
-                            lblStr = `$${value} (${this.boardSalesQty1d[key][ind]})`
-                          return lblStr
-                        },
-                      },
-                    },
-                  })
-                }
-              })
-            }
-          }
-        })
-      } catch (error) {
-        // console.log(error)
-      }
-    },
-    allBoardGraphSingleFunc(days, board, boardKey) {
-      try {
-        this.$axios
-          .$get(`stoxticker/single-graph-board/${days}/${board}`)
-          .then((res) => {
-            if (res.status == 200) {
-              $('.sx-allboards-apex-top-alld' + board).show()
-              $('.sx-allboards-apex-top-1d' + board).hide()
-
-              this.boardDaysGraph.splice(boardKey, 1, days)
-              this.allBoardGraph.splice(boardKey, 1, res.data)
-
-              this.boardSeries.splice(boardKey, 1, [
-                { name: 'SX', data: res.data.sales_graph.values },
-              ])
-              this.boardSalesQty.splice(boardKey, 1, res.data.sales_graph.qty)
-              this.boardChartOptions.splice(boardKey, 1, {
-                xaxis: {
-                  categories: res.data.sales_graph.labels,
-                },
-              })
-            }
-          })
-      } catch (error) {
-        // console.log(error)
-      }
-    },
-    allBoardGraphSingleFunc1d(days, board, boardKey) {
-      try {
-        this.boardDaysGraph.splice(boardKey, 1, days)
-        $('.sx-allboards-apex-top-alld' + board).hide()
-        $('.sx-allboards-apex-top-1d' + board).show()
-      } catch (error) {
-        // console.log(error)
-      }
-    },
+   
+   
   },
 }
 </script>
@@ -2722,23 +2286,23 @@ html body main .card.search-slabs-out .my-card-listing .my-card {
   }
 }
 
-.featured-boards{
-    font-family: 'CocogoosePro-Regular', Helvetica, Arial, sans-serif;
-    font-weight: 400;
-    border-radius: 2px;
-    background-color: #fff;
-    padding: 20px 35px 17px 35px;
-    color: #000;
-    font-size: 12px;
-    text-align: center;
-    text-transform: uppercase;
-    outline: none;
-    border: 0;
+.featured-boards {
+  font-family: 'CocogoosePro-Regular', Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  border-radius: 2px;
+  background-color: #fff;
+  padding: 20px 35px 17px 35px;
+  color: #000;
+  font-size: 12px;
+  text-align: center;
+  text-transform: uppercase;
+  outline: none;
+  border: 0;
 }
-.featured-boards .chevron-right{
-    padding-left:5px;
+.featured-boards .chevron-right {
+  padding-left: 5px;
 }
-.small-font{
-  font-size:4vw !important;
+.small-font {
+  font-size: 4vw !important;
 }
 </style>
