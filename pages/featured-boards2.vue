@@ -9,26 +9,16 @@
           </button>
           <span class="tooltip-text set-tooltip mr-xl-2" v-b-tooltip.bottomleft  title="Click here to create your own custom StoxTicker by adding any Slabs you want to the SlabStoxPro database.">?</span>
 
-            <button class="card-btn search-stox" >
-              Search stoxticker board
-              <span class="chevron-right">
-              <font-awesome-icon :icon="['fas', 'chevron-right']" />
-              </span>
-              <span class="chevron-down">
-              <font-awesome-icon :icon="['fas', 'chevron-down']" />
-              </span>
-            </button>
-            <span class="tooltip-text set-tooltip mx-xl-2" v-b-tooltip.bottomleft title="Click here to search other SlabStoxPro users’ StoxTicker boards to see who they’re tracking.">?</span>
-
-            <nuxt-link to="/featured-boards" >
-            <button class="card-btn featured-boards" >
-                Featured boards
-                <span class="chevron-right">
-                <font-awesome-icon :icon="['fas', 'chevron-right']" />
-                </span>
-            </button>
-            </nuxt-link>
-            <span class="tooltip-text set-tooltip mx-xl-2" v-b-tooltip.bottomleft title="Click here to fetch featured boards">?</span>
+          <button class="card-btn search-stox" >
+            Search stoxticker board
+            <span class="chevron-right">
+            <font-awesome-icon :icon="['fas', 'chevron-right']" />
+            </span>
+             <span class="chevron-down">
+             <font-awesome-icon :icon="['fas', 'chevron-down']" />
+             </span>
+          </button>
+          <span class="tooltip-text set-tooltip mx-xl-2" v-b-tooltip.bottomleft title="Click here to search other SlabStoxPro users’ StoxTicker boards to see who they’re tracking.">?</span>
         </div>
       </div>
     </div>
@@ -154,7 +144,7 @@
           
             <h5 class="card-title">
              <button class="theme-btn card-btn dashboard-apex-top-alld">
-                Slabstox ${{ stoxtickerData.total ? stoxtickerData.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : '' }}
+                Slabstox ${{ stoxtickerData.total }}
               </button>
               <button
                 :class="
@@ -171,7 +161,7 @@
                     'long-arrow-alt-' + stoxtickerData.change_arrow,
                   ]"
                 />&nbsp;
-                <span class="g-dollar-d-val"> ${{ stoxtickerData.doller_diff ? stoxtickerData.doller_diff.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","):'' }}</span>
+                <span class="g-dollar-d-val"> ${{ stoxtickerData.doller_diff }}</span>
               </button>
               <button
                 :class="
@@ -187,7 +177,7 @@
                     'fas',
                     'long-arrow-alt-' + stoxtickerData.change_arrow,
                   ]"
-                />&nbsp;{{ stoxtickerData.perc_diff ? stoxtickerData.perc_diff.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","):'' }}%
+                />&nbsp;{{ stoxtickerData.perc_diff }}%
               </button>
 
                <button class="theme-btn card-btn dashboard-apex-top-1d" style="display: none">
@@ -457,14 +447,14 @@
               </h5>
               <div class="row" style="justify-content: center;">
                 <div class="bs-stats bs-stats1">
-                  <h2 :class="sx_length && sx_length >= 16 ? 'small-font' : ''">SX</h2>
+                  <h2>SX</h2>
                 </div>
                 <div class="bs-stats bs-stats2">
                   <h3>{{ intToString(data.total) }}</h3>
                   <span class="tot-sla">TOTAL SLABS</span>
                 </div>
                 <div class="bs-stats bs-stats3">
-                  <h2 :class="sx_length && sx_length >= 16 ? 'small-font' : ''">${{ (data.sale?data.sale.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","):0) }}</h2>
+                  <h2>${{ (data.sale?data.sale:0) }}</h2>
                   <span class="avg-sla">TOTAL SX VALUE</span>
                 </div>
                 <div class="bs-stats bs-stats4">
@@ -473,7 +463,7 @@
                       :icon="['fas', 'caret-' + data.change_arrow]"
                     />
                   </div>
-                  <h2 :class="sx_length && sx_length >= 16 ? 'small-font' : ''">{{ data.change }}%</h2>
+                  <h2>{{ data.change }}%</h2>
                   <span class="cha-amo">CHANGE AMOUNT</span>
                 </div>
               </div>
@@ -510,126 +500,7 @@ slabstox.com
           </p>
         </b-modal>
 
-        <div class="col-md-12 col-sm-12 pl-0 stoxticker_listing-outer">
-          <div class="card stoxticker_page stoxticker_listing">
-            <div class="card-body">
-              <h5 class="card-title">
-                <button class="theme-btn card-btn" >SX STOXTICKER</button>
-                <span class="tooltip-text d-inline" v-b-tooltip.bottomleft  title="Similar to the New York Stock Exchange, our StoxTicker allows you tosee a running list of cards from all sports, including their respective values. If the card is in green, it’s trending up since the most recent sale. If it is in red, it’s trending down.">?</span>
-                <span class="float-right share-lk-top sb-data-values-out">
-                <span class="share-icon si-white">
-                  Share
-                  <img src="~/assets/img/share-icon-white.png" alt />
-                </span>
-                <div class="share-all-outer" style="top: 19px;">
-                  <ul>
-                    <li style="margin: 0;">
-                      <a :href="'https://www.facebook.com/sharer/sharer.php?u='+encodeURI(sxStoxtickerUrl)"  target="_blank"
-                        ><img src="~/assets/img/icons/facebook.svg" alt
-                      /></a>
-                    </li>
-                    <li style="margin: 0;">
-                      <a
-                        :href="
-                          'https://twitter.com/intent/tweet?url=' +
-                          encodeURI(sxStoxtickerUrl) +
-                          '&text=StoxTicker@' +
-                         (stoxtickerData.total?stoxtickerData.total:'')
-                        "
-                        target="_blank"
-                        ><img src="~/assets/img/icons/twitter.svg" alt
-                      /></a>
-                    </li>
-                    <li style="margin: 0;">
-                      <a
-                        :href="
-                          'http://pinterest.com/pin/create/button/?url=' +
-                          encodeURI(sxStoxtickerUrl) +
-                          '&media=' +
-                          encodeURI(this.graphImage) +
-                          '&description=' +
-                          encodeURI('Buy & Sell Sports Cards Online')
-                        "
-                        target="_blank"
-                        ><img src="~/assets/img/pinterest.png" alt
-                      /></a>
-                    </li>
-                    <li style="margin: 0;">
-                      <a
-                        :href="
-                          'https://www.linkedin.com/shareArticle?mini=true&url=' +
-                          encodeURI(sxStoxtickerUrl)
-                        "
-                        target="_blank"
-                        ><img src="~/assets/img/icons/linkedin-circled.svg" alt
-                      /></a>
-                    </li>
-                  </ul>
-                </div>
-              </span>
-              </h5>
-              <ul>
-                <li v-for="sport in attributes.sport" :key="sport">
-                  <h3 class="h3-title">{{sport}}</h3>
-
-                  <marquee-text
-                    :duration="30"
-                    :paused="paused"
-                    :key="'soldListing' + sport + 'MarqueeKey'"
-                    :v-if="soldListing[sport] != 0"
-                  >
-                    <div
-                      
-                      @mouseenter="paused = !paused"
-                      @mouseleave="paused = false"
-                      v-for="(value,key) in soldListing"
-                      :key="key"                    
-                    >
-                    <div v-if="key == sport">
-                      <template v-for="list in value">
-                        <h4>
-                          <nuxt-link
-                            class="sx-stox-card-link"
-                            :to="'/card-data/?id=' + list.card.id"
-                            :class="
-                              list.slab_sold_flag == true
-                                ? 'listing-rise'
-                                : 'listing-fall'
-                            "
-                            >{{ list.card.title }} - ${{ list.sold_price }}
-                          </nuxt-link>
-                          &nbsp;&nbsp;
-                        </h4>
-                      </template>
-                    </div>
-                    </div>
-                  </marquee-text>
-
-                  <marquee-text
-                    :duration="30"
-                    :paused="paused"
-                    :repeat="1"
-                    v-if="soldListing.basketball == 0"
-                  >
-                    <div
-                      @mouseenter="paused = !paused"
-                      @mouseleave="paused = false"
-                    >
-                      <h4 style="padding: 0 50px">No recently sold listings.</h4>
-                    </div>
-                  </marquee-text>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div class="social_share ss-h4">
-            <h4>
-              <a class="embed-link" href="#" @click="embedSellsCode()"
-                >EMBED CODE </>
-              </a>
-            </h4>
-          </div>
-        </div>
+     
 
         <b-modal id="embedSellsCode" title="" size="xl" hide-footer>
           <h5>Copy code and paste to your website.</h5>
@@ -834,6 +705,199 @@ slabstox.com
     </div>
    
 
+   <div class="row dashboard-graph-row all-public-boards-list-out">
+      <div class="col-md-12 col-sm-12" v-for="(itemdata, key) in allBoardGraph" :key='`allBoardGraph-${key}`'>
+        <div class="card">
+          <div
+            class="card-body dashboard-graph sx-stats-all"
+            id="dashboard-graph-outer"
+          >
+            <h5 class="card-title">
+              <nuxt-link
+                :class="'theme-btn card-btn thb-btn sx-allboards-apex-top-alld'+allBoardGraph[key].id"
+                :to="`stox-details?board=${allBoardGraph[key].id}`"
+                style="margin-right: 4px;" v-if="user != null && user.full_name != null"
+                >{{ allBoardGraph[key].name }}
+                ${{ allBoardGraph[key].total_card_value }}
+              </nuxt-link>
+              <span
+                :class="'theme-btn card-btn thb-btn sx-allboards-apex-top-alld'+allBoardGraph[key].id"
+                style="margin-right: 4px;" v-if="user == null || user.full_name == null" v-b-modal.loginTopPopup
+                >{{ allBoardGraph[key].name }}
+                ${{ allBoardGraph[key].total_card_value }}
+              </span>
+              <button
+                :class="
+                  (allBoardGraph[key].sx_icon &&
+                  allBoardGraph[key].sx_icon == 'up'
+                    ? 'theme-green-btn'
+                    : 'theme-red-btn') + ' card-btn sx-allboards-apex-top-alld'+allBoardGraph[key].id
+                "
+              >
+                <font-awesome-icon
+                  v-if="allBoardGraph[key].sx_icon !== undefined"
+                  :icon="[
+                    'fas',
+                    'long-arrow-alt-' + allBoardGraph[key].sx_icon,
+                  ]"
+                />&nbsp;&nbsp;
+                <span class="g-dollar-d-val"> ${{ allBoardGraph[key].doller_diff }}</span>
+              </button>
+              <button
+                :class="
+                  (allBoardGraph[key].sx_icon &&
+                  allBoardGraph[key].sx_icon == 'up'
+                    ? 'theme-green-btn'
+                    : 'theme-red-btn') + ' card-btn sx-allboards-apex-top-alld'+allBoardGraph[key].id
+                "
+              >
+                <font-awesome-icon
+                  v-if="allBoardGraph[key].sx_icon !== undefined"
+                  :icon="[
+                    'fas',
+                    'long-arrow-alt-' + allBoardGraph[key].sx_icon,
+                  ]"
+                />&nbsp;&nbsp;{{ allBoardGraph[key].pert_diff }}%
+              </button>
+
+              <nuxt-link
+                :class="'theme-btn card-btn thb-btn sx-allboards-apex-top-1d'+allBoardGraph[key].id" style="display: none; margin-right: 4px;"
+                :to="`stox-details?board=${allBoardGraph[key].id}`"
+                v-if="user != null && user.full_name != null"
+                >{{ allBoardGraph[key].name }}
+                ${{ allBoardGraph[key].total_card_value }}
+              </nuxt-link>
+              <span
+                :class="'theme-btn card-btn thb-btn sx-allboards-apex-top-1d'+allBoardGraph[key].id" style="display: none; margin-right: 4px;"
+               v-if="user == null || user.full_name == null" v-b-modal.loginTopPopup
+                >{{ allBoardGraph[key].name }}
+                ${{ allBoardGraph[key].total_card_value }}
+              </span>
+              <button
+                :class="
+                  (allBoardGraph[key].sx_icon &&
+                  allBoardGraph[key].sx_icon == 'up'
+                    ? 'theme-green-btn'
+                    : 'theme-red-btn') + ' card-btn sx-allboards-apex-top-1d'+allBoardGraph[key].id
+                " style="display: none"
+              >
+                <font-awesome-icon
+                  v-if="allBoardGraph[key].sx_icon !== undefined"
+                  :icon="[
+                    'fas',
+                    'long-arrow-alt-' + allBoardGraph[key].sx_icon,
+                  ]"
+                />&nbsp;&nbsp;
+                <span class="g-dollar-d-val"> ${{ allBoardGraph[key].doller_diff }}</span>
+              </button>
+              <button
+                :class="
+                  (allBoardGraph[key].sx_icon &&
+                  allBoardGraph[key].sx_icon == 'up'
+                    ? 'theme-green-btn'
+                    : 'theme-red-btn') + ' card-btn sx-allboards-apex-top-1d'+allBoardGraph[key].id
+                " style="display: none"
+              >
+                <font-awesome-icon
+                  v-if="allBoardGraph[key].sx_icon !== undefined"
+                  :icon="[
+                    'fas',
+                    'long-arrow-alt-' + allBoardGraph[key].sx_icon,
+                  ]"
+                />&nbsp;&nbsp;{{ allBoardGraph[key].pert_diff }}%
+              </button>
+              <button
+                class="theme-btn card-btn "
+                v-if="allBoardGraph[key].featured == 1"
+              >
+               Featured
+              </button>
+            </h5>
+            <div class="dashboard-apex-top">
+               <div :class="'sx-allboards-apex-top-1d'+allBoardGraph[key].id" style="display: none">
+              <VueApexCharts
+              ref="stoxtickerBoardChart"
+                type="area"
+                height="350"
+                :key="`vac-${key}-dashChart`"
+                :options="boardChartOptions1d[key]"
+                :series="boardSeries1d[key]"
+              ></VueApexCharts>
+                </div>
+                <div :class="'sx-allboards-apex-top-alld'+allBoardGraph[key].id">
+                  <VueApexCharts
+                    ref="stoxtickerBoardChart"
+                    type="area"
+                    height="350"
+                    :key="`vac-${key}-dashChart`"
+                    :options="boardChartOptions[key]"
+                    :series="boardSeries[key]"
+                  ></VueApexCharts>
+                </div>
+            </div>
+            <div class="dashboard-graph-footer" id='`boardGraphs-${key}`'>
+              <ul class="dashboard-graph-footer-month-filter" :id='`dc-${key}-ul`' :key='`dc-${key}-ul`'>
+                <li
+                  :class="[{'active': boardDaysGraph[key] == 2}, 'dashboard-graph-footer-month-filter-item']"
+                  @click="allBoardGraphSingleFunc1d(2,allBoardGraph[key].id,key)"
+                >
+                  1D
+                </li>
+                <li
+                  :class="[{'active': boardDaysGraph[key] == 7}, 'dashboard-graph-footer-month-filter-item']"
+                  @click="allBoardGraphSingleFunc(7,allBoardGraph[key].id,key)"
+                >
+                  1W
+                </li>
+                <li
+                  :class="[{'active': boardDaysGraph[key] == 30}, 'dashboard-graph-footer-month-filter-item']"
+                  @click="allBoardGraphSingleFunc(30,allBoardGraph[key].id,key)"
+                >
+                  1M
+                </li>
+                <li
+                  :class="[{'active': boardDaysGraph[key] == 90}, 'dashboard-graph-footer-month-filter-item']"
+                  @click="allBoardGraphSingleFunc(90,allBoardGraph[key].id,key)"
+                >
+                  3M
+                </li>
+                <li
+                  :class="[{'active': boardDaysGraph[key] == 180}, 'dashboard-graph-footer-month-filter-item']"
+                  @click="allBoardGraphSingleFunc(180,allBoardGraph[key].id,key)"
+                >
+                  6M
+                </li>
+                <li
+                  :class="[{'active': boardDaysGraph[key] == 365}, 'dashboard-graph-footer-month-filter-item']"
+                  @click="allBoardGraphSingleFunc(365,allBoardGraph[key].id,key)"
+                >
+                  1Y
+                </li>
+                <li
+                  :class="[{'active': boardDaysGraph[key] == 1825}, 'dashboard-graph-footer-month-filter-item']"
+                  @click="allBoardGraphSingleFunc(1825,allBoardGraph[key].id,key)"
+                >
+                  5Y
+                </li>
+              </ul>
+              <p class="dashboard-graph-footer-update-at float-right">
+                Last Updated - 
+                {{ (allBoardGraph[key].sales_graph.last_timestamp?allBoardGraph[key].sales_graph.last_timestamp:'') }}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="social_share ss-h4">
+          <h4>
+            <a class="embed-link" href="javascript:void(0);"
+              @click="embedStoxtickerCode()" >EMBED CODE </>
+            </a>
+          </h4>
+        </div>
+      </div>
+      
+    </div>
 
   </div>
 </template>
@@ -844,13 +908,14 @@ import CardSlabItem from '~/components/dashboard/CardSlabItem'
 import CardListItem from '~/components/dashboard/CardListItem'
 import $ from 'jquery'
 import vClickOutside from 'v-click-outside'
-import MarqueeText from 'vue-marquee-text-component'
 import { mapGetters } from 'vuex'
 import { FILTERS } from '../constants/advance_search_filter'
+
 
 export default {
   transition: 'fade',
   layout: 'guestOuter',
+  // auth: 'guest',
   directives: {
     clickOutside: vClickOutside.directive,
   },
@@ -879,12 +944,13 @@ export default {
     var currentHref = location.href
     this.sxStoxtickerUrl = currentHref.replace('stoxticker', 'stox-feed')
 
-    this.getData()
-    this.slabstoxGraph(90, 1)
+    // this.getData()
+    // this.slabstoxGraph(90, 1)
 
-    this.getSoldListing()
+    // this.getSoldListing()
     // this.getAllBoards()
-
+    this.allBoardGraphFunc(90)
+    this.allBoardGraphFunc1d(2)
     this.logo = document.getElementById('sidebarLogo').src
 
     $('.custom-stox').on('click', function () {
@@ -930,31 +996,15 @@ export default {
       e.preventDefault()
     })
   },
-  updated() {
-    // this.mountAppend = this.mountAppend + 1
-    // if (
-    //   $.trim($('.all-public-boards-list-out').html()) == '' &&
-    //   this.mountAppend == 4
-    // ) {
-    //   setTimeout(() => {
-    //     this.allBoardGraphFunc(90)
-    //     this.allBoardGraphFunc1d(2)
-    //   }, 10000)
-    // }
-      var sx = $('.bs-stats3 h2').text();
-      this.sx_length = sx.length;
-  },
   components: {
     CardListItem,
     CardSlabItem,
-    MarqueeText,
+  
     VueApexCharts: () => import('vue-apexcharts'),
   },
   data() {
     return {
-      sx_length: '',
       paused: false,
-      // mountAppend: 0,
       logo: null,
       baseUrl: BASE_URL,
       keyword: null,
@@ -982,12 +1032,13 @@ export default {
       soldListingpokemonMarqueeKey: 0,
       soldListinghockeyMarqueeKey: 0,
       // allBoards: '',
-  
+      allBoardGraph: [],
       boardDaysGraph: [],
       boardChartOptions: [],
       boardSeries: [],
       boardSalesQty: [],
 
+      allBoardGraph1d: [],
       boardChartOptions1d: [],
       boardSeries1d: [],
       boardSalesQty1d: [],
@@ -1194,12 +1245,12 @@ export default {
       filters: { ...FILTERS },
     }
   },
-  computed: {
+  computed:{
     ...mapGetters({
       showAdvanceSearch: 'advancesearch/show',
       filters_old_state: 'advancesearch/filters',
-      attributes: 'advancesearch/attributes',
-    }),
+      attributes: 'advancesearch/attributes'
+    })
   },
   methods: {
     searchBoard(days = 90) {
@@ -1421,6 +1472,7 @@ export default {
               $('.search-stox-box .search-bar input').val('')
               this.searchSlabs = res.data
               this.$toast.success('Stoxticker board created successfully.')
+              this.allBoardGraphFunc(90)
             }
           })
           .catch((err) => {
@@ -1670,8 +1722,247 @@ export default {
         this.sxActiveDaysGraph = days
       }
     },
-   
-   
+    allBoardGraphFunc(days = 90) {
+      try {
+        this.$axios.$get(`stoxticker/all-boards/${days}`).then((res) => {
+          if (res.status == 200) {
+            if (res.data != null && res.data.length > 0) {
+              res.data.map((item, key) => {
+                this.boardDaysGraph[key] = days
+                if (typeof item != 'undefined') {
+                  this.allBoardGraph[key] = item
+                  this.boardSeries[key] = [
+                    {
+                      name: 'SX',
+                      data: item.sales_graph.values,
+                    },
+                  ]
+                  this.boardDaysGraph.push(90)
+                  this.boardSalesQty.push(item.sales_graph.qty)
+                  this.boardChartOptions.push({
+                    chart: {
+                      toolbar: {
+                        show: false,
+                      },
+                      height: 350,
+                      type: 'area',
+                      background: 'transparent',
+                      zoom: {
+                        enabled: false,
+                      },
+                    },
+                    colors: ['#14f078'],
+                    dataLabels: {
+                      enabled: false,
+                    },
+                    stroke: {
+                      curve: 'smooth',
+                    },
+                    xaxis: {
+                      labels: {
+                        style: {
+                          colors: '#edecec',
+                          fontSize: '10px',
+                          fontFamily: 'NexaBold',
+                        },
+                      },
+                      type: 'datetime',
+                      tickAmount: 6,
+                      categories: item.sales_graph.labels,
+                    },
+                    yaxis: {
+                      labels: {
+                        style: {
+                          colors: '#edecec',
+                          fontSize: '10px',
+                          fontFamily: 'NexaBold',
+                        },
+                        formatter: (value, ind) => {
+                          let valCheck = value
+                          if (Number(value) === value && value % 1 !== 0) {
+                            let valCheck = Number(value).toFixed(2)
+                          }
+
+                          let lblStr = `$${valCheck}`
+                          return lblStr
+                        },
+                      },
+                    },
+                    tooltip: {
+                      enabled: true,
+                      x: {
+                        format: 'MM/dd/yy',
+                      },
+                      y: {
+                        formatter: (value, ind) => {
+                          let lblStr = `$${value}`
+                          if (typeof ind == 'object')
+                            lblStr = `$${value} (${
+                              this.boardSalesQty[key][ind.dataPointIndex]
+                            })`
+                          else
+                            lblStr = `$${value} (${this.boardSalesQty[key][ind]})`
+                          return lblStr
+                        },
+                      },
+                    },
+                  })
+                }
+              })
+            }
+          }
+        })
+      } catch (error) {
+        // console.log(error)
+      }
+    },
+    allBoardGraphFunc1d(days = 90) {
+      try {
+        this.$axios.$get(`stoxticker/all-boards/${days}`).then((res) => {
+          if (res.status == 200) {
+            if (res.data != null && res.data.length > 0) {
+              res.data.map((item, key) => {
+                // this.boardDaysGraph[key] = days
+                if (typeof item != 'undefined') {
+                  this.allBoardGraph1d[key] = item
+                  this.boardSeries1d[key] = [
+                    {
+                      name: 'SX',
+                      data: item.sales_graph.values,
+                    },
+                  ]
+                  // this.boardDaysGraph.push(90)
+                  this.boardSalesQty1d.push(item.sales_graph.qty)
+                  this.boardChartOptions1d.push({
+                    chart: {
+                      toolbar: {
+                        show: false,
+                      },
+                      height: 350,
+                      type: 'area',
+                      background: 'transparent',
+                      zoom: {
+                        enabled: false,
+                      },
+                    },
+                    colors: ['#14f078'],
+                    dataLabels: {
+                      enabled: false,
+                    },
+                    stroke: {
+                      curve: 'smooth',
+                    },
+                    xaxis: {
+                      labels: {
+                        style: {
+                          colors: '#edecec',
+                          fontSize: '10px',
+                          fontFamily: 'NexaBold',
+                        },
+                      },
+                      type: 'category',
+                      tickAmount: 24,
+                      tickPlacement: 'on',
+                      categories: item.sales_graph.labels,
+                      labels: {
+                        formatter: function (value) {
+                          if (value !== undefined) {
+                            var splittedCategories = value.split(':')
+                            var mins = splittedCategories[1]
+                            if (mins == '00') {
+                              return value
+                            } else {
+                              return ''
+                            }
+                          }
+                          return ''
+                        },
+                      },
+                    },
+                    yaxis: {
+                      labels: {
+                        style: {
+                          colors: '#edecec',
+                          fontSize: '10px',
+                          fontFamily: 'NexaBold',
+                        },
+                        formatter: (value, ind) => {
+                          let valCheck = value
+                          if (Number(value) === value && value % 1 !== 0) {
+                            let valCheck = Number(value).toFixed(2)
+                          }
+
+                          let lblStr = `$${valCheck}`
+                          return lblStr
+                        },
+                      },
+                    },
+                    tooltip: {
+                      enabled: true,
+                      x: {
+                        formatter: (value, ind) => {
+                          return item.sales_graph.labels[ind.dataPointIndex]
+                        },
+                      },
+                      y: {
+                        formatter: (value, ind) => {
+                          let lblStr = `$${value}`
+                          if (typeof ind == 'object')
+                            lblStr = `$${value} (${
+                              this.boardSalesQty1d[key][ind.dataPointIndex]
+                            })`
+                          else
+                            lblStr = `$${value} (${this.boardSalesQty1d[key][ind]})`
+                          return lblStr
+                        },
+                      },
+                    },
+                  })
+                }
+              })
+            }
+          }
+        })
+      } catch (error) {
+        // console.log(error)
+      }
+    },
+    allBoardGraphSingleFunc(days, board, boardKey) {
+      try {
+        this.$axios
+          .$get(`stoxticker/single-graph-board/${days}/${board}`)
+          .then((res) => {
+            if (res.status == 200) {
+              $('.sx-allboards-apex-top-alld' + board).show()
+              $('.sx-allboards-apex-top-1d' + board).hide()
+
+              this.boardDaysGraph.splice(boardKey, 1, days)
+              this.allBoardGraph.splice(boardKey, 1, res.data)
+
+              this.boardSeries.splice(boardKey, 1, [
+                { name: 'SX', data: res.data.sales_graph.values },
+              ])
+              this.boardSalesQty.splice(boardKey, 1, res.data.sales_graph.qty)
+              this.boardChartOptions.splice(boardKey, 1, {
+                xaxis: {
+                  categories: res.data.sales_graph.labels,
+                },
+              })
+            }
+          })
+      } catch (error) {
+        // console.log(error)
+      }
+    },
+    allBoardGraphSingleFunc1d(days, board, boardKey) {
+      try {
+        this.boardDaysGraph.splice(boardKey, 1, days)
+        $('.sx-allboards-apex-top-alld' + board).hide()
+        $('.sx-allboards-apex-top-1d' + board).show()
+      } catch (error) {
+        // console.log(error)
+      }
+    },
   },
 }
 </script>
@@ -1967,12 +2258,11 @@ ul.my-card-listing {
       margin-left: 1px;
       margin-bottom: 5px;
       a {
-        // font-family: 'CocogoosePro-Regular', Helvetica, Arial, sans-serif;
-        font-family: NexaBold, Helvetica, Arial, sans-serif;
+        font-family: 'CocogoosePro-Regular', Helvetica, Arial, sans-serif;
         font-weight: 400;
         border-radius: 2px;
         background-color: #f5f5f5;
-        padding: 12px 17px 10px 17px;
+        padding: 12px 20px 10px 20px;
         color: #000;
         font-size: 11px;
         text-decoration: none;
@@ -2281,25 +2571,5 @@ html body main .card.search-slabs-out .my-card-listing .my-card {
       margin-bottom: 20px;
     }
   }
-}
-
-.featured-boards {
-  font-family: 'CocogoosePro-Regular', Helvetica, Arial, sans-serif;
-  font-weight: 400;
-  border-radius: 2px;
-  background-color: #fff;
-  padding: 20px 35px 17px 35px;
-  color: #000;
-  font-size: 12px;
-  text-align: center;
-  text-transform: uppercase;
-  outline: none;
-  border: 0;
-}
-.featured-boards .chevron-right {
-  padding-left: 5px;
-}
-.small-font {
-  font-size: 4vw !important;
 }
 </style>

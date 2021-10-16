@@ -5,15 +5,7 @@
         <div class="card ap">
           <div class="card-body">
             <h5 class="card-title">
-              <button class="theme-btn card-btn">Active Listings</button>
-              <nuxt-link
-                v-if="isAdmin"
-                class="theme-green-btn card-btn pull-right"
-                :to="`/admin/create-listings-excel`"
-                style="margin-right: 5px"
-              >
-                Import Listing via CSV
-              </nuxt-link>
+              <button class="theme-btn card-btn">Other Listings</button>
             </h5>
           </div>
           <div class="card-body search-form">
@@ -111,7 +103,7 @@
                   <th style="width: 83px">Time Left</th>
                   <th style="width: 80px">Price</th>
                   <th style="width: 120px">Sold Price</th>
-                  <!-- <th style="width: 70px">Sold Price Status</th> -->
+                  <th style="width: 70px">Sold Price Status</th>
                   <th style="width: 130px">Listing Id</th>
                   <th style="width: 75px">Slab Id</th>
                   <th style="width: 70px">Status</th>
@@ -149,7 +141,7 @@
                       <i class="fa fa-floppy-o" aria-hidden="true"></i>
                     </button>
                   </td>
-                   <!-- <td>{{ item.item_status }}</td> -->
+                   <td>{{ item.item_status }}</td>
                   <td>{{ item.itemId }}</td>
                   <td>{{ item.card_id }}</td>
                   <td>{{ item.status == 0 ? 'Active' : 'Inactive' }}</td>
@@ -602,7 +594,7 @@ export default {
           this.showLoader()
           this.requestInProcess = true
           let payload = { page: page, search: this.searchTerm }
-          this.$router.push('/admin/ebay-items-listings?page=' + page)
+          this.$router.push('/admin/ebay-items-other-listings?page=' + page)
           // if (filter != null) payload['sport'] = filter.target.value
 
           if (filter != null) {
@@ -619,7 +611,7 @@ export default {
           }
 
           this.$axios
-            .post('get-ebay-list', payload)
+            .post('get-ebay-other-list', payload)
             .then((res) => {
               if (res.status == 200) {
                 this.currentPage = page

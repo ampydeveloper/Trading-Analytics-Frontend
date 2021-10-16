@@ -12,15 +12,7 @@
     </div>
 
     <div class="row dashboard-graph-row all-public-boards-list-out">
-
-      <div
-        class="col-md-12 col-sm-12"
-        v-for="(itemdata, key) in allBoardGraph"
-        :key="`allBoardGraph-${key}`"
-      >
-<span>{{ allBoardGraph[key].name }}</span>
-      </div>
-
+     
       <div
         class="col-md-12 col-sm-12"
         v-for="(itemdata, key) in allBoardGraph"
@@ -31,6 +23,7 @@
             class="card-body dashboard-graph sx-stats-all"
             id="dashboard-graph-outer"
           >
+          <span style="display:none">{{key}}43</span>
             <h5 class="card-title">
               <nuxt-link
                 :class="
@@ -314,16 +307,13 @@
 <script>
 import { BASE_URL } from '../constants/keys'
 import $ from 'jquery'
-import vClickOutside from 'v-click-outside'
 import { mapGetters } from 'vuex'
 import { FILTERS } from '../constants/advance_search_filter'
 
 export default {
   transition: 'fade',
   layout: 'guestOuter',
-  directives: {
-    clickOutside: vClickOutside.directive,
-  },
+
   head() {
     return {
       title: 'Stoxticker - SlabStox',
@@ -337,67 +327,50 @@ export default {
     }
   },
   mounted() {
-    var currentHref = location.href
-    this.sxStoxtickerUrl = currentHref.replace('stoxticker', 'stox-feed')
+    // var currentHref = location.href
+    // this.sxStoxtickerUrl = currentHref.replace('stoxticker', 'stox-feed')
     // this.allBoardGraphFunc(90)
     // this.allBoardGraphFunc1d(2)
-setTimeout(() => {
-        this.allBoardGraphFunc(90)
-        this.allBoardGraphFunc1d(2)
-      }, 2000)
-    this.logo = document.getElementById('sidebarLogo').src
+    // setTimeout(() => {
+      this.allBoardGraphFunc(90)
+      this.allBoardGraphFunc1d(2)
+    // }, 2000)
+    // this.logo = document.getElementById('sidebarLogo').src
     // $('.custom-stox').text('red');
-  },
-updated() {
 
+    setTimeout(() => {
+      this.allBoardGraphFunc(90)
+      this.allBoardGraphFunc1d(2)
+    }, 10000)
+  },
+  updated() {
+    // setTimeout(() => {
+    //   this.allBoardGraphFunc(90)
+    //   this.allBoardGraphFunc1d(2)
+    // }, 2000)
     //  this.allBoardGraphFunc(90)
     //     this.allBoardGraphFunc1d(2)
-  // console.log(this.mountAppend);
-//  this.mountAppend = this.mountAppend + 1
-//     if (
-//       $.trim($('.all-public-boards-list-out').html()) == '' &&
-//       this.mountAppend == 4
-//     ) {
-//       setTimeout(() => {
-//         this.allBoardGraphFunc(90)
-//         this.allBoardGraphFunc1d(2)
-//       }, 10000)
-//     }
+    // console.log(this.mountAppend);
+    //  this.mountAppend = this.mountAppend + 1
+    //     if (
+    //       $.trim($('.all-public-boards-list-out').html()) == '' &&
+    //       this.mountAppend == 4
+    //     ) {
+    //       setTimeout(() => {
+    //         this.allBoardGraphFunc(90)
+    //         this.allBoardGraphFunc1d(2)
+    //       }, 10000)
+    //     }
   },
   components: {
     VueApexCharts: () => import('vue-apexcharts'),
   },
   data() {
     return {
-      paused: false,
-      mountAppend: 0,
-      logo: null,
-      baseUrl: BASE_URL,
-      keyword: null,
-      searchKeyword: null,
+   
+     
       requestInProcess: false,
-      searchSlabs: [],
-      boardSearch: [],
-      boardActiveDay: [],
-      boardPage: 1,
-      stoxtickerData: [],
-      stoxtickerData1d: [],
-      sxActiveDaysGraph: '',
-      graphImage: '',
-      sxGraphImage: '',
-      perc_diff: 0,
-      doller_diff: 0,
-      total_sales: 0,
-      last_timestamp: 'N/A',
-      currentUrl: location.origin + '/main-stoxticker',
-      // soldListing: '',
-      // soldListingbasketballMarqueeKey: 0,
-      // soldListingfootballMarqueeKey: 0,
-      // soldListingbaseballMarqueeKey: 0,
-      // soldListingsoccerMarqueeKey: 0,
-      // soldListingpokemonMarqueeKey: 0,
-      // soldListinghockeyMarqueeKey: 0,
-      // allBoards: '',
+  
       allBoardGraph: [],
       boardDaysGraph: [],
       boardChartOptions: [],
@@ -409,205 +382,13 @@ updated() {
       boardSeries1d: [],
       boardSalesQty1d: [],
 
-      searchChartOptions: [],
-      searchSeries: [],
-      searchSalesQty: [],
-      smartKeyword: [],
-      showSmartSearch: false,
+    
       sxStoxtickerUrl: '',
-      // data: {
-      //   total: 0,
-      //   sale: 0,
-      //   change: 0,
-      //   change_icon: 'up',
-      //   last_updated: '',
-      // },
-      graph1dInitialized: false,
-      show1dGraph: false,
-      showalldGraph: true,
+    
       allBoardsGraph1dInitialized: false,
       allBoardsShow1dGraph: false,
       allBoardsShowalldGraph: true,
-      // series: [
-      //   {
-      //     name: 'SX',
-      //     data: [0],
-      //   },
-      // ],
-      // chartOptions: {
-      //   chart: {
-      //     toolbar: {
-      //       show: false,
-      //     },
-      //     height: 350,
-      //     type: 'area',
-      //     background: 'transparent',
-      //     zoom: {
-      //       enabled: false,
-      //     },
-      //   },
-      //   colors: ['#14f078'],
-      //   dataLabels: {
-      //     enabled: false,
-      //   },
-      //   stroke: {
-      //     curve: 'smooth',
-      //   },
-      //   yaxis: {
-      //     labels: {
-      //       style: {
-      //         colors: '#edecec',
-      //         fontSize: '10px',
-      //         fontFamily: 'NexaBold',
-      //       },
-      //       formatter: (value, ind) => {
-      //         return `$${value}`
-      //       },
-      //     },
-      //   },
-      //   xaxis: {
-      //     labels: {
-      //       style: {
-      //         colors: '#edecec',
-      //         fontSize: '10px',
-      //         fontFamily: 'NexaBold',
-      //       },
-      //     },
-      //     type: 'category',
-      //     categories: [],
-      //   },
-      // },
-      // sxSeries: [
-      //   {
-      //     name: 'SX',
-      //     data: [0],
-      //   },
-      // ],
-      // sxSalesQty: [],
-      // sxChartOptions: {
-      //   chart: {
-      //     toolbar: {
-      //       show: false,
-      //     },
-      //     height: 350,
-      //     type: 'area',
-      //     background: 'transparent',
-      //     zoom: {
-      //       enabled: false,
-      //     },
-      //   },
-      //   colors: ['#14f078'],
-      //   dataLabels: {
-      //     enabled: false,
-      //   },
-      //   stroke: {
-      //     curve: 'smooth',
-      //   },
-      //   yaxis: {
-      //     labels: {
-      //       style: {
-      //         colors: '#edecec',
-      //         fontSize: '10px',
-      //         fontFamily: 'NexaBold',
-      //       },
-      //     },
-      //   },
-      //   xaxis: {
-      //     labels: {
-      //       style: {
-      //         colors: '#edecec',
-      //         fontSize: '10px',
-      //         fontFamily: 'NexaBold',
-      //       },
-      //     },
-      //     type: 'datetime',
-      //     tickAmount: 6,
-      //     tickPlacement: 'on',
-      //     categories: [],
-      //   },
-      //   tooltip: {
-      //     enabled: true,
-      //     x: {
-      //       format: 'MM/dd/yy',
-      //     },
-      //   },
-      //   noData: {
-      //     text: 'Graph Loading...',
-      //     align: 'center',
-      //     verticalAlign: 'middle',
-      //     offsetX: 0,
-      //     offsetY: 0,
-      //     style: {
-      //       colors: '#edecec',
-      //       fontSize: '10px',
-      //       fontFamily: 'NexaBold',
-      //     },
-      //   },
-      // },
-      // sxSeries1d: [
-      //   {
-      //     name: 'SX',
-      //     data: [0],
-      //   },
-      // ],
-      // sxSalesQty1d: [],
-      // sxChartOptions1d: {
-      //   chart: {
-      //     toolbar: {
-      //       show: false,
-      //     },
-      //     height: 350,
-      //     type: 'area',
-      //     background: 'transparent',
-      //     zoom: {
-      //       enabled: false,
-      //     },
-      //   },
-      //   colors: ['#14f078'],
-      //   dataLabels: {
-      //     enabled: false,
-      //   },
-      //   stroke: {
-      //     curve: 'smooth',
-      //   },
-      //   yaxis: {
-      //     labels: {
-      //       style: {
-      //         colors: '#edecec',
-      //         fontSize: '10px',
-      //         fontFamily: 'NexaBold',
-      //       },
-      //     },
-      //   },
-      //   xaxis: {
-      //     labels: {
-      //       style: {
-      //         colors: '#edecec',
-      //         fontSize: '10px',
-      //         fontFamily: 'NexaBold',
-      //       },
-      //     },
-      //     type: 'category',
-      //     tickAmount: 24,
-      //     tickPlacement: 'on',
-      //     categories: [],
-      //   },
-      //   tooltip: {
-      //     enabled: true,
-      //   },
-      //   noData: {
-      //     text: 'Graph Loading...',
-      //     align: 'center',
-      //     verticalAlign: 'middle',
-      //     offsetX: 0,
-      //     offsetY: 0,
-      //     style: {
-      //       colors: '#edecec',
-      //       fontSize: '10px',
-      //       fontFamily: 'NexaBold',
-      //     },
-      //   },
-      // },
+ 
       filters: { ...FILTERS },
     }
   },
@@ -714,10 +495,16 @@ updated() {
                   })
                 }
               })
-              console.log(this.allBoardGraph);
+              // console.log(this.allBoardGraph);
+
             }
+    //         setTimeout(() => {
+    //   this.allBoardGraphFunc(90)
+    //   this.allBoardGraphFunc1d(2)
+    // // }, 2000)
           }
         })
+
       } catch (error) {
         // console.log(error)
       }
@@ -1193,6 +980,9 @@ ul.my-card-listing {
 }
 .load-more-btn .custom-stox {
   padding: 12px 35px 11px 35px;
+}
+.top-btn{
+  margin-left: 12px;
 }
 .top-btn.active {
   margin-bottom: 0px;
