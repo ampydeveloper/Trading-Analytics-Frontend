@@ -12,7 +12,6 @@
     </div>
 
     <div class="row dashboard-graph-row all-public-boards-list-out">
-     
       <div
         class="col-md-12 col-sm-12"
         v-for="(itemdata, key) in allBoardGraph"
@@ -23,7 +22,6 @@
             class="card-body dashboard-graph sx-stats-all"
             id="dashboard-graph-outer"
           >
-          <span style="display:none">{{key}}43</span>
             <h5 class="card-title">
               <nuxt-link
                 :class="
@@ -327,68 +325,33 @@ export default {
     }
   },
   mounted() {
-    // var currentHref = location.href
-    // this.sxStoxtickerUrl = currentHref.replace('stoxticker', 'stox-feed')
-    // this.allBoardGraphFunc(90)
-    // this.allBoardGraphFunc1d(2)
-    // setTimeout(() => {
-      this.allBoardGraphFunc(90)
-      this.allBoardGraphFunc1d(2)
-    // }, 2000)
-    // this.logo = document.getElementById('sidebarLogo').src
-    // $('.custom-stox').text('red');
-
-    setTimeout(() => {
-      this.allBoardGraphFunc(90)
-      this.allBoardGraphFunc1d(2)
-    }, 10000)
+  
+    this.allBoardGraphFunc(90)
+    this.allBoardGraphFunc1d(2)
+ 
   },
   updated() {
-    // setTimeout(() => {
-    //   this.allBoardGraphFunc(90)
-    //   this.allBoardGraphFunc1d(2)
-    // }, 2000)
-    //  this.allBoardGraphFunc(90)
-    //     this.allBoardGraphFunc1d(2)
-    // console.log(this.mountAppend);
-    //  this.mountAppend = this.mountAppend + 1
-    //     if (
-    //       $.trim($('.all-public-boards-list-out').html()) == '' &&
-    //       this.mountAppend == 4
-    //     ) {
-    //       setTimeout(() => {
-    //         this.allBoardGraphFunc(90)
-    //         this.allBoardGraphFunc1d(2)
-    //       }, 10000)
-    //     }
+  
   },
   components: {
     VueApexCharts: () => import('vue-apexcharts'),
   },
   data() {
     return {
-   
-     
       requestInProcess: false,
-  
       allBoardGraph: [],
       boardDaysGraph: [],
       boardChartOptions: [],
       boardSeries: [],
       boardSalesQty: [],
-
       allBoardGraph1d: [],
       boardChartOptions1d: [],
       boardSeries1d: [],
       boardSalesQty1d: [],
-
-    
       sxStoxtickerUrl: '',
-    
       allBoardsGraph1dInitialized: false,
       allBoardsShow1dGraph: false,
       allBoardsShowalldGraph: true,
- 
       filters: { ...FILTERS },
     }
   },
@@ -400,32 +363,38 @@ export default {
     }),
   },
   methods: {
-    trimTitle(title) {
-      if (title.length > 53) {
-        title = title.substring(0, 53)
-        title += '...'
-        return title
-      }
-      return title
-    },
+    // trimTitle(title) {
+    //   if (title.length > 53) {
+    //     title = title.substring(0, 53)
+    //     title += '...'
+    //     return title
+    //   }
+    //   return title
+    // },
     allBoardGraphFunc(days = 90) {
       try {
         this.$axios.$get(`stoxticker/all-boards/${days}`).then((res) => {
           if (res.status == 200) {
             if (res.data != null && res.data.length > 0) {
               res.data.map((item, key) => {
-                this.boardDaysGraph[key] = days
                 if (typeof item != 'undefined') {
-                  this.allBoardGraph[key] = item
-                  this.boardSeries[key] = [
-                    {
-                      name: 'SX',
-                      data: item.sales_graph.values,
-                    },
+                  this.allBoardGraph = [...this.allBoardGraph, item]
+                  this.boardSeries = [
+                    ...this.boardSeries,
+                    [
+                      {
+                        name: 'SX',
+                        data: item.sales_graph.values,
+                      },
+                    ],
                   ]
-                  this.boardDaysGraph.push(90)
-                  this.boardSalesQty.push(item.sales_graph.qty)
-                  this.boardChartOptions.push({
+
+                  this.boardDaysGraph = [...this.boardDaysGraph, 90]
+                  this.boardSalesQty = [
+                    ...this.boardSalesQty,
+                    item.sales_graph.qty,
+                  ]
+                  var boardChartOptionsArr = {
                     chart: {
                       toolbar: {
                         show: false,
@@ -492,21 +461,18 @@ export default {
                         },
                       },
                     },
-                  })
+                  }
+                  this.boardChartOptions = [
+                    ...this.boardChartOptions,
+                    boardChartOptionsArr,
+                  ]
                 }
               })
-              // console.log(this.allBoardGraph);
-
             }
-    //         setTimeout(() => {
-    //   this.allBoardGraphFunc(90)
-    //   this.allBoardGraphFunc1d(2)
-    // // }, 2000)
           }
         })
-
       } catch (error) {
-        // console.log(error)
+        console.log(error)
       }
     },
     allBoardGraphFunc1d(days = 90) {
@@ -515,18 +481,26 @@ export default {
           if (res.status == 200) {
             if (res.data != null && res.data.length > 0) {
               res.data.map((item, key) => {
-                // this.boardDaysGraph[key] = days
                 if (typeof item != 'undefined') {
-                  this.allBoardGraph1d[key] = item
-                  this.boardSeries1d[key] = [
-                    {
-                      name: 'SX',
-                      data: item.sales_graph.values,
-                    },
+                  this.allBoardGraph1d = [...this.allBoardGraph1d, item]
+                
+                  this.boardSeries1d = [
+                    ...this.boardSeries1d,
+                    [
+                      {
+                        name: 'SX',
+                        data: item.sales_graph.values,
+                      },
+                    ],
                   ]
+                  
                   // this.boardDaysGraph.push(90)
-                  this.boardSalesQty1d.push(item.sales_graph.qty)
-                  this.boardChartOptions1d.push({
+                  this.boardSalesQty1d = [
+                    ...this.boardSalesQty1d,
+                    item.sales_graph.qty,
+                  ]
+                
+                  var boardChartOptions1dArr = {
                     chart: {
                       toolbar: {
                         show: false,
@@ -610,14 +584,18 @@ export default {
                         },
                       },
                     },
-                  })
+                  }
+                  this.boardChartOptions1d = [
+                    ...this.boardChartOptions1d,
+                    boardChartOptions1dArr,
+                  ]
                 }
               })
             }
           }
         })
       } catch (error) {
-        // console.log(error)
+        console.log(error)
       }
     },
     allBoardGraphSingleFunc(days, board, boardKey) {
@@ -644,7 +622,7 @@ export default {
             }
           })
       } catch (error) {
-        // console.log(error)
+        console.log(error)
       }
     },
     allBoardGraphSingleFunc1d(days, board, boardKey) {
@@ -653,7 +631,7 @@ export default {
         $('.sx-allboards-apex-top-alld' + board).hide()
         $('.sx-allboards-apex-top-1d' + board).show()
       } catch (error) {
-        // console.log(error)
+        console.log(error)
       }
     },
   },
@@ -981,7 +959,7 @@ ul.my-card-listing {
 .load-more-btn .custom-stox {
   padding: 12px 35px 11px 35px;
 }
-.top-btn{
+.top-btn {
   margin-left: 12px;
 }
 .top-btn.active {

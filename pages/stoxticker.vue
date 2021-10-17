@@ -883,7 +883,6 @@ export default {
     this.slabstoxGraph(90, 1)
 
     this.getSoldListing()
-    // this.getAllBoards()
 
     this.logo = document.getElementById('sidebarLogo').src
 
@@ -931,18 +930,8 @@ export default {
     })
   },
   updated() {
-    // this.mountAppend = this.mountAppend + 1
-    // if (
-    //   $.trim($('.all-public-boards-list-out').html()) == '' &&
-    //   this.mountAppend == 4
-    // ) {
-    //   setTimeout(() => {
-    //     this.allBoardGraphFunc(90)
-    //     this.allBoardGraphFunc1d(2)
-    //   }, 10000)
-    // }
-      var sx = $('.bs-stats3 h2').text();
-      this.sx_length = sx.length;
+    var sx = $('.bs-stats3 h2').text()
+    this.sx_length = sx.length
   },
   components: {
     CardListItem,
@@ -954,7 +943,6 @@ export default {
     return {
       sx_length: '',
       paused: false,
-      // mountAppend: 0,
       logo: null,
       baseUrl: BASE_URL,
       keyword: null,
@@ -981,8 +969,7 @@ export default {
       soldListingsoccerMarqueeKey: 0,
       soldListingpokemonMarqueeKey: 0,
       soldListinghockeyMarqueeKey: 0,
-      // allBoards: '',
-  
+
       boardDaysGraph: [],
       boardChartOptions: [],
       boardSeries: [],
@@ -1444,11 +1431,17 @@ export default {
           if (res.status == 200) {
             this.data = res.data
           } else {
-            this.$router.push('/404')
+            this.$toast.error(
+              'There has been an error fetching Stoxticker. Please refresh your page.',
+              { timeOut: 10000 }
+            )
           }
         })
       } catch (error) {
-        this.$router.push('/404')
+        this.$toast.error(
+          'There has been an error fetching Stoxticker. Please refresh your page.',
+          { timeOut: 10000 }
+        )
       }
     },
     getSoldListing() {
@@ -1670,8 +1663,6 @@ export default {
         this.sxActiveDaysGraph = days
       }
     },
-   
-   
   },
 }
 </script>
