@@ -363,9 +363,17 @@ export default {
     }),
   },
   methods: {
+    // trimTitle(title) {
+    //   if (title.length > 53) {
+    //     title = title.substring(0, 53)
+    //     title += '...'
+    //     return title
+    //   }
+    //   return title
+    // },
     allBoardGraphFunc(days = 90) {
       try {
-        this.$axios.$get(`stoxticker/featured-boards/${days}`).then((res) => {
+        this.$axios.$get(`stoxticker/all-boards/${days}`).then((res) => {
           if (res.status == 200) {
             if (res.data != null && res.data.length > 0) {
               res.data.map((item, key) => {
@@ -469,7 +477,7 @@ export default {
     },
     allBoardGraphFunc1d(days = 90) {
       try {
-        this.$axios.$get(`stoxticker/featured-boards/${days}`).then((res) => {
+        this.$axios.$get(`stoxticker/all-boards/${days}`).then((res) => {
           if (res.status == 200) {
             if (res.data != null && res.data.length > 0) {
               res.data.map((item, key) => {

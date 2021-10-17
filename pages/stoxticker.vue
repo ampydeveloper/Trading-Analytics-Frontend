@@ -29,6 +29,17 @@
             </button>
             </nuxt-link>
             <span class="tooltip-text set-tooltip mx-xl-2" v-b-tooltip.bottomleft title="Click here to fetch featured boards">?</span>
+     
+        <nuxt-link to="/personal-boards" >
+            <button class="card-btn featured-boards" >
+                Personal boards
+                <span class="chevron-right">
+                <font-awesome-icon :icon="['fas', 'chevron-right']" />
+                </span>
+            </button>
+            </nuxt-link>
+            <span class="tooltip-text set-tooltip mx-xl-2" v-b-tooltip.bottomleft title="Click here to fetch personal boards">?</span>
+        
         </div>
       </div>
     </div>
@@ -1794,7 +1805,7 @@ ul.my-card-listing {
     rgba(27, 231, 131, 0.76) 33%,
     rgba(5, 251, 98, 0.76) 100%
   );
-  padding: 20px 35px 17px 35px;
+  padding: 20px 20px 17px 35px;
   color: #000;
   font-size: 12px;
   text-align: center;
@@ -1802,6 +1813,7 @@ ul.my-card-listing {
   text-transform: uppercase;
   outline: none;
   margin-right: 10px;
+  text-decoration: none;
 
   @media (max-width: 768px) {
     padding: 20px 20px 17px 20px;
@@ -1826,7 +1838,7 @@ ul.my-card-listing {
   font-weight: 400;
   border-radius: 2px;
   background-color: #fff;
-  padding: 20px 35px 17px 35px;
+  padding: 20px 20px 17px 35px;
   color: #000;
   font-size: 12px;
   text-align: center;
@@ -2279,7 +2291,7 @@ html body main .card.search-slabs-out .my-card-listing .my-card {
   font-weight: 400;
   border-radius: 2px;
   background-color: #fff;
-  padding: 20px 35px 17px 35px;
+  padding: 20px 20px 17px 35px;
   color: #000;
   font-size: 12px;
   text-align: center;
