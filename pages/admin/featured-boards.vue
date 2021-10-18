@@ -532,18 +532,18 @@
 </template>
 
 <script>
-import { BASE_URL } from '../constants/keys'
+import { BASE_URL } from '../../constants/keys'
 import CardSlabItem from '~/components/dashboard/CardSlabItem'
 import CardListItem from '~/components/dashboard/CardListItem'
 import $ from 'jquery'
 import vClickOutside from 'v-click-outside'
 import MarqueeText from 'vue-marquee-text-component'
 import { mapGetters } from 'vuex'
-import { FILTERS } from '../constants/advance_search_filter'
+import { FILTERS } from '../../constants/advance_search_filter'
 
 export default {
   transition: 'fade',
-  layout: 'guestOuter',
+  layout: 'admin',
   directives: {
     clickOutside: vClickOutside.directive,
   },
@@ -569,11 +569,10 @@ export default {
     }
   },
   mounted() {
-    this.allBoardGraphFunc(90)
-    this.allBoardGraphFunc1d(2)
-    
     var currentHref = location.href
     this.sxStoxtickerUrl = currentHref.replace('stoxticker', 'stox-feed')
+    this.allBoardGraphFunc(90)
+    this.allBoardGraphFunc1d(2)
     this.getData()
     this.slabstoxGraph(90, 1)
 
@@ -626,17 +625,15 @@ export default {
     })
   },
   updated() {
-    // console.log(this.mountAppend)
     this.mountAppend = this.mountAppend + 1
-    console.log(this.mountAppend)
     if (
-      
-      this.mountAppend == 2
+      $.trim($('.all-public-boards-list-out').html()) == '' &&
+      this.mountAppend == 4
     ) {
       setTimeout(() => {
         this.allBoardGraphFunc(90)
         this.allBoardGraphFunc1d(2)
-      }, 1000)
+      }, 10000)
     }
   },
   components: {
@@ -1452,8 +1449,6 @@ export default {
                       },
                     },
                   })
-        $('.search-slabs-out').show()
-
                 }
               })
             }
@@ -1565,7 +1560,6 @@ export default {
                       },
                     },
                   })
-                  $('.search-slabs-out').show()     
                 }
               })
             }

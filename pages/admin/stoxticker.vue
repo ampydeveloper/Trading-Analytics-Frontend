@@ -20,15 +20,17 @@
             </button>
             <span class="tooltip-text set-tooltip mx-xl-2" v-b-tooltip.bottomleft title="Click here to search other SlabStoxPro users’ StoxTicker boards to see who they’re tracking.">?</span>  
 
-            <button class="card-btn search-stox" >
-              Featured boards 
-              <span class="chevron-right">
-              <font-awesome-icon :icon="['fas', 'chevron-right']" />
-              </span>
-              <span class="chevron-down">
-              <font-awesome-icon :icon="['fas', 'chevron-down']" />
-              </span>
+            <nuxt-link
+              class=""
+              to="/featured-boards"
+            >
+            <button class="card-btn featured-boards" >
+                Featured boards
+                <span class="chevron-right">
+                <font-awesome-icon :icon="['fas', 'chevron-right']" />
+                </span>
             </button>
+            </nuxt-link>
             <span class="tooltip-text set-tooltip mx-xl-2" v-b-tooltip.bottomleft title="featured boards">?</span>
         </div>
       </div>
@@ -2202,5 +2204,24 @@ html body main .card.search-slabs-out .my-card-listing .my-card {
       margin-bottom: 20px;
     }
   }
+}
+.featured-boards{
+    font-family: 'CocogoosePro-Regular', Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    border-radius: 2px;
+    background-color: #fff;
+    padding: 20px 35px 17px 35px;
+    color: #000;
+    font-size: 12px;
+    text-align: center;
+    text-transform: uppercase;
+    outline: none;
+    border: 0;
+}
+.featured-boards .chevron-right{
+    padding-left:5px;
+}
+.small-font{
+  font-size:4vw !important;
 }
 </style>

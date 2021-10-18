@@ -1128,7 +1128,9 @@ export default {
     
   },
   updated() {
+    console.log(this.mountAppend)
     this.mountAppend = this.mountAppend + 1
+    console.log(this.mountAppend)
     if (
       $.trim($('.all-public-boards-list-out').html()) == '' &&
       this.mountAppend == 4
