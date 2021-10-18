@@ -36,19 +36,40 @@
                       target="_blank"
                       style="color: #28a745"
                       :href="card.link"
-                      >{{ card.link }}</a>
+                      >{{ card.link }}</a
+                    >
 
-                      <div class="image-card" v-if="card.ebay_short_item != null">
-                        <p v-if="card.ebay_short_item.title != null">{{card.ebay_short_item.title}}</p>
-                        <img v-if="card.ebay_short_item.image != null" :src="card.ebay_short_item.image"  />
-                        <b-row align-h="between">
-                          <b-col cols="6" class="desc" v-if="card.ebay_short_item.price != null">${{card.ebay_short_item.price}}</b-col>
-                          <b-col cols="6" class="desc" v-if="card.ebay_short_item.time_left != null">{{ card.ebay_short_item.time_left != '0s' ? card.ebay_short_item.time_left : '00:00' }}</b-col>
-                        </b-row>
-                      </div>
+                    <div class="image-card" v-if="card.ebay_short_item != null">
+                      <p v-if="card.ebay_short_item.title != null">
+                        {{ card.ebay_short_item.title }}
+                      </p>
+                      <img
+                        v-if="card.ebay_short_item.image != null"
+                        :src="card.ebay_short_item.image"
+                      />
+                      <b-row align-h="between">
+                        <b-col
+                          cols="6"
+                          class="desc"
+                          v-if="card.ebay_short_item.price != null"
+                          >${{ card.ebay_short_item.price }}</b-col
+                        >
+                        <b-col
+                          cols="6"
+                          class="desc"
+                          v-if="card.ebay_short_item.time_left != null"
+                          >{{
+                            card.ebay_short_item.time_left != '0s'
+                              ? card.ebay_short_item.time_left
+                              : '00:00'
+                          }}</b-col
+                        >
+                      </b-row>
+                    </div>
                   </td>
                   <td>
-                    <nuxt-link v-if="card.user != null"
+                    <nuxt-link
+                      v-if="card.user != null"
                       style="color: #28a745"
                       :to="`users?id=${card.user.id}`"
                       >{{ card.user.full_name }} ({{
@@ -160,15 +181,15 @@ export default {
   mounted() {
     this.getRequestedListing(this.page)
   },
-  updated(){
+  updated() {
     $('.card-header a').hover(
       function () {
-        var $this = $(this);
-        $this.siblings('.image-card').stop(true, false).fadeIn();
+        var $this = $(this)
+        $this.siblings('.image-card').stop(true, false).fadeIn()
       },
       function () {
-        var $this = $(this);
-        $this.siblings('.image-card').stop(true, false).fadeOut();
+        var $this = $(this)
+        $this.siblings('.image-card').stop(true, false).fadeOut()
       }
     )
   },
@@ -193,15 +214,19 @@ export default {
       }
     },
   },
-   methods: {
+  methods: {
     cancelRequest() {
       this.checkSlabOldId = null
       this.$bvModal.hide('checkSlabPopup')
     },
     checkItem(card) {
-      this.checkCard = card
-       this.checkSlabNewId= null
-      this.$bvModal.show('checkSlabPopup')
+      try {
+        this.checkCard = card
+        this.checkSlabNewId = null
+        this.$bvModal.show('checkSlabPopup')
+      } catch (err) {
+        location.reload()
+      }
     },
     getRequestedListing(page) {
       if (!this.requestInProcess) {
@@ -319,46 +344,46 @@ ul.my-card-listing {
   line-height: 2;
   margin-top: 2px;
 }
-.card-header{
+.card-header {
   position: relative;
-  color:#edecec !important;
-  font-family: "Nexa", Helvetica, Arial, sans-serif;
+  color: #edecec !important;
+  font-family: 'Nexa', Helvetica, Arial, sans-serif;
   letter-spacing: 1px;
-  font-size:14px;
+  font-size: 14px;
 }
-.card-header p{
+.card-header p {
   font-size: 11px !important;
   text-decoration: underline;
-  padding:0px 1px;
-  margin-bottom:7px !important;
+  padding: 0px 1px;
+  margin-bottom: 7px !important;
   font-family: 'CocogoosePro-SemiLightItalic', Helvetica, Arial, sans-serif !important;
   text-transform: uppercase !important;
 }
-.image-card{
+.image-card {
   position: absolute;
   display: none;
   z-index: 1;
-  padding:5px 3px 3px 3px;
+  padding: 5px 3px 3px 3px;
   top: 50%;
   left: 67%;
-  transform: translate(0,-50%);
+  transform: translate(0, -50%);
   width: 210px;
   border: 2px solid #39414a;
   border-radius: 0.25rem;
   background: #272d33;
 }
-.image-card h3{
-  margin:0px 5px;
+.image-card h3 {
+  margin: 0px 5px;
 }
-.desc{
-  padding:5px 18px 3px 18px;
+.desc {
+  padding: 5px 18px 3px 18px;
   font-size: 12px !important;
-  font-family: "NexaBold", Helvetica, Arial, sans-serif;
+  font-family: 'NexaBold', Helvetica, Arial, sans-serif;
 }
-.desc:last-child{
+.desc:last-child {
   text-align: right;
 }
-.image-card img{
-  width:100%;
+.image-card img {
+  width: 100%;
 }
 </style>

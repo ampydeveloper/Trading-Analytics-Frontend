@@ -179,6 +179,8 @@ export default {
     if (this.$route.query.parent_site) {
       this.parent_site = this.$route.query.parent_site
       window.localStorage.setItem('parent_site', 1)
+      this.parent_redirect = this.$route.query.parent_redirect
+      window.localStorage.setItem('parent_redirect', this.parent_redirect)
     } else if (window.localStorage.getItem('parent_site') == 1 || window.localStorage.getItem('parent_site') == '1') {
       this.parent_site = true
     }
@@ -211,6 +213,7 @@ export default {
         id: null,
       },
       parent_site: false,
+      parent_redirect: false,
     }
   },
   methods: {
@@ -244,12 +247,13 @@ export default {
                 var hashPassword = 'Z[d[<PV{R/=FmAfQ|io#AKV?rJbbJk(61po5aN+,CW|]&LX^,D`?lGL4T+P>rf'+this.form.password+'76lGLH||JE+9NzO[i^XY?-^-TQygzaW%sE+@^6Y12yF>|AVb6qc,,}[W_:Gu';
                 if (this.parent_site == true || this.parent_site == 'true') {
                   window.localStorage.setItem('parent_site', 0);
+                  window.localStorage.setItem('parent_redirect', 0);
                   window.location.href =
                     'https://www.slabstox.com/auto-login?email=' +
                     encodeURIComponent(this.form.email) +
                     '&token=' +
                     encodeURIComponent(hashPassword) +
-                    '&parent_site=1'
+                    '&parent_site=1&parent_redirect='+ encodeURIComponent(this.parent_redirect)
                 } else {
                   // window.location.href = '/dashboard'
                   window.location.href =

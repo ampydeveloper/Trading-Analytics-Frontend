@@ -100,7 +100,6 @@ export default {
         (googleUser) => {
           let profile = googleUser.getBasicProfile()
 
-          //YOUR CODE HERE
           var data = {
             first_name: profile.getGivenName(),
             last_name: profile.getFamilyName(),
@@ -111,14 +110,13 @@ export default {
           selfthis.socialLogin(data, 'google')
         },
         (error) => {
-          console.log(error);
           if (error.error != 'popup_closed_by_user') {
             this.errorMessageVal =
-              'There has been an error fetching your details. Please check your Google account for permissions or check your browser for cookie settings.'
-            this.$toast.error(
-              'There has been an error fetching your details. Please check your Google account for permissions or check your browser for cookie settings.',
-              { timeOut: 10000 }
-            )
+              'There has been an error fetching your details. Please try again.'
+            // this.$toast.error(
+            //   'There has been an error fetching your details. Please check your Google account for permissions or check your browser for cookie settings.',
+            //   { timeOut: 10000 }
+            // )
           }
         }
       )

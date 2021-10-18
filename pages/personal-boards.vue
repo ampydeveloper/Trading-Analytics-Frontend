@@ -3,195 +3,9 @@
     <div class="row">
       <div class="col-md-12 pl-1 mb-4 mt-2">
         <div class="top-btn">
-<<<<<<< HEAD
-          <button class="card-btn custom-stox">
-            <font-awesome-icon :icon="['fas', 'plus']" />
-            create custom stoxticker
-          </button>
-          <span class="tooltip-text set-tooltip mr-xl-2" v-b-tooltip.bottomleft  title="Click here to create your own custom StoxTicker by adding any Slabs you want to the SlabStoxPro database.">?</span>
-
-            <button class="card-btn search-stox" >
-              Search stoxticker board
-              <span class="chevron-right">
-              <font-awesome-icon :icon="['fas', 'chevron-right']" />
-              </span>
-              <span class="chevron-down">
-              <font-awesome-icon :icon="['fas', 'chevron-down']" />
-              </span>
-            </button>
-            <span class="tooltip-text set-tooltip mx-xl-2" v-b-tooltip.bottomleft title="Click here to search other SlabStoxPro users’ StoxTicker boards to see who they’re tracking.">?</span>
-
-            <button class="card-btn featured-boards" >
-              Featured boards
-              <span class="chevron-right">
-              <font-awesome-icon :icon="['fas', 'chevron-right']" />
-              </span>
-            </button>
-            <span class="tooltip-text set-tooltip mx-xl-2" v-b-tooltip.bottomleft title="featured boards">?</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="row analytics_page">
-      <div class="col-md-12 mb-3">
-        <div class="search-stox-box">
-          <div class="inner-wrap">
-            <div class="search-field">
-              <div class="row">
-                <div class="col-md-10">
-                  <div class="search-bar">
-                    <input
-                      type="text"
-                      placeholder="STOXTICKER BOARD SEARCH"
-                      v-model="searchKeyword"
-                      @keyup.enter="searchBoard()"
-                    />
-                  </div>
-                </div>
-                <div class="col-md-2">
-                  <div class="close-btn">
-                    <span>
-                      <font-awesome-icon :icon="['fas', 'chevron-up']" />
-                      Close</span
-                    >
-                  </div>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="select-cat">
-                    <h6>SELECT CATEGORIES</h6>
-                  </div>
-                </div>
-                <div class="cat-wrap">
-                  <div class="cat-btn"> 
-                    <ul>
-                      <li v-for="sport in attributes.sport" :key="sport">
-                        <a href="#" class="theme-btn card-btn" :data-sport="sport">{{sport}}</a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-                <div class="search-wrap">
-                  <div class="search">
-                    <button
-                      class="card-btn custom-stox-search"
-                      @click="searchBoard()"
-                      
-                    >
-                      search stoxticker board
-                      <font-awesome-icon
-                        :icon="['fas', 'chevron-circle-right']"
-                      />
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="search-add-box">
-          <div class="inner-wrap">
-            <div class="search-field">
-              <div class="row">
-                <div class="col-md-10">
-                  <div class="search-bar">
-                    <input
-                      type="text"
-                      placeholder="SEARCH SLABS"
-                      v-model="keyword"
-                      @keyup.enter="getSmartKeyword()"
-                    />
-                  </div>
-                </div>
-                <div class="col-md-2">
-                  <div class="close-btn">
-                    <span>
-                      <font-awesome-icon :icon="['fas', 'chevron-up']" />
-                      Close</span
-                    >
-                  </div>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="search-wrap col-sm-12">
-                  <div class="search">
-                    <button
-                      class="card-btn custom-stox-search"
-                      @click="getSmartKeyword()"
-                    >
-                      search
-                      <font-awesome-icon
-                        :icon="['fas', 'chevron-circle-right']"
-                      />
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-         <div class="dataloader search-board-dataloader" v-if="requestInProcess">
-            <b-spinner variant="success" label="Spinning"></b-spinner>
-          </div>
-
-      </div>
-    </div>
-
-
-      <div class="card card-single-row-outer search-slabs-out" style="display:none;">
-        <div class="card-body">
-          <h5 class="card-title custom-smart-search-player-name">
-            <button class="card-btn theme-btn">Slabs</button>
-            
-          </h5>
-           <ul
-              class="my-card-listing my-card-active-listing"
-            >
-            </ul>
-                    <ul
-              class="my-card-listing"
-            >
-              <li
-                class="my-card"   v-for="itemdata in searchSlabs" :id="'slab-search-'+itemdata.id"
-              :key="itemdata.id" :data-card_id="itemdata.id"
-              >
-                <h4 class="my-card-title" :title="itemdata.title">
-                  {{ trimTitle(itemdata.title) }}
-                </h4>
-                <div class="image-container">
-                  <img
-                    class="card-image"
-                    :title="itemdata.title"
-                    :src="itemdata.cardImage"
-                    :alt="itemdata.id"
-                  />
-                    <span v-if="itemdata.grade != null" class="grade-image-text">{{
-                itemdata.grade
-              }}</span>
-                </div>
-                <button class="my-card-view-listing add-to-board" v-on:click="addToBoard(itemdata.id)">
-                  Add to Board
-                  <font-awesome-icon :icon="['fas', 'chevron-circle-right']" />
-                </button>
-              </li>
-              <li class="my-card-no-slab" v-if="searchSlabs.length == 0">
-                No slab found.
-              </li>
-            </ul>
-
-          <div
-            class="empty-result"
-            v-if="data.length == 0 && !requestInProcess"
-=======
           <nuxt-link class="card-btn custom-stox" :to="`stoxticker`">
             <font-awesome-icon :icon="['fas', 'chevron-left']" />
             Back to stoxticker</nuxt-link
->>>>>>> 73a133d27b9cf25300b14e668af423325d5778f1
           >
         </div>
       </div>
@@ -511,77 +325,6 @@ export default {
     }
   },
   mounted() {
-<<<<<<< HEAD
-    this.allBoardGraphFunc(90)
-    this.allBoardGraphFunc1d(2)
-    
-    var currentHref = location.href
-    this.sxStoxtickerUrl = currentHref.replace('stoxticker', 'stox-feed')
-    this.getData()
-    this.slabstoxGraph(90, 1)
-
-    this.getSoldListing()
-    // this.getAllBoards()
-
-    this.logo = document.getElementById('sidebarLogo').src
-
-    $('.custom-stox').on('click', function () {
-      $(this).addClass('active')
-      $('.search-add-box').addClass('active')
-      $('.search-stox-box').removeClass('active')
-      $('.search-stox').removeClass('active')
-      $('.search-name-out').hide()
-      $('.stoxticker_page-outer').hide()
-      $('.stoxticker_listing-outer').hide()
-      $('.board-search-list-outer').hide()
-      $('.dashboard-graph-row').hide()
-      $('.all-public-boards-list-out').hide()
-    })
-
-    $('.search-stox').on('click', function () {
-      $(this).addClass('active')
-      $('.search-stox-box').addClass('active')
-      $('.search-add-box').removeClass('active')
-      $('.custom-stox').removeClass('active')
-      $('.search-name-out').hide()
-      $('.stoxticker_page-outer').hide()
-      $('.stoxticker_listing-outer').hide()
-      $('.dashboard-graph-row').hide()
-      $('.search-slabs-out').hide()
-      $('.all-public-boards-list-out').hide()
-    })
-
-    $('.close-btn').on('click', function () {
-      $('.custom-stox').removeClass('active')
-      $('.search-stox').removeClass('active')
-      $('.search-stox-box').removeClass('active')
-      $('.search-add-box').removeClass('active')
-      $('.search-name-out').hide()
-      $('.board-search-list-outer').hide()
-      $('.stoxticker_page-outer').show()
-      $('.stoxticker_listing-outer').show()
-      $('.all-public-boards-list-out').show()
-    })
-
-    $('.cat-btn li a').on('click', function (e) {
-      $(this).parent().toggleClass('active')
-      e.preventDefault()
-    })
-  },
-  updated() {
-    // console.log(this.mountAppend)
-    this.mountAppend = this.mountAppend + 1
-    console.log(this.mountAppend)
-    if (
-      
-      this.mountAppend == 2
-    ) {
-      setTimeout(() => {
-        this.allBoardGraphFunc(90)
-        this.allBoardGraphFunc1d(2)
-      }, 1000)
-    }
-=======
   
     this.allBoardGraphFunc(90)
     this.allBoardGraphFunc1d(2)
@@ -589,7 +332,6 @@ export default {
   },
   updated() {
   
->>>>>>> 73a133d27b9cf25300b14e668af423325d5778f1
   },
   components: {
     VueApexCharts: () => import('vue-apexcharts'),
@@ -621,9 +363,17 @@ export default {
     }),
   },
   methods: {
+    // trimTitle(title) {
+    //   if (title.length > 53) {
+    //     title = title.substring(0, 53)
+    //     title += '...'
+    //     return title
+    //   }
+    //   return title
+    // },
     allBoardGraphFunc(days = 90) {
       try {
-        this.$axios.$get(`stoxticker/featured-boards/${days}`).then((res) => {
+        this.$axios.$get(`stoxticker/all-boards/${days}`).then((res) => {
           if (res.status == 200) {
             if (res.data != null && res.data.length > 0) {
               res.data.map((item, key) => {
@@ -711,17 +461,11 @@ export default {
                         },
                       },
                     },
-<<<<<<< HEAD
-                  })
-        $('.search-slabs-out').show()
-
-=======
                   }
                   this.boardChartOptions = [
                     ...this.boardChartOptions,
                     boardChartOptionsArr,
                   ]
->>>>>>> 73a133d27b9cf25300b14e668af423325d5778f1
                 }
               })
             }
@@ -733,7 +477,7 @@ export default {
     },
     allBoardGraphFunc1d(days = 90) {
       try {
-        this.$axios.$get(`stoxticker/featured-boards/${days}`).then((res) => {
+        this.$axios.$get(`stoxticker/all-boards/${days}`).then((res) => {
           if (res.status == 200) {
             if (res.data != null && res.data.length > 0) {
               res.data.map((item, key) => {
@@ -840,16 +584,11 @@ export default {
                         },
                       },
                     },
-<<<<<<< HEAD
-                  })
-                  $('.search-slabs-out').show()     
-=======
                   }
                   this.boardChartOptions1d = [
                     ...this.boardChartOptions1d,
                     boardChartOptions1dArr,
                   ]
->>>>>>> 73a133d27b9cf25300b14e668af423325d5778f1
                 }
               })
             }
