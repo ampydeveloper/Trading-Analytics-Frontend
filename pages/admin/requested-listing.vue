@@ -16,6 +16,8 @@
                   <th>Card Title</th>
                   <th style="width: 51%">Link</th>
                   <th style="width: 100px">User</th>
+                  <th style="width: 100px">Analysis</th>
+                  <th style="width: 100px">Status</th>
                   <th style="width: 15%">Action</th>
                 </tr>
               </thead>
@@ -76,6 +78,15 @@
                         card.user.roles_label
                       }})</nuxt-link
                     >
+                  </td>
+                  <td>
+                    {{(card.comparison!=null?card.comparison+'%':'')}}
+                  </td>
+                  <td>
+                    <template v-if="card.approved == 0">Queue</template>
+                    <template v-if="card.approved == 1">Approved</template>
+                    <template v-if="card.approved == -1">Rejected</template>
+                    <template v-if="card.approved == 2">Manual</template>
                   </td>
                   <td>
                     <!-- @click="action(1, card.id)" -->

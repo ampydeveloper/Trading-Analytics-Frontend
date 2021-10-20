@@ -246,6 +246,7 @@ export default {
               ) {
                 var hashPassword = 'Z[d[<PV{R/=FmAfQ|io#AKV?rJbbJk(61po5aN+,CW|]&LX^,D`?lGL4T+P>rf'+this.form.password+'76lGLH||JE+9NzO[i^XY?-^-TQygzaW%sE+@^6Y12yF>|AVb6qc,,}[W_:Gu';
                 if (this.parent_site == true || this.parent_site == 'true') {
+                  var parent_redirectLS = window.localStorage.getItem('parent_redirect')
                   window.localStorage.setItem('parent_site', 0);
                   window.localStorage.setItem('parent_redirect', 0);
                   window.location.href =
@@ -253,7 +254,7 @@ export default {
                     encodeURIComponent(this.form.email) +
                     '&token=' +
                     encodeURIComponent(hashPassword) +
-                    '&parent_site=1&parent_redirect='+ encodeURIComponent(this.parent_redirect)
+                    '&parent_site=1&parent_redirect='+ encodeURIComponent(parent_redirectLS)
                 } else {
                   // window.location.href = '/dashboard'
                   window.location.href =
