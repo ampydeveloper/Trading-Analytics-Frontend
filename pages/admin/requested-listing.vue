@@ -13,12 +13,12 @@
               <thead>
                 <tr>
                   <th style="width: 65px">Card Id</th>
-                  <th>Card Title</th>
-                  <th style="width: 51%">Link</th>
+                  <th style="width: 17%">Card Title</th>
+                  <th style="width: 30%">Link</th>
                   <th style="width: 100px">User</th>
                   <th style="width: 100px">Analysis</th>
                   <th style="width: 100px">Status</th>
-                  <th style="width: 15%">Action</th>
+                  <th style="width: 235px">Action</th>
                 </tr>
               </thead>
               <tbody v-if="cards.length > 0">
