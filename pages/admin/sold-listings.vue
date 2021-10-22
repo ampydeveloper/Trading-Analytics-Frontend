@@ -77,7 +77,6 @@
                   <th>Title</th>
                   <th style="width: 80px">Price</th>
                   <th style="width: 120px">Sold Price</th>
-                      <th style="width: 120px">Username</th>
                   <th style="width: 130px">Listing Id</th>
                   <th style="width: 75px">Slab Id</th>
                   <th style="width: 70px">Status</th>
@@ -90,12 +89,6 @@
                   <td>{{ item.title }}</td>
                   <td>${{ item.price }}</td>
                   <td>${{ item.sold_price }}</td>
-                  <td v-if="item.card_sales != null">
-                    {{ item.card_sales.source=='Script'?'Python':(item.card_sales.sale_user==null?'':item.card_sales.sale_user.full_name+'('+item.card_sales.sale_user.id+')') }}
-                    </td>
-                    <td v-if="item.card_sales == null">
-
-                    </td>
                   <td>{{ item.itemId }}</td>
                   <td>{{ item.card_id }}</td>
                   <td>{{ item.status == 1 ? 'Active' : 'Inactive' }}</td>
