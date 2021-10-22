@@ -30,7 +30,7 @@
             </nuxt-link>
             <span class="tooltip-text set-tooltip mx-xl-2" v-b-tooltip.bottomleft title="Click here to fetch featured boards">?</span>
      
-        <nuxt-link to="/personal-boards" >
+        <!-- <nuxt-link to="/personal-boards" >
             <button class="card-btn featured-boards" >
                 Personal boards
                 <span class="chevron-right">
@@ -38,7 +38,7 @@
                 </span>
             </button>
             </nuxt-link>
-            <span class="tooltip-text set-tooltip mx-xl-2" v-b-tooltip.bottomleft title="Click here to fetch personal boards">?</span>
+            <span class="tooltip-text set-tooltip mx-xl-2" v-b-tooltip.bottomleft title="Click here to fetch personal boards">?</span> -->
         
         </div>
       </div>

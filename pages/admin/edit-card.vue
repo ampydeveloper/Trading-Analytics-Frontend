@@ -133,7 +133,7 @@
                 <label>Image                  
                 </label>
  <div class="input-file">
-                <img :src='imgSrc' alt='Card-image' v-if='imgSrc.length > 0' width="200" @click="viewImg"/>
+                <img :src='imgSrc' alt='Slab Thumbnail' v-if="imgSrc!= null" width="200" @click="viewImg"/>
                 <input
                   type="file"
                   placeholder="Image"
@@ -201,7 +201,7 @@ export default {
         image: '',
         // readyforcron: 0,
       },
-      imgSrc: '',
+      imgSrc: null,
       requestInProcess: false,
       statusMessage: null,
     }

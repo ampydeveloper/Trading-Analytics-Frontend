@@ -37,13 +37,7 @@
         <li class="nav-item">
           <nuxt-link class="nav-link" to="/admin/ebay-items-listings">
             <div class="icon trenders-icon"></div>
-            <div class="link-text">Active Listings</div>
-          </nuxt-link>
-        </li>
-         <li class="nav-item">
-          <nuxt-link class="nav-link" to="/admin/ebay-items-other-listings">
-            <div class="icon trenders-icon"></div>
-            <div class="link-text">Archive Listings</div>
+            <div class="link-text">All Listings</div>
           </nuxt-link>
         </li>
         <li class="nav-item" v-if="isAdmin">
