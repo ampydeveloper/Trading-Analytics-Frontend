@@ -13,18 +13,18 @@
               <thead>
                 <tr>
                   <th style="width: 65px">Card Id</th>
-                  <th>Card Title</th>
-                  <th style="width: 51%">Link</th>
+                  <th style="width: 17%">Card Title</th>
+                  <th style="width: 30%">Link</th>
                   <th style="width: 100px">User</th>
                   <th style="width: 100px">Analysis</th>
                   <th style="width: 100px">Status</th>
-                  <th style="width: 15%">Action</th>
+                  <th style="width: 235px">Action</th>
                 </tr>
               </thead>
               <tbody v-if="cards.length > 0">
                 <tr v-for="card of cards" :key="card.id">
                   <td>{{ card.card_id }}</td>
-                  <td>
+                  <td class="image-box">
                     <a
                       target="_blank"
                       style="color: #28a745"
@@ -32,13 +32,14 @@
                     >
                       {{ card.card.title }}
                     </a>
+                    <img :src="card.card.cardImage" />
                   </td>
                   <td class="text-lowercase card-header">
                     <a
                       target="_blank"
                       style="color: #28a745"
                       :href="card.link"
-                      >{{ card.link }}</a
+                      >{{ trimString(card.link) }}</a
                     >
 
                     <div class="image-card" v-if="card.ebay_short_item != null">
@@ -203,6 +204,16 @@ export default {
         $this.siblings('.image-card').stop(true, false).fadeOut()
       }
     )
+    $('.image-box a').hover(
+      function () {
+        var $this = $(this);
+        $this.siblings('img').stop(true, false).fadeIn();
+      },
+      function () {
+        var $this = $(this);
+        $this.siblings('img').stop(true, false).fadeOut();
+      }
+    )
   },
   watch: {
     cards(val) {
@@ -212,6 +223,7 @@ export default {
             $('#all-request-listing-table').DataTable({
               pageLength: 20,
               oLanguage: { sSearch: '' },
+              aaSorting: [],
               aoColumnDefs: [
                 {
                   bSortable: false,
@@ -226,6 +238,12 @@ export default {
     },
   },
   methods: {
+    trimString(str, max = 120) {
+      const array = str.trim().split(' ')
+      const ellipsis = str.length > max ? '...' : ''
+
+      return str.slice(0, max) + ellipsis
+    },
     cancelRequest() {
       this.checkSlabOldId = null
       this.$bvModal.hide('checkSlabPopup')
@@ -396,5 +414,19 @@ ul.my-card-listing {
 }
 .image-card img {
   width: 100%;
+}
+.image-box {
+  position: relative;
+}
+.image-box img {
+  position: absolute;
+    top: 50%;
+    left: 100%;
+    transform: translate(0,-50%);
+    display: none ;
+    width: 150px;
+    border: 4px solid #272d33;
+    border-radius: 0.25rem;
+    z-index: 99;
 }
 </style>
