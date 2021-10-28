@@ -1,16 +1,18 @@
 <template>
   <div class="col-md-12 col-sm-12 search-page live-auctions-page">
-    <div class="navbar">
-      <ul>
-        <li
-          v-for="sport in cards"
-          :key="sport"
-          class="sports-navbars btn theme-green-btn"
-          :data-title="sport.replace(' ', '-') + '-outor-div'"
-        >
-          {{ sport }}
-        </li>
-      </ul>
+    <div class="fixed-categories">
+      <div class="navbar-categories">
+        <ul>
+          <li
+            v-for="sport in cards"
+            :key="sport"
+            class="sports-navbars btn theme-green-btn"
+            :data-title="sport.replace(' ', '-') + '-outor-div'"
+          >
+            {{ sport }}
+          </li>
+        </ul>
+      </div>
     </div>
 
     <EndingSoonListing />
@@ -196,14 +198,14 @@ export default {
   background: #f95050;
 }
 
-.navbar ul {
+.navbar-categories ul {
   width: 100%;
   text-align: center;
   margin: 0;
   padding: 0;
 }
 
-.navbar ul li {
+.navbar-categories ul li {
   display: inline-block;
   margin: 10px 5px;
   padding: 6px 12px 4px 12px;
@@ -219,26 +221,64 @@ export default {
 }
 
 @media (max-width: 1100px) {
-  .navbar ul li {
+  .navbar-categories ul li {
     padding: 6px 10px 4px 10px;
     font-size: 10px;
     letter-spacing: 2px;
   }
-  .navbar {
+  .navbar-categories {
     padding: 0px;
   }
 }
 @media (max-width: 1023px) {
-  .navbar ul li {
+  .navbar-categories ul li {
     padding: 6px 6px 4px 6px;
     font-size: 8px;
     letter-spacing: 1px;
   }
 }
 @media (max-width: 767px) {
-  .navbar ul li {
+  .navbar-categories ul li {
     padding: 6px 7px 4px 7px;
     font-size: 10px;
   }
+  .fixed-categories{
+    height:100px !important;
+  }
+  .fixed-categories .navbar-categories{
+    width:95% !important; 
+    top: 160px !important;
+  }
+
+}
+.fixed-categories{
+  position: relative;
+  height:28px;
+}
+.fixed-categories .navbar-categories{
+  background-color: #272d33 !important;
+  width:83%;  
+  position: fixed;
+  top: 80px;
+  height:50px;
+  margin-left:-13px;
+  z-index: 10;
+}
+@media (max-width: 400px){
+  .fixed-categories .navbar-categories{
+    position: relative;
+    width:100% !important;
+    top: 0 !important;
+    height: 50px;
+    margin:10px 0px 0px 0px;
+  }
+}
+@media (max-width: 375px){
+    .fixed-categories {
+        height: 130px !important;
+    }
+    .fixed-categories .navbar-categories{
+      margin: 27px 0px 0px 0px;
+    }
 }
 </style>

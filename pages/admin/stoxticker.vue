@@ -22,7 +22,7 @@
 
             <nuxt-link
               class=""
-              to="/featured-boards"
+              to="/admin/featured-boards"
             >
             <button class="card-btn featured-boards" >
                 Featured boards
@@ -32,6 +32,16 @@
             </button>
             </nuxt-link>
             <span class="tooltip-text set-tooltip mx-xl-2" v-b-tooltip.bottomleft title="featured boards">?</span>
+
+            <nuxt-link to="/admin/personal-boards" >
+            <button class="card-btn featured-boards" >
+                Personal boards
+                <span class="chevron-right">
+                <font-awesome-icon :icon="['fas', 'chevron-right']" />
+                </span>
+            </button>
+            </nuxt-link>
+            <span class="tooltip-text set-tooltip mx-xl-2" v-b-tooltip.bottomleft title="Click here to fetch personal boards">?</span>
         </div>
       </div>
     </div>
@@ -128,6 +138,16 @@
                       @click="getSmartKeyword()"
                     >
                       search
+                      <font-awesome-icon
+                        :icon="['fas', 'chevron-circle-right']"
+                      />
+                    </button>
+                    <button
+                      class="card-btn custom-stox-search"
+                      v-if="this.isHidden == false"
+                      @click="createBoard()"
+                    >
+                      create board
                       <font-awesome-icon
                         :icon="['fas', 'chevron-circle-right']"
                       />
@@ -580,6 +600,7 @@ export default {
     // this.logo = document.getElementById('sidebarLogo').src
 
     $('.custom-stox').on('click', function () {
+      this.isHidden = true
       $(this).addClass('active')
       $('.search-add-box').addClass('active')
       $('.search-stox-box').removeClass('active')
@@ -593,6 +614,7 @@ export default {
     })
 
     $('.search-stox').on('click', function () {
+      this.isHidden = true
       $(this).addClass('active')
       $('.search-stox-box').addClass('active')
       $('.search-add-box').removeClass('active')
@@ -606,6 +628,7 @@ export default {
     })
 
     $('.close-btn').on('click', function () {
+      this.isHidden = true
       $('.custom-stox').removeClass('active')
       $('.search-stox').removeClass('active')
       $('.search-stox-box').removeClass('active')
@@ -869,6 +892,7 @@ export default {
         },
       },
       filters: { ...FILTERS },
+      isHidden :true,
     }
   },
   computed:{
@@ -1057,6 +1081,7 @@ export default {
             if (res.status == 200) {
               $('.search-slabs-out').show()
               $('.search-name-out').show()
+              this.isHidden = false
               this.searchSlabs = res.data
             }
           })
@@ -1085,6 +1110,7 @@ export default {
           .then((res) => {
             this.requestInProcess = false
             if (res.status == 200) {
+              this.isHidden = true
               $('.search-name-out input').val('')
               $('.search-slabs-out').hide()
               $('.search-name-out').hide()
@@ -1683,10 +1709,6 @@ ul.my-card-listing {
 .embed-link {
   color: #fff;
 }
-
-// .top-btn {
-//   margin-bottom: 20px;
-// }
 .thb-btn {
   color: #000;
   &:hover {
@@ -1734,7 +1756,7 @@ ul.my-card-listing {
   border: 0;
   text-transform: uppercase;
   outline: none;
-  margin-right: 10px;
+  // margin-right: 10px;
 
   @media (max-width: 768px) {
     padding: 20px 20px 17px 20px;
@@ -1937,6 +1959,10 @@ ul.my-card-listing {
   .search-wrap {
     margin-top: 15px;
   }
+}
+.search-add-box,
+.search-stox-box{
+  margin-top:90px;
 }
 .search-wrap {
   width: calc(100% - 863px);
@@ -2223,5 +2249,79 @@ html body main .card.search-slabs-out .my-card-listing .my-card {
 }
 .small-font{
   font-size:4vw !important;
+}
+@media (min-width: 767px)
+{
+  .stoxticker-btn{
+    height:60px;
+  }
+  .top-btn{
+      position: sticky;
+      top:0;
+      padding:0px 0px 15px 0px;
+      z-index: 13;
+      background-color: #272d33 !important;
+      // width: 82%;
+  }
+}
+// @media (min-width: 991px)
+// { 
+//   .top-btn
+//   {
+//     // width: 82%;
+//   }
+// }
+@media (min-width: 1020px)
+{
+  .top-btn{
+    padding: 15px 0px;
+    top: 0;
+  }
+}
+@media (max-width: 1300px){
+    .featured-boards,
+    .search-stox,
+    .custom-stox-search,
+    .custom-stox
+    {
+      padding: 15px 15px 14px 17px;
+      font-size:11px;
+    }
+     
+}
+@media (max-width: 1080px){
+    .featured-boards,
+    .search-stox,
+    .custom-stox-search,
+    .custom-stox
+    {
+      padding: 9px;
+      font-size:10px;
+    }
+     
+}
+@media (max-width: 1020px){
+    .featured-boards,
+    .search-stox
+    {
+      margin-top:15px;
+      width:242px;
+    }
+    .featured-boards,
+    .search-stox,
+    .custom-stox-search,
+    .custom-stox
+    {
+      padding: 15px 24px;
+      font-size:11px;
+    }
+}
+
+@media (max-width: 1080px)
+{
+    .dashboard-nav-bar .nav-bar-form .nav-bar-search-btn
+    {
+      width:135px !important;
+    }
 }
 </style>

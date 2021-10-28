@@ -27,6 +27,16 @@
               </span>
             </button>
             <span class="tooltip-text set-tooltip mx-xl-2" v-b-tooltip.bottomleft title="featured boards">?</span>
+
+            <nuxt-link to="/admin/personal-boards" >
+            <button class="card-btn featured-boards" >
+                Personal boards
+                <span class="chevron-right">
+                <font-awesome-icon :icon="['fas', 'chevron-right']" />
+                </span>
+            </button>
+            </nuxt-link>
+            <span class="tooltip-text set-tooltip mx-xl-2" v-b-tooltip.bottomleft title="Click here to fetch personal boards">?</span>
         </div>
       </div>
     </div>
@@ -123,6 +133,16 @@
                       @click="getSmartKeyword()"
                     >
                       search
+                      <font-awesome-icon
+                        :icon="['fas', 'chevron-circle-right']"
+                      />
+                    </button>
+                    <button
+                      class="card-btn custom-stox-search"
+                      v-if="this.isHidden == false"
+                      @click="createBoard()"
+                    >
+                      create board
                       <font-awesome-icon
                         :icon="['fas', 'chevron-circle-right']"
                       />
@@ -569,19 +589,21 @@ export default {
     }
   },
   mounted() {
-    var currentHref = location.href
-    this.sxStoxtickerUrl = currentHref.replace('stoxticker', 'stox-feed')
     this.allBoardGraphFunc(90)
     this.allBoardGraphFunc1d(2)
+    
+    var currentHref = location.href
+    this.sxStoxtickerUrl = currentHref.replace('stoxticker', 'stox-feed')
     this.getData()
     this.slabstoxGraph(90, 1)
 
     this.getSoldListing()
     // this.getAllBoards()
 
-    this.logo = document.getElementById('sidebarLogo').src
+    // this.logo = document.getElementById('sidebarLogo').src
 
     $('.custom-stox').on('click', function () {
+      this.isHidden = true
       $(this).addClass('active')
       $('.search-add-box').addClass('active')
       $('.search-stox-box').removeClass('active')
@@ -595,6 +617,7 @@ export default {
     })
 
     $('.search-stox').on('click', function () {
+      this.isHidden = true
       $(this).addClass('active')
       $('.search-stox-box').addClass('active')
       $('.search-add-box').removeClass('active')
@@ -608,6 +631,7 @@ export default {
     })
 
     $('.close-btn').on('click', function () {
+      this.isHidden = true
       $('.custom-stox').removeClass('active')
       $('.search-stox').removeClass('active')
       $('.search-stox-box').removeClass('active')
@@ -625,15 +649,17 @@ export default {
     })
   },
   updated() {
+    // console.log(this.mountAppend)
     this.mountAppend = this.mountAppend + 1
+    console.log(this.mountAppend)
     if (
-      $.trim($('.all-public-boards-list-out').html()) == '' &&
-      this.mountAppend == 4
+      
+      this.mountAppend == 2
     ) {
       setTimeout(() => {
         this.allBoardGraphFunc(90)
         this.allBoardGraphFunc1d(2)
-      }, 10000)
+      }, 1000)
     }
   },
   components: {
@@ -884,6 +910,7 @@ export default {
         },
       },
       filters: { ...FILTERS },
+      isHidden :true,
     }
   },
   computed: {
@@ -1071,6 +1098,7 @@ export default {
             if (res.status == 200) {
               $('.search-slabs-out').show()
               $('.search-name-out').show()
+              this.isHidden = false
               this.searchSlabs = res.data
             }
           })
@@ -1099,6 +1127,7 @@ export default {
           .then((res) => {
             this.requestInProcess = false
             if (res.status == 200) {
+              this.isHidden = true
               $('.search-name-out input').val('')
               $('.search-slabs-out').hide()
               $('.search-name-out').hide()
@@ -1449,6 +1478,8 @@ export default {
                       },
                     },
                   })
+        $('.search-slabs-out').show()
+
                 }
               })
             }
@@ -1560,6 +1591,7 @@ export default {
                       },
                     },
                   })
+                  $('.search-slabs-out').show()     
                 }
               })
             }
@@ -1743,7 +1775,7 @@ ul.my-card-listing {
   border: 0;
   text-transform: uppercase;
   outline: none;
-  margin-right: 10px;
+  // margin-right: 10px;
 
   @media (max-width: 768px) {
     padding: 20px 20px 17px 20px;
@@ -1900,7 +1932,6 @@ ul.my-card-listing {
       margin-left: 1px;
       margin-bottom: 5px;
       a {
-        // font-family: 'CocogoosePro-Regular', Helvetica, Arial, sans-serif;
         font-family: NexaBold, Helvetica, Arial, sans-serif;
         font-weight: 400;
         border-radius: 2px;
@@ -1947,6 +1978,10 @@ ul.my-card-listing {
   .search-wrap {
     margin-top: 15px;
   }
+}
+.search-add-box,
+.search-stox-box{
+  margin-top:90px;
 }
 .search-wrap {
   width: calc(100% - 863px);
@@ -2001,6 +2036,7 @@ ul.my-card-listing {
   height: 600px;
   overflow-y: scroll;
   overflow-x: hidden;
+  margin-top: 50px ;
 }
 html body main .card.search-slabs-out .my-card-listing .my-card {
   width: 16.66%;
@@ -2097,7 +2133,6 @@ html body main .card.search-slabs-out .my-card-listing .my-card {
     margin-bottom: 7px;
     text-align: center;
     background: #272d33;
-    // border-radiupx;
     height: 12vw;
     .icons-container {
       position: absolute;
@@ -2231,5 +2266,71 @@ html body main .card.search-slabs-out .my-card-listing .my-card {
 }
 .featured-boards .chevron-right{
     padding-left:5px;
+}
+@media (min-width: 767px)
+{
+  .stoxticker-btn{
+    height:60px;
+  }
+  .top-btn{
+      position: sticky;
+      top: 0;
+      padding:0px 0px 15px 0px;
+      z-index: 13;
+      background-color: #272d33 !important;
+      // width: 82%;
+  }
+}
+// @media (min-width: 991px)
+// { 
+//   .top-btn
+//   {
+//     width: 82%;
+//   }
+// }
+@media (min-width: 1020px)
+{
+  .top-btn{
+    padding: 15px 0px;
+    top: 0;
+  }
+}
+@media (max-width: 1300px){
+    .featured-boards,
+    .search-stox,
+    .custom-stox-search,
+    .custom-stox
+    {
+      padding: 15px 15px 14px 17px;
+      font-size:11px;
+    }
+     
+}
+@media (max-width: 1080px){
+    .featured-boards,
+    .search-stox,
+    .custom-stox-search,
+    .custom-stox
+    {
+      padding: 9px;
+      font-size:10px;
+    }
+     
+}
+@media (max-width: 1020px){
+    .featured-boards,
+    .search-stox
+    {
+      margin-top:15px;
+      width:242px;
+    }
+    .featured-boards,
+    .search-stox,
+    .custom-stox-search,
+    .custom-stox
+    {
+      padding: 15px 24px;
+      font-size:11px;
+    }
 }
 </style>

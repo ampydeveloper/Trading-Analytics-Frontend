@@ -1,8 +1,8 @@
 <template>
   <nav class="navbar dashboard-nav-bar flex-md-nowrap p-0">
     <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="javascript:;"></a>
-    <!-- <img class="top-nav-bar-search-logo" src="~/assets/img/navbar-top-stox-search.png" alt /> -->
-    <!-- <div class="nav-bar-form">
+    <!-- <img class="top-nav-bar-search-logo" src="~/assets/img/navbar-top-stox-search.png" alt />
+    <div class="nav-bar-form">
       <div
         class="nav-bar-form-input"
         v-bind:class="{'nav-bar-form-input_search_bar_open': showAdvanceSearch}"
@@ -39,7 +39,7 @@
           </div>
           <div class="notification_list">
             <ul v-for="(item, key) of items">
-               <!-- <li class="text-center">
+              <!-- <li class="text-center">
                 
                 <h6>Sorry No Notifications.</h6>
                 
@@ -148,8 +148,8 @@ this.$router.push('/admin/ebay-items-listings?item='+itemId)
   font-family: 'CocogoosePro-Italic', Helvetica, Arial, sans-serif;
   .top-nav-bar-search-logo {
     width: 10%;
-    margin: 0px 25px;
-    margin-top: 5px;
+    // margin: 0px 25px;
+    margin: 5px 25px;
   }
 
   .nav-bar-form {
@@ -167,7 +167,7 @@ this.$router.push('/admin/ebay-items-listings?item='+itemId)
     }
     .nav-bar-form-input {
       margin-right: 20px;
-      margin-top: 4px;
+      margin: 4px 0;
       display: inline-block;
       width: 70%;
       .form-control {

@@ -1,20 +1,271 @@
 <template>
-  <nav class="navbar dashboard-nav-bar flex-md-nowrap p-0 erer">
-    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="javascript:;"></a>
-    <img
-      class="top-nav-bar-search-logo"
-      src="~/assets/img/navbar-top-stox-search.png"
-      alt
-    />
-    <span class="toggle_topnav">+</span>
-    <div class="header-top-mobile d-none clearfix">
-      <div class="sibar-logo-top">
-        <img
-          src="~/assets/img/dashboard-sidebar-middel-logo.png"
-          alt="Slabstox"
-        />
+  <div class="navbar-fixed">
+    <nav class="navbar dashboard-nav-bar flex-md-nowrap p-0 erer">
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="javascript:;"></a>
+      <img
+        class="top-nav-bar-search-logo"
+        src="~/assets/img/navbar-top-stox-search.png"
+        alt
+      />
+      <span class="toggle_topnav">+</span>
+      <div class="header-top-mobile d-none clearfix">
+        <div class="sibar-logo-top">
+          <img
+            src="~/assets/img/dashboard-sidebar-middel-logo.png"
+            alt="Slabstox"
+          />
+        </div>
+
+        <ul
+          class="upper-links list-inline clearfix"
+          v-if="user == null || user.full_name == null"
+        >
+          <li>
+            <nuxt-link to="/login">
+              <i>Sign In</i>
+            </nuxt-link>
+          </li>
+          <li>/</li>
+          <li>
+            <nuxt-link to="/register">
+              <i>Sign Up</i>
+            </nuxt-link>
+          </li>
+        </ul>
+      </div>
+      <div class="profile_wrap b-profileImage">
+        <b-navbar-nav class="top-nav-navbar">
+          <!-- <b-nav-item
+            class="top-nav-icon"
+            href="javascript:;"
+            v-if="user != null && user.full_name != null"
+            @click="shownotification = !shownotification"
+          >
+            <img class="icon" src="~/assets/img/icons/bell.png" />
+          </b-nav-item> -->
+          <!-- <b-nav-item class="top-nav-icon" to="/cart">
+            <img class="icon" src="~/assets/img/icons/cart.png" />
+            <span v-show="cartItemsCount > 0" class="cart-item-count">{{
+              cartItemsCount
+            }}</span>
+          </b-nav-item> -->
+          <b-nav-item-dropdown
+            right
+            v-if="user != null && user.full_name != null"
+          >
+            <template v-slot:button-content>
+              <b-avatar variant="info" :src="user.picture" class></b-avatar>
+              <em>{{ user.full_name }}</em>
+              <span class="bg"></span>
+            </template>
+            <b-dropdown-item to="/profile"
+              ><img class="icon" src="~/assets/img/icons/profile_icon.png" />
+              Profile</b-dropdown-item
+            >
+            <b-dropdown-item @click="logout" href="javascript:;"
+              ><img
+                class="icon"
+                src="~/assets/img/icons/logout_icon.png"
+              />Logout</b-dropdown-item
+            >
+          </b-nav-item-dropdown>
+        </b-navbar-nav>
       </div>
 
+      <div class="mobile_navbar sidebar">
+        <!-- <span class="toggle_mainnav" @click="mobileNavShow != mobileNavShow">+</span>-->
+        <ul
+          class="nav flex-column nav-list-first"
+          v-bind:class="{ 'mobile-show': mobileNavShow }"
+        >
+          <li class="nav-item">
+            <nuxt-link class="nav-link" to="/dashboard">
+              <div class="icon dashboard-icon"></div>
+            </nuxt-link>
+          </li>
+          <li class="nav-item">
+            <nuxt-link class="nav-link" to="/live-auctions">
+              <div class="icon live-auctions-icon"></div>
+            </nuxt-link>
+          </li>
+          <li class="nav-item">
+            <nuxt-link class="nav-link" to="/trenders">
+              <div class="icon trenders-icon"></div>
+            </nuxt-link>
+          </li>
+          <li class="nav-item" v-if="user != null && user.full_name != null">
+            <nuxt-link class="nav-link" to="/head2head">
+              <div class="icon head-to-head-icon"></div>
+            </nuxt-link>
+          </li>
+          <li class="nav-item" v-if="user == null || user.full_name == null">
+            <span class="nav-link" v-b-modal.loginTopPopup>
+              <div class="icon head-to-head-icon"></div>
+            </span>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:;">
+              <div class="icon toggle-icon" @click="toggleMobileNav()"></div>
+            </a>
+          </li>
+          <!-- <li class="nav-item">
+            <nuxt-link class="nav-link" to="/watch-list">
+              <div class="icon watch-list-icon"></div>
+            </nuxt-link>
+          </li> -->
+          <li class="nav-item" v-if="user != null && user.full_name != null">
+            <nuxt-link class="nav-link" to="/my-portfolio">
+              <div class="icon my-listing-icon"></div>
+            </nuxt-link>
+          </li>
+          <li class="nav-item" v-if="user == null || user.full_name == null">
+            <span class="nav-link" v-b-modal.loginTopPopup>
+              <div class="icon my-listing-icon"></div>
+            </span>
+          </li>
+          <!-- <li class="nav-item">
+            <nuxt-link class="nav-link" to="/sell-slabs">
+              <div class="icon sell-card-icon"></div>
+            </nuxt-link>
+          </li> -->
+          <!-- <li class="nav-item">
+            <nuxt-link class="nav-link" to="/my-listing">
+              <div class="icon top-pick-icon"></div>
+            </nuxt-link>
+          </li>
+          <li class="nav-item">
+            <nuxt-link class="nav-link" to="/analytics">
+              <div class="icon analytics-icon"></div>
+            </nuxt-link>
+          </li> -->
+          <li class="nav-item">
+            <nuxt-link class="nav-link" to="/stoxticker">
+              <div class="icon stoxticker-icon"></div>
+            </nuxt-link>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://www.slabstox.com/category/sxnewsfeed/" target="_blank">
+              <div class="icon news-feed-icon"></div>
+            </a>
+          </li>
+          <li class="nav-item" v-if="user != null && user.full_name != null">
+            <nuxt-link class="nav-link" to="/stox-requrest">
+              <div class="icon stox-request-icon"></div>
+            </nuxt-link>
+          </li>
+          <li class="nav-item" v-if="user == null || user.full_name == null">
+            <span class="nav-link" v-b-modal.loginTopPopup>
+              <div class="icon stox-request-icon"></div>
+            </span>
+          </li>
+        </ul>
+        <!-- <div class="sibar-logo-middel">
+          <img src="~/assets/img/dashboard-sidebar-middel-logo.png" alt="Slabstox" />
+        </div>
+        <ul class="nav flex-column mb-2">
+          <li class="nav-item">
+            <nuxt-link class="nav-link" to="/live-auctions">
+              <div class="icon my-stoxpro-icon"></div>
+              <div class="link-text">My Stoxpro</div>
+            </nuxt-link>
+          </li>
+        </ul>-->
+      </div>
+      <div class="nav-bar-form">
+        <div
+          class="nav-bar-form-input custom-smart-search"
+          v-bind:class="{
+            'nav-bar-form-input_search_bar_open': showAdvanceSearch,
+          }"
+        >
+          <input
+            v-on:keyup.enter="searchNow()"
+            v-on:keyup="getSmartKeyword()"
+            class="form-control"
+            v-model="keyword"
+            type="text"
+            aria-label="Search"
+          />
+          <span class="advance-search-label" @click="toggleAdvanceSearch()">{{
+            showAdvanceSearch
+              ? 'Basic&nbsp;&nbsp;search'
+              : 'Advanced&nbsp;&nbsp;search'
+          }}</span>
+          <div class="display_keyword" v-if="showSmartSearch">
+            <ul v-click-outside="hideSmartSearch">
+              <li
+                v-for="(item, key) of smartKeyword"
+                :key="key"
+                @click="selectKeyword(item.id)"
+              >
+                {{ item.player + ' ' + item.title }}
+              </li>
+              <li v-if="smartKeyword.length == 0">
+                No results found for this search
+              </li>
+            </ul>
+          </div>
+        </div>
+        <button
+          type="button"
+          @click="searchNow()"
+          class="nav-bar-search-btn"
+          v-bind:class="{ search_bar_open: showAdvanceSearch }"
+        >
+          Search Stox
+        </button>
+      </div>
+      <b-navbar-nav class="top-nav-navbar top-right-nav b-profileImage">
+        <b-nav-item
+          class="top-nav-icon"
+          href="javascript:;"
+          v-if="user != null && user.full_name != null"
+          @click="shownotification = !shownotification"
+        >
+          <img class="icon" src="~/assets/img/icons/bell.png" />
+          <div class="notification_wrap" v-if="shownotification">
+            <div class="notification_count">
+              <h5>All Notifications</h5>
+            </div>
+            <div class="notification_list">
+              <ul>
+                <li class="text-center">
+                  <h6>Sorry No Notifications.</h6>
+                </li>
+                <!-- <li>
+                  <i class="fa fa-bell" aria-hidden="true"></i>
+                  <h5>New Message</h5>
+                  <h6>New card listing added.</h6>
+                  <span>1 Min Ago</span>
+                </li> -->
+              </ul>
+            </div>
+            <div class="viewall">
+              <h5>View all Notifications</h5>
+            </div>
+          </div>
+        </b-nav-item>
+        <!-- <b-nav-item class="top-nav-icon" to="/cart">
+          <img class="icon" src="~/assets/img/icons/cart.png" />
+          <span v-show="cartItemsCount > 0" class="cart-item-count">{{
+            cartItemsCount
+          }}</span>
+        </b-nav-item> -->
+        <b-nav-item-dropdown right v-if="user != null && user.full_name != null">
+          <template v-slot:button-content>
+            <b-avatar variant="info" :src="user.picture"></b-avatar>
+            <em>{{ user.full_name }}</em>
+            <span class="bg"></span>
+          </template>
+          <b-dropdown-item to="/profile">
+            <img class="icon" src="~/assets/img/icons/profile_icon.png" />
+            Profile
+          </b-dropdown-item>
+          <b-dropdown-item @click="logout" href="javascript:;">
+            <img class="icon" src="~/assets/img/icons/logout_icon.png" />Logout
+          </b-dropdown-item>
+        </b-nav-item-dropdown>
+      </b-navbar-nav>
       <ul
         class="upper-links list-inline clearfix"
         v-if="user == null || user.full_name == null"
@@ -31,257 +282,8 @@
           </nuxt-link>
         </li>
       </ul>
-    </div>
-    <div class="profile_wrap b-profileImage">
-      <b-navbar-nav class="top-nav-navbar">
-        <!-- <b-nav-item
-          class="top-nav-icon"
-          href="javascript:;"
-          v-if="user != null && user.full_name != null"
-          @click="shownotification = !shownotification"
-        >
-          <img class="icon" src="~/assets/img/icons/bell.png" />
-        </b-nav-item> -->
-        <!-- <b-nav-item class="top-nav-icon" to="/cart">
-          <img class="icon" src="~/assets/img/icons/cart.png" />
-          <span v-show="cartItemsCount > 0" class="cart-item-count">{{
-            cartItemsCount
-          }}</span>
-        </b-nav-item> -->
-        <b-nav-item-dropdown
-          right
-          v-if="user != null && user.full_name != null"
-        >
-          <template v-slot:button-content>
-            <b-avatar variant="info" :src="user.picture" class></b-avatar>
-            <em>{{ user.full_name }}</em>
-            <span class="bg"></span>
-          </template>
-          <b-dropdown-item to="/profile"
-            ><img class="icon" src="~/assets/img/icons/profile_icon.png" />
-            Profile</b-dropdown-item
-          >
-          <b-dropdown-item @click="logout" href="javascript:;"
-            ><img
-              class="icon"
-              src="~/assets/img/icons/logout_icon.png"
-            />Logout</b-dropdown-item
-          >
-        </b-nav-item-dropdown>
-      </b-navbar-nav>
-    </div>
-
-    <div class="mobile_navbar sidebar">
-      <!-- <span class="toggle_mainnav" @click="mobileNavShow != mobileNavShow">+</span>-->
-      <ul
-        class="nav flex-column nav-list-first"
-        v-bind:class="{ 'mobile-show': mobileNavShow }"
-      >
-        <li class="nav-item">
-          <nuxt-link class="nav-link" to="/dashboard">
-            <div class="icon dashboard-icon"></div>
-          </nuxt-link>
-        </li>
-        <li class="nav-item">
-          <nuxt-link class="nav-link" to="/live-auctions">
-            <div class="icon live-auctions-icon"></div>
-          </nuxt-link>
-        </li>
-        <li class="nav-item">
-          <nuxt-link class="nav-link" to="/trenders">
-            <div class="icon trenders-icon"></div>
-          </nuxt-link>
-        </li>
-        <li class="nav-item" v-if="user != null && user.full_name != null">
-          <nuxt-link class="nav-link" to="/head2head">
-            <div class="icon head-to-head-icon"></div>
-          </nuxt-link>
-        </li>
-        <li class="nav-item" v-if="user == null || user.full_name == null">
-          <span class="nav-link" v-b-modal.loginTopPopup>
-            <div class="icon head-to-head-icon"></div>
-          </span>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="javascript:;">
-            <div class="icon toggle-icon" @click="toggleMobileNav()"></div>
-          </a>
-        </li>
-        <!-- <li class="nav-item">
-          <nuxt-link class="nav-link" to="/watch-list">
-            <div class="icon watch-list-icon"></div>
-          </nuxt-link>
-        </li> -->
-        <li class="nav-item" v-if="user != null && user.full_name != null">
-          <nuxt-link class="nav-link" to="/my-portfolio">
-            <div class="icon my-listing-icon"></div>
-          </nuxt-link>
-        </li>
-        <li class="nav-item" v-if="user == null || user.full_name == null">
-          <span class="nav-link" v-b-modal.loginTopPopup>
-            <div class="icon my-listing-icon"></div>
-          </span>
-        </li>
-        <!-- <li class="nav-item">
-          <nuxt-link class="nav-link" to="/sell-slabs">
-            <div class="icon sell-card-icon"></div>
-          </nuxt-link>
-        </li> -->
-        <!-- <li class="nav-item">
-          <nuxt-link class="nav-link" to="/my-listing">
-            <div class="icon top-pick-icon"></div>
-          </nuxt-link>
-        </li>
-        <li class="nav-item">
-          <nuxt-link class="nav-link" to="/analytics">
-            <div class="icon analytics-icon"></div>
-          </nuxt-link>
-        </li> -->
-        <li class="nav-item">
-          <nuxt-link class="nav-link" to="/stoxticker">
-            <div class="icon stoxticker-icon"></div>
-          </nuxt-link>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="https://www.slabstox.com/category/sxnewsfeed/" target="_blank">
-            <div class="icon news-feed-icon"></div>
-          </a>
-        </li>
-        <li class="nav-item" v-if="user != null && user.full_name != null">
-          <nuxt-link class="nav-link" to="/stox-requrest">
-            <div class="icon stox-request-icon"></div>
-          </nuxt-link>
-        </li>
-        <li class="nav-item" v-if="user == null || user.full_name == null">
-          <span class="nav-link" v-b-modal.loginTopPopup>
-            <div class="icon stox-request-icon"></div>
-          </span>
-        </li>
-      </ul>
-      <!-- <div class="sibar-logo-middel">
-        <img src="~/assets/img/dashboard-sidebar-middel-logo.png" alt="Slabstox" />
-      </div>
-      <ul class="nav flex-column mb-2">
-        <li class="nav-item">
-          <nuxt-link class="nav-link" to="/live-auctions">
-            <div class="icon my-stoxpro-icon"></div>
-            <div class="link-text">My Stoxpro</div>
-          </nuxt-link>
-        </li>
-      </ul>-->
-    </div>
-    <div class="nav-bar-form">
-      <div
-        class="nav-bar-form-input custom-smart-search"
-        v-bind:class="{
-          'nav-bar-form-input_search_bar_open': showAdvanceSearch,
-        }"
-      >
-        <input
-          v-on:keyup.enter="searchNow()"
-          v-on:keyup="getSmartKeyword()"
-          class="form-control"
-          v-model="keyword"
-          type="text"
-          aria-label="Search"
-        />
-        <span class="advance-search-label" @click="toggleAdvanceSearch()">{{
-          showAdvanceSearch
-            ? 'Basic&nbsp;&nbsp;search'
-            : 'Advanced&nbsp;&nbsp;search'
-        }}</span>
-        <div class="display_keyword" v-if="showSmartSearch">
-          <ul v-click-outside="hideSmartSearch">
-            <li
-              v-for="(item, key) of smartKeyword"
-              :key="key"
-              @click="selectKeyword(item.id)"
-            >
-              {{ item.player + ' ' + item.title }}
-            </li>
-            <li v-if="smartKeyword.length == 0">
-              No results found for this search
-            </li>
-          </ul>
-        </div>
-      </div>
-      <button
-        type="button"
-        @click="searchNow()"
-        class="nav-bar-search-btn"
-        v-bind:class="{ search_bar_open: showAdvanceSearch }"
-      >
-        Search Stox
-      </button>
-    </div>
-    <b-navbar-nav class="top-nav-navbar top-right-nav b-profileImage">
-      <b-nav-item
-        class="top-nav-icon"
-        href="javascript:;"
-        v-if="user != null && user.full_name != null"
-        @click="shownotification = !shownotification"
-      >
-        <img class="icon" src="~/assets/img/icons/bell.png" />
-        <div class="notification_wrap" v-if="shownotification">
-          <div class="notification_count">
-            <h5>All Notifications</h5>
-          </div>
-          <div class="notification_list">
-            <ul>
-              <li class="text-center">
-                <h6>Sorry No Notifications.</h6>
-              </li>
-              <!-- <li>
-                <i class="fa fa-bell" aria-hidden="true"></i>
-                <h5>New Message</h5>
-                <h6>New card listing added.</h6>
-                <span>1 Min Ago</span>
-              </li> -->
-            </ul>
-          </div>
-          <div class="viewall">
-            <h5>View all Notifications</h5>
-          </div>
-        </div>
-      </b-nav-item>
-      <!-- <b-nav-item class="top-nav-icon" to="/cart">
-        <img class="icon" src="~/assets/img/icons/cart.png" />
-        <span v-show="cartItemsCount > 0" class="cart-item-count">{{
-          cartItemsCount
-        }}</span>
-      </b-nav-item> -->
-      <b-nav-item-dropdown right v-if="user != null && user.full_name != null">
-        <template v-slot:button-content>
-          <b-avatar variant="info" :src="user.picture"></b-avatar>
-          <em>{{ user.full_name }}</em>
-          <span class="bg"></span>
-        </template>
-        <b-dropdown-item to="/profile">
-          <img class="icon" src="~/assets/img/icons/profile_icon.png" />
-          Profile
-        </b-dropdown-item>
-        <b-dropdown-item @click="logout" href="javascript:;">
-          <img class="icon" src="~/assets/img/icons/logout_icon.png" />Logout
-        </b-dropdown-item>
-      </b-nav-item-dropdown>
-    </b-navbar-nav>
-    <ul
-      class="upper-links list-inline clearfix"
-      v-if="user == null || user.full_name == null"
-    >
-      <li>
-        <nuxt-link to="/login">
-          <i>Sign In</i>
-        </nuxt-link>
-      </li>
-      <li>/</li>
-      <li>
-        <nuxt-link to="/register">
-          <i>Sign Up</i>
-        </nuxt-link>
-      </li>
-    </ul>
-  </nav>
+    </nav>
+  </div>
 </template>
 
 <script>
@@ -393,13 +395,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.navbar-fixed{
+  position: relative;
+  height:80px;
+  nav{
+    position:fixed;
+    width:100%;
+    height:80px;
+    background-color: #272d33 !important;
+    z-index: 13;
+  }
+}
 .dashboard-nav-bar {
   text-transform: uppercase;
   font-family: 'CocogoosePro-Italic', Helvetica, Arial, sans-serif;
   .top-nav-bar-search-logo {
     width: 10%;
-    margin: 0px 25px;
-    margin-top: 20px;
+    // margin: 0px 25px;
+    margin: 10px 25px;
     @media (max-width: 991px) {
       display: none;
     }
@@ -430,7 +443,7 @@ export default {
   }
   .nav-bar-form {
     width: calc(100% - 150px);
-    margin-top: 25px;
+    margin: 13px 0;
     @media (max-width: 1120px) {
       padding-left: 17px;
     }
@@ -518,11 +531,11 @@ export default {
   }
   .top-nav-navbar {
     flex-direction: row;
-    margin-top: 10px;
+    margin: 10px 0;
     .top-nav-icon {
       .nav-link {
         width: 34px;
-        margin-top: 13px;
+        margin: 7px 0;
         .icon {
           background-color: $theme-card-background-color;
           border-radius: 100%;
@@ -1001,5 +1014,29 @@ export default {
   .dashboard-nav-bar .top-nav-navbar .nav-item .nav-link {
     color: #39414a !important;
   }
+
+  .nav-bar-form{
+    background-color: #272d33 !important;
+    z-index: 11;
+    position: fixed;
+    width: 100% !important;
+    margin: 0px !important;
+    padding: 15px;
+  }
 }
+
+@media (max-width: 635px){
+  .navbar-categories{
+    height:83px !important ;
+  }
+  .navbar-categories ul li{
+    margin: 8px 5px !important;
+  }
+}
+@media (max-width: 768px){  
+  .navbar-fixed{
+    margin-bottom:60px;
+  }
+}
+
 </style>

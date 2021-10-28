@@ -16,12 +16,26 @@
                   placeholder="Select User"
                   :reduce="(name) => name.id"
                   :options="users"
+                  :disabled="selPlatform > 0"
                   v-model="selUser"
                 >
                   <template slot="no-options"> Search Users</template>
                 </v-select>
               </div>
-              <div class="col-3">
+              <div class="col-2">
+                <v-select
+                  label="name"
+                  name="platform"
+                  placeholder="Select Platform"
+                  :reduce="(name) => name.id"
+                  :options="platforms"
+                  :disabled="selUser > 0"
+                  v-model="selPlatform"
+                >
+                  <template slot="no-options"> Search Platform</template>
+                </v-select>
+              </div>
+              <div class="col-2">
                 <v-select
                   name="user"
                   label="name"
@@ -83,6 +97,15 @@
                   Fetch
                 </button>
               </div>
+              <div class="col-1">
+                <button
+                  class="btn btn-outline-secondary"
+                  @click="resetData()"
+                  type="button"
+                >
+                  Reset
+                </button>
+              </div>
             </div>
           </div>
           <div class="table_wrapper ap">
@@ -105,6 +128,7 @@
                   <th style="width: 100px">Action</th>
                   <th style="width: 150px">Entity</th>
                   <th>Entity Id</th>
+                  <th>Username</th>
                   <th>Operations</th>
                   <th style="width: 150px">Date/time</th>
                 </tr>
@@ -138,6 +162,7 @@
 
                     <span v-else v-text="log.subject_id"></span>
                   </td>
+                  <td>{{ log.log_name }}</td>
                   <td>{{ log.properties }}</td>
                   <td>
                     {{ $moment(log.created_at).format('MMMM DD Y - hh:mm:ss') }}
@@ -217,11 +242,13 @@ export default {
   data() {
     return {
       selUser: 0,
+      selPlatform:0,
       selModel: null,
       selSt: null,
       totalCount: 0,
       users: [],
       models: [],
+      platforms:[],
       logs: [],
       start_date: null,
       end_date: null,
@@ -258,6 +285,7 @@ export default {
               if (res.status == 200) {
                 this.users = res.data.data.users
                 this.models = res.data.data.models
+                this.platforms = res.data.data.platforms ? res.data.data.platforms : []
               }
               this.requestInProcess = false
               this.hideLoader()
@@ -274,13 +302,14 @@ export default {
     },
     getActivityLogs(page = 1) {
       // this.page.current != page //condition may be needed
-      if (!this.requestInProcess && this.selUser > 0) {
+      if (!this.requestInProcess && (this.selUser > 0 || this.selPlatform > 0)) {
         try {
           this.showLoader()
+          let get_input = this.selUser > 0 ? this.selUser : this.selPlatform
           this.requestInProcess = true
           this.$axios
             .get(
-              `users/get-activity-logs-for-admin/${this.selUser}?model=${this.selModel}&sts=${this.selSt}&page=${page}&start_date=${this.start_date}&end_date=${this.end_date}`
+              `users/get-activity-logs-for-admin/${get_input}?model=${this.selModel}&sts=${this.selSt}&page=${page}&start_date=${this.start_date}&end_date=${this.end_date}`
             )
             .then((res) => {
               if (res.status == 200) {
@@ -306,13 +335,14 @@ export default {
       }
     },
     getActivityLogsCsv() {
-      if (!this.requestInProcess && this.selUser > 0) {
+      if (!this.requestInProcess && (this.selUser > 0 || this.selPlatform > 0)) {
         try {
+          let get_input = this.selUser > 0 ? this.selUser : this.selPlatform
           this.showLoader()
           this.requestInProcess = true
           this.$axios
             .get(
-              `users/get-activity-logs-csv-for-admin/${this.selUser}?model=${this.selModel}&sts=${this.selSt}&start_date=${this.start_date}&end_date=${this.end_date}`
+              `users/get-activity-logs-csv-for-admin/${get_input}?model=${this.selModel}&sts=${this.selSt}&start_date=${this.start_date}&end_date=${this.end_date}`
             )
             .then((res) => {
               if (res.status == 200 && res.data.csv_link != null) {
@@ -343,6 +373,14 @@ export default {
           )
         }
       }
+    },
+    resetData(){
+      this.selUser = 0
+      this.selPlatform = 0
+      this.selModel = null
+      this.selSt = null
+      this.start_date = null
+      this.end_date = null
     },
   },
 }
