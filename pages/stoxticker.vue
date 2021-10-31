@@ -20,23 +20,23 @@
             </button>
             <span class="tooltip-text set-tooltip mx-xl-2" v-b-tooltip.bottomleft title="Click here to search other SlabStoxPro users’ StoxTicker boards to see who they’re tracking.">?</span>
 
-            <nuxt-link to="/featured-boards" >
-            <button class="card-btn featured-boards" >
+            <nuxt-link to="/featured-boards" class="card-btn featured-boards">
+ 
                 Featured boards
                 <span class="chevron-right">
                 <font-awesome-icon :icon="['fas', 'chevron-right']" />
                 </span>
-            </button>
+          
             </nuxt-link>
             <span class="tooltip-text set-tooltip mx-xl-2" v-b-tooltip.bottomleft title="Click here to fetch featured boards">?</span>
      
-            <nuxt-link to="/personal-boards" >
-            <button class="card-btn featured-boards" >
+            <nuxt-link to="/personal-boards" class="card-btn featured-boards">
+           
                 Personal boards
                 <span class="chevron-right">
                 <font-awesome-icon :icon="['fas', 'chevron-right']" />
                 </span>
-            </button>
+        
             </nuxt-link>
             <span class="tooltip-text set-tooltip mx-xl-2" v-b-tooltip.bottomleft title="Click here to fetch personal boards">?</span>
         
@@ -478,14 +478,14 @@
               </h5>
               <div class="row" style="justify-content: center;">
                 <div class="bs-stats bs-stats1">
-                  <h2 :class="sx_length && sx_length >= 16 ? 'small-font' : ''">SX</h2>
+                  <h2 :class="sx_length_class">SX</h2>
                 </div>
                 <div class="bs-stats bs-stats2">
                   <h3>{{ intToString(data.total) }}</h3>
                   <span class="tot-sla">TOTAL SLABS</span>
                 </div>
                 <div class="bs-stats bs-stats3">
-                  <h2 :class="sx_length && sx_length >= 16 ? 'small-font' : ''">${{ (data.sale?data.sale.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","):0) }}</h2>
+                  <h2 :class="sx_length_class">${{ (data.sale?data.sale.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","):0) }}</h2>
                   <span class="avg-sla">TOTAL SX VALUE</span>
                 </div>
                 <div class="bs-stats bs-stats4">
@@ -494,7 +494,7 @@
                       :icon="['fas', 'caret-' + data.change_arrow]"
                     />
                   </div>
-                  <h2 :class="sx_length && sx_length >= 16 ? 'small-font' : ''">{{ data.change }}%</h2>
+                  <h2 :class="sx_length_class">{{ data.change }}%</h2>
                   <span class="cha-amo">CHANGE AMOUNT</span>
                 </div>
               </div>
@@ -908,7 +908,7 @@ export default {
     this.logo = document.getElementById('sidebarLogo').src
 
     $('.custom-stox').on('click', function () {
-       this.isHidden = true
+      this.isHidden = true
       $(this).addClass('active')
       $('.search-add-box').addClass('active')
       $('.search-stox-box').removeClass('active')
@@ -936,7 +936,7 @@ export default {
     })
 
     $('.close-btn').on('click', function () {
-       this.isHidden = true
+      this.isHidden = true
       $('.custom-stox').removeClass('active')
       $('.search-stox').removeClass('active')
       $('.search-stox-box').removeClass('active')
@@ -954,20 +954,6 @@ export default {
     })
   },
   updated() {
-    console.log(this.mountAppend)
-    this.mountAppend = this.mountAppend + 1
-    console.log(this.mountAppend)
-    if (
-      $.trim($('.all-public-boards-list-out').html()) == '' &&
-      this.mountAppend == 4
-    ) {
-      setTimeout(() => {
-        this.allBoardGraphFunc(90)
-        this.allBoardGraphFunc1d(2)
-      }, 10000)
-    }
-      var sx = $('.bs-stats3 h2').text();
-      this.sx_length = sx.length;
   },
   components: {
     CardListItem,
@@ -977,7 +963,7 @@ export default {
   },
   data() {
     return {
-      sx_length: '',
+     sx_length_class: '',
       paused: false,
       logo: null,
       baseUrl: BASE_URL,
@@ -1215,7 +1201,7 @@ export default {
         },
       },
       filters: { ...FILTERS },
-      isHidden :true,
+      isHidden: true,
     }
   },
   computed: {
@@ -1401,19 +1387,28 @@ export default {
           .then((res) => {
             this.requestInProcess = false
             if (res.status == 200) {
+                this.searchSlabs = []
               $('.search-slabs-out').show()
               $('.search-name-out').show()
               this.isHidden = false
               this.searchSlabs = res.data
+            } else {
+              this.searchSlabs = []
             }
           })
           .catch((err) => {
             this.requestInProcess = false
-            console.log(err)
+            this.$toast.error(
+              'There has been an error searching slab. Please try again.',
+              { timeOut: 10000 }
+            )
           })
       } catch (err) {
         this.requestInProcess = false
-        console.log(err)
+        this.$toast.error(
+          'There has been an error searching slab. Please try again.',
+          { timeOut: 10000 }
+        )
       }
     },
     createBoard() {
@@ -1469,6 +1464,12 @@ export default {
         this.$axios.$get('get-stoxticker-data').then((res) => {
           if (res.status == 200) {
             this.data = res.data
+            if (this.data.sale != null && this.data.sale.length >= 16) {
+              this.sx_length_class = 'small-font'
+            }
+            if (this.data.change != null && this.data.change.length >= 5) {
+              this.sx_length_class = 'small-font'
+            }
           } else {
             this.$toast.error(
               'There has been an error fetching Stoxticker. Please refresh your page.',
@@ -2046,8 +2047,8 @@ ul.my-card-listing {
   }
 }
 .search-add-box,
-.search-stox-box{
-  margin-top:30px;
+.search-stox-box {
+  margin-top: 30px;
 }
 
 .search-wrap {
@@ -2073,7 +2074,7 @@ ul.my-card-listing {
 
 @media (max-width: 570px) {
   .top-btn .card-btn {
-    width: 100%;
+    width: 92%;
     margin-bottom: 7px;
     margin-left: 0px;
     margin-right: 0px;
@@ -2330,6 +2331,10 @@ html body main .card.search-slabs-out .my-card-listing .my-card {
   text-transform: uppercase;
   outline: none;
   border: 0;
+  display: inline-block;
+}
+.featured-boards:hover{
+  text-decoration: none;
 }
 .featured-boards .chevron-right {
   padding-left: 5px;
@@ -2337,94 +2342,82 @@ html body main .card.search-slabs-out .my-card-listing .my-card {
 .small-font {
   font-size: 4vw !important;
 }
-@media (min-width: 768px)
-{
-  
-  .top-btn{
-      position: fixed;
-      top: 70px;
-      padding:0px 0px 15px 0px;
-      z-index: 13;
-      background-color: #272d33 !important;
-      width: 75%;
+@media (min-width: 768px) {
+  .top-btn {
+    position: fixed;
+    top: 70px;
+    padding: 0px 0px 15px 0px;
+    z-index: 13;
+    background-color: #272d33 !important;
+    width: 75%;
   }
 }
-@media (min-width: 991px)
-{ 
-  .stoxticker-btn{
-    height:30px;
+@media (min-width: 991px) {
+  .stoxticker-btn {
+    height: 30px;
   }
-  .top-btn
-  {
+  .top-btn {
     width: 82%;
   }
 }
-@media (min-width: 1020px)
-{
-  .top-btn
-  {
+@media (min-width: 1020px) {
+  .top-btn {
     padding: 15px 0px;
     top: 80px;
   }
 }
-@media (max-width: 1300px){
-    .featured-boards,
-    .search-stox,
-    .custom-stox-search,
-    .custom-stox
-    {
-      padding: 15px 15px 14px 17px;
-      font-size:11px;
-    }
-     
-}
-@media (max-width: 1080px){
-    .featured-boards,
-    .search-stox,
-    .custom-stox-search,
-    .custom-stox
-    {
-      padding: 9px;
-      font-size:10px;
-    }
-     
-}
-@media (max-width: 1020px){
-    .featured-boards,
-    .search-stox
-    {
-      margin-top:15px;
-      width:242px;
-    }
-    .featured-boards,
-    .search-stox,
-    .custom-stox-search,
-    .custom-stox
-    {
-      padding: 15px 24px;
-      font-size:11px;
-    }
-}
-@media (min-width: 570px) and (max-width: 767px){
-  .top-btn{
-      position: fixed;
-      top: 150px;
-      padding:0px 0px 15px 0px;
-      z-index: 13;
-      background-color: #272d33 !important;
-      // width: 75%;
-  }
-  .stoxticker-btn{
-      height:80px;
+@media (max-width: 1300px) {
+  .featured-boards,
+  .search-stox,
+  .custom-stox-search,
+  .custom-stox {
+    padding: 15px 15px 14px 17px;
+    font-size: 11px;
   }
 }
-@media (min-width: 769px){
-  .stoxticker-btn{
-      height:60px;
+@media (max-width: 1080px) {
+  .featured-boards,
+  .search-stox,
+  .custom-stox-search,
+  .custom-stox {
+    padding: 9px;
+    font-size: 10px;
   }
 }
-@media (max-width: 375px){
-  .top-btn{
+@media (max-width: 1020px) {
+  .featured-boards,
+  .search-stox {
+    margin-top: 15px;
+    width: 242px;
+  }
+  .featured-boards,
+  .search-stox,
+  .custom-stox-search,
+  .custom-stox {
+    padding: 15px 24px;
+    font-size: 11px;
+  }
+}
+@media (min-width: 570px) and (max-width: 767px) {
+  .top-btn {
+    position: fixed;
+    top: 150px;
+    padding: 0px 0px 15px 0px;
+    z-index: 13;
+    background-color: #272d33 !important;
+    // width: 75%;
+  }
+  .stoxticker-btn {
+    height: 80px;
+  }
+}
+@media (min-width: 769px) {
+  .stoxticker-btn {
+    height: 60px;
+  }
+}
+@media (max-width: 375px) {
+  .top-btn {
     margin-top: 20px;
   }
 }

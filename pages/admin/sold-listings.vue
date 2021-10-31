@@ -17,7 +17,14 @@
                   class="form-control text-capitalize"
                 >
                   <option selected>Select Sport</option>
-                  <option class="text-capitalize" v-for="sport in attributes.sport" :key="sport"  :value="sport">{{sport}}</option>
+                  <option
+                    class="text-capitalize"
+                    v-for="sport in attributes.sport"
+                    :key="sport"
+                    :value="sport"
+                  >
+                    {{ sport }}
+                  </option>
                   <option value="random_bin">Random Bin</option>
                 </select>
               </div>
@@ -62,7 +69,7 @@
                       type="button"
                       id="button-addon2"
                     >
-                     <i class="fa serach-icon fa-search"></i>
+                      <i class="fa serach-icon fa-search"></i>
                     </button>
                   </div>
                 </div>
@@ -73,16 +80,60 @@
             <table class="table table-striped">
               <thead>
                 <tr>
-                  <th class="sorting" @click="field_name = 'id',changeOrder()" style="width: 75px">Id</th>
-                  <th class="sorting" @click="field_name = 'title', changeOrder()">Title</th>
-                  <th class="sorting" @click="field_name = 'price', changeOrder()" style="width: 80px">Price</th>
-                  <th class="sorting" @click="field_name = 'sold_price', changeOrder()" style="width: 120px">Sold Price</th>
-                  <th class="sorting" @click="field_name = 'date_sold', changeOrder()" style="width: 210px">Date Sold</th>
-                  <th class="sorting" @click="field_name = 'username', changeOrder()" style="width: 120px">Username</th>
-                  <th class="sorting" @click="field_name = 'listing_id', changeOrder()" style="width: 130px">Listing Id</th>
-                  <th class="sorting" @click="field_name = 'slab_id', changeOrder()" style="width: 75px">Slab Id</th>
-                  <th class="sorting" @click="field_name = 'status', changeOrder()" style="width: 70px">Status</th>
-                  <!-- <th>Actions</th> -->
+                  <th
+                    class="sorting"
+                    @click=";(field_name = 'id'), changeOrder()"
+                    style="width: 75px"
+                  >
+                    Id
+                  </th>
+                  <th
+                  >
+                    Title
+                  </th>
+                  <th
+                    style="width: 80px"
+                  >
+                    Price
+                  </th>
+                  <th
+                    class="sorting"
+                    @click=";(field_name = 'sold_price'), changeOrder()"
+                    style="width: 120px"
+                  >
+                    Sold Price
+                  </th>
+                  <th
+                    class="sorting"
+                    @click=";(field_name = 'listing_ending_at'), changeOrder()"
+                    style="width: 210px"
+                  >
+                    Date Sold
+                  </th>
+                  <th
+                    style="width: 120px"
+                  >
+                    Username
+                  </th>
+                  <th
+                    class="sorting"
+                    @click=";(field_name = 'itemId'), changeOrder()"
+                    style="width: 130px"
+                  >
+                    Listing Id
+                  </th>
+                  <th
+                    class="sorting"
+                    @click=";(field_name = 'card_id'), changeOrder()"
+                    style="width: 75px"
+                  >
+                    Slab Id
+                  </th>
+                  <th
+                    style="width: 70px"
+                  >
+                    Status
+                  </th>
                 </tr>
               </thead>
               <tbody v-if="items.length > 0">
@@ -91,31 +142,37 @@
                   <td>{{ item.title }}</td>
                   <td>${{ item.price }}</td>
                   <td>${{ item.sold_price }}</td>
-                  <td v-if="item.card_sales != null"
+                  <td
+                    v-if="item.card_sales != null"
                     :data-order="
-                      $moment(item.card_sales.timestamp).format('YYYY-MM-DD HH:mm:ss')
+                      $moment(item.card_sales.timestamp).format(
+                        'YYYY-MM-DD HH:mm:ss'
+                      )
                     "
                   >
                     {{
-                      $moment(item.card_sales.timestamp).format('MMMM DD Y - HH:mm:ss')
+                      $moment(item.card_sales.timestamp).format(
+                        'MMMM DD Y - HH:mm:ss'
+                      )
                     }}
                   </td>
+                  <td v-if="item.card_sales == null">-</td>
                   <td v-if="item.card_sales != null">
-                    {{ item.card_sales.source=='Script'?'Python':(item.card_sales.sale_user==null?'':item.card_sales.sale_user.full_name+'('+item.card_sales.sale_user.id+')') }}
-                    </td>
-                    <td v-if="item.card_sales == null">
-
-                    </td>
+                    {{
+                      item.card_sales.source == 'Script'
+                        ? 'Python'
+                        : item.card_sales.sale_user == null
+                        ? ''
+                        : item.card_sales.sale_user.full_name +
+                          '(' +
+                          item.card_sales.sale_user.id +
+                          ')'
+                    }}
+                  </td>
+                  <td v-if="item.card_sales == null">-</td>
                   <td>{{ item.itemId }}</td>
                   <td>{{ item.card_id }}</td>
                   <td>{{ item.status == 1 ? 'Active' : 'Inactive' }}</td>
-                  <!-- <td>
-                    <select @change="statusChange($event, item.id, key)" class="form-control text-capitalize">
-                      <option disabled>Status</option>
-                      <option value="0">Active</option>
-                      <option value="2">Disable</option>
-                    </select>
-                  </td> -->
                 </tr>
               </tbody>
               <tbody v-if="items.length == 0 && requestInProcess">
@@ -413,30 +470,27 @@ export default {
       this.getItems(this.page)
     }
 
-    $('.sorting').click(function(){   
-
-        if($(this).hasClass('sorting_asc')){
-          $(this).removeClass('sorting_asc')
-          $(this).addClass('sorting_desc')
-          return
-        }
-        else if($(this).hasClass('sorting_desc')){
-          $(this).removeClass('sorting_desc')
-          $(this).addClass('sorting_asc')
-          return
-        }
-        else{
-            $('.sorting').each(function(){
-              if($(this).hasClass('sorting_asc')){
-                $(this).removeClass('sorting_asc')
-              }
-              if($(this).hasClass('sorting_desc')){
-                $(this).removeClass('sorting_desc')
-              }
-            });
-            $(this).addClass('sorting_asc')
-        }
-    });
+    $('.sorting').click(function () {
+      if ($(this).hasClass('sorting_asc')) {
+        $(this).removeClass('sorting_asc')
+        $(this).addClass('sorting_desc')
+        return
+      } else if ($(this).hasClass('sorting_desc')) {
+        $(this).removeClass('sorting_desc')
+        $(this).addClass('sorting_asc')
+        return
+      } else {
+        $('.sorting').each(function () {
+          if ($(this).hasClass('sorting_asc')) {
+            $(this).removeClass('sorting_asc')
+          }
+          if ($(this).hasClass('sorting_desc')) {
+            $(this).removeClass('sorting_desc')
+          }
+        })
+        $(this).addClass('sorting_asc')
+      }
+    })
   },
   components: {},
   data() {
@@ -454,17 +508,17 @@ export default {
       filter: null,
       allPages: 0,
       filters: { ...FILTERS },
-      field_name:'',
-      isSort:0,
-      old_field:'',
+      field_name: '',
+      isSort: 0,
+      old_field: '',
     }
-  },   
+  },
   computed: {
     ...mapGetters({
       showAdvanceSearch: 'advancesearch/show',
       filters_old_state: 'advancesearch/filters',
-      attributes: 'advancesearch/attributes'
-    })
+      attributes: 'advancesearch/attributes',
+    }),
   },
   methods: {
     getItems(page, filter = null) {
@@ -474,8 +528,7 @@ export default {
           this.requestInProcess = true
           let payload = { page: page, search: this.searchTerm }
           this.$router.push('/admin/sold-listings?page=' + page)
-          // if(filter != null) payload['sport'] = filter.target.value
-
+          
           if (filter != null) {
             payload['sport'] = filter.target.value
             this.sportFilter = filter
@@ -507,39 +560,6 @@ export default {
         }
       }
     },
-    getStatus(status) {
-      if (status == 0) {
-        return 'Active'
-      } else if (status == 1) {
-        return 'Disabled by cron'
-      } else if (status == 2) {
-        return 'Disabled manually'
-      }
-    },
-    statusChange(event, id, key) {
-      if (!this.requestInProcess) {
-        try {
-          this.showLoader()
-          this.requestInProcess = true
-          this.$axios
-            .$post('admin/change-ebay-status', {
-              id: id,
-              status: event.target.value,
-            })
-            .then((res) => {
-              this.requestInProcess = false
-              this.hideLoader()
-              this.items[key].status = event.target.value
-
-              setTimeout(() => this.getItems(this.currentPage), 500)
-            })
-        } catch (err) {
-          this.hideLoader()
-          this.requestInProcess = false
-          console.log(err)
-        }
-      }
-    },
     saveSoldPrice(id) {
       if (!this.requestInProcess) {
         try {
@@ -562,114 +582,105 @@ export default {
         }
       }
     },
-    changeOrder(page, filter = null){
-      if(this.field_name != ""){
-          if(this.old_field != this.field_name){
-              this.old_field = this.field_name              
-              this.isSort = 0
-              if(this.isSort == 0)
-              {
-                this.isSort = 1
-              }
-              else if(this.isSort == 1)
-              {
-                this.isSort = 2
-              }
-              else if(this.isSort == 2)
-              {
-                this.isSort = 1
-              }
-              else{
-                this.isSort = 0
-              }
+    changeOrder(filter = null) {
+      if (this.field_name != '') {
+        if (this.old_field != this.field_name) {
+          this.old_field = this.field_name
+          this.isSort = 0
+          if (this.isSort == 0) {
+            this.isSort = 1
+          } else if (this.isSort == 1) {
+            this.isSort = 2
+          } else if (this.isSort == 2) {
+            this.isSort = 1
+          } else {
+            this.isSort = 0
+          }
 
-            if(this.isSort != 0){
-                if (!this.requestInProcess) {
-                  try {
-                    this.showLoader()
-                    this.requestInProcess = true
-                    let payload = { page: page, search: this.searchTerm ,field: this.old_field,order: this.isSort}
-                    this.$router.push('/admin/sold-listings?page=' + page)
-
-                    if (filter != null) {
-                      payload['sport'] = filter.target.value
-                      this.sportFilter = filter
-                    } else if (this.sportFilter != null) {
-                      payload['sport'] = this.sportFilter.target.value
-                    }
-
-                    this.$axios
-                      .post('get-ebay-list-sold', payload)
-                      .then((res) => {
-                        if (res.status == 200) {
-                          this.currentPage = page
-                          this.items = res.data.data
-                          this.page = res.data.next
-                          this.sportsList = res.data.sportsList
-                          this.allPages = res.data.all_pages
-                        }
-                        this.requestInProcess = false
-                        this.hideLoader()
-                      })
-                  } catch (err) {
-                    this.hideLoader()
-                    this.requestInProcess = false
-                    console.log(err)
-                  }
+          if (this.isSort != 0) {
+            if (!this.requestInProcess) {
+              try {
+                this.showLoader()
+                this.requestInProcess = true
+                let payload = {
+                  page: this.currentPage,
+                  search: this.searchTerm,
+                  column_name: this.old_field,
+                  sort_type: (this.isSort==1?'ASC':'DESC'),
                 }
+                this.$router.push('/admin/sold-listings?page=' + this.currentPage)
+
+                if (filter != null) {
+                  payload['sport'] = filter.target.value
+                  this.sportFilter = filter
+                } else if (this.sportFilter != null) {
+                  payload['sport'] = this.sportFilter.target.value
+                }
+
+                this.$axios.post('get-ebay-list-sold-sorting', payload).then((res) => {
+                  if (res.status == 200) {
+                    this.items = res.data.data
+                    this.page = res.data.next
+                    this.sportsList = res.data.sportsList
+                    this.allPages = res.data.all_pages
+                  }
+                  this.requestInProcess = false
+                  this.hideLoader()
+                })
+              } catch (err) {
+                this.hideLoader()
+                this.requestInProcess = false
+                console.log(err)
+              }
             }
           }
-          else
-          {
-              console.log(this.old_field)
-              if(this.isSort == 1)
-              {
-                this.isSort = 2
-              }
-              else if(this.isSort == 2)
-              {
-                this.isSort = 1
-              }
-              else{
-                this.isSort = 0
-              }
-
-              if (!this.requestInProcess) {
-                  try {
-                    this.showLoader()
-                    this.requestInProcess = true
-                    let payload = { page: page, search: this.searchTerm ,field: this.old_field,order: this.isSort}
-                    this.$router.push('/admin/sold-listings?page=' + page)
-
-                    if (filter != null) {
-                      payload['sport'] = filter.target.value
-                      this.sportFilter = filter
-                    } else if (this.sportFilter != null) {
-                      payload['sport'] = this.sportFilter.target.value
-                    }
-
-                    this.$axios
-                      .post('get-ebay-list-sold', payload)
-                      .then((res) => {
-                        if (res.status == 200) {
-                          this.currentPage = page
-                          this.items = res.data.data
-                          this.page = res.data.next
-                          this.sportsList = res.data.sportsList
-                          this.allPages = res.data.all_pages
-                        }
-                        this.requestInProcess = false
-                        this.hideLoader()
-                      })
-                  } catch (err) {
-                    this.hideLoader()
-                    this.requestInProcess = false
-                    console.log(err)
-                  }
-                }
+        } else {
+          if (this.isSort == 1) {
+            this.isSort = 2
+          } else if (this.isSort == 2) {
+            this.isSort = 1
+          } else {
+            this.isSort = 0
           }
+
+          if (!this.requestInProcess) {
+            try {
+              this.showLoader()
+              this.requestInProcess = true
+              let payload = {
+                page: this.currentPage,
+                search: this.searchTerm,
+                column_name: this.old_field,
+                sort_type: (this.isSort==1?'ASC':'DESC'),
+              }
+              this.$router.push('/admin/sold-listings?page=' + this.currentPage)
+
+              if (filter != null) {
+                payload['sport'] = filter.target.value
+                this.sportFilter = filter
+              } else if (this.sportFilter != null) {
+                payload['sport'] = this.sportFilter.target.value
+              }
+
+              this.$axios.post('get-ebay-list-sold-sorting', payload).then((res) => {
+                if (res.status == 200) {
+                  this.items = res.data.data
+                  this.page = res.data.next
+                  this.sportsList = res.data.sportsList
+                  this.allPages = res.data.all_pages
+                }
+                this.requestInProcess = false
+                this.hideLoader()
+              })
+            } catch (err) {
+              this.hideLoader()
+              this.requestInProcess = false
+              console.log(err)
+            }
+          }
+        }
       }
-    }
+    },
   },
 }
 </script>
@@ -712,15 +723,15 @@ input.disable-arrow::-webkit-inner-spin-button {
   margin: 0;
 }
 table.table-striped thead tr th.sorting {
-    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAQAAADYWf5HAAAAkElEQVQoz7XQMQ5AQBCF4dWQSJxC5wwax1Cq1e7BAdxD5SL+Tq/QCM1oNiJidwox0355mXnG/DrEtIQ6azioNZQxI0ykPhTQIwhCR+BmBYtlK7kLJYwWCcJA9M4qdrZrd8pPjZWPtOqdRQy320YSV17OatFC4euts6z39GYMKRPCTKY9UnPQ6P+GtMRfGtPnBCiqhAeJPmkqAAAAAElFTkSuQmCC);
-    cursor: pointer;
-    background-repeat: no-repeat;
-    background-position: 100%;
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAQAAADYWf5HAAAAkElEQVQoz7XQMQ5AQBCF4dWQSJxC5wwax1Cq1e7BAdxD5SL+Tq/QCM1oNiJidwox0355mXnG/DrEtIQ6azioNZQxI0ykPhTQIwhCR+BmBYtlK7kLJYwWCcJA9M4qdrZrd8pPjZWPtOqdRQy320YSV17OatFC4euts6z39GYMKRPCTKY9UnPQ6P+GtMRfGtPnBCiqhAeJPmkqAAAAAElFTkSuQmCC);
+  cursor: pointer;
+  background-repeat: no-repeat;
+  background-position: 100%;
 }
 table.table-striped thead tr th.sorting_desc {
-    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAYAAAByUDbMAAAAZUlEQVQ4y2NgGAWjYBSggaqGu5FA/BOIv2PBIPFEUgxjB+IdQPwfC94HxLykus4GiD+hGfQOiB3J8SojEE9EM2wuSJzcsFMG4ttQgx4DsRalkZENxL+AuJQaMcsGxBOAmGvopk8AVz1sLZgg0bsAAAAASUVORK5CYII=)!important;
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAYAAAByUDbMAAAAZUlEQVQ4y2NgGAWjYBSggaqGu5FA/BOIv2PBIPFEUgxjB+IdQPwfC94HxLykus4GiD+hGfQOiB3J8SojEE9EM2wuSJzcsFMG4ttQgx4DsRalkZENxL+AuJQaMcsGxBOAmGvopk8AVz1sLZgg0bsAAAAASUVORK5CYII=) !important;
 }
 table.table-striped thead tr th.sorting_asc {
-    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAYAAAByUDbMAAAAZ0lEQVQ4y2NgGLKgquEuFxBPAGI2ahhWCsS/gDibUoO0gPgxEP8H4ttArEyuQYxAPBdqEAxPBImTY5gjEL9DM+wTENuQahAvEO9DMwiGdwAxOymGJQLxTyD+jgWDxCMZRsEoGAVoAADeemwtPcZI2wAAAABJRU5ErkJggg==)!important;
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAYAAAByUDbMAAAAZ0lEQVQ4y2NgGLKgquEuFxBPAGI2ahhWCsS/gDibUoO0gPgxEP8H4ttArEyuQYxAPBdqEAxPBImTY5gjEL9DM+wTENuQahAvEO9DMwiGdwAxOymGJQLxTyD+jgWDxCMZRsEoGAVoAADeemwtPcZI2wAAAABJRU5ErkJggg==) !important;
 }
 </style>

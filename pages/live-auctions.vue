@@ -41,13 +41,17 @@ export default {
   mounted() {
     this.getEndingSoonListing()
   },
-   updated() {
-   $('.sports-navbars').click(function () {
+  updated() {
+    $('.sports-navbars').click(function () {
       var link = '#'
       link += $(this).attr('data-title')
+      var fixedheaderheight = 130;
+      if ($(window).width() < 768) {
+        fixedheaderheight = 187;
+      }
       $('html, body').animate(
         {
-          scrollTop: $(link).offset().top,
+          scrollTop: $(link).offset().top - fixedheaderheight,
         },
         2000
       )
@@ -242,43 +246,42 @@ export default {
     padding: 6px 7px 4px 7px;
     font-size: 10px;
   }
-  .fixed-categories{
-    height:100px !important;
+  .fixed-categories {
+    height: 100px !important;
   }
-  .fixed-categories .navbar-categories{
-    width:95% !important; 
+  .fixed-categories .navbar-categories {
+    width: 95% !important;
     top: 160px !important;
   }
-
 }
-.fixed-categories{
+.fixed-categories {
   position: relative;
-  height:28px;
+  height: 28px;
 }
-.fixed-categories .navbar-categories{
+.fixed-categories .navbar-categories {
   background-color: #272d33 !important;
-  width:83%;  
+  width: 83%;
   position: fixed;
   top: 80px;
-  height:50px;
-  margin-left:-13px;
+  height: 50px;
+  margin-left: -13px;
   z-index: 10;
 }
-@media (max-width: 400px){
-  .fixed-categories .navbar-categories{
+@media (max-width: 400px) {
+  .fixed-categories .navbar-categories {
     position: relative;
-    width:100% !important;
+    width: 100% !important;
     top: 0 !important;
     height: 50px;
-    margin:10px 0px 0px 0px;
+    margin: 10px 0px 0px 0px;
   }
 }
-@media (max-width: 375px){
-    .fixed-categories {
-        height: 130px !important;
-    }
-    .fixed-categories .navbar-categories{
-      margin: 27px 0px 0px 0px;
-    }
+@media (max-width: 375px) {
+  .fixed-categories {
+    height: 130px !important;
+  }
+  .fixed-categories .navbar-categories {
+    margin: 27px 0px 0px 0px;
+  }
 }
 </style>

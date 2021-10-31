@@ -10,7 +10,7 @@
           </div>
           <div class="card-body search-form">
             <div class="row row-5">
-              <div class="col-3">
+              <div class="col-2">
                 <v-select
                   label="name"
                   placeholder="Select User"
@@ -64,7 +64,7 @@
                   <template slot="no-options"> Select Approval Status</template>
                 </v-select>
               </div>
-              <div class="col-3 custom-date-pick">
+              <div class="col-4 custom-date-pick">
                 <b-form-datepicker
                   class="profile_datepicker"
                   v-model="start_date"
@@ -162,7 +162,7 @@
 
                     <span v-else v-text="log.subject_id"></span>
                   </td>
-                  <td>{{ log.log_name }}</td>
+                  <td>{{ (log.subject_name != null?log.subject_name.full_name:'') }}</td>
                   <td>{{ log.properties }}</td>
                   <td>
                     {{ $moment(log.created_at).format('MMMM DD Y - hh:mm:ss') }}
@@ -176,14 +176,14 @@
               </tbody>
               <tbody v-if="logs.length == 0 && requestInProcess == false">
                 <tr>
-                  <td colspan="6" class="text-center">
+                  <td colspan="7" class="text-center">
                     No Activity Logs found.
                   </td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
-                  <td colspan="6">
+                  <td colspan="7">
                     <button
                       class="theme-btn card-btn"
                       :disabled="page.current - 1 <= 0"
@@ -285,7 +285,7 @@ export default {
               if (res.status == 200) {
                 this.users = res.data.data.users
                 this.models = res.data.data.models
-                this.platforms = res.data.data.platforms ? res.data.data.platforms : []
+                this.platforms = res.data.data.platform_user ? res.data.data.platform_user : []
               }
               this.requestInProcess = false
               this.hideLoader()
