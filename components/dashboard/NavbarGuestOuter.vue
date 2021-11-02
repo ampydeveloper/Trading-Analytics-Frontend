@@ -1038,5 +1038,11 @@ export default {
     margin-bottom:60px;
   }
 }
-
+.select-parent .v-select.vs--single .vs__dropdown-toggle{
+  height:30px !important;
+  overflow: hidden;
+}
+.custom-date-pick .form-control{
+  margin-right:0px !important;
+}
 </style>

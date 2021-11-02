@@ -10,101 +10,104 @@
           </div>
           <div class="card-body search-form">
             <div class="row row-5">
-              <div class="col-2">
-                <v-select
-                  label="name"
-                  placeholder="Select User"
-                  :reduce="(name) => name.id"
-                  :options="users"
-                  :disabled="selPlatform > 0"
-                  v-model="selUser"
+              <div class="col-md-8 row m-0">
+                <div class="col-md-3 select-parent" >
+                  <v-select
+                    label="name"
+                    placeholder="Select User"
+                    :reduce="(name) => name.id"
+                    :options="users"
+                    :disabled="selPlatform > 0"
+                    v-model="selUser"
+                  >
+                    <template slot="no-options"> Search Users</template>
+                  </v-select>
+                </div>
+                <div class="col-md-3 pl-md-0 select-parent" >
+                  <v-select
+                    label="name"
+                    name="platform"
+                    placeholder="Select Platform"
+                    :reduce="(name) => name.id"
+                    :options="platforms"
+                    :disabled="selUser > 0"
+                    v-model="selPlatform"
+                  >
+                    <template slot="no-options"> Search Platform</template>
+                  </v-select>
+                </div>
+                <div class="col-md-3 pl-md-0 select-parent">
+                  <v-select
+                    name="user"
+                    label="name"
+                    placeholder="Select Entity"
+                    :reduce="(name) => name.id"
+                    :options="models"
+                    v-model="selModel"
+                  >
+                    <template slot="no-options"> Select Entity Type</template>
+                  </v-select>
+                </div>
+                <div class="col-md-3 pl-md-0 select-parent"
+                  v-if="selModel != null && selModel.includes('RequestListing')"
                 >
-                  <template slot="no-options"> Search Users</template>
-                </v-select>
+                  <v-select
+                    label="name"
+                    placeholder="Select Approval Status"
+                    :reduce="(name) => name.id"
+                    :options="[
+                      { id: 1, name: 'Approved' },
+                      { id: -1, name: 'Rejected' },
+                    ]"
+                    v-model="selSt"
+                  >
+                    <template slot="no-options"> Select Approval Status</template>
+                  </v-select>
+                </div>
               </div>
-              <div class="col-2">
-                <v-select
-                  label="name"
-                  name="platform"
-                  placeholder="Select Platform"
-                  :reduce="(name) => name.id"
-                  :options="platforms"
-                  :disabled="selUser > 0"
-                  v-model="selPlatform"
-                >
-                  <template slot="no-options"> Search Platform</template>
-                </v-select>
-              </div>
-              <div class="col-2">
-                <v-select
-                  name="user"
-                  label="name"
-                  placeholder="Select Entity"
-                  :reduce="(name) => name.id"
-                  :options="models"
-                  v-model="selModel"
-                >
-                  <template slot="no-options"> Select Entity Type</template>
-                </v-select>
-              </div>
-              <div
-                class="col-2"
-                v-if="selModel != null && selModel.includes('RequestListing')"
-              >
-                <v-select
-                  label="name"
-                  placeholder="Select Approval Status"
-                  :reduce="(name) => name.id"
-                  :options="[
-                    { id: 1, name: 'Approved' },
-                    { id: -1, name: 'Rejected' },
-                  ]"
-                  v-model="selSt"
-                >
-                  <template slot="no-options"> Select Approval Status</template>
-                </v-select>
-              </div>
-              <div class="col-4 custom-date-pick">
-                <b-form-datepicker
-                  class="profile_datepicker"
-                  v-model="start_date"
-                  placeholder="Start Date"
-                  :date-format-options="{
-                    year: 'numeric',
-                    month: 'numeric',
-                    day: '2-digit',
-                  }"
-                  locale="en"
-                ></b-form-datepicker>
-                <b-form-datepicker
-                  class="profile_datepicker"
-                  v-model="end_date"
-                  placeholder="End Date"
-                  :date-format-options="{
-                    year: 'numeric',
-                    month: 'numeric',
-                    day: '2-digit',
-                  }"
-                  locale="en"
-                ></b-form-datepicker>
-              </div>
-              <div class="col-1">
-                <button
-                  class="btn btn-outline-secondary"
-                  @click="getActivityLogs(1)"
-                  type="button"
-                >
-                  Fetch
-                </button>
-              </div>
-              <div class="col-1">
-                <button
-                  class="btn btn-outline-secondary"
-                  @click="resetData()"
-                  type="button"
-                >
-                  Reset
-                </button>
+              <div class="col-md-4 row m-0">
+                <div class="col custom-date-pick pl-md-0">
+                  <b-form-datepicker
+                    class="profile_datepicker"
+                    v-model="start_date"
+                    placeholder="Start Date"
+                    :date-format-options="{
+                      year: 'numeric',
+                      month: 'numeric',
+                      day: '2-digit',
+                    }"
+                    locale="en"
+                  ></b-form-datepicker>
+                  <b-form-datepicker
+                    class="profile_datepicker"
+                    v-model="end_date"
+                    placeholder="End Date"
+                    :date-format-options="{
+                      year: 'numeric',
+                      month: 'numeric',
+                      day: '2-digit',
+                    }"
+                    locale="en"
+                  ></b-form-datepicker>
+                </div>
+                <div class="col-auto pl-md-0">
+                  <button
+                    class="btn btn-custom btn-outline-secondary"
+                    @click="getActivityLogs(1)"
+                    type="button"
+                  >
+                    Fetch
+                  </button>
+                </div>
+                <div class="col-auto pl-md-0">
+                  <button
+                    class="btn btn-custom btn-outline-secondary"
+                    @click="resetData()"
+                    type="button"
+                  >
+                    Reset
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -241,8 +244,8 @@ export default {
   },
   data() {
     return {
-      selUser: 0,
-      selPlatform:0,
+      selUser: '',
+      selPlatform:'',
       selModel: null,
       selSt: null,
       totalCount: 0,
@@ -301,15 +304,16 @@ export default {
       }
     },
     getActivityLogs(page = 1) {
-      // this.page.current != page //condition may be needed
-      if (!this.requestInProcess && (this.selUser > 0 || this.selPlatform > 0)) {
+      if (!this.requestInProcess && (this.selUser != null || this.selPlatform != null)) {
         try {
           this.showLoader()
-          let get_input = this.selUser > 0 ? this.selUser : this.selPlatform
+          console.log('11 ' +this.selUser);
+          console.log('00 ' +this.selPlatform);
+          var get_input = (this.selUser != null ? this.selUser : '') || (this.selPlatform != null ? this.selPlatform : '') 
           this.requestInProcess = true
           this.$axios
             .get(
-              `users/get-activity-logs-for-admin/${get_input}?model=${this.selModel}&sts=${this.selSt}&page=${page}&start_date=${this.start_date}&end_date=${this.end_date}`
+              `users/get-activity-logs-for-admin?user=${get_input}&model=${this.selModel}&sts=${this.selSt}&page=${page}&start_date=${this.start_date}&end_date=${this.end_date}`
             )
             .then((res) => {
               if (res.status == 200) {
@@ -417,6 +421,9 @@ ul.my-card-listing {
   float: left;
   width: 50%;
 }
+.custom-date-pick .profile_datepicker label{
+  margin-right:0px !important;
+}
 .row-5 {
   margin-left: -5px;
   margin-right: -5px;
@@ -427,5 +434,12 @@ ul.my-card-listing {
 }
 .btn-export-csv{
   margin-bottom: 7px;
+}
+.select-parent .v-select.vs--single .vs__dropdown-toggle{
+  height:30px !important;
+  overflow: hidden;
+}
+.btn-custom{
+  padding:0px 4px !important;
 }
 </style>

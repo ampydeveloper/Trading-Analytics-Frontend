@@ -92,6 +92,8 @@
                     Title
                   </th>
                   <th
+                    class="sorting"
+                    @click=";(field_name = 'price'), changeOrder()"
                     style="width: 80px"
                   >
                     Price

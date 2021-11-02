@@ -402,6 +402,8 @@
               <ul>
                 <li>SlabStox Value: ${{ slabstoxValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</li>
                 <li>Overall Volume Rank: {{ rank }}</li>
+                <li>Overall Price Rank: {{ price_rank }}</li>
+                <li>Overall % Rank: {{ percentage_rank }}</li>
                 <li>
                   Last Sale Price:
                   {{ lastSalePrice ? '$' + lastSalePrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 'N/A' }}
@@ -760,6 +762,8 @@ export default {
       lowestSale: '',
       slabstoxValue: 0,
       rank: 0,
+      price_rank: 0,
+      percentage_rank: 0,
       sx_icon_class: 'theme-btn',
       sx_icon1d_class: 'theme-btn',
       currentUrl: location.href,
@@ -1160,6 +1164,8 @@ if (this.showalldGraph == true) {
                 this.lastSalePrice = res.data.lastSalePrice
                 this.slabstoxValue = res.data.slabstoxValue
                 this.rank = res.data.rank
+                this.price_rank = res.data.price_rank
+                this.percentage_rank = res.data.percentage_rank
               }
               this.initGraphLabelLength = res.data.labels
                 ? res.data.labels.length
