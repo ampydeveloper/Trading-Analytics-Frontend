@@ -7,7 +7,7 @@
             <font-awesome-icon :icon="['fas', 'plus']" />
             create custom stoxticker
           </button>
-          <span class="tooltip-text set-tooltip mr-xl-2" v-b-tooltip.bottomleft  title="Click here to create your own custom StoxTicker by adding any Slabs you want to the SlabStoxPro database.">?</span>
+          <span class="tooltip-text set-tooltip mr-xl-2" v-b-tooltip.bottomleft  title="Combine any Slabs in our database to create your own index fund to track card price movement over time.">?</span>
 
             <button class="card-btn search-stox" >
               Search stoxticker board 
@@ -18,7 +18,7 @@
               <font-awesome-icon :icon="['fas', 'chevron-down']" />
               </span>
             </button>
-            <span class="tooltip-text set-tooltip mx-xl-2" v-b-tooltip.bottomleft title="Click here to search other SlabStoxPro users’ StoxTicker boards to see who they’re tracking.">?</span>  
+            <span class="tooltip-text set-tooltip mx-xl-2" v-b-tooltip.bottomleft title="Search for other indexes to see what other SlabStoxPro users are tracking.">?</span>  
 
             <nuxt-link
               class=""
@@ -31,7 +31,7 @@
                 </span>
             </button>
             </nuxt-link>
-            <span class="tooltip-text set-tooltip mx-xl-2" v-b-tooltip.bottomleft title="featured boards">?</span>
+            <span class="tooltip-text set-tooltip mx-xl-2" v-b-tooltip.bottomleft title="View the SlabStox team indexes to track what we’re watching in the market.">?</span>
 
             <nuxt-link to="/admin/personal-boards" >
             <button class="card-btn featured-boards" >
@@ -41,7 +41,7 @@
                 </span>
             </button>
             </nuxt-link>
-            <span class="tooltip-text set-tooltip mx-xl-2" v-b-tooltip.bottomleft title="Click here to fetch personal boards">?</span>
+            <span class="tooltip-text set-tooltip mx-xl-2" v-b-tooltip.bottomleft title="View the different StoxTicker indexes you have created.">?</span>
         </div>
       </div>
     </div>
@@ -110,7 +110,7 @@
           <div class="inner-wrap">
             <div class="search-field">
               <div class="row">
-                <div class="col-md-10">
+                <div class="col-10 col-md-7 col-lg-8 col-xl-9">
                   <div class="search-bar">
                     <input
                       type="text"
@@ -120,7 +120,20 @@
                     />
                   </div>
                 </div>
-                <div class="col-md-2">
+                <div class="col-12 col-md p-md-0 pt-2">
+                  <div class="search">
+                    <button
+                      class="card-btn custom-stox-search w-100"
+                      @click="getSmartKeyword()"
+                    >
+                      search
+                      <font-awesome-icon
+                        :icon="['fas', 'chevron-circle-right']"
+                      />
+                    </button>
+                  </div>
+                </div>
+                <div class="col-md-auto close-custom">
                   <div class="close-btn">
                     <span>
                       <font-awesome-icon :icon="['fas', 'chevron-up']" />
@@ -131,19 +144,15 @@
               </div>
 
               <div class="row">
-                <div class="search-wrap col-sm-12">
+                <div class="col-12 col-md-8 col-lg-9 col-xl-10 pt-2" v-if="this.isHidden == false" >
+                  <div class="search-bar">
+                    <input type="text" :value="(user!=null?user.first_name:'')  + ' ' +  (user!=null && user.last_name!=null?user.last_name:'')" placeholder="ENTER BOARD NAME">
+                  </div>
+                </div>
+                <div class="col-12 col-md-4 col-lg-3 col-xl-2 pl-md-0 pt-2 ">
                   <div class="search">
                     <button
-                      class="card-btn custom-stox-search"
-                      @click="getSmartKeyword()"
-                    >
-                      search
-                      <font-awesome-icon
-                        :icon="['fas', 'chevron-circle-right']"
-                      />
-                    </button>
-                    <button
-                      class="card-btn custom-stox-search"
+                      class="card-btn w-100 custom-stox-search"
                       v-if="this.isHidden == false"
                       @click="createBoard()"
                     >
@@ -217,12 +226,12 @@
 
       <div class="card search-name-out" style="display:none;">
         <div class="card-body" style="padding:0;">
-          <h5 class="card-title custom-smart-search-player-name">
+          <!-- <h5 class="card-title custom-smart-search-player-name">
             <button class="card-btn theme-btn">Create Board</button>
-          </h5>
-          <div class="search-bar">
+          </h5> -->
+          <!-- <div class="search-bar">
           <input type="text" :value="(user!=null?user.first_name:'')  + ' ' +  (user!=null?user.last_name:'')" placeholder="ENTER BOARD NAME" style="margin-bottom: 15px;">
-</div>
+          </div> -->
           <div class="create-board-out my-card text-center">
  <button class="my-card-view-listing create-board" @click="createBoard()">
                   Create Board
@@ -2165,7 +2174,7 @@ html body main .card.search-slabs-out .my-card-listing .my-card {
 }
 .create-board-out {
   width: 100%;
-  margin-bottom: 10px;
+  margin: 10px 0px;
   .create-board {
     width: auto;
     padding: 6px 25px 5px 25px;
@@ -2323,5 +2332,18 @@ html body main .card.search-slabs-out .my-card-listing .my-card {
     {
       width:135px !important;
     }
+}
+@media (max-width:768px){
+  .close-custom{
+    position: absolute !important;
+    right: 40px !important;
+  }
+}
+.select-parent .v-select.vs--single .vs__dropdown-toggle{
+  height:30px !important;
+  overflow: hidden;
+}
+.custom-date-pick .form-control{
+  margin-right:0px !important;
 }
 </style>
