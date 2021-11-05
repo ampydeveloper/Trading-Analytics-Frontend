@@ -38,6 +38,7 @@
                   type="text"
                   class="form-control"
                   placeholder="Source"
+                  readonly
                   required
                 />
               </div>
@@ -135,7 +136,7 @@ export default {
               timestamp: res.data.timestamp,
               quantity: res.data.quantity,
               cost: res.data.cost,
-              source: res.data.source,
+              source: (res.data.source=='Script'?'Ebay':res.data.source),
               type: res.data.type,
             }
           }
