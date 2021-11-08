@@ -37,7 +37,7 @@
                     {{ $moment(item.timestamp).format('MMMM DD Y - hh:mm:ss') }}
                   </td>
                   <td>{{ item.type }}</td>
-                  <td>{{ item.source }}</td>
+                  <td>{{ (item.source=='Script'?'Ebay':item.source) }}</td>
                   <td>{{ item.quantity }}</td>
                   <td>${{ item.cost }}</td>
                   <td>

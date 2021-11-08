@@ -561,7 +561,7 @@
               <td>
                 {{ $moment(card.timestamp).format('MMMM DD Y hh:mm:ss A') }}
               </td>
-              <td>{{ card.source }}</td>
+              <td>{{ (card.source=='Script'?'Ebay':card.source) }}</td>
               <td>{{ card.type }}</td>
               <td>{{ card.quantity }}</td>
               <td>${{ card.cost }}</td>
