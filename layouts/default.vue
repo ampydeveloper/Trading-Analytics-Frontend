@@ -59,4 +59,7 @@ export default {
     }
   }
 }
+.theme-btn{
+  color: #000;
+}
 </style>

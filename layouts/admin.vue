@@ -73,4 +73,7 @@ main{
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
 }
+.theme-btn{
+  color: #000;
+}
 </style>

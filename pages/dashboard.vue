@@ -5,7 +5,7 @@
         <div class="card stoxticker_page stoxticker_listing analytics_page">
           <div class="card-body">
             <h5 class="card-title">
-              <button class="theme-btn card-btn">SX STOXTICKER</button>
+              <button class="theme-btn card-btn ">SX STOXTICKER</button>
               <span
                 class="tooltip-text d-inline"
                 v-b-tooltip.bottomleft
@@ -145,7 +145,7 @@
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">
-              <button class="theme-btn card-btn">SX Featured Slabs</button>
+              <button class="theme-btn card-btn ">SX Featured Slabs</button>
               <span
                 class="tooltip-text mx-2"
                 v-b-tooltip.bottomleft
@@ -211,7 +211,7 @@
                   <font-awesome-icon :icon="['fas', 'chevron-right']" />
                 </nuxt-link>
 
-                <button class="theme-btn card-btn btn-sxvalue">
+                <button class="theme-btn card-btn  btn-sxvalue">
                   Slabstox ${{ stoxtickerData.sale.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}
                 </button>
               </div>
@@ -221,7 +221,7 @@
                 :class="
                   (sxIcon && sxIcon == 'up'
                     ? 'theme-green-btn'
-                    : 'theme-red-btn') + ' card-btn dashboard-apex-top-alld'
+                    : 'theme-red-btn') + ' card-btn  dashboard-apex-top-alld'
                 "
               >
                 <font-awesome-icon
@@ -234,7 +234,7 @@
                 :class="
                   (sxIcon && sxIcon == 'up'
                     ? 'theme-green-btn'
-                    : 'theme-red-btn') + ' card-btn dashboard-apex-top-alld'
+                    : 'theme-red-btn') + ' card-btn  dashboard-apex-top-alld'
                 "
               >
                 <font-awesome-icon
@@ -247,7 +247,7 @@
                 :class="
                   (sxIcon1d && sxIcon1d == 'up'
                     ? 'theme-green-btn'
-                    : 'theme-red-btn') + ' card-btn dashboard-apex-top-1d'
+                    : 'theme-red-btn') + ' card-btn  dashboard-apex-top-1d'
                 "
                 style="display: none"
               >
@@ -261,7 +261,7 @@
                 :class="
                   (sxIcon1d && sxIcon1d == 'up'
                     ? 'theme-green-btn'
-                    : 'theme-red-btn') + ' card-btn dashboard-apex-top-1d'
+                    : 'theme-red-btn') + ' card-btn  dashboard-apex-top-1d'
                 "
                 style="display: none"
               >
@@ -375,7 +375,7 @@
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">
-              <button class="theme-btn card-btn">Top Live Auctions</button>
+              <button class="theme-btn card-btn ">Top Live Auctions</button>
               <nuxt-link class="card-link float-right" to="/live-auctions">
                 View All
                 <font-awesome-icon :icon="['fas', 'chevron-right']" />
@@ -415,7 +415,7 @@
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">
-              <button class="theme-btn card-btn">Wishlist</button>
+              <button class="theme-btn card-btn ">Wishlist</button>
               <nuxt-link
                 class="card-link float-right"
                 to="/my-portfolio"
@@ -454,7 +454,7 @@
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">
-              <button class="theme-btn card-btn">Portfolio</button>
+              <button class="theme-btn card-btn ">Portfolio</button>
               <nuxt-link
                 class="card-link float-right"
                 to="/my-portfolio"

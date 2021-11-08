@@ -82,7 +82,7 @@
                 <tr>
                   <th
                     class="sorting"
-                    @click=";(field_name = 'id'), changeOrder()"
+                    @click=";(field_name = 'id'), order = true, changeOrder()"
                     style="width: 75px"
                   >
                     Id
@@ -93,21 +93,21 @@
                   </th>
                   <th
                     class="sorting"
-                    @click=";(field_name = 'price'), changeOrder()"
+                    @click=";(field_name = 'price'), order = true, changeOrder()"
                     style="width: 80px"
                   >
                     Price
                   </th>
                   <th
                     class="sorting"
-                    @click=";(field_name = 'sold_price'), changeOrder()"
+                    @click=";(field_name = 'sold_price'), order = true, changeOrder()"
                     style="width: 120px"
                   >
                     Sold Price
                   </th>
                   <th
                     class="sorting"
-                    @click=";(field_name = 'listing_ending_at'), changeOrder()"
+                    @click=";(field_name = 'listing_ending_at'), order = true, changeOrder()"
                     style="width: 210px"
                   >
                     Date Sold
@@ -119,14 +119,14 @@
                   </th>
                   <th
                     class="sorting"
-                    @click=";(field_name = 'itemId'), changeOrder()"
+                    @click=";(field_name = 'itemId'), order = true, changeOrder()"
                     style="width: 130px"
                   >
                     Listing Id
                   </th>
                   <th
                     class="sorting"
-                    @click=";(field_name = 'card_id'), changeOrder()"
+                    @click=";(field_name = 'card_id'), order = true, changeOrder()"
                     style="width: 75px"
                   >
                     Slab Id
@@ -139,7 +139,7 @@
                 </tr>
               </thead>
               <tbody v-if="items.length > 0">
-                <tr v-for="(item, key) of items" :key="item.id">
+                <tr v-for="(item) of items" :key="item.id">
                   <td>{{ item.id }}</td>
                   <td>{{ item.title }}</td>
                   <td>${{ item.price }}</td>
@@ -201,42 +201,42 @@
                     </button>
                     <button
                       class="theme-btn card-btn"
-                      @click="getItems(2)"
+                      @click="changeOrder(2)"
                       v-if="allPages >= 2"
                     >
                       2
                     </button>
                     <button
                       class="theme-btn card-btn"
-                      @click="getItems(3)"
+                      @click="changeOrder(3)"
                       v-if="allPages >= 3"
                     >
                       3
                     </button>
                     <button
                       class="theme-btn card-btn"
-                      @click="getItems(4)"
+                      @click="changeOrder(4)"
                       v-if="allPages >= 4"
                     >
                       4
                     </button>
                     <button
                       class="theme-btn card-btn"
-                      @click="getItems(5)"
+                      @click="changeOrder(5)"
                       v-if="allPages >= 5"
                     >
                       5
                     </button>
                     <button
                       class="theme-btn card-btn"
-                      @click="getItems(2)"
+                      @click="changeOrder(2)"
                       v-if="allPages >= 2"
                     >
                       Next
                     </button>
                     <button
                       class="theme-btn card-btn"
-                      @click="getItems(allPages)"
+                      @click="changeOrder(allPages)"
                     >
                       Last
                     </button>
@@ -247,7 +247,7 @@
                     <button class="theme-btn card-btn disable-pagination">
                       First
                     </button>
-                    <button class="theme-btn card-btn" @click="getItems(1)">
+                    <button class="theme-btn card-btn" @click="changeOrder(1)">
                       Previous
                     </button>
                     <button class="theme-btn card-btn active-pagination">
@@ -255,42 +255,42 @@
                     </button>
                     <button
                       class="theme-btn card-btn"
-                      @click="getItems(3)"
+                      @click="changeOrder(3)"
                       v-if="allPages >= 3"
                     >
                       3
                     </button>
                     <button
                       class="theme-btn card-btn"
-                      @click="getItems(4)"
+                      @click="changeOrder(4)"
                       v-if="allPages >= 4"
                     >
                       4
                     </button>
                     <button
                       class="theme-btn card-btn"
-                      @click="getItems(5)"
+                      @click="changeOrder(5)"
                       v-if="allPages >= 5"
                     >
                       5
                     </button>
                     <button
                       class="theme-btn card-btn"
-                      @click="getItems(6)"
+                      @click="changeOrder(6)"
                       v-if="allPages >= 6"
                     >
                       6
                     </button>
                     <button
                       class="theme-btn card-btn"
-                      @click="getItems(3)"
+                      @click="changeOrder(3)"
                       v-if="allPages >= 3"
                     >
                       Next
                     </button>
                     <button
                       class="theme-btn card-btn"
-                      @click="getItems(allPages)"
+                      @click="changeOrder(allPages)"
                     >
                       Last
                     </button>
@@ -301,10 +301,10 @@
                     <button class="theme-btn card-btn disable-pagination">
                       First
                     </button>
-                    <button class="theme-btn card-btn" @click="getItems(2)">
+                    <button class="theme-btn card-btn" @click="changeOrder(2)">
                       Previous
                     </button>
-                    <button class="theme-btn card-btn" @click="getItems(2)">
+                    <button class="theme-btn card-btn" @click="changeOrder(2)">
                       2
                     </button>
                     <button class="theme-btn card-btn active-pagination">
@@ -312,35 +312,35 @@
                     </button>
                     <button
                       class="theme-btn card-btn"
-                      @click="getItems(4)"
+                      @click="changeOrder(4)"
                       v-if="allPages >= 4"
                     >
                       4
                     </button>
                     <button
                       class="theme-btn card-btn"
-                      @click="getItems(5)"
+                      @click="changeOrder(5)"
                       v-if="allPages >= 5"
                     >
                       5
                     </button>
                     <button
                       class="theme-btn card-btn"
-                      @click="getItems(6)"
+                      @click="changeOrder(6)"
                       v-if="allPages >= 6"
                     >
                       6
                     </button>
                     <button
                       class="theme-btn card-btn"
-                      @click="getItems(4)"
+                      @click="changeOrder(4)"
                       v-if="allPages >= 4"
                     >
                       Next
                     </button>
                     <button
                       class="theme-btn card-btn"
-                      @click="getItems(allPages)"
+                      @click="changeOrder(allPages)"
                     >
                       Last
                     </button>
@@ -348,50 +348,50 @@
                 </tr>
                 <tr v-if="page - 1 > 3 && items.length >= 30">
                   <td colspan="9">
-                    <button class="theme-btn card-btn" @click="getItems(1)">
+                    <button class="theme-btn card-btn" @click="changeOrder(1)">
                       First
                     </button>
                     <button
                       class="theme-btn card-btn"
-                      @click="getItems(page - 2)"
+                      @click="changeOrder(page - 2)"
                     >
                       Previous
                     </button>
                     <button
                       class="theme-btn card-btn"
-                      @click="getItems(page - 3)"
+                      @click="changeOrder(page - 3)"
                     >
                       {{ page - 3 }}
                     </button>
                     <button
                       class="theme-btn card-btn"
-                      @click="getItems(page - 2)"
+                      @click="changeOrder(page - 2)"
                     >
                       {{ page - 2 }}
                     </button>
                     <button class="theme-btn card-btn active-pagination">
                       {{ page - 1 }}
                     </button>
-                    <button class="theme-btn card-btn" @click="getItems(page)">
+                    <button class="theme-btn card-btn" @click="changeOrder(page)">
                       {{ page }}
                     </button>
                     <button
                       class="theme-btn card-btn"
-                      @click="getItems(page + 1)"
+                      @click="changeOrder(page + 1)"
                       v-if="allPages >= page + 1"
                     >
                       {{ page + 1 }}
                     </button>
                     <button
                       class="theme-btn card-btn"
-                      @click="getItems(page)"
+                      @click="changeOrder(page)"
                       v-if="allPages >= page"
                     >
                       Next
                     </button>
                     <button
                       class="theme-btn card-btn"
-                      @click="getItems(allPages)"
+                      @click="changeOrder(allPages)"
                     >
                       Last
                     </button>
@@ -413,21 +413,21 @@
                     </button>
                     <button
                       class="theme-btn card-btn"
-                      @click="getItems(1)"
+                      @click="changeOrder(1)"
                       v-if="page - 1 != 1"
                     >
                       First
                     </button>
                     <button
                       class="theme-btn card-btn"
-                      @click="getItems(page - 2)"
+                      @click="changeOrder(page - 2)"
                       v-if="page - 2 > 0"
                     >
                       Previous
                     </button>
                     <button
                       class="theme-btn card-btn"
-                      @click="getItems(page - 2)"
+                      @click="changeOrder(page - 2)"
                       v-if="page - 2 > 0"
                     >
                       {{ page - 2 }}
@@ -513,6 +513,7 @@ export default {
       field_name: '',
       isSort: 0,
       old_field: '',
+      order:false,
     }
   },
   computed: {
@@ -584,20 +585,24 @@ export default {
         }
       }
     },
-    changeOrder(filter = null) {
+    changeOrder(page,filter = null) {
       if (this.field_name != '') {
         if (this.old_field != this.field_name) {
           this.old_field = this.field_name
-          this.isSort = 0
-          if (this.isSort == 0) {
-            this.isSort = 1
-          } else if (this.isSort == 1) {
-            this.isSort = 2
-          } else if (this.isSort == 2) {
-            this.isSort = 1
-          } else {
+          if(this.order == true){
+            console.log('top')
             this.isSort = 0
+            if (this.isSort == 0) {
+              this.isSort = 1
+            } else if (this.isSort == 1) {
+              this.isSort = 2
+            } else if (this.isSort == 2) {
+              this.isSort = 1
+            } else {
+              this.isSort = 0
+            }
           }
+          this.order = false
 
           if (this.isSort != 0) {
             if (!this.requestInProcess) {
@@ -605,12 +610,12 @@ export default {
                 this.showLoader()
                 this.requestInProcess = true
                 let payload = {
-                  page: this.currentPage,
+                  page: page ? page : 1,
                   search: this.searchTerm,
                   column_name: this.old_field,
-                  sort_type: (this.isSort==1?'ASC':'DESC'),
+                  sort_type: (this.isSort==1?'ASC' : this.isSort==2 ?'DESC':'ASC'),
                 }
-                this.$router.push('/admin/sold-listings?page=' + this.currentPage)
+                this.$router.push('/admin/sold-listings?page=' + page)
 
                 if (filter != null) {
                   payload['sport'] = filter.target.value
@@ -637,25 +642,29 @@ export default {
             }
           }
         } else {
-          if (this.isSort == 1) {
-            this.isSort = 2
-          } else if (this.isSort == 2) {
-            this.isSort = 1
-          } else {
-            this.isSort = 0
+          if(this.order == true){
+            console.log('bottom')
+            if (this.isSort == 1) {
+              this.isSort = 2
+            } else if (this.isSort == 2) {
+              this.isSort = 1
+            } else {
+              this.isSort = 0
+            }
           }
 
+          this.order = false
           if (!this.requestInProcess) {
             try {
               this.showLoader()
               this.requestInProcess = true
               let payload = {
-                page: this.currentPage,
+                page: page ? page : 1,
                 search: this.searchTerm,
                 column_name: this.old_field,
-                sort_type: (this.isSort==1?'ASC':'DESC'),
+                sort_type: (this.isSort==1?'ASC' : this.isSort==2 ?'DESC':'ASC'),
               }
-              this.$router.push('/admin/sold-listings?page=' + this.currentPage)
+              this.$router.push('/admin/sold-listings?page=' + page)
 
               if (filter != null) {
                 payload['sport'] = filter.target.value

@@ -95,11 +95,11 @@
             <div class="card">
               <div class="card-body dashboard-graph">
                 <h5 class="card-title_new">
-                  <button class="theme-btn card-btn dashboard-apex-top-alld">
+                  <button class="theme-btn card-btn  dashboard-apex-top-alld">
                     *SX Value ${{ cardGraph.sx_value ? cardGraph.sx_value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 0 }}
                   </button>
                   <button
-                    :class="sx_icon_class + ' card-btn dashboard-apex-top-alld'"
+                    :class="sx_icon_class + ' card-btn  dashboard-apex-top-alld'"
                   >
                     <font-awesome-icon
                       v-if="
@@ -112,7 +112,7 @@
                     }}
                   </button>
                   <button
-                    :class="sx_icon_class + ' card-btn dashboard-apex-top-alld'"
+                    :class="sx_icon_class + ' card-btn  dashboard-apex-top-alld'"
                   >
                     <font-awesome-icon
                       v-if="
@@ -124,7 +124,7 @@
                   </button>
 
                   <button
-                    class="theme-btn card-btn dashboard-apex-top-1d"
+                    class="theme-btn card-btn  dashboard-apex-top-1d"
                     style="display: none"
                   >
                     *SX Value ${{
@@ -132,7 +132,7 @@
                     }}
                   </button>
                   <button
-                    :class="sx_icon1d_class + ' card-btn dashboard-apex-top-1d'"
+                    :class="sx_icon1d_class + ' card-btn  dashboard-apex-top-1d'"
                     style="display: none"
                   >
                     <font-awesome-icon
@@ -147,7 +147,7 @@
                     }}
                   </button>
                   <button
-                    :class="sx_icon1d_class + ' card-btn dashboard-apex-top-1d'"
+                    :class="sx_icon1d_class + ' card-btn  dashboard-apex-top-1d'"
                     style="display: none"
                   >
                     <font-awesome-icon
@@ -373,7 +373,7 @@
             <div class="card">
               <div class="card-body sales_graph-graph">
                 <h5 class="card-title1">
-                  <button class="theme-btn card-btn">SALES VOLUME</button>
+                  <button class="theme-btn card-btn ">SALES VOLUME</button>
 
                   <a
                     href="javascript:;"
