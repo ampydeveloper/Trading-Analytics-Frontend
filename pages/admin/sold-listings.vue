@@ -586,11 +586,14 @@ export default {
       }
     },
     changeOrder(page,filter = null) {
-      if (this.field_name != '') {
-        if (this.old_field != this.field_name) {
+    
+      // if (this.field_name != '') {
+       
+        if (this.field_name != '' && this.old_field != this.field_name) {
+     
           this.old_field = this.field_name
+          
           if(this.order == true){
-            console.log('top')
             this.isSort = 0
             if (this.isSort == 0) {
               this.isSort = 1
@@ -609,14 +612,18 @@ export default {
               try {
                 this.showLoader()
                 this.requestInProcess = true
+                if(page == undefined || page == ''){
+                  page = this.currentPage
+                }
+                console.log(page)
                 let payload = {
-                  page: page ? page : 1,
+                  page: page,
                   search: this.searchTerm,
                   column_name: this.old_field,
                   sort_type: (this.isSort==1?'ASC' : this.isSort==2 ?'DESC':'ASC'),
                 }
                 this.$router.push('/admin/sold-listings?page=' + page)
-
+                this.currentPage = page
                 if (filter != null) {
                   payload['sport'] = filter.target.value
                   this.sportFilter = filter
@@ -643,7 +650,6 @@ export default {
           }
         } else {
           if(this.order == true){
-            console.log('bottom')
             if (this.isSort == 1) {
               this.isSort = 2
             } else if (this.isSort == 2) {
@@ -658,14 +664,18 @@ export default {
             try {
               this.showLoader()
               this.requestInProcess = true
+              if(page == undefined || page == ''){
+                page = this.currentPage
+              }
+              console.log(page)
               let payload = {
-                page: page ? page : 1,
+                page: page,
                 search: this.searchTerm,
                 column_name: this.old_field,
                 sort_type: (this.isSort==1?'ASC' : this.isSort==2 ?'DESC':'ASC'),
               }
-              this.$router.push('/admin/sold-listings?page=' + page)
-
+              this.$router.push('/admin/sold-listings?page=' + page )
+              this.currentPage = page
               if (filter != null) {
                 payload['sport'] = filter.target.value
                 this.sportFilter = filter
@@ -690,7 +700,7 @@ export default {
             }
           }
         }
-      }
+      // }
     },
   },
 }
