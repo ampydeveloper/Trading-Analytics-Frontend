@@ -176,6 +176,9 @@ export default {
     }
   },
   mounted() {
+    //Logout user if user comes from wp site
+    this.$auth.logout();
+
     if (this.$route.query.parent_site) {
       this.parent_site = this.$route.query.parent_site
       window.localStorage.setItem('parent_site', 1)

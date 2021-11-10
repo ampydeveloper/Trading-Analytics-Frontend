@@ -40,7 +40,7 @@
             <b-dropdown-item to="/profile"
               ><img class="icon" src="~/assets/img/icons/profile_icon.png" />Profile</b-dropdown-item
             >
-            <b-dropdown-item @click="logout" href="javascript:;"
+            <b-dropdown-item to="/logout"
               ><img
                 class="icon"
                 src="~/assets/img/icons/logout_icon.png"
@@ -239,7 +239,7 @@
             <img class="icon" src="~/assets/img/icons/profile_icon.png" />
             Profile
           </b-dropdown-item>
-          <b-dropdown-item @click="logout" href="javascript:;">
+          <b-dropdown-item to="/logout">
             <img class="icon" src="~/assets/img/icons/logout_icon.png" />Logout
           </b-dropdown-item>
         </b-nav-item-dropdown>

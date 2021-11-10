@@ -703,6 +703,10 @@ slabstox.com
                 itemdata.grade
               }}</span>
                 </div>
+                <button class="my-card-view-listing add-to-board added-to-board">
+                  Added to Board
+                  <font-awesome-icon :icon="['fas', 'chevron-circle-right']" />
+                </button>
                 <button class="my-card-view-listing add-to-board" v-on:click="addToBoard(itemdata.id)">
                   Add to Board
                   <font-awesome-icon :icon="['fas', 'chevron-circle-right']" />
@@ -2323,7 +2327,15 @@ html body main .card.search-slabs-out .my-card-listing .my-card {
     }
   }
 }
-
+  .added-to-board{
+    display:none !important;
+  }
+  .my-card-listing.my-card-active-listing .added-to-board{
+ display:block !important;
+  }
+  .my-card-listing.my-card-active-listing .add-to-board{
+ display:none;
+  }
 .featured-boards {
   font-family: 'CocogoosePro-Regular', Helvetica, Arial, sans-serif;
   font-weight: 400;
